@@ -1,9 +1,11 @@
 <?php
 /*
 Plugin Name: Formulaire Memenza
-Description: Un plugin personnalisé pour WooCommerce.
+Plugin URI: http://test.com
+Description: Formulaire Memenza pour les données JSON2Video.
 Version: 1.0
 Author: Thomas Leconte
+Author URI: http://test.com
 License: GPL2
 */
 
@@ -20,5 +22,12 @@ function memenza_plugin_menu() {
         2                         // Position du menu
     );
 }
-
-?>
+// Fonction pour afficher le contenu de la page
+function memenza_plugin_page_content() {
+    ?>
+    <div class="wrap">
+        <h1>Ici notre plugin WooCommerce</h1>
+        <p>Ceci est la page d'administration du plugin WooCommerce personnalisé.</p>
+    </div>
+    <?php
+}
