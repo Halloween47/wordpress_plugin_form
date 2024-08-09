@@ -29,6 +29,7 @@ function memenza_plugin_page_content() {
         <h1>Ici notre plugin WooCommerce</h1>
         <p>Ceci est la page d'administration du plugin WooCommerce personnalisé.</p>
         <div id="react-container"></div>
+        <div id="react-container-stepper"></div>
     </div>
     <?php
 }
