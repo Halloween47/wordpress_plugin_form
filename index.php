@@ -31,3 +31,14 @@ function memenza_plugin_page_content() {
     </div>
     <?php
 }
+
+add_action('admin_enqueue_scripts', 'enqeue_react_script');
+function enqeue_react_script() {
+    wp_enqueue_script(
+        'test_integration_react',
+        plugins_url('js/dist/bundle.js', __FILE__),
+        array(),
+        '1.0.0',
+        true
+    );
+}
