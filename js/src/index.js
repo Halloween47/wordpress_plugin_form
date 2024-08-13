@@ -4,6 +4,7 @@ import { createRoot } from 'react-dom/client';
 import QRCode from "react-qr-code";
 import HorizontalLinearStepper from "./HorizontalLinearStepper.jsx";
 import BasicButtonGroup from "./components/ButtonGroup.jsx";
+import SimpleContainer from "./components/Container.jsx";
 
 
 
@@ -20,5 +21,9 @@ rootStepper.render(<HorizontalLinearStepper />);
 const containerButtonGroup = document.getElementById('react-container-buttongroup');
 const rootButtonGroup = createRoot(containerButtonGroup);
 rootButtonGroup.render(<BasicButtonGroup />);
+
+const containerPresentation = document.getElementById('react-container-presentation');
+const rootPresentation = createRoot(containerPresentation);
+rootPresentation.render(<SimpleContainer />);
 
 //////////////////////////////////////////////////////////////////
