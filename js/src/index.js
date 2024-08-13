@@ -3,16 +3,22 @@ import React from "react";
 import { createRoot } from 'react-dom/client';
 import QRCode from "react-qr-code";
 import HorizontalLinearStepper from "./HorizontalLinearStepper.jsx";
+import BasicButtonGroup from "./components/ButtonGroup.jsx";
 
 
 
 // ReactDOM.render(<QRCode value="Coucou cherie" />, document.getElementById("react-container"));
 
 const container = document.getElementById('react-container');
-const containerStepper = document.getElementById('react-container-stepper');
 const root = createRoot(container);
-const rootStepper = createRoot(containerStepper);
 root.render(<QRCode value="http://lestoilesheroiques.fr" />);
+
+const containerStepper = document.getElementById('react-container-stepper');
+const rootStepper = createRoot(containerStepper);
 rootStepper.render(<HorizontalLinearStepper />);
+
+const containerButtonGroup = document.getElementById('react-container-buttongroup');
+const rootButtonGroup = createRoot(containerButtonGroup);
+rootButtonGroup.render(<BasicButtonGroup />);
 
 //////////////////////////////////////////////////////////////////
