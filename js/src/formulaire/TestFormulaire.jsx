@@ -1,3 +1,99 @@
+import * as React from 'react';
+import PropTypes from 'prop-types';
+
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CssBaseline from '@mui/material/CssBaseline';
+import Grid from '@mui/material/Grid';
+import Stack from '@mui/material/Stack';
+import Step from '@mui/material/Step';
+import StepLabel from '@mui/material/StepLabel';
+import Stepper from '@mui/material/Stepper';
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import Typography from '@mui/material/Typography';
+
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
+import AutoAwesomeRoundedIcon from '@mui/icons-material/AutoAwesomeRounded';
+import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
+import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
+
+import AddressForm from '../components/AddressForm.jsx';
+import getCheckoutTheme from '../components/getCheckoutTheme.jsx';
+import Info from '../components/Info.jsx';
+import InfoMobile from '../components/InfoMobile.jsx';
+import PaymentForm from '../components/PaymentForm.jsx';
+import Review from '../components/Review.jsx';
+import ToggleColorMode from '../components/ToggleColorMode.jsx';
+
+function ToggleCustomTheme({ showCustomTheme, toggleCustomTheme }) {
+    return (
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          width: '100dvw',
+          position: 'fixed',
+          bottom: 24,
+        }}
+      >
+        <ToggleButtonGroup
+          color="primary"
+          exclusive
+          value={showCustomTheme}
+          onChange={toggleCustomTheme}
+          aria-label="Platform"
+          sx={{
+            backgroundColor: 'background.default',
+            '& .Mui-selected': {
+              pointerEvents: 'none',
+            },
+          }}
+        >
+          <ToggleButton value>
+            <AutoAwesomeRoundedIcon sx={{ fontSize: '20px', mr: 1 }} />
+            Custom theme
+          </ToggleButton>
+          <ToggleButton value={false}>Material Design 2</ToggleButton>
+        </ToggleButtonGroup>
+      </Box>
+    );
+  }
+  
+  ToggleCustomTheme.propTypes = {
+    showCustomTheme: PropTypes.shape({
+      valueOf: PropTypes.func.isRequired,
+    }).isRequired,
+    toggleCustomTheme: PropTypes.func.isRequired,
+  };
+  
+  const steps = ['Shipping address', 'Payment details', 'Review your order'];
+  
+  const logoStyle = {
+    width: '140px',
+    height: '56px',
+    marginLeft: '-4px',
+    marginRight: '-8px',
+  };
+  
+  function getStepContent(step) {
+    switch (step) {
+      case 0:
+        return <AddressForm />;
+      case 1:
+        return <PaymentForm />;
+      case 2:
+        return <Review />;
+      default:
+        throw new Error('Unknown step');
+    }
+  }
+
 export default function Checkout() {
     const [mode, setMode] = React.useState('light');
     const [showCustomTheme, setShowCustomTheme] = React.useState(true);

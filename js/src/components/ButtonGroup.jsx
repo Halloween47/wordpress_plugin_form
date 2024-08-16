@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import SimpleContainer from './Container.jsx';
 import BasicGrid from './Grid.jsx';
-import TestFormulaire from '../formulaire/TestFormulaire.jsx';
+import Checkout from './checkout/Checkout.js';
 
 export default function BasicButtonGroup() {
   
@@ -34,7 +34,7 @@ export default function BasicButtonGroup() {
     } else if (buttonText === 'Formulaire') {
       const containerPresentation = document.getElementById('react-container-presentation');
       const rootPresentation = createRoot(containerPresentation);
-      rootPresentation.render(<TestFormulaire />);
+      rootPresentation.render(<Checkout />);
     }
     
   }
