@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import SimpleContainer from './Container.jsx';
 import BasicGrid from './Grid.jsx';
+import TestFormulaire from '../formulaire/TestFormulaire.jsx';
 
 export default function BasicButtonGroup() {
   
@@ -15,22 +16,32 @@ export default function BasicButtonGroup() {
     console.log('Texte du bouton cliqué :', buttonText);
     
     if (buttonText === 'Three') {
+
       alert('VIVA L\'ALGERIE');
+
     } else if (buttonText ==='Two') {
-      
+
       const containerPresentation = document.getElementById('react-container-presentation');
       const rootPresentation = createRoot(containerPresentation);
       rootPresentation.render(<SimpleContainer />);
+
     } else if (buttonText === 'One') {
+
       const containerPresentation = document.getElementById('react-container-presentation');
       const rootPresentation = createRoot(containerPresentation);
       rootPresentation.render(<BasicGrid />);
+
+    } else if (buttonText === 'Formulaire') {
+      const containerPresentation = document.getElementById('react-container-presentation');
+      const rootPresentation = createRoot(containerPresentation);
+      rootPresentation.render(<TestFormulaire />);
     }
     
   }
   
   return (
     <ButtonGroup variant="contained" aria-label="Basic button group">
+    <Button onClick={handleClick}>Formulaire</Button>
     <Button onClick={handleClick}>One</Button>
     <Button onClick={handleClick}>Two</Button>
     <Button onClick={handleClick}>Three</Button>
