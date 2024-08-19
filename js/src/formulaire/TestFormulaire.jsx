@@ -72,7 +72,7 @@ function ToggleCustomTheme({ showCustomTheme, toggleCustomTheme }) {
     toggleCustomTheme: PropTypes.func.isRequired,
   };
   
-  const steps = ['Shipping address', 'Payment details', 'Review your order'];
+  const steps = ['1. Informations sur le couple', 'Payment details', 'Review your order'];
   
   const logoStyle = {
     width: '140px',

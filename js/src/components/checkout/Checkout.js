@@ -75,7 +75,7 @@ ToggleCustomTheme.propTypes = {
   toggleCustomTheme: PropTypes.func.isRequired,
 };
 
-const steps = ['Shipping address', 'Payment details', 'Review your order'];
+const steps = ['1. Informations sur le couple', 'Payment details', 'Review your order'];
 function getStepContent(step) {
   switch (step) {
     case 0:

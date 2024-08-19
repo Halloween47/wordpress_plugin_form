@@ -50,7 +50,7 @@ export default function AddressForm() {
           name="address1"
           type="address1"
           placeholder="Street name and number"
-          autoComplete="shipping address-line1"
+          autoComplete="1. Informations sur le couple-line1"
           required
         />
       </FormGrid>
@@ -61,7 +61,7 @@ export default function AddressForm() {
           name="address2"
           type="address2"
           placeholder="Apartment, suite, unit, etc. (optional)"
-          autoComplete="shipping address-line2"
+          autoComplete="1. Informations sur le couple-line2"
           required
         />
       </FormGrid>

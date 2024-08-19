@@ -17,15 +17,15 @@ export default function AddressForm() {
   return (
     <Grid container spacing={3}>
       <FormGrid size={{ xs: 12, md: 6 }}>
-        <FormLabel htmlFor="first-name" required>
-          First name
+        <FormLabel htmlFor="prenoms-des-maries" required>
+        Prénoms des mariés
         </FormLabel>
         <OutlinedInput
-          id="first-name"
-          name="first-name"
+          id="prenoms-des-maries"
+          name="prenoms-des-maries"
           type="name"
-          placeholder="John"
-          autoComplete="first name"
+          placeholder="Marc & Lisa"
+          autoComplete="prenoms des maries"
           required
           size="small"
         />
@@ -53,7 +53,7 @@ export default function AddressForm() {
           name="address1"
           type="address1"
           placeholder="Street name and number"
-          autoComplete="shipping address-line1"
+          autoComplete="1. Informations sur le couple-line1"
           required
           size="small"
         />
@@ -65,7 +65,7 @@ export default function AddressForm() {
           name="address2"
           type="address2"
           placeholder="Apartment, suite, unit, etc. (optional)"
-          autoComplete="shipping address-line2"
+          autoComplete="1. Informations sur le couple-line2"
           required
           size="small"
         />
