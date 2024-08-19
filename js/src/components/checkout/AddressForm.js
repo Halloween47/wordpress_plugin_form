@@ -7,6 +7,7 @@ import Grid from '@mui/material/Grid';
 // import Grid from '@mui/material/Grid2';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import { styled } from '@mui/system';
+import BasicDateTimePicker from '../DatePicker.jsx';
 
 const FormGrid = styled(Grid)(() => ({
   display: 'flex',
@@ -29,6 +30,12 @@ export default function AddressForm() {
           required
           size="small"
         />
+      </FormGrid>
+      <FormGrid size={{ xs: 12, md: 6 }}>
+      <FormLabel htmlFor="date-du-mariage" required>
+      Date du mariage
+        </FormLabel>
+        <BasicDateTimePicker />
       </FormGrid>
       <FormGrid size={{ xs: 12, md: 6 }}>
         <FormLabel htmlFor="last-name" required>
