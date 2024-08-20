@@ -9,6 +9,7 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import { styled } from '@mui/system';
 import BasicDateTimePicker from '../DatePicker.jsx';
 import CountrySelect from '../CountrySelect.jsx';
+import DropZone from '../DropZone.jsx';
 
 const FormGrid = styled(Grid)(() => ({
   display: 'flex',
@@ -43,6 +44,12 @@ export default function AddressForm() {
       Lieu du mariage
         </FormLabel>
         <CountrySelect />
+      </FormGrid>
+      <FormGrid  size={{ xs: 12, md: 6 }}>
+      <FormLabel htmlFor="photo-des-maries" required>
+      Photo des mariés
+        </FormLabel>
+<DropZone />
       </FormGrid>
       <FormGrid size={{ xs: 12, md: 6 }}>
         <FormLabel htmlFor="last-name" required>
