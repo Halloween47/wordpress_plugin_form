@@ -19,140 +19,45 @@ const FormGrid = styled(Grid)(() => ({
 export default function AddressForm() {
   return (
     <Grid container spacing={3}>
-      <FormGrid size={{ xs: 12, md: 6 }}>
-        <FormLabel htmlFor="prenoms-des-maries" required>
-        Prénoms des mariés
-        </FormLabel>
-        <OutlinedInput
-          id="prenoms-des-maries"
-          name="prenoms-des-maries"
-          type="name"
-          placeholder="Marc & Lisa"
-          autoComplete="prenoms des maries"
-          required
-          size="small"
-        />
-      </FormGrid>
-      <FormGrid size={{ xs: 12, md: 6 }}>
-      <FormLabel htmlFor="date-du-mariage" required>
-      Date du mariage
-        </FormLabel>
-        <BasicDateTimePicker />
-      </FormGrid>
-      <FormGrid size={{ xs: 12, md: 6 }}>
-      <FormLabel htmlFor="lieu-du-mariage" required>
-      Lieu du mariage
-        </FormLabel>
-        <CountrySelect />
-      </FormGrid>
-      <FormGrid  size={{ xs: 12, md: 6 }}>
-      <FormLabel htmlFor="photo-des-maries" required>
-      Photo des mariés
-        </FormLabel>
-<DropZone />
-      </FormGrid>
-      <FormGrid size={{ xs: 12, md: 6 }}>
-        <FormLabel htmlFor="last-name" required>
-          Last name
-        </FormLabel>
-        <OutlinedInput
-          id="last-name"
-          name="last-name"
-          type="last-name"
-          placeholder="Snow"
-          autoComplete="last name"
-          required
-          size="small"
-        />
-      </FormGrid>
-      <FormGrid size={{ xs: 12 }}>
-        <FormLabel htmlFor="address1" required>
-          Address line 1
-        </FormLabel>
-        <OutlinedInput
-          id="address1"
-          name="address1"
-          type="address1"
-          placeholder="Street name and number"
-          autoComplete="1. Informations sur le couple-line1"
-          required
-          size="small"
-        />
-      </FormGrid>
-      <FormGrid size={{ xs: 12 }}>
-        <FormLabel htmlFor="address2">Address line 2</FormLabel>
-        <OutlinedInput
-          id="address2"
-          name="address2"
-          type="address2"
-          placeholder="Apartment, suite, unit, etc. (optional)"
-          autoComplete="1. Informations sur le couple-line2"
-          required
-          size="small"
-        />
-      </FormGrid>
-      <FormGrid size={{ xs: 6 }}>
-        <FormLabel htmlFor="city" required>
-          City
-        </FormLabel>
-        <OutlinedInput
-          id="city"
-          name="city"
-          type="city"
-          placeholder="New York"
-          autoComplete="City"
-          required
-          size="small"
-        />
-      </FormGrid>
-      <FormGrid size={{ xs: 6 }}>
-        <FormLabel htmlFor="state" required>
-          State
-        </FormLabel>
-        <OutlinedInput
-          id="state"
-          name="state"
-          type="state"
-          placeholder="NY"
-          autoComplete="State"
-          required
-          size="small"
-        />
-      </FormGrid>
-      <FormGrid size={{ xs: 6 }}>
-        <FormLabel htmlFor="zip" required>
-          Zip / Postal code
-        </FormLabel>
-        <OutlinedInput
-          id="zip"
-          name="zip"
-          type="zip"
-          placeholder="12345"
-          autoComplete="shipping postal-code"
-          required
-          size="small"
-        />
-      </FormGrid>
-      <FormGrid size={{ xs: 6 }}>
-        <FormLabel htmlFor="country" required>
-          Country
-        </FormLabel>
-        <OutlinedInput
-          id="country"
-          name="country"
-          type="country"
-          placeholder="United States"
-          autoComplete="shipping country"
-          required
-          size="small"
-        />
-      </FormGrid>
-      <FormGrid size={{ xs: 12 }}>
-        <FormControlLabel
-          control={<Checkbox name="saveAddress" value="yes" />}
-          label="Use this address for payment details"
-        />
-      </FormGrid>
+    <FormGrid size={{ xs: 12, md: 6 }}>
+    <FormLabel htmlFor="prenoms-des-maries" required>
+    Prénoms des mariés
+    </FormLabel>
+    <OutlinedInput
+    id="prenoms-des-maries"
+    name="prenoms-des-maries"
+    type="name"
+    placeholder="Marc & Lisa"
+    autoComplete="prenoms des maries"
+    required
+    size="small"
+    />
+    </FormGrid>
+    <FormGrid size={{ xs: 12, md: 6 }}>
+    <FormLabel htmlFor="date-du-mariage" required>
+    Date du mariage
+    </FormLabel>
+    <BasicDateTimePicker />
+    </FormGrid>
+    <FormGrid size={{ xs: 12, md: 6 }}>
+    <FormLabel htmlFor="lieu-du-mariage" required>
+    Lieu du mariage
+    </FormLabel>
+    <CountrySelect />
+    </FormGrid>
+    <FormGrid  size={{ xs: 12, md: 6 }}>
+    <FormLabel htmlFor="photo-des-maries" required>
+    Photo des mariés
+    </FormLabel>
+    <DropZone />
+    </FormGrid>
+    
+    <FormGrid size={{ xs: 12 }}>
+    <FormControlLabel
+    control={<Checkbox name="saveAddress" value="yes" />}
+    label="Use this address for payment details"
+    />
+    </FormGrid>
     </Grid>
   );
 }
