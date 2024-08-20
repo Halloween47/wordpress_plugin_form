@@ -1,8 +1,7 @@
 import { useState, useRef } from "react";
 import QRCode from "react-qr-code";
 import * as htmlToImage from "html-to-image";
-import '../index.css'
-
+import "../index.css";
 
 function QrCodeGenerator() {
   const [url, setUrl] = useState("");
@@ -43,7 +42,7 @@ function QrCodeGenerator() {
             value={url}
             onChange={(e) => setUrl(e.target.value)}
           />
-        
+
           <button onClick={handleQrCodeGenerator}>Generate QR Code</button>
         </div>
 
