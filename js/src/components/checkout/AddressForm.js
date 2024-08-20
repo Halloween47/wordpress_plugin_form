@@ -51,11 +51,19 @@ export default function AddressForm() {
     </FormLabel>
     <DropZone />
     </FormGrid>
-    
-    <FormGrid size={{ xs: 12 }}>
-    <FormControlLabel
-    control={<Checkbox name="saveAddress" value="yes" />}
-    label="Use this address for payment details"
+    <FormGrid  size={{ xs: 12, md: 6 }}>
+    <FormLabel htmlFor="photo-des-maries" required>
+    Photo des mariés
+    </FormLabel>
+    <CountrySelect />
+    <OutlinedInput
+    id="prenoms-des-maries"
+    name="prenoms-des-maries"
+    type="name"
+    placeholder="Marc & Lisa"
+    autoComplete="prenoms des maries"
+    required
+    size="small"
     />
     </FormGrid>
     </Grid>
