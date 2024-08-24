@@ -27,7 +27,6 @@ function memenza_plugin_page_content() {
     ?>
     <div class="wrap">
         <div id="plugin_backoffice_container">
-            test
             <div id="react-container-buttongroup"></div>
             <div id="react-container-presentation"></div>
         </div>

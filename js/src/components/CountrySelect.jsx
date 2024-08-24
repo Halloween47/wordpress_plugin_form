@@ -7,7 +7,7 @@ export default function CountrySelect() {
   return (
     <Autocomplete
       id="country-select-demo"
-      sx={{ width: 300 }}
+      sx={{ width: 400 }}
       options={countries}
       autoHighlight
       getOptionLabel={(option) => option.label}
@@ -22,7 +22,7 @@ export default function CountrySelect() {
           >
             <img
               loading="lazy"
-              width="20"
+              width="30"
               srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
               src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
               alt=""
@@ -34,7 +34,7 @@ export default function CountrySelect() {
       renderInput={(params) => (
         <TextField
           {...params}
-          label="Choose a country"
+          // label="Lieu"
           inputProps={{
             ...params.inputProps,
             autoComplete: "new-password", // disable autocomplete and autofill

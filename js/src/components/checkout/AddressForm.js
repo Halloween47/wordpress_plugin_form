@@ -18,8 +18,8 @@ const FormGrid = styled(Grid)(() => ({
 
 export default function AddressForm() {
   return (
-    <Grid container spacing={3}>
-      <FormGrid size={{ xs: 12, md: 6 }}>
+    <Grid container spacing={1}>
+      <FormGrid size={{ xs: 12, md: 12 }}>
         <FormLabel htmlFor="prenoms-des-maries" required>
           Prénoms des mariés
         </FormLabel>
@@ -33,38 +33,33 @@ export default function AddressForm() {
           size="small"
         />
       </FormGrid>
-      <FormGrid size={{ xs: 12, md: 6 }}>
-        <FormLabel htmlFor="date-du-mariage" required>
+      <FormGrid size={{ xs: 12, md: 12 }}>
+        <FormLabel
+          htmlFor="date-du-mariage"
+          required
+          md={{
+            marginTop: 8,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
           Date du mariage
         </FormLabel>
         <BasicDateTimePicker />
       </FormGrid>
       <FormGrid size={{ xs: 12, md: 6 }}>
-        <FormLabel htmlFor="lieu-du-mariage" required>
+        <FormLabel htmlFor="lieu-du-mariage" required label={'margin="normal"'}>
           Lieu du mariage
         </FormLabel>
         <CountrySelect />
       </FormGrid>
+      <br></br>
       <FormGrid size={{ xs: 12, md: 6 }}>
         <FormLabel htmlFor="photo-des-maries" required>
           Photo des mariés
         </FormLabel>
         <DropZone />
-      </FormGrid>
-      <FormGrid size={{ xs: 12, md: 6 }}>
-        <FormLabel htmlFor="photo-des-maries" required>
-          Photo des mariés
-        </FormLabel>
-        <CountrySelect />
-        <OutlinedInput
-          id="prenoms-des-maries"
-          name="prenoms-des-maries"
-          type="name"
-          placeholder="Marc & Lisa"
-          autoComplete="prenoms des maries"
-          required
-          size="small"
-        />
       </FormGrid>
     </Grid>
   );

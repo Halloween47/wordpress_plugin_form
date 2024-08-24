@@ -30,6 +30,7 @@ import PaymentForm from "./PaymentForm";
 import Review from "./Review";
 import ToggleColorMode from "./ToggleColorMode";
 import SitemarkIcon from "./SitemarkIcon";
+import DetailsForm from "./DetailsForm.jsx";
 
 function ToggleCustomTheme({ showCustomTheme, toggleCustomTheme }) {
   return (
@@ -77,6 +78,7 @@ ToggleCustomTheme.propTypes = {
 
 const steps = [
   "1. Informations sur le couple",
+  "2. Détails et anecdotes",
   "Payment details",
   "Review your order",
 ];
@@ -84,9 +86,11 @@ function getStepContent(step) {
   switch (step) {
     case 0:
       return <AddressForm />;
-    case 1:
-      return <PaymentForm />;
+      case 1:
+      return <DetailsForm />;
     case 2:
+      return <PaymentForm />;
+    case 3:
       return <Review />;
     default:
       throw new Error("Unknown step");

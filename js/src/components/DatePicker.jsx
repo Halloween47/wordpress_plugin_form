@@ -12,7 +12,11 @@ export default function BasicDateTimePicker() {
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       {/* <DemoContainer components={['DateTimePicker']}> */}
       {/* <DateTimePicker /> */}
-      <DatePicker format="DD/MM/YYYY" defaultValue={dayjs("17-04-2024")} />
+      <DatePicker
+        format="DD/MM/YYYY"
+        defaultValue={dayjs("17-04-2024")}
+        spacing={2}
+      />
       {/* </DemoContainer> */}
     </LocalizationProvider>
   );
