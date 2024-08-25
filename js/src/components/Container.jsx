@@ -9,9 +9,17 @@ export default function SimpleContainer() {
     <React.Fragment>
       <CssBaseline />
       {/* <Container maxWidth="sm" sx={{ bgcolor: "#000000", width:"100vw", height: "100vh" }}> */}
-      <Container fixed sx={{ bgcolor: "#000000", width:"100", height: "80vh", marginTop: "10px" }}>
+      <Container
+        fixed
+        sx={{
+          bgcolor: "#000000",
+          width: "100",
+          height: "80vh",
+          marginTop: "10px",
+        }}
+      >
         {/* <Box sx={{ bgcolor: "#cfe8fc", height: "100vh" }} /> */}
-      <DownloadButton />
+        <DownloadButton />
       </Container>
     </React.Fragment>
   );
