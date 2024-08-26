@@ -86,7 +86,7 @@ function getStepContent(step) {
   switch (step) {
     case 0:
       return <AddressForm />;
-      case 1:
+    case 1:
       return <DetailsForm />;
     case 2:
       return <PaymentForm />;
@@ -134,7 +134,13 @@ export default function Checkout() {
   return (
     <ThemeProvider theme={showCustomTheme ? checkoutTheme : defaultTheme}>
       <CssBaseline />
-      <Grid container sx={{ height: { xs: "100%", sm: "100dvh" } }}>
+      <Grid
+        container
+        sx={{
+          height: { xs: "100%", sm: "100dvh" },
+          mt: 4,
+        }}
+      >
         <Grid
           item
           xs={12}

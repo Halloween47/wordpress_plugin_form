@@ -8,13 +8,12 @@ function ContainerForm() {
   return (
     <React.Fragment>
       <CssBaseline />
-      {/* <Container fixed sx={{ bgcolor: "#008000", width:"100", height: "80vh", marginTop: "10px" }}> */}
-      <Container
-        fixed
-        sx={{ bgcolor: "#008000", width: "100", marginTop: "10px" }}
-      >
+      {/* <Container
+         maxWidth="lg" 
+        sx={{ bgcolor: "#008000", marginTop: "10px" }}
+      > */}
         <Checkout />
-      </Container>
+      {/* </Container> */}
     </React.Fragment>
   );
 }
