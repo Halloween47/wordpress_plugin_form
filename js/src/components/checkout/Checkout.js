@@ -77,8 +77,7 @@ ToggleCustomTheme.propTypes = {
 };
 
 const steps = [
-  "1. Informations sur le couple",
-  "2. Détails et anecdotes",
+  "Informations sur le couple",
   "Payment details",
   "Review your order",
 ];
@@ -87,10 +86,8 @@ function getStepContent(step) {
     case 0:
       return <AddressForm />;
     case 1:
-      return <DetailsForm />;
-    case 2:
       return <PaymentForm />;
-    case 3:
+    case 2:
       return <Review />;
     default:
       throw new Error("Unknown step");
