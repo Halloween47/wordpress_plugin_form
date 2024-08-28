@@ -13,6 +13,7 @@ function ContainerForm() {
          maxWidth="lg" 
         sx={{ bgcolor: "#008000", marginTop: "10px" }}
       > */}
+      <Sliders />
       <Checkout />
       {/* </Container> */}
     </React.Fragment>
