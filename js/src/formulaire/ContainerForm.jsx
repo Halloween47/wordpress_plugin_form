@@ -3,6 +3,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
 import DownloadButton from "../components/checkout/DownloadButton.jsx";
 import Checkout from "../components/checkout/Checkout.js";
+import Sliders from "../components/sliders/Sliders.jsx";
 
 function ContainerForm() {
   return (

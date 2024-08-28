@@ -40,6 +40,11 @@ function memenza_plugin_page_content() {
     <?php
 }
 
+function style_sliders() {
+    wp_enqueue_style('style_sliders', plugin_dir_url(__FILE__) . 'js/src/components/sliders/sliders.css',  10);
+}
+add_action('wp_enqueue_scripts', 'style_sliders');
+
 add_action('admin_enqueue_scripts', 'enqeue_react_script');
 function enqeue_react_script() {
     wp_enqueue_script(
@@ -50,3 +55,5 @@ function enqeue_react_script() {
         true
     );
 }
+
+
