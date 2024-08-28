@@ -14,7 +14,7 @@ function ContainerForm() {
         sx={{ bgcolor: "#008000", marginTop: "10px" }}
       > */}
       <Sliders />
-        <Checkout />
+      <Checkout />
       {/* </Container> */}
     </React.Fragment>
   );
