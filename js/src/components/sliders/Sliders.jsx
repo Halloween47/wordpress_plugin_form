@@ -89,7 +89,7 @@ export default function Sliders() {
             />
             <img
               class="item"
-              src="https://images.pexels.com/photos/1598073/pexels-photo-1598073.jpeg?auto=compress&cs=tinysrgb&w=600"
+              src="https://images.pexels.com/photos/2253870/pexels-photo-2253870.jpeg"
               alt=""
             />
             <img
