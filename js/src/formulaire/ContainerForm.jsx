@@ -12,7 +12,7 @@ function ContainerForm() {
          maxWidth="lg" 
         sx={{ bgcolor: "#008000", marginTop: "10px" }}
       > */}
-        <Checkout />
+      <Checkout />
       {/* </Container> */}
     </React.Fragment>
   );
