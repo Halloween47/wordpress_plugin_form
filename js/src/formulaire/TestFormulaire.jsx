@@ -57,7 +57,7 @@ function ToggleCustomTheme({ showCustomTheme, toggleCustomTheme }) {
       >
         <ToggleButton value>
           <AutoAwesomeRoundedIcon sx={{ fontSize: "20px", mr: 1 }} />
-          Custom theme
+          theme perso
         </ToggleButton>
         <ToggleButton value={false}>Material Design 2</ToggleButton>
       </ToggleButtonGroup>
@@ -155,7 +155,7 @@ export default function Checkout() {
               href="/material-ui/getting-started/templates/landing-page/"
               sx={{ ml: "-8px" }}
             >
-              Back to
+              Retour à
               <img
                 src={
                   "https://assets-global.website-files.com/61ed56ae9da9fd7e0ef0a967/61f12e6faf73568658154dae_SitemarkDefault.svg"
@@ -217,7 +217,7 @@ export default function Checkout() {
                 href="/material-ui/getting-started/templates/landing-page/"
                 sx={{ alignSelf: "start" }}
               >
-                Back to
+                Retour à
                 <img
                   src={
                     "https://assets-global.website-files.com/61ed56ae9da9fd7e0ef0a967/61f12e6faf73568658154dae_SitemarkDefault.svg"

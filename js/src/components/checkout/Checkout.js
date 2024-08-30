@@ -78,8 +78,8 @@ ToggleCustomTheme.propTypes = {
 
 const steps = [
   "Informations sur le couple",
-  "Payment details",
-  "Review your order",
+  "Détails du paiement",
+  "Vérifiez votre commande",
 ];
 function getStepContent(step) {
   switch (step) {
@@ -162,7 +162,8 @@ export default function Checkout() {
               href="/material-ui/getting-started/templates/"
               sx={{ ml: "-8px" }}
             >
-              Back to
+              
+              Retour à
               <SitemarkIcon />
             </Button>
           </Box>
@@ -218,7 +219,7 @@ export default function Checkout() {
                 href="/material-ui/getting-started/templates/"
                 sx={{ alignSelf: "start" }}
               >
-                Back to
+                Retour à
                 <SitemarkIcon />
               </Button>
               <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
