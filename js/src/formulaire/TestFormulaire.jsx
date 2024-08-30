@@ -370,7 +370,7 @@ export default function Checkout() {
                         display: { xs: "none", sm: "flex" },
                       }}
                     >
-                      précédent
+                      Précédent
                     </Button>
                   )}
 
@@ -384,7 +384,7 @@ export default function Checkout() {
                         display: { xs: "flex", sm: "none" },
                       }}
                     >
-                      précédent
+                      Précédent
                     </Button>
                   )}
 

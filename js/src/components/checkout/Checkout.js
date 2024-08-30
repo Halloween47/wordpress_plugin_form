@@ -59,7 +59,7 @@ function ToggleCustomTheme({ showCustomTheme, toggleCustomTheme }) {
       >
         <ToggleButton value>
           <AutoAwesomeRoundedIcon sx={{ fontSize: "20px", mr: 1 }} />
-          Custom theme
+          Thème personnalisé
         </ToggleButton>
         <ToggleButton data-screenshot="toggle-default-theme" value={false}>
           Material Design 2
@@ -357,7 +357,7 @@ export default function Checkout() {
                       variant="text"
                       sx={{ display: { xs: "none", sm: "flex" } }}
                     >
-                      précédent
+                      Précédent
                     </Button>
                   )}
 
@@ -369,7 +369,7 @@ export default function Checkout() {
                       fullWidth
                       sx={{ display: { xs: "flex", sm: "none" } }}
                     >
-                      précédent
+                      Précédent
                     </Button>
                   )}
 
@@ -387,10 +387,10 @@ export default function Checkout() {
           </Box>
         </Grid>
       </Grid>
-      <ToggleCustomTheme
+      {/* <ToggleCustomTheme
         toggleCustomTheme={toggleCustomTheme}
         showCustomTheme={showCustomTheme}
-      />
+      /> */}
     </ThemeProvider>
   );
 }
