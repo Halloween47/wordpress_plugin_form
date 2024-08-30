@@ -113,7 +113,7 @@ export default function Checkout() {
     setShowCustomTheme((prev) => !prev);
   };
 
-  const handleNext = () => {
+  const handleSuivant = () => {
     setActiveStep(activeStep + 1);
   };
 
@@ -174,7 +174,7 @@ export default function Checkout() {
               maxWidth: 500,
             }}
           >
-            <Info totalPrice={activeStep >= 2 ? "$144.97" : "$134.98"} />
+            <Info totalPrice={activeStep >= 2 ? "$144.97" : "134.98€"} />
           </Box>
         </Grid>
         <Grid
@@ -281,11 +281,11 @@ export default function Checkout() {
                   Selected products
                 </Typography>
                 <Typography variant="body1">
-                  {activeStep >= 2 ? "$144.97" : "$134.98"}
+                  {activeStep >= 2 ? "$144.97" : "134.98€"}
                 </Typography>
               </div>
               <InfoMobile
-                totalPrice={activeStep >= 2 ? "$144.97" : "$134.98"}
+                totalPrice={activeStep >= 2 ? "$144.97" : "134.98€"}
               />
             </CardContent>
           </Card>
@@ -370,7 +370,7 @@ export default function Checkout() {
                         display: { xs: "none", sm: "flex" },
                       }}
                     >
-                      Previous
+                      précédent
                     </Button>
                   )}
 
@@ -384,19 +384,19 @@ export default function Checkout() {
                         display: { xs: "flex", sm: "none" },
                       }}
                     >
-                      Previous
+                      précédent
                     </Button>
                   )}
 
                   <Button
                     variant="contained"
                     endIcon={<ChevronRightRoundedIcon />}
-                    onClick={handleNext}
+                    onClick={handleSuivant}
                     sx={{
                       width: { xs: "100%", sm: "fit-content" },
                     }}
                   >
-                    {activeStep === steps.length - 1 ? "Place order" : "Next"}
+                    {activeStep === steps.length - 1 ? "Place order" : "Suivant"}
                   </Button>
                 </Box>
               </React.Fragment>

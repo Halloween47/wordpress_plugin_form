@@ -8,24 +8,24 @@ import Typography from "@mui/material/Typography";
 
 const products = [
   {
-    name: "Professional plan",
-    desc: "Monthly subscription",
-    price: "$15.00",
-  },
-  {
-    name: "Dedicated support",
-    desc: "Included in the Professional plan",
+    name: "Prénoms des mariés",
+    desc: "Versailles",
     price: "Free",
   },
   {
-    name: "Hardware",
-    desc: "Devices needed for development",
-    price: "$69.99",
+    name: "Lieu du mariage",
+    desc: "Versailles",
+    price: "Free",
   },
   {
-    name: "Landing page template",
-    desc: "License",
-    price: "$49.99",
+    name: "Date du mariage",
+    desc: "Versailles",
+    price: "Free",
+  },
+  {
+    name: "Surnoms affectueux",
+    desc: "Versailles",
+    price: "Free",
   },
 ];
 

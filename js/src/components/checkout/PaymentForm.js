@@ -284,7 +284,7 @@ export default function PaymentForm() {
           </PaymentContainer>
           <FormControlLabel
             control={<Checkbox name="saveCard" />}
-            label="Remember credit card details for next time"
+            label="Remember credit card details for Suivant time"
           />
         </Box>
       )}

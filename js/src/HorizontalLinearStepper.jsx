@@ -24,7 +24,7 @@ export default function HorizontalLinearStepper() {
     return skipped.has(step);
   };
 
-  const handleNext = () => {
+  const handleSuivant = () => {
     let newSkipped = skipped;
     if (isStepSkipped(activeStep)) {
       newSkipped = new Set(newSkipped.values());
@@ -108,8 +108,8 @@ export default function HorizontalLinearStepper() {
               </Button>
             )}
 
-            <Button onClick={handleNext}>
-              {activeStep === steps.length - 1 ? "Finish" : "Next"}
+            <Button onClick={handleSuivant}>
+              {activeStep === steps.length - 1 ? "Finish" : "Suivant"}
             </Button>
           </Box>
         </React.Fragment>
