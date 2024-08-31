@@ -63,7 +63,7 @@ const GlobalStyles = `
 
 `;
 
-export default function Sliders() {
+export default function Sliders({onImageClick}) {
   return (
     <React.Fragment>
       <CssBaseline />
@@ -91,7 +91,8 @@ export default function Sliders() {
           <img
             class="item"
             src="https://images.pexels.com/photos/2253870/pexels-photo-2253870.jpeg"
-            alt=""
+            alt="photo mariage"
+            onClick={onImageClick}
           />
           <img
             class="item"

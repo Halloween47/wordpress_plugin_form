@@ -4,18 +4,20 @@ import Container from "@mui/material/Container";
 import DownloadButton from "../components/checkout/DownloadButton.jsx";
 import Checkout from "../components/checkout/Checkout.js";
 import Sliders from "../components/sliders/Sliders.jsx";
+import { useState } from "react";
 
 function ContainerForm() {
+  const [showCheckout, setShowCheckout] = useState(false);
+
+function handleImgaClick() {
+  setShowCheckout(true);
+}
+
   return (
     <React.Fragment>
       <CssBaseline />
-      {/* <Container
-         maxWidth="lg" 
-        sx={{ bgcolor: "#008000", marginTop: "10px" }}
-      > */}
-      <Sliders />
-      <Checkout />
-      {/* </Container> */}
+      <Sliders onImageClick={handleImgaClick} />
+      {showCheckout && <Checkout />}
     </React.Fragment>
   );
 }

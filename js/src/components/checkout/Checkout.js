@@ -122,7 +122,8 @@ export default function Checkout() {
   }, []);
 
   const toggleColorMode = () => {
-    const newMode = mode === "dark" ? "light" : "dark";
+    // const newMode = mode === "dark" ? "light" : "dark";
+    const newMode = mode === "light" ? "dark" : "light";
     setMode(newMode);
     localStorage.setItem("themeMode", newMode); // Save the selected mode to localStorage
   };
@@ -153,7 +154,8 @@ export default function Checkout() {
           sx={{
             display: { xs: "none", md: "flex" },
             flexDirection: "column",
-            backgroundColor: "background.paper",
+            // backgroundColor: "background.paper",
+            backgroundColor: "#34495E",
             borderRight: { sm: "none", md: "1px solid" },
             borderColor: { sm: "none", md: "divider" },
             alignItems: "start",
@@ -205,6 +207,7 @@ export default function Checkout() {
             maxWidth: "100%",
             width: "100%",
             backgroundColor: { xs: "transparent", sm: "background.default" },
+            // backgroundColor: { xs: "transparent", sm: "#f5f5f5" },
             alignItems: "start",
             pt: { xs: 2, sm: 4 },
             px: { xs: 2, sm: 10 },
