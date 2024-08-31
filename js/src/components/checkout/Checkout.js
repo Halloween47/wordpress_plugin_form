@@ -32,6 +32,13 @@ import ToggleColorMode from "./ToggleColorMode";
 import SitemarkIcon from "./SitemarkIcon";
 import DetailsForm from "./DetailsForm.jsx";
 
+const logoStyle = {
+  width: "140px",
+  height: "56px",
+  marginLeft: "14px",
+  marginRight: "-8px",
+};
+
 function ToggleCustomTheme({ showCustomTheme, toggleCustomTheme }) {
   return (
     <Box
@@ -164,7 +171,15 @@ export default function Checkout() {
             >
               
               Retour à
-              <SitemarkIcon />
+              {/* <SitemarkIcon /> */}
+              <img
+                  src={
+                    // "https://assets-global.website-files.com/61ed56ae9da9fd7e0ef0a967/61f12e6faf73568658154dae_SitemarkDefault.svg"
+                    "https://memenza.laisne.ovh/wp-content/uploads/2023/05/memenza.jpg"
+                  }
+                  style={logoStyle}
+                  alt="Sitemark's logo"
+                />
             </Button>
           </Box>
           <Box
