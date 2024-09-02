@@ -34,7 +34,7 @@ function memenza_plugin_page_content() {
 
         <div id="plugin_backoffice_container">
             <div id="react-container-buttongroup"></div>
-            <div id="react-container-presentation"></div>
+            <div id="react-container-presentation" class ="react-container-presentation" ></div>
         </div>  
     </div>
     <?php

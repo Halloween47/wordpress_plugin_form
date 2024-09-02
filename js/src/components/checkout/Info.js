@@ -9,23 +9,23 @@ import Typography from "@mui/material/Typography";
 const products = [
   {
     name: "Prénoms des mariés",
-    desc: "Versailles",
-    price: "Free",
+    desc: "Lisa & Marc",
+    price: "Gratuit",
   },
   {
     name: "Lieu du mariage",
     desc: "Versailles",
-    price: "Free",
+    price: "Gratuit",
   },
   {
     name: "Date du mariage",
-    desc: "Versailles",
-    price: "Free",
+    desc: "12/12/24",
+    price: "Gratuit",
   },
   {
     name: "Surnoms affectueux",
-    desc: "Versailles",
-    price: "Free",
+    desc: "Chachou & Bibou",
+    price: "Gratuit",
   },
 ];
 
@@ -33,10 +33,12 @@ function Info({ totalPrice }) {
   return (
     <React.Fragment>
       <Typography variant="subtitle2" sx={{ color: "text.secondary" }}>
-        Total
+        {/* Total */}
+        Récap
       </Typography>
       <Typography variant="h4" gutterBottom>
-        {totalPrice}
+        {/* {totalPrice} */}
+        Votre évenement
       </Typography>
       <List disablePadding>
         {products.map((product) => (
