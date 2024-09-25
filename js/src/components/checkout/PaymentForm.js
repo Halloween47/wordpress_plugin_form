@@ -161,7 +161,7 @@ export default function PaymentForm() {
                     },
                   ]}
                 />
-                <Typography sx={{ fontWeight: "medium" }}>Card</Typography>
+                <Typography sx={{ fontWeight: "medium" }}>Carte Bancaire</Typography>
               </CardContent>
             </CardActionArea>
           </Card>
@@ -195,7 +195,7 @@ export default function PaymentForm() {
                   ]}
                 />
                 <Typography sx={{ fontWeight: "medium" }}>
-                  Bank account
+                  Virement SEPA
                 </Typography>
               </CardContent>
             </CardActionArea>
@@ -226,7 +226,7 @@ export default function PaymentForm() {
             >
               <FormGrid sx={{ flexGrow: 1 }}>
                 <FormLabel htmlFor="card-number" required>
-                  Card number
+                  Numéro de carte
                 </FormLabel>
                 <OutlinedInput
                   id="card-number"
@@ -240,7 +240,8 @@ export default function PaymentForm() {
               </FormGrid>
               <FormGrid sx={{ maxWidth: "20%" }}>
                 <FormLabel htmlFor="cvv" required>
-                  CVV
+                  {/* Code de sécurité (cryptogramme) */}
+                  Crypto
                 </FormLabel>
                 <OutlinedInput
                   id="cvv"
@@ -256,7 +257,7 @@ export default function PaymentForm() {
             <Box sx={{ display: "flex", gap: 2 }}>
               <FormGrid sx={{ flexGrow: 1 }}>
                 <FormLabel htmlFor="card-name" required>
-                  Name
+                  Nom du titulaire de la carte
                 </FormLabel>
                 <OutlinedInput
                   id="card-name"
@@ -268,7 +269,7 @@ export default function PaymentForm() {
               </FormGrid>
               <FormGrid sx={{ flexGrow: 1 }}>
                 <FormLabel htmlFor="card-expiration" required>
-                  Expiration date
+                  Date expiration
                 </FormLabel>
                 <OutlinedInput
                   id="card-expiration"
@@ -284,7 +285,7 @@ export default function PaymentForm() {
           </PaymentContainer>
           <FormControlLabel
             control={<Checkbox name="saveCard" />}
-            label="Remember credit card details for Suivant time"
+            label="Mémoriser les détails de la carte de crédit pour l'heure Suivante"
           />
         </Box>
       )}

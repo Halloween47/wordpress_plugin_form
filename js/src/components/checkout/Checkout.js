@@ -398,7 +398,7 @@ export default function Checkout() {
                     onClick={handleSuivant}
                     sx={{ width: { xs: "100%", sm: "fit-content" } }}
                   >
-                    {activeStep === steps.length - 1 ? "Place order" : "Suivant"}
+                    {activeStep === steps.length - 1 ? "Passer la commande" : "Suivant"}
                   </Button>
                 </Box>
               </React.Fragment>
