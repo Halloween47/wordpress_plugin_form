@@ -336,17 +336,15 @@ export default function Checkout() {
             {activeStep === steps.length ? (
               <Stack spacing={2} useFlexGap>
                 <Typography variant="h1">📦</Typography>
-                <Typography variant="h5">Thank you for your order!</Typography>
+                <Typography variant="h5">Merci pour votre commande !</Typography>
                 <Typography variant="body1" sx={{ color: "text.secondary" }}>
-                  Your order number is
-                  <strong>&nbsp;#140396</strong>. We have emailed your order
-                  confirmation and will update you once its shipped.
+                  Votre numéro de commande est le <strong>&nbsp;#140396</strong>. Nous avons envoyé votre confirmation de commande par e-mail et vous tiendrons au courant une fois expédiée.
                 </Typography>
                 <Button
                   variant="contained"
                   sx={{ alignSelf: "start", width: { xs: "100%", sm: "auto" } }}
                 >
-                  Go to my orders
+                  Accédez à mes commandes
                 </Button>
               </Stack>
             ) : (

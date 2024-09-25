@@ -262,7 +262,7 @@ export default function PaymentForm() {
                 <OutlinedInput
                   id="card-name"
                   autoComplete="card-name"
-                  placeholder="John Smith"
+                  placeholder="Kevin Smith"
                   required
                   size="small"
                 />
@@ -293,36 +293,28 @@ export default function PaymentForm() {
       {paymentType === "bankTransfer" && (
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
           <Alert severity="warning" icon={<WarningRoundedIcon />}>
-            Your order will be processed once we receive the funds.
+          Votre commande sera traitée une fois que nous recevrons les fonds.
           </Alert>
           <Typography variant="subtitle1" sx={{ fontWeight: "medium" }}>
-            Bank account
+          Compte bancaire
           </Typography>
           <Typography variant="body1" gutterBottom>
-            Please transfer the payment to the bank account details shown below.
+          Veuillez transférer le paiement sur les coordonnées bancaires indiquées ci-dessous.
           </Typography>
           <Box sx={{ display: "flex", gap: 1 }}>
             <Typography variant="body1" sx={{ color: "text.secondary" }}>
-              Bank:
+              Banque:
             </Typography>
             <Typography variant="body1" sx={{ fontWeight: "medium" }}>
-              Mastercredit
+              LCL 
             </Typography>
           </Box>
           <Box sx={{ display: "flex", gap: 1 }}>
             <Typography variant="body1" sx={{ color: "text.secondary" }}>
-              Account number:
+            Numéro de compte:
             </Typography>
             <Typography variant="body1" sx={{ fontWeight: "medium" }}>
               123456789
-            </Typography>
-          </Box>
-          <Box sx={{ display: "flex", gap: 1 }}>
-            <Typography variant="body1" sx={{ color: "text.secondary" }}>
-              Routing number:
-            </Typography>
-            <Typography variant="body1" sx={{ fontWeight: "medium" }}>
-              987654321
             </Typography>
           </Box>
         </Box>
