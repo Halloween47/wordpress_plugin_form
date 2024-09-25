@@ -31,6 +31,7 @@ import Review from "./Review";
 import ToggleColorMode from "./ToggleColorMode";
 import SitemarkIcon from "./SitemarkIcon";
 import DetailsForm from "./DetailsForm.jsx";
+import ContainerQRCode from "../../qrcode/ContainerQRCode.jsx";
 
 const logoStyle = {
   width: "140px",
@@ -205,6 +206,7 @@ export default function Checkout() {
           sx={{
             display: "flex",
             flexDirection: "column",
+            justifyContent: "space-between",
             maxWidth: "100%",
             width: "100%",
             backgroundColor: { xs: "transparent", sm: "background.default" },
@@ -335,17 +337,18 @@ export default function Checkout() {
             </Stepper>
             {activeStep === steps.length ? (
               <Stack spacing={2} useFlexGap>
-                <Typography variant="h1">📦</Typography>
-                <Typography variant="h5">Merci pour votre commande !</Typography>
-                <Typography variant="body1" sx={{ color: "text.secondary" }}>
+                {/* <Typography variant="h1">📦</Typography> */}
+                {/* <Typography variant="h5">Merci pour votre commande !</Typography> */}
+                {/* <Typography variant="body1" sx={{ color: "text.secondary" }}>
                   Votre numéro de commande est le <strong>&nbsp;#140396</strong>. Nous avons envoyé votre confirmation de commande par e-mail et vous tiendrons au courant une fois expédiée.
-                </Typography>
-                <Button
+                </Typography> */}
+                {/* <Button
                   variant="contained"
                   sx={{ alignSelf: "start", width: { xs: "100%", sm: "auto" } }}
                 >
                   Accédez à mes commandes
-                </Button>
+                </Button> */}
+                <ContainerQRCode />
               </Stack>
             ) : (
               <React.Fragment>
