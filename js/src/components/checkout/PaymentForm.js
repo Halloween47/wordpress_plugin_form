@@ -206,7 +206,7 @@ export default function PaymentForm() {
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
           <PaymentContainer>
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-              <Typography variant="subtitle2">Credit card</Typography>
+              <Typography variant="subtitle2">Carte de crédit</Typography>
               <CreditCardRoundedIcon sx={{ color: "text.secondary" }} />
             </Box>
             <SimCardRoundedIcon

@@ -8,12 +8,12 @@ import ListItemText from "@mui/material/ListItemText";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
-const addresses = ["1 MUI Drive", "Reactville", "Anytown", "99999", "USA"];
+const addresses = ["16", "bis", "Quai Amiral Hamelin,", "14000", "Caen"];    
 const payments = [
-  { name: "Card type:", detail: "Visa" },
-  { name: "Card holder:", detail: "Mr. John Smith" },
-  { name: "Card number:", detail: "xxxx-xxxx-xxxx-1234" },
-  { name: "Expiry date:", detail: "04/2024" },
+  { name: "Type de carte:", detail: "Visa" },
+  { name: "Titulaire de la carte:", detail: "Mr. Kevin Smith" },
+  { name: "Numéro de carte:", detail: "xxxx-xxxx-xxxx-1234" },
+  { name: "Date d'expiration:", detail: "04/2024" },
 ];
 
 export default function Review() {
@@ -21,11 +21,11 @@ export default function Review() {
     <Stack spacing={2}>
       <List disablePadding>
         <ListItem sx={{ py: 1, px: 0 }}>
-          <ListItemText primary="Products" secondary="4 selected" />
+          <ListItemText primary="Produits" secondary="4 Produits" />
           <Typography variant="body2">134.98€</Typography>
         </ListItem>
         <ListItem sx={{ py: 1, px: 0 }}>
-          <ListItemText primary="Shipping" secondary="Plus taxes" />
+          <ListItemText primary="Services annexes" secondary="Exemple de service" />
           <Typography variant="body2">9.99€</Typography>
         </ListItem>
         <ListItem sx={{ py: 1, px: 0 }}>
@@ -44,16 +44,16 @@ export default function Review() {
       >
         <div>
           <Typography variant="subtitle2" gutterBottom>
-            Shipment details
+          Détails de la livraison
           </Typography>
-          <Typography gutterBottom>John Smith</Typography>
+          <Typography gutterBottom>Kevin Smith</Typography>
           <Typography gutterBottom sx={{ color: "text.secondary" }}>
             {addresses.join(", ")}
           </Typography>
         </div>
         <div>
           <Typography variant="subtitle2" gutterBottom>
-            Payment details
+          Détails du paiement
           </Typography>
           <Grid container>
             {payments.map((payment) => (
