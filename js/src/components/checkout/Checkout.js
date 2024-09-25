@@ -168,7 +168,7 @@ export default function Checkout() {
             <Button
               startIcon={<ArrowBackRoundedIcon />}
               component="a"
-              href="/material-ui/getting-started/templates/"
+              href="https://memenza.laisne.ovh"
               sx={{ ml: "-8px" }}
             >
               
@@ -235,7 +235,7 @@ export default function Checkout() {
               <Button
                 startIcon={<ArrowBackRoundedIcon />}
                 component="a"
-                href="/material-ui/getting-started/templates/"
+                href="https://memenza.laisne.ovh"
                 sx={{ alignSelf: "start" }}
               >
                 Retour à
