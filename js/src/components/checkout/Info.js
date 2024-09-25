@@ -9,23 +9,19 @@ import Typography from "@mui/material/Typography";
 const products = [
   {
     name: "Prénoms des mariés",
-    desc: "Lisa & Marc",
-    price: "Gratuit",
+    desc: "Lisa & Marc"
   },
   {
     name: "Lieu du mariage",
-    desc: "Versailles",
-    price: "Gratuit",
+    desc: "Versailles"
   },
   {
     name: "Date du mariage",
-    desc: "12/12/24",
-    price: "Gratuit",
+    desc: "12/12/24"
   },
   {
     name: "Surnoms affectueux",
-    desc: "Chachou & Bibou",
-    price: "Gratuit",
+    desc: "Chachou & Bibou"
   },
 ];
 
