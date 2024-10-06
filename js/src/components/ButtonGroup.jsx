@@ -12,6 +12,8 @@ import ToggleColorMode from "./checkout/ToggleColorMode.js";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import getCheckoutTheme from "./checkout/theme/getCheckoutTheme.js";
 
+import MemenzaFormulaire from '../memenza/MemenzaFormulaire.jsx';
+
 
 export default function BasicButtonGroup() {
   const [mode, setMode] = React.useState("light");
@@ -61,6 +63,12 @@ export default function BasicButtonGroup() {
       const rootPresentation = createRoot(containerPresentation);
       // rootPresentation.render(<Checkout />);
       rootPresentation.render(<ContainerForm />);
+    } else if (buttonText === "Memenza 2.0") {
+      const containerPresentation = document.getElementById(
+        "react-container-presentation",
+      );
+      const rootPresentation = createRoot(containerPresentation);
+      rootPresentation.render(<MemenzaFormulaire />);
     }
   };
 
