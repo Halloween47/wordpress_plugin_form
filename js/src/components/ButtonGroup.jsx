@@ -84,6 +84,7 @@ export default function BasicButtonGroup() {
       <Button onClick={handleClick}>Formulaire</Button>
       <Button onClick={handleClick}>QR Code</Button>
       <Button onClick={handleClick}>Test Grid</Button>
+      <Button onClick={handleClick}>Memenza 2.0</Button>
     <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
     </ButtonGroup>
     </ThemeProvider>
