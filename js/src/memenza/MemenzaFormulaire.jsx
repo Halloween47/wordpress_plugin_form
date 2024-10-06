@@ -15,7 +15,7 @@ const steps = [
   ];
 
   const StylesFormulaire = `
-  h1 {
+  h1, h2 {
   color: white;
   margin-bottom: 20px!important;
   }
@@ -73,6 +73,7 @@ const MemenzaFormulaire = () => {
     return (
         <div className="memenzaFormulaire">
         <h1>Formulaire Memenza</h1>
+        <h2>Nom du produit</h2>
         
         <Box sx={{ width: "100%" }}>
         
