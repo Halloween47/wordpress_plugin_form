@@ -6,6 +6,7 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import MemenzaCategories from './components/MemenzaCategories.jsx';
 
 const steps = [
     "Categorie",
@@ -137,6 +138,7 @@ const MemenzaFormulaire = () => {
           </Box>
         </React.Fragment>
       )}
+      <MemenzaCategories />
       </Box>
       <style>{StylesFormulaire}</style>
         </div>
