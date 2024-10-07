@@ -9,7 +9,7 @@ const StylesSliders = `
   gap: 3rem;
   flex-flow: column;
   position: relative;
-  margin-top: 30px;
+  margin: 50px 0;
   }
   .carousel {
   max-width: 80%;

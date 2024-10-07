@@ -20,6 +20,10 @@ const StylesFormulaire = `
   color: white;
   padding: 20px;
   }
+  .nom-produit {
+  font-size: 2.3em !important;
+  margin: 10px 0;
+  }
   `;
 
 const MemenzaFormulaire = () => {
@@ -67,12 +71,14 @@ const MemenzaFormulaire = () => {
   return (
     <div className="memenzaFormulaire">
       <h1>Formulaire Memenza</h1>
-      <h2>Nom du produit</h2>
 
       <Box sx={{ width: "100%" }}>
         <Stepper
           activeStep={activeStep}
           sx={{
+            // "background-color": "black",
+            width: "80%",
+            margin: "20px auto 50px auto",
             "& .css-2fdkz6": { color: "#ffffff" },
             "& .css-2fdkz6.Mui-completed": { color: " #ffffff" },
             "& .css-2fdkz6.Mui-active": { color: "#ffffff" },
@@ -96,6 +102,7 @@ const MemenzaFormulaire = () => {
             );
           })}
         </Stepper>
+        <div className="nom-produit">Nom du produit</div>
 
         <MemenzaCategories />
 
@@ -124,11 +131,12 @@ const MemenzaFormulaire = () => {
                 Retour
               </Button>
               <Box sx={{ flex: "1 1 auto" }} />
-              {isStepOptional(activeStep) && (
+              {/* à utiliser en cas d'etape optionnel */}
+              {/* {isStepOptional(activeStep) && (
                 <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
                   Skip
                 </Button>
-              )}
+              )} */}
 
               <Button onClick={handleSuivant} sx={{ color: "#ffffff" }}>
                 {activeStep === steps.length - 1 ? "Terminé" : "Suivant"}
