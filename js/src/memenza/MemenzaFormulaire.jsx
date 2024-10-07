@@ -76,9 +76,11 @@ const MemenzaFormulaire = () => {
         <Stepper
           activeStep={activeStep}
           sx={{
-            // "background-color": "black",
+            "background-color": "black",
+            borderRadius: "10px",
             width: "80%",
             margin: "20px auto 50px auto",
+            padding: "10px",
             "& .css-2fdkz6": { color: "#ffffff" },
             "& .css-2fdkz6.Mui-completed": { color: " #ffffff" },
             "& .css-2fdkz6.Mui-active": { color: "#ffffff" },
