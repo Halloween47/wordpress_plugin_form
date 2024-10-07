@@ -96,7 +96,7 @@ width: 90%;
 
 `;
 
-export default function SlidersSousCategories({ onImageClick }) {
+export default function SlidersSousCategories() {
   return (
     <React.Fragment>
       <div className="container-sliders-sous-categories">
