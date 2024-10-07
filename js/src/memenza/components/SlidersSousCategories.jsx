@@ -20,7 +20,7 @@ const StylesSlidersSousCategories = `
   transform-style: preserve-3d;
   transform: perspective(1000px);
 }
-.carousel-sous-categories .item-sous-categories {
+.carousel-sous-categories .image-container-sous-categories {
   width: 100%;
   height: 150px;
   max-width: 250px;
@@ -30,23 +30,23 @@ const StylesSlidersSousCategories = `
   object-fit: cover;
   filter: brightness(1);
 }
-.carousel-sous-categories .item-sous-categories:hover {
+.carousel-sous-categories .image-container-sous-categories:hover {
   filter: brightness(1);
   transform: translateZ(170px);
 }
-.carousel-sous-categories .item-sous-categories:hover + * {
+.carousel-sous-categories .image-container-sous-categories:hover + * {
   filter: brightness(0.6);
   transform: translateZ(120px) rotateY(25deg);
 }
-.carousel-sous-categories .item-sous-categories:hover + * + * {
+.carousel-sous-categories .image-container-sous-categories:hover + * + * {
   filter: brightness(0.4);
   transform: translateZ(50px) rotateY(15deg);
 }
-.carousel-sous-categories .item-sous-categories:has(+ *:hover) {
+.carousel-sous-categories .image-container-sous-categories:has(+ *:hover) {
   filter: brightness(0.6);
   transform: translateZ(120px) rotateY(-25deg);
 }
-.carousel-sous-categories .item-sous-categories:has(+ * + *:hover) {
+.carousel-sous-categories .image-container-sous-categories:has(+ * + *:hover) {
   filter: brightness(0.4);
   transform: translateZ(50px) rotateY(-15deg);
 }
