@@ -53,19 +53,19 @@ const StylesSliders = `
 
 `;
 
-export default function Sliders({onImageClick}) {
+export default function Sliders({ onImageClick }) {
   return (
     <React.Fragment>
       <div className="container-carousel">
         <div className="carousel">
           <img
             class="item"
-            src="https://images.pexels.com/photos/1173777/pexels-photo-1173777.jpeg?auto=compress&cs=tinysrgb&w=600"
+            src="https://images.pexels.com/photos/1456613/pexels-photo-1456613.jpeg?auto=compress&cs=tinysrgb&w=600"
             alt=""
           />
           <img
             class="item"
-            src="https://images.pexels.com/photos/775201/pexels-photo-775201.jpeg?auto=compress&cs=tinysrgb&w=600"
+            src="https://images.pexels.com/photos/265856/pexels-photo-265856.jpeg?auto=compress&cs=tinysrgb&w=600"
             alt=""
           />
           <img
@@ -76,12 +76,12 @@ export default function Sliders({onImageClick}) {
           />
           <img
             class="item"
-            src="https://images.pexels.com/photos/70365/forest-sunbeams-trees-sunlight-70365.jpeg?auto=compress&cs=tinysrgb&w=600"
+            src="https://images.pexels.com/photos/948185/pexels-photo-948185.jpeg?auto=compress&cs=tinysrgb&w=600"
             alt=""
           />
           <img
             class="item"
-            src="https://images.pexels.com/photos/1658967/pexels-photo-1658967.jpeg?auto=compress&cs=tinysrgb&w=600"
+            src="https://images.pexels.com/photos/1024996/pexels-photo-1024996.jpeg?auto=compress&cs=tinysrgb&w=600"
             alt=""
           />
         </div>

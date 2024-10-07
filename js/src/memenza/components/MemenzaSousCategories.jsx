@@ -3,7 +3,7 @@ import SlidersSousCategories from "./SlidersSousCategories.jsx";
 
 const StylesOverlay = `
 .memenza-sous-categories {
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: rgba(164, 111, 251, 0.95);
   position: absolute;
   top: 0;
   left: 0;
@@ -15,6 +15,9 @@ const StylesOverlay = `
   justify-content: center;
   align-items: center;
 }
+  .memenza-sous-categories h2 {
+  font-size: 2rem;
+  }
 `;
 
 function MemenzaSousCategories() {
