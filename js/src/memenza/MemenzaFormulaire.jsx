@@ -9,6 +9,16 @@ import Button from "@mui/material/Button";
 import MemenzaCategories from "./components/MemenzaCategories.jsx";
 
 const steps = ["Categorie", "Visuel", "Video", "Validation"];
+function getStepContent(step) {
+  switch (step) {
+    case 0:
+      return <MemenzaCategories />;
+      case 1:
+        // return <Memenza />
+    default:
+      throw new Error("Unknown step");
+  }
+}
 
 const StylesFormulaire = `
   h1, h2 {
@@ -106,7 +116,8 @@ const MemenzaFormulaire = () => {
         </Stepper>
         <div className="nom-produit">Nom du produit</div>
 
-        <MemenzaCategories />
+        {/* <MemenzaCategories /> */}
+        {getStepContent(activeStep)}
 
         {activeStep === steps.length ? (
           <React.Fragment>
