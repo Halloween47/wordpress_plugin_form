@@ -14,8 +14,8 @@ function getStepContent(step) {
   switch (step) {
     case 0:
       return <MemenzaCategories />;
-      case 1:
-        return <MemenzaVisuel />
+    case 1:
+      return <MemenzaVisuel />;
     default:
       throw new Error("Unknown step");
   }
@@ -34,6 +34,7 @@ const StylesFormulaire = `
   .nom-produit {
   font-size: 2.3em !important;
   margin: 10px 0;
+  padding-bottom: 10px;
   }
   `;
 
@@ -81,9 +82,9 @@ const MemenzaFormulaire = () => {
 
   return (
     <div className="memenzaFormulaire">
-      <h1>Formulaire Memenza</h1>
-
       <Box sx={{ width: "100%" }}>
+        <div className="nom-produit">Nom du produit</div>
+
         <Stepper
           activeStep={activeStep}
           sx={{
@@ -115,7 +116,6 @@ const MemenzaFormulaire = () => {
             );
           })}
         </Stepper>
-        <div className="nom-produit">Nom du produit</div>
 
         {/* <MemenzaCategories /> */}
         {getStepContent(activeStep)}
