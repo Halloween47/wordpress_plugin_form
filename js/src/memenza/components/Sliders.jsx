@@ -70,7 +70,7 @@ export default function Sliders({ onImageClick }) {
           />
           <img
             class="item"
-            src="https://images.pexels.com/photos/2253870/pexels-photo-2253870.jpeg"
+            src="https://images.pexels.com/photos/2253870/pexels-photo-2253870.jpeg?auto=compress&cs=tinysrgb&w=600"
             alt="photo mariage"
             onClick={onImageClick}
           />
