@@ -17,8 +17,8 @@ function getStepContent(step) {
       return <MemenzaCategories />;
     case 1:
       return <MemenzaVisuel />;
-      case 2:
-        return <EtapeVideo />;
+    case 2:
+      return <EtapeVideo />;
     default:
       throw new Error("Unknown step");
   }
@@ -85,7 +85,7 @@ const MemenzaFormulaire = () => {
 
   return (
     <div className="memenzaFormulaire">
-      <Box sx={{ width: "100%", height: "auto", }}>
+      <Box sx={{ width: "100%", height: "auto" }}>
         <div className="nom-produit">Nom du produit</div>
 
         <Stepper
