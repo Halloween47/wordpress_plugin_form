@@ -6,10 +6,10 @@ export default function MemenzaSousCategoriesDetails({ children, reversed }) {
   return (
     <Container
       sx={(theme) => ({
-        backgroundColor: 'white',
+        // backgroundColor: 'white',
         position: 'relative',
         // minHeight: '5vh',
-        height: '90vh',
+        height: '60vh',
         display: 'flex',
         justifyContent: 'center',
         // alignItems: 'center',

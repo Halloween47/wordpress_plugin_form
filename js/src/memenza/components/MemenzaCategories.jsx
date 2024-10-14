@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import Sliders from "./Sliders.jsx";
 import MemenzaSousCategories from "./MemenzaSousCategories.jsx";
 

@@ -6,16 +6,18 @@ export default function MemenzaSousCategorieDescription() {
   return (
     <div className="memenza-sous-categorie-description">
       <Typography
+        variant="h3"
         color="primary"
-        sx={{ fontSize: "1.25rem", fontWeight: "bold" }}
+        sx={{ fontSize: "1.8rem", fontWeight: "bold", mb: "10px" }}
       >
         Titre Sous Categorie
       </Typography>
       <Typography
-        variant="h1"
+        variant="p"
         sx={{
-          fontWeight: "bold",
-          fontSize: "clamp(1.875rem, 1.3636rem + 2.1818vw, 3rem)",
+          // fontWeight: "bold",
+          // fontSize: "clamp(1.875rem, 1.3636rem + 2.1818vw, 3rem)",
+          fontSize: "1.2rem",
         }}
       >
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus id
