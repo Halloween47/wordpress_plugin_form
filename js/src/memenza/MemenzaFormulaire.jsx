@@ -85,7 +85,7 @@ const MemenzaFormulaire = () => {
 
   return (
     <div className="memenzaFormulaire">
-      <Box sx={{ width: "100%" }}>
+      <Box sx={{ width: "100%", height: "auto", }}>
         <div className="nom-produit">Nom du produit</div>
 
         <Stepper
