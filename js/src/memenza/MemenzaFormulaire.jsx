@@ -8,6 +8,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import MemenzaCategories from "./components/MemenzaCategories.jsx";
 import MemenzaVisuel from "./components/MemenzaVisuel.jsx";
+import EtapeVideo from "./components/EtapeVideo.jsx";
 
 const steps = ["Categorie", "Visuel", "Video", "Validation"];
 function getStepContent(step) {
@@ -16,6 +17,8 @@ function getStepContent(step) {
       return <MemenzaCategories />;
     case 1:
       return <MemenzaVisuel />;
+      case 2:
+        return <EtapeVideo />;
     default:
       throw new Error("Unknown step");
   }
