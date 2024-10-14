@@ -15,7 +15,8 @@ const steps = ["Categorie", "Visuel", "Video", "Validation"];
 function getStepContent(step) {
   switch (step) {
     case 0:
-      return <MemenzaCategories />;
+      // return <MemenzaCategories />;
+      return <EtapeValidation />;
     case 1:
       return <MemenzaVisuel />;
     case 2:
