@@ -10,12 +10,14 @@ import MemenzaCategories from "./components/MemenzaCategories.jsx";
 import MemenzaVisuel from "./components/MemenzaVisuel.jsx";
 import EtapeVideo from "./components/EtapeVideo.jsx";
 import EtapeValidation from "./components/EtapeValidation.jsx";
+import EtapeCategorie from "./components/EtapeCategorie.jsx";
 
 const steps = ["Categorie", "Visuel", "Video", "Validation"];
 function getStepContent(step) {
   switch (step) {
     case 0:
-      return <MemenzaCategories />;
+      // return <MemenzaCategories />;
+      return <EtapeCategorie />;
     case 1:
       return <MemenzaVisuel />;
     case 2:
