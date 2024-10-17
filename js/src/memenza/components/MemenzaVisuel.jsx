@@ -25,9 +25,6 @@ function MemenzaVisuel() {
       <MemenzaSousCategoriesDetails />
       <MemenzaChoixVisuel />
       <FormGrid size={{ xs: 12, md: 6 }} mr={0} mb={2}>
-        <FormLabel htmlFor="chanson-mariee" required>
-          Chanson préférée du couple
-        </FormLabel>
         <DownloadButton />
         <Dropzone />
       </FormGrid>
