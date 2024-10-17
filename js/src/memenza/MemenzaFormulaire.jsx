@@ -148,7 +148,7 @@ const MemenzaFormulaire = () => {
             </Typography>
             <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
               <Button
-                color="inherit"
+                // color="inherit"
                 disabled={activeStep === 0}
                 onClick={handleBack}
                 sx={{ mr: 1 }}
@@ -163,7 +163,7 @@ const MemenzaFormulaire = () => {
                 </Button>
               )} */}
 
-              <Button onClick={handleSuivant} sx={{ color: "#ffffff" }}>
+              <Button  variant="contained" onClick={handleSuivant} sx={{ color: "#ffffff ", backgroundColor: "#A46FFB" }}>
                 {activeStep === steps.length - 1 ? "Terminé" : "Suivant"}
               </Button>
             </Box>
