@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography, Grid } from "@mui/material";
+import { Box, Typography, Grid, Card, CardMedia, CardContent } from "@mui/material";
 
 const images = [
   "https://images.unsplash.com/photo-1593642532973-d31b6557fa68?fit=crop&w=500&q=80",
@@ -14,31 +14,49 @@ const images = [
 
 export default function MemenzaChoixVisuel() {
   return (
-    <Box sx={{ textAlign: "left", p: 4 }}>
-      <Typography variant="h4" gutterBottom>
-        Choisissez votre visuel
-      </Typography>
-      <Grid container spacing={2} justifyContent="center">
+    <Box sx={{ textAlign: "center", p: 4, bgcolor: "#f5f5f5", minHeight: "100vh" }}>
+      <Box sx={{ mb: 4, py: 2, borderBottom: "2px solid #3f51b5" }}>
+        <Typography variant="h4" gutterBottom>
+          Choisissez votre visuel
+        </Typography>
+        <Typography variant="subtitle1" color="textSecondary">
+          Sélectionnez un visuel qui correspond à votre image de marque
+        </Typography>
+      </Box>
+
+      <Grid container spacing={3} justifyContent="center">
         {images.map((src, index) => (
-          <Grid item key={index} xs={6} sm={4} md={3}>
-            <Box
-              component="img"
-              src={src}
-              alt={`Visuel ${index + 1}`}
+          <Grid item key={index} xs={12} sm={6} md={4} lg={3}>
+            <Card
               sx={{
-                width: "100%",
-                height: 200, // Hauteur fixe pour toutes les images
-                borderRadius: 2,
-                objectFit: "cover", // Garde le contenu centré et recadré
                 transition: "transform 0.3s ease, box-shadow 0.3s ease",
-                cursor: "pointer",
                 "&:hover": {
                   transform: "scale(1.05)",
-                  boxShadow: 3,
+                  boxShadow: 6,
                 },
               }}
               onClick={() => console.log(`Image ${index + 1} clicked`)}
-            />
+            >
+              <CardMedia
+                component="img"
+                image={src}
+                alt={`Visuel ${index + 1}`}
+                sx={{
+                  height: 200,
+                  borderTopLeftRadius: 4,
+                  borderTopRightRadius: 4,
+                  objectFit: "cover",
+                }}
+              />
+              <CardContent>
+                <Typography variant="body1" color="textPrimary" fontWeight="bold">
+                  Visuel {index + 1}
+                </Typography>
+                <Typography variant="body2" color="textSecondary">
+                  Description courte pour expliquer l'intérêt de ce visuel.
+                </Typography>
+              </CardContent>
+            </Card>
           </Grid>
         ))}
       </Grid>
