@@ -17,8 +17,8 @@ function getStepContent(step) {
   switch (step) {
     case 0:
       // return <MemenzaCategories />;
-      // return <EtapeCategorie />;
-      return <EtapeVideo />;
+      return <EtapeCategorie />;
+      // return <EtapeVideo />;
     case 1:
       return <MemenzaVisuel />;
     case 2:
