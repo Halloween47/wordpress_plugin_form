@@ -10,6 +10,7 @@ import {
   Typography,
   Box,
   Container,
+  styled,
 } from "@mui/material";
 
 const StyleEtapeVideo = `
@@ -37,12 +38,13 @@ const StyleEtapeVideo = `
     border-radius: 8px;
   }
   .etape-video-intro-txt {
-    width: 60%;
+    width: 50%;
     color: #333;
     font-size: 16px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
   }
   .etape-video-template {
     background-color: #fff;
@@ -53,7 +55,7 @@ const StyleEtapeVideo = `
   }
   .etape-video-upload-video {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     margin-bottom: 20px;
   }
   .etape-video-personnalisation-video {
@@ -80,6 +82,15 @@ const WeddingImage = [
   "https://images.unsplash.com/photo-1593642532973-d31b6557fa68?fit=crop&w=500&q=80",
 ];
 
+const Root = styled('div')(({ theme }) => ({
+  width: '100%',
+  ...theme.typography.body2,
+  color: theme.palette.text.secondary,
+  '& > :not(style) ~ :not(style)': {
+    marginTop: theme.spacing(2),
+  },
+}));
+
 function EtapeVideo() {
   return (
     <Container className="etape-video" maxWidth="lg">
@@ -92,6 +103,9 @@ function EtapeVideo() {
           />
         </Box>
         <Box className="etape-video-intro-txt">
+        <Typography variant="h4" color="textPrimary">
+            Bienvenue dans la partie Vidéo
+          </Typography>
           <Typography variant="body1" color="textPrimary">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam
             autem voluptate quia neque, tempore placeat veritatis omnis,
@@ -103,10 +117,12 @@ function EtapeVideo() {
 
       <Box className="etape-video-template">
         <MemenzaChoixVideo />
-      </Box>
-
-      <Box className="etape-video-upload-video">
+        <Root>
+        <Divider> OU </Divider>
+        <Box className="etape-video-upload-video">
         <DownloadButton />
+      </Box>
+        </Root>
       </Box>
 
       <Box className="etape-video-personnalisation-video">
