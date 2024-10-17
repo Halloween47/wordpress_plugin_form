@@ -32,11 +32,11 @@ function getStepContent(step) {
 
 const StylesFormulaire = `
   h1, h2 {
-  color: white;
   margin-bottom: 20px!important;
   }
   .memenzaFormulaire {
-  background-color: #0a2657;
+  // background-color: #0a2657;
+  background-color: #EBECF1;
   color: white;
   padding: 20px;
   }
@@ -92,8 +92,10 @@ const MemenzaFormulaire = () => {
   return (
     <div className="memenzaFormulaire">
       <Box sx={{ width: "100%", height: "auto" }}>
-        <div className="nom-produit">Nom du produit</div>
-
+        {/* <div className="nom-produit">Nom du produit</div> */}
+        <Typography variant="h4" gutterBottom sx={{color: "#000",}}>
+        Nom du produit
+      </Typography>
         <Stepper
           activeStep={activeStep}
           sx={{
