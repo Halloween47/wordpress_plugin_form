@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import { Box, Typography, Grid } from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import Checkbox from '@mui/material/Checkbox';
 
 const videos = [
   "https://samplelib.com/lib/preview/mp4/sample-5s.mp4",
@@ -11,7 +12,7 @@ const videos = [
 export default function MemenzaChoixVideo() {
   const videoRefs = useRef([]);
   const [isPlaying, setIsPlaying] = useState(Array(videos.length).fill(false));
-
+  
   const handleVideoClick = (index) => {
     const video = videoRefs.current[index];
     const playingStatus = [...isPlaying];
@@ -26,6 +27,7 @@ export default function MemenzaChoixVideo() {
 
     setIsPlaying(playingStatus);
   };
+
 
   return (
     <Box sx={{ textAlign: "center", p: 4 }}>
@@ -83,6 +85,7 @@ export default function MemenzaChoixVideo() {
                 </Box>
               )}
             </Box>
+            <Checkbox />
           </Grid>
         ))}
       </Grid>

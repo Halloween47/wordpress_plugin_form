@@ -126,10 +126,11 @@ function EtapeVideo() {
       </Box>
 
       <Box className="etape-video-personnalisation-video">
+      
         <Typography variant="h5" gutterBottom>
           Personnalisez votre vidéo
         </Typography>
-
+        <Divider> ICI VOTRE TEXTE </Divider>
         <Box className="etape-video-personnalisation-video-medias">
           {[1, 2, 3].map((media) => (
             <Box className="upload-media" key={media}>
