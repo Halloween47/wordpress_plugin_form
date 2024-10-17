@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { Box, Typography, Grid } from "@mui/material";
+import { Box, Typography, Grid} from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import Checkbox from '@mui/material/Checkbox';
 
@@ -8,6 +8,7 @@ const videos = [
   "https://samplelib.com/lib/preview/mp4/sample-10s.mp4",
   "https://samplelib.com/lib/preview/mp4/sample-15s.mp4",
 ];
+
 
 export default function MemenzaChoixVideo() {
   const videoRefs = useRef([]);
@@ -27,6 +28,8 @@ export default function MemenzaChoixVideo() {
 
     setIsPlaying(playingStatus);
   };
+
+ 
 
 
   return (
