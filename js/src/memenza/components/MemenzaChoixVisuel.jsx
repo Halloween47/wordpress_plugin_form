@@ -19,9 +19,8 @@ export default function MemenzaChoixVisuel() {
         <Typography variant="h4" gutterBottom>
           Choisissez votre visuel
         </Typography>
-        <Typography variant="subtitle1" color="textSecondary">
-          Sélectionnez un visuel qui correspond à votre image de marque
-        </Typography>
+        <Typography variant="h5" color="textSecondary">
+Choisissez votre visuel        </Typography>
       </Box>
 
       <Grid container spacing={3} justifyContent="center">

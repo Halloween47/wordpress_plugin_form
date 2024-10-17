@@ -24,7 +24,7 @@ function MemenzaVisuel() {
     <div>
       <MemenzaSousCategoriesDetails />
       <MemenzaChoixVisuel />
-      <FormGrid size={{ xs: 12, md: 6 }} mr={0} mb={2}>
+      <FormGrid sx={{width: "50%", display: "flex", justifyContent:"center", mx: "auto"}} size={{ xs: 12, md: 6 }} mr={0} mb={2}>
         <DownloadButton />
         <Dropzone />
       </FormGrid>
