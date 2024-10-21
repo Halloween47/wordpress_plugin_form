@@ -4,6 +4,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import { Paper } from "@mui/material";
 
 const style = {
   position: "absolute",
@@ -44,6 +45,23 @@ function PopupUpload() {
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
           </Typography>
+          <div className="zone-haut">
+            zone haut
+            <Box
+              sx={{
+                display: "flex",
+                flexWrap: "wrap",
+                "& > :not(style)": {
+                  m: 1,
+                  width: 128,
+                  height: 128,
+                },
+              }}
+            >
+              <Paper elevation={24} square={false} />
+            </Box>
+          </div>
+          <div className="zone-bas">zone bas</div>
         </Box>
       </Modal>
     </div>
