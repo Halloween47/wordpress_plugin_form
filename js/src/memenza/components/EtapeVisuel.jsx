@@ -9,6 +9,8 @@ import {
   CardMedia,
   CardContent,
   Divider,
+  TextField,
+  Checkbox,
 } from "@mui/material";
 import React, { useState } from "react";
 import MemenzaChoixVisuel from "./MemenzaChoixVisuel.jsx";
@@ -48,6 +50,13 @@ const StyleEtapeVisuel = `
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
+  }
+    .etape-video-personnalisation-visuel {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
   }
   `;
 
@@ -121,7 +130,8 @@ function EtapeVisuel() {
                       boxShadow: 6,
                     },
                   }}
-                  onClick={() => console.log(`Image ${index + 1} clicked`)}
+                  //   onClick={() => console.log(`Image ${index + 1} clicked`)}
+                  onClick={handleVisuelClickCustom}
                 >
                   <CardMedia
                     component="img"
@@ -166,6 +176,40 @@ function EtapeVisuel() {
           <DownloadButton />
           <Dropzone />
         </FormGrid>
+        {showTextCustomVisuel && (
+          <Box className="etape-video-personnalisation-visuel">
+            <Typography variant="h5" gutterBottom>
+              Personnalisez votre vidéo
+            </Typography>
+            <Divider> ICI VOTRE TEXTE </Divider>
+            <Box className="etape-video-personnalisation-video-medias">
+              {[1, 2, 3].map((media) => (
+                <Box className="upload-media" key={media}>
+                  <Typography variant="body2">Média {media} :</Typography>
+                  <Button variant="contained" color="primary">
+                    Upload votre média
+                  </Button>
+                </Box>
+              ))}
+              <Divider style={{ margin: "20px 0" }} />
+              {[1, 2].map((text) => (
+                <Box className="upload-media" key={`text-${text}`}>
+                  <Typography variant="body2">Texte {text} :</Typography>
+                  <TextField
+                    id={`filled-basic-${text}`}
+                    label={`Text ${text}`}
+                    variant="filled"
+                    size="small"
+                  />
+                  <Checkbox
+                    defaultChecked
+                    {...{ inputProps: { "aria-label": "Checkbox demo" } }}
+                  />
+                </Box>
+              ))}
+            </Box>
+          </Box>
+        )}
         <ButtonGroup
           sx={{
             // backgroundColor: "white",
