@@ -6,6 +6,20 @@ import Modal from "@mui/material/Modal";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { Paper } from "@mui/material";
 
+////////////////////////////////////
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+
+function generate(element) {
+  return [0, 1, 2].map((value) =>
+    React.cloneElement(element, {
+      key: value,
+    }),
+  );
+}
+////////////////////////////////////
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -18,10 +32,19 @@ const style = {
   p: 4,
 };
 
+const StylesPopupUpload = `
+.zone-haut {
+display: flex;
+},
+`;
+
 function PopupUpload() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const [dense, setDense] = React.useState(false);
+
   return (
     <div>
       <Button
@@ -39,20 +62,16 @@ function PopupUpload() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </Typography>
           <div className="zone-haut">
-            zone haut
             <Box
               sx={{
+                backgroundColor: "grey",
+                width: "100%",
                 display: "flex",
                 flexWrap: "wrap",
+                justifyContent: "center",
+                alignItems: "center",
                 "& > :not(style)": {
-                  m: 1,
                   width: 128,
                   height: 128,
                 },
@@ -60,10 +79,42 @@ function PopupUpload() {
             >
               <Paper elevation={24} square={false} />
             </Box>
+            <Box
+              className="popup-upload_zone-infos-qualite"
+              sx={{
+                // backgroundColor: "#000000",
+                display: "flex",
+                flexDirection: "column",
+                flexWrap: "nowrap",
+                alignItems: "center",
+                m: 2,
+                "& > :not(style)": {
+                  // width: 228,
+                  width: "100%",
+                  // height: 128,
+                },
+              }}
+            >
+              <Typography variant="h6" color="textPrimary">
+                Explications
+              </Typography>
+              <List dense={dense}>
+                {generate(
+                  <ListItem disablePadding={true}>
+                    <ListItemText
+                      primary="Single-line item"
+                      secondary={"Secondary text"}
+                      // secondary={secondary ? 'Secondary text' : null}
+                    />
+                  </ListItem>,
+                )}
+              </List>
+            </Box>
           </div>
           <div className="zone-bas">zone bas</div>
         </Box>
       </Modal>
+      <style>{StylesPopupUpload}</style>
     </div>
   );
 }
