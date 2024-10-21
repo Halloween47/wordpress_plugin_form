@@ -30,7 +30,7 @@ function EtapeCategorie() {
   return (
     <div className="memenza-categories">
       <h2>Choisissez votre catégorie.</h2>
-      <Button onClick={handleOpen}>Open modal</Button>
+      <Button onClick={handleOpen}>Test modal pour sous categories</Button>
       <Modal
         open={open}
         onClose={handleClose}

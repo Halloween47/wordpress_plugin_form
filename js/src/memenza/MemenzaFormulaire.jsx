@@ -100,8 +100,10 @@ const MemenzaFormulaire = () => {
           activeStep={activeStep}
           sx={{
             "background-color": "black",
+            // "background-color": "#ffffff",
             borderRadius: "10px",
-            width: "80%",
+            // width: "80%",
+            width: "100%",
             margin: "20px auto 50px auto",
             padding: "10px",
             "& .css-2fdkz6": { color: "#ffffff" },
