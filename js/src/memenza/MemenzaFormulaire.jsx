@@ -11,6 +11,7 @@ import MemenzaVisuel from "./components/MemenzaVisuel.jsx";
 import EtapeVideo from "./components/EtapeVideo.jsx";
 import EtapeValidation from "./components/EtapeValidation.jsx";
 import EtapeCategorie from "./components/EtapeCategorie.jsx";
+import EtapeVisuel from "./components/EtapeVisuel.jsx";
 
 const steps = ["Categorie", "Visuel", "Video", "Validation"];
 function getStepContent(step) {
@@ -20,7 +21,8 @@ function getStepContent(step) {
       return <EtapeCategorie />;
       // return <EtapeVideo />;
     case 1:
-      return <MemenzaVisuel />;
+      // return <MemenzaVisuel />;
+      return <EtapeVisuel />;
     case 2:
       return <EtapeVideo />;
     case 3:
