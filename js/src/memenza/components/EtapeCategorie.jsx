@@ -4,7 +4,6 @@ import MemenzaSousCategories from "./MemenzaSousCategories.jsx";
 import { Box, Button, Modal, Typography } from "@mui/material";
 import SlidersSousCategories from "./SlidersSousCategories.jsx";
 
-
 const style = {
   position: "absolute",
   // top: "50%",
@@ -72,11 +71,11 @@ top: "20%",
 
 function EtapeCategorie() {
   const [showSliders, setShowSliders] = useState(false);
-  
+
   function handleImageClick() {
     setShowSliders(true);
   }
-  
+
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -84,7 +83,6 @@ function EtapeCategorie() {
   return (
     <div className="memenza-categories">
       <h2>Choisissez votre catégorie.</h2>
-      <Button onClick={handleOpen}>Test modal pour sous categories</Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -92,50 +90,52 @@ function EtapeCategorie() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-        {/* <Box sx={StylesSousCategories}> */}
+          {/* <Box sx={StylesSousCategories}> */}
           {/* <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
           </Typography> */}
           <div className="memenza-sous-categories">
-      <h2>Choisissez votre sous-catégorie</h2>
-      <SlidersSousCategories />
-      <Button
-        variant="contained"
-        sx={{ position: "absolute", bottom: "5%", right: "5%" }}
-      >
-        Visuel
-      </Button>
-      <style>{StylesSousCategories}</style>
-    </div>
+            <h2>Choisissez votre sous-catégorie</h2>
+            <SlidersSousCategories />
+            <Button
+              variant="contained"
+              sx={{ position: "absolute", bottom: "5%", right: "5%" }}
+            >
+              Visuel
+            </Button>
+            <style>{StylesSousCategories}</style>
+          </div>
         </Box>
       </Modal>
       {/* <Sliders onImageClick={handleImageClick} /> */}
       <Sliders onImageClick={handleOpen} />
       {/* {showSliders && <MemenzaSousCategories />} */}
-      {showSliders && <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-        {/* <Box sx={StylesSousCategories}> */}
-          {/* <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+      {showSliders && (
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            {/* <Box sx={StylesSousCategories}> */}
+            {/* <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
           </Typography> */}
-          <div className="memenza-sous-categories">
-      <h2>Choisissez votre sous-catégorie</h2>
-      <SlidersSousCategories />
-      <Button
-        variant="contained"
-        sx={{ position: "absolute", bottom: "5%", right: "5%" }}
-      >
-        Visuel
-      </Button>
-      <style>{StylesSousCategories}</style>
-    </div>
-        </Box>
-      </Modal>}
+            <div className="memenza-sous-categories">
+              <h2>Choisissez votre sous-catégorie</h2>
+              <SlidersSousCategories />
+              <Button
+                variant="contained"
+                sx={{ position: "absolute", bottom: "5%", right: "5%" }}
+              >
+                Visuel
+              </Button>
+              <style>{StylesSousCategories}</style>
+            </div>
+          </Box>
+        </Modal>
+      )}
     </div>
   );
 }
