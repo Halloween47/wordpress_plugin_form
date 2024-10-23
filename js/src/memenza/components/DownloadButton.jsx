@@ -7,18 +7,18 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { styled } from "@mui/material";
 
-const VisuallyHiddenInput = styled('input')({
-  clip: 'rect(0 0 0 0)',
-  clipPath: 'inset(50%)',
+const VisuallyHiddenInput = styled("input")({
+  clip: "rect(0 0 0 0)",
+  clipPath: "inset(50%)",
   height: 1,
-  overflow: 'hidden',
-  position: 'absolute',
+  overflow: "hidden",
+  position: "absolute",
   bottom: 0,
   left: 0,
-  whiteSpace: 'nowrap',
+  whiteSpace: "nowrap",
   width: 1,
 });
 
@@ -28,7 +28,7 @@ function DownloadButton() {
   const handleClose = () => setOpen(false);
   return (
     <div>
-      {/* // <Button
+      {/* {/* // <Button
     //   component="label"
     //   role={undefined}
     //   variant="contained"
@@ -36,21 +36,22 @@ function DownloadButton() {
     //   startIcon={<CloudUploadIcon />}
     // >
     //   Uploader son propre visuel
-    // </Button>
-    <Button
-    component="label"
-    role={undefined}
-    variant="contained"
-    tabIndex={-1}
-    startIcon={<CloudUploadIcon />}
-  >
-  Uploader son propre visuel
-    <VisuallyHiddenInput
-      type="file"
-      onChange={(event) => console.log(event.target.files)}
-      multiple
-    />
-  </Button>
+    // </Button> */}
+      <Button
+        component="label"
+        role={undefined}
+        variant="contained"
+        tabIndex={-1}
+        startIcon={<CloudUploadIcon />}
+      >
+        Uploader son propre visuel
+        <VisuallyHiddenInput
+          type="file"
+          onChange={(event) => console.log(event.target.files)}
+          multiple
+        />
+      </Button>
+    </div>
   );
 }
 export default DownloadButton;
