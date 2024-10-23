@@ -1,7 +1,8 @@
-import { Box, Button, Grid, Modal, Typography } from "@mui/material";
+import { Box, Button, CardMedia, Grid, Modal, Typography } from "@mui/material";
 import React, { useRef } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import LogoMemenza from "./Logo.jsx";
 
 const style = {
   position: "absolute",
@@ -69,10 +70,11 @@ function PopupPreview() {
           >
             <CloseIcon />
           </Box>
+          <LogoMemenza />
           <Typography
             variant="h6"
             color="textPrimary"
-            sx={{ textAlign: "center", p: 3 }}
+            sx={{ textAlign: "center", p: 1 }}
           >
             Votre visuel
           </Typography>
