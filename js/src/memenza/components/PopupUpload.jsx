@@ -10,6 +10,7 @@ import { Paper } from "@mui/material";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
+import styled from "styled-components";
 
 function generate(element) {
   return [0, 1, 2].map((value) =>
@@ -25,7 +26,8 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
+  // width: 600,
+  width: "30%",
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
@@ -35,8 +37,24 @@ const style = {
 const StylesPopupUpload = `
 .zone-haut {
 display: flex;
+margin-bottom : 10px;
+},
+.zone-bas {
+ display: flex;
 },
 `;
+
+const VisuallyHiddenInput = styled("input")({
+  clip: "rect(0 0 0 0)",
+  clipPath: "inset(50%)",
+  height: 1,
+  overflow: "hidden",
+  position: "absolute",
+  bottom: 0,
+  left: 0,
+  whiteSpace: "nowrap",
+  width: 1,
+});
 
 function PopupUpload() {
   const [open, setOpen] = React.useState(false);
@@ -66,7 +84,7 @@ function PopupUpload() {
             <Box
               sx={{
                 backgroundColor: "grey",
-                width: "100%",
+                width: "50%",
                 display: "flex",
                 flexWrap: "wrap",
                 justifyContent: "center",
@@ -83,6 +101,7 @@ function PopupUpload() {
               className="popup-upload_zone-infos-qualite"
               sx={{
                 // backgroundColor: "#000000",
+                // width: "70%",
                 display: "flex",
                 flexDirection: "column",
                 flexWrap: "nowrap",
@@ -102,8 +121,8 @@ function PopupUpload() {
                 {generate(
                   <ListItem disablePadding={true}>
                     <ListItemText
-                      primary="Single-line item"
-                      secondary={"Secondary text"}
+                      primary="Infos qualité media"
+                      secondary={"Critères"}
                       // secondary={secondary ? 'Secondary text' : null}
                     />
                   </ListItem>,
@@ -111,7 +130,40 @@ function PopupUpload() {
               </List>
             </Box>
           </div>
-          <div className="zone-bas">zone bas</div>
+          <div className="zone-bas">
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "flex-end",
+                alignItems: "center",
+                gap: 2,
+              }}
+            >
+              <Typography
+                variant="subtitle1"
+                sx={{ textDecoration: "underline" }}
+              >
+                J'envoie :
+              </Typography>
+              <Button
+                component="label"
+                role={undefined}
+                variant="contained"
+                tabIndex={-1}
+                startIcon={<CloudUploadIcon />}
+              >
+                Parcourir
+                <VisuallyHiddenInput
+                  type="file"
+                  onChange={(event) => console.log(event.target.files)}
+                  multiple
+                />
+              </Button>
+              <Button component="label" variant="contained">
+                OK
+              </Button>
+            </Box>
+          </div>
         </Box>
       </Modal>
       <style>{StylesPopupUpload}</style>
