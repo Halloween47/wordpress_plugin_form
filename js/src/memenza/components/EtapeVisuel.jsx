@@ -17,6 +17,7 @@ import MemenzaChoixVisuel from "./MemenzaChoixVisuel.jsx";
 import DownloadButton from "./DownloadButton.jsx";
 import styled from "styled-components";
 import Dropzone from "./DropZone.jsx";
+import PopupUpload from "./PopupUpload.jsx";
 
 const StyleEtapeVisuel = `
 .etape-visuel {
@@ -111,6 +112,9 @@ function EtapeVisuel() {
             p: 4,
             bgcolor: "#f5f5f5",
             // minHeight: "100vh",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
           <Box sx={{ mb: 4, py: 2, borderBottom: "2px solid #3f51b5" }}>
@@ -161,21 +165,24 @@ function EtapeVisuel() {
             ))}
           </Grid>
           <Divider sx={{ mt: 2 }}> OU </Divider>
+          <FormGrid
+            sx={{
+              //   backgroundColor: "#000000",
+              width: "50%",
+              display: "flex",
+              justifyContent: "center",
+              mt: 2,
+            }}
+            size={{ xs: 12, md: 6 }}
+            mr={0}
+            mb={2}
+          >
+            {/* <DownloadButton /> */}
+            {/* <Dropzone /> */}
+            <PopupUpload />
+          </FormGrid>
         </Box>
-        <FormGrid
-          sx={{
-            width: "50%",
-            display: "flex",
-            justifyContent: "center",
-            mx: "auto",
-          }}
-          size={{ xs: 12, md: 6 }}
-          mr={0}
-          mb={2}
-        >
-          <DownloadButton />
-          <Dropzone />
-        </FormGrid>
+
         {showTextCustomVisuel && (
           <Box className="etape-video-personnalisation-visuel">
             <Typography variant="h5" gutterBottom>
