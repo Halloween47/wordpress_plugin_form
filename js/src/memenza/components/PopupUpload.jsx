@@ -4,6 +4,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import CloseIcon from "@mui/icons-material/Close";
 import { Paper } from "@mui/material";
 
 ////////////////////////////////////
@@ -80,6 +81,20 @@ function PopupUpload() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
+          <Box
+            sx={{
+              // backgroundColor: "#000000",
+              display: "flex",
+              justifyContent: "flex-end",
+              p: 1,
+              position: "absolute",
+              top: 0,
+              right: 0,
+            }}
+            onClick={handleClose}
+          >
+            <CloseIcon />
+          </Box>
           <div className="zone-haut">
             <Box
               sx={{
