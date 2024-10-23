@@ -18,6 +18,7 @@ import DownloadButton from "./DownloadButton.jsx";
 import styled from "styled-components";
 import Dropzone from "./DropZone.jsx";
 import PopupUpload from "./PopupUpload.jsx";
+import PopupPreview from "./PopupPreview.jsx";
 
 const StyleEtapeVisuel = `
 .etape-visuel {
@@ -225,6 +226,7 @@ function EtapeVisuel() {
             justifyContent: "flex-end",
           }}
         >
+          <PopupPreview />
           <Button color="error">Prévisualiser</Button>
           <Button variant="contained" color="success">
             J'envoie
