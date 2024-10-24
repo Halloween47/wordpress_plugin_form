@@ -12,7 +12,8 @@ const style = {
   // width: 600,
   width: "30%",
   bgcolor: "background.paper",
-  border: "2px solid #000",
+  // border: "2px solid #000",
+  borderRadius: "8px",
   boxShadow: 24,
   p: 4,
 };
@@ -70,14 +71,14 @@ function PopupPreview() {
           >
             <CloseIcon />
           </Box>
-          <LogoMemenza />
           <Typography
             variant="h6"
             color="textPrimary"
-            sx={{ textAlign: "center", p: 1 }}
+            sx={{ textAlign: "center", pb: 1 }}
           >
-            Votre visuel
+            Votre visuel <br /> <em>by</em>
           </Typography>
+          <LogoMemenza />
           <Box sx={{ backgroundColor: "#000000" }}>
             <Grid justifyContent="center">
               {videos.map((src, index) => (
@@ -97,6 +98,8 @@ function PopupPreview() {
                       height: 300,
                       cursor: "pointer",
                       borderRadius: 2,
+
+                      mt: 2,
                       overflow: "hidden",
                       "&:hover .overlay": {
                         opacity: isPlaying[index] ? 0 : 1,

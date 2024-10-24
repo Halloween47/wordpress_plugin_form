@@ -227,7 +227,6 @@ function EtapeVisuel() {
           }}
         >
           <PopupPreview />
-          <Button color="error">Prévisualiser</Button>
           <Button variant="contained" color="success">
             J'envoie
           </Button>

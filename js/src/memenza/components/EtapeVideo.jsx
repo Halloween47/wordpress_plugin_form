@@ -15,6 +15,7 @@ import {
 
 import { purple } from '@mui/material/colors';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import PopupPreview from "./PopupPreview.jsx";
 
 const StyleEtapeVideo = `
   .etape-video {
@@ -217,7 +218,7 @@ Uploader son propre visuel
 
       <Box className="etape-video-boutons">
         <ButtonGroup>
-          <Button color="error">Prévisualiser</Button>
+          <PopupPreview />
           <Button variant="contained" color="success">
             J'envoie
           </Button>
