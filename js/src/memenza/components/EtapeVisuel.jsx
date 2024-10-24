@@ -13,10 +13,7 @@ import {
   Checkbox,
 } from "@mui/material";
 import React, { useState } from "react";
-import MemenzaChoixVisuel from "./MemenzaChoixVisuel.jsx";
-import DownloadButton from "./DownloadButton.jsx";
 import styled from "styled-components";
-import Dropzone from "./DropZone.jsx";
 import PopupUpload from "./PopupUpload.jsx";
 import PopupPreview from "./PopupPreview.jsx";
 
@@ -68,7 +65,6 @@ const FormGrid = styled(Grid)(() => ({
   display: "flex",
   flexDirection: "column",
   alignItems: "space-between",
-  // backgroundColor: "red",
 }));
 
 const images = [
@@ -99,7 +95,6 @@ function EtapeVisuel() {
               src="https://images.pexels.com/photos/265856/pexels-photo-265856.jpeg?auto=compress&cs=tinysrgb&w=600"
               alt=""
               style={{ width: "100%", 
-                // height: "auto", 
                 height: "100%", 
                 borderRadius: "8px",
               objectFit: "cover"
@@ -118,13 +113,11 @@ function EtapeVisuel() {
             </Typography>
           </Box>
         </Box>
-        {/* <MemenzaChoixVisuel /> */}
         <Box
           sx={{
             textAlign: "center",
             p: 4,
             bgcolor: "#f5f5f5",
-            // minHeight: "100vh",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -147,7 +140,6 @@ function EtapeVisuel() {
                       boxShadow: 6,
                     },
                   }}
-                  //   onClick={() => console.log(`Image ${index + 1} clicked`)}
                   onClick={handleVisuelClickCustom}
                 >
                   <CardMedia
@@ -180,7 +172,6 @@ function EtapeVisuel() {
           <Divider sx={{ mt: 2 }}> OU </Divider>
           <FormGrid
             sx={{
-              //   backgroundColor: "#000000",
               width: "50%",
               display: "flex",
               justifyContent: "center",
@@ -190,8 +181,6 @@ function EtapeVisuel() {
             mr={0}
             mb={2}
           >
-            {/* <DownloadButton /> */}
-            {/* <Dropzone /> */}
             <PopupUpload />
           </FormGrid>
         </Box>
@@ -232,7 +221,6 @@ function EtapeVisuel() {
         )}
         <ButtonGroup
           sx={{
-            // backgroundColor: "white",
             width: "100%",
             display: "flex",
             justifyContent: "flex-end",

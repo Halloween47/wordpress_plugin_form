@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import DownloadButton from "./DownloadButton.jsx";
-import MemenzaChoixVideo from "./MemenzaChoixVideo.jsx";
 import {
   Button,
   ButtonGroup,
@@ -15,6 +13,8 @@ import {
 
 import { purple } from '@mui/material/colors';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+
+import MemenzaChoixVideo from "./MemenzaChoixVideo.jsx";
 import PopupPreview from "./PopupPreview.jsx";
 
 const StyleEtapeVideo = `
@@ -84,7 +84,7 @@ const StyleEtapeVideo = `
   }
 `;
 
-const WeddingImage = [
+const imgIntroVideo = [
   "https://images.unsplash.com/photo-1593642532973-d31b6557fa68?fit=crop&w=500&q=80",
 ];
 
@@ -131,7 +131,7 @@ function EtapeVideo() {
       <Box className="etape-video-intro">
         <Box className="etape-video-intro-img">
           <img
-            src={WeddingImage}
+            src={imgIntroVideo}
             alt="Wedding"
             style={{ width: "100%", height: "auto", borderRadius: "8px" }}
           />
