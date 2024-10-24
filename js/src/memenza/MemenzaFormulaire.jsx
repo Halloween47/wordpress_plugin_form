@@ -6,8 +6,6 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import MemenzaCategories from "./components/MemenzaCategories.jsx";
-import MemenzaVisuel from "./components/MemenzaVisuel.jsx";
 import EtapeVideo from "./components/EtapeVideo.jsx";
 import EtapeValidation from "./components/EtapeValidation.jsx";
 import EtapeCategorie from "./components/EtapeCategorie.jsx";
@@ -17,35 +15,32 @@ const steps = ["Categorie", "Visuel", "Video", "Validation"];
 function getStepContent(step) {
   switch (step) {
     case 0:
-      // return <MemenzaCategories />;
       return <EtapeCategorie />;
-      // return <EtapeVideo />;
     case 1:
-      // return <MemenzaVisuel />;
       return <EtapeVisuel />;
     case 2:
       return <EtapeVideo />;
     case 3:
       return <EtapeValidation />;
     default:
-      throw new Error("Unknown step");
+      throw new Error("Etape inconnu");
   }
 }
 
 const StylesFormulaire = `
   h1, h2 {
-  margin-bottom: 20px!important;
+    margin-bottom: 20px!important;
   }
   .memenzaFormulaire {
-  // background-color: #0a2657;
-  background-color: #EBECF1;
-  color: white;
-  padding: 20px;
+    // background-color: #0a2657;
+    background-color: #EBECF1;
+    color: white;
+    padding: 20px;
   }
   .nom-produit {
-  font-size: 2.3em !important;
-  margin: 10px 0;
-  padding-bottom: 10px;
+    font-size: 2.3em !important;
+    margin: 10px 0;
+    padding-bottom: 10px;
   }
   `;
 
@@ -78,9 +73,7 @@ const MemenzaFormulaire = () => {
 
   const handleSkip = () => {
     if (!isStepOptional(activeStep)) {
-      // You probably want to guard against something like this,
-      // it should never occur unless someone's actively trying to break something.
-      throw new Error("You can't skip a step that isn't optional.");
+      throw new Error("Vous ne pouvez pas sauter une étape qui n'est pas facultative.");
     }
 
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -94,7 +87,6 @@ const MemenzaFormulaire = () => {
   return (
     <div className="memenzaFormulaire">
       <Box sx={{ width: "100%", height: "auto" }}>
-        {/* <div className="nom-produit">Nom du produit</div> */}
         <Typography variant="h4" gutterBottom sx={{color: "#000",}}>
         Nom du produit
       </Typography>
@@ -102,9 +94,7 @@ const MemenzaFormulaire = () => {
           activeStep={activeStep}
           sx={{
             "background-color": "black",
-            // "background-color": "#ffffff",
             borderRadius: "10px",
-            // width: "80%",
             width: "100%",
             margin: "20px auto 50px auto",
             padding: "10px",
@@ -116,11 +106,6 @@ const MemenzaFormulaire = () => {
           {steps.map((label, index) => {
             const stepProps = {};
             const labelProps = {};
-            //   if (isStepOptional(index)) {
-            //     labelProps.optional = (
-            //       <Typography variant="caption">Optional</Typography>
-            //     );
-            //   }
             if (isStepSkipped(index)) {
               stepProps.completed = false;
             }
@@ -132,13 +117,12 @@ const MemenzaFormulaire = () => {
           })}
         </Stepper>
 
-        {/* <MemenzaCategories /> */}
         {getStepContent(activeStep)}
 
         {activeStep === steps.length ? (
           <React.Fragment>
             <Typography sx={{ mt: 2, mb: 1 }}>
-              All steps completed - you&apos;re finished
+            Toutes les étapes sont terminées : vous avez terminé
             </Typography>
             <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
               <Box sx={{ flex: "1 1 auto" }} />
@@ -152,7 +136,6 @@ const MemenzaFormulaire = () => {
             </Typography>
             <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
               <Button
-                // color="inherit"
                 disabled={activeStep === 0}
                 onClick={handleBack}
                 sx={{ mr: 1 }}
