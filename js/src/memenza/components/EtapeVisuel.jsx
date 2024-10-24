@@ -74,7 +74,12 @@ const images = [
   "https://images.unsplash.com/photo-1517423440428-a5a00ad493e8?fit=crop&w=500&q=80",
   "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?fit=crop&w=500&q=80",
   "https://images.unsplash.com/photo-1498050108023-c5249f4df085?fit=crop&w=500&q=80",
-];
+  "https://images.unsplash.com/photo-1593642532973-d31b6557fa68?fit=crop&w=500&q=80",
+  "https://images.unsplash.com/photo-1517423440428-a5a00ad493e8?fit=crop&w=500&q=80",
+  "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?fit=crop&w=500&q=80",
+  "https://images.unsplash.com/photo-1498050108023-c5249f4df085?fit=crop&w=500&q=80",
+]
+;
 
 function EtapeVisuel() {
   const [showTextCustomVisuel, setShowTextCustomVisuel] = useState(false);
