@@ -26,12 +26,6 @@ function memenza_plugin_menu() {
 function memenza_plugin_page_content() {
     ?>
     <div class="wrap">
-    <!-- <h1>Ici notre plugin WooCommerce</h1> -->
-        <!-- <p>Ceci est la page d'administration du plugin WooCommerce personnalisé.</p> -->
-        <!-- <div id="react-container"></div> -->
-
-        <!-- <div id="react-container-presentation"></div> -->
-
         <div id="plugin_backoffice_container">
             <div id="react-container-buttongroup"></div>
             <div id="react-container-presentation" class ="react-container-presentation" ></div>

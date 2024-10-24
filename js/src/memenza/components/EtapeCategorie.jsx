@@ -52,8 +52,6 @@ const StylesSousCategories = `
 `;
 
 function EtapeCategorie() {
-  const [showSliders, setShowSliders] = useState(false);
-
   function handleImageClick() {
     setShowSliders(true);
   }
@@ -63,8 +61,21 @@ function EtapeCategorie() {
   const handleClose = () => setOpen(false);
 
   return (
-    <div className="memenza-categories">
-      <Typography variant="h4" sx={{fontSize: "2.5rem", color: "#000000", mb: "1.5rem", textAlign:"center", fontWeight:600, lineHeight: 1.2}}>Choisissez votre catégorie.</Typography>
+    <Box className="memenza-categories">
+      <Typography
+        variant="h4"
+        sx={{
+          fontSize: "2.5rem",
+          color: "#000000",
+          mb: "1.5rem",
+          textAlign: "center",
+          fontWeight: 600,
+          lineHeight: 1.2,
+        }}
+      >
+        Choisissez votre catégorie.
+      </Typography>
+      <Sliders onImageClick={handleOpen} />
       <Modal
         open={open}
         onClose={handleClose}
@@ -85,30 +96,7 @@ function EtapeCategorie() {
           </div>
         </Box>
       </Modal>
-      <Sliders onImageClick={handleOpen} />
-      {showSliders && (
-        <Modal
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style}>
-            <div className="memenza-sous-categories">
-              <h2>Choisissez votre sous-catégorie</h2>
-              <SlidersSousCategories />
-              <Button
-                variant="contained"
-                sx={{ position: "absolute", bottom: "5%", right: "5%" }}
-              >
-                Visuel
-              </Button>
-              <style>{StylesSousCategories}</style>
-            </div>
-          </Box>
-        </Modal>
-      )}
-    </div>
+    </Box>
   );
 }
 
