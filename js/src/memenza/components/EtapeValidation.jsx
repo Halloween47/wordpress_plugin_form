@@ -1,11 +1,10 @@
-import { Typography, Box, Divider, Paper } from "@mui/material";
 import React from "react";
+import { Typography, Box, Divider, Paper } from "@mui/material";
 
 function EtapeValidation() {
   return (
     <Box sx={{ p: 4, backgroundColor: "#f7f7f7" }}>
-      {/* Titre de la validation */}
-      <Typography variant="h4" sx={{ mb: 2, fontWeight: "bold" }}>
+      <Typography variant="h4" sx={{ mb: 2, fontWeight: "bold", color: "#000000" }}>
         Validation
       </Typography>
 
