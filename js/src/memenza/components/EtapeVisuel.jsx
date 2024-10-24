@@ -42,9 +42,11 @@ const StyleEtapeVisuel = `
     .etape-visuel-intro-img {
     background-color: #e0e0e0;
     width: 40%;
+    height: 100%;
     border-radius: 8px;
   }
     .etape-visuel-intro-txt {
+    // background-color: green;
     width: 50%;
     color: #333;
     font-size: 16px;
@@ -91,19 +93,24 @@ function EtapeVisuel() {
   return (
     <div>
       <Container className="etape-visuel" maxWidth="lg">
-        <Box className="etape-visuel-intro">
+        <Box className="etape-visuel-intro" sx={{height: "50vh"}}>
           <Box className="etape-visuel-intro-img">
             <img
               src="https://images.pexels.com/photos/265856/pexels-photo-265856.jpeg?auto=compress&cs=tinysrgb&w=600"
               alt=""
-              style={{ width: "100%", height: "auto", borderRadius: "8px" }}
+              style={{ width: "100%", 
+                // height: "auto", 
+                height: "100%", 
+                borderRadius: "8px",
+              objectFit: "cover"
+              }}
             />
           </Box>
-          <Box className="etape-visuel-intro-txt">
-            <Typography variant="h4" color="textPrimary">
+          <Box className="etape-visuel-intro-txt" sx={{p:4}}>
+            <Typography variant="h4" color="textPrimary" sx={{mb: 1}}>
               Bienvenue dans la partie Visuel
             </Typography>
-            <Typography variant="body1" color="textPrimary">
+            <Typography variant="body1" color="textPrimary" sx={{pr: 3}}>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam
               autem voluptate quia neque, tempore placeat veritatis omnis,
               incidunt ab, corrupti maxime perspiciatis sint eius debitis
