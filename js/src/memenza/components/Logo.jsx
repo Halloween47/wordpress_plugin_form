@@ -2,7 +2,8 @@ import { Box, CardMedia } from "@mui/material";
 import React from "react";
 
 const MemenzaLogo =
-  "https://memenza.laisne.ovh/wp-content/uploads/2024/09/cropped-Memenza_violet.png";
+  // "https://memenza.laisne.ovh/wp-content/uploads/2024/09/cropped-Memenza_violet.png";
+  "https://memenza.fr/wp-content/uploads/2024/10/Logo_primaire_noir_violet.svg";
 
 function LogoMemenza() {
   return (
