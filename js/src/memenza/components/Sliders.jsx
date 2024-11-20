@@ -70,28 +70,27 @@ export default function Sliders({ onImageClick }) {
     <div className="carousel">
     <img
     class="item"
-    src="https://images.pexels.com/photos/1456613/pexels-photo-1456613.jpeg?auto=compress&cs=tinysrgb&w=600"
+    // src="https://images.pexels.com/photos/1456613/pexels-photo-1456613.jpeg?auto=compress&cs=tinysrgb&w=600"
+    src="https://memenza.fr/wp-content/uploads/2024/10/insta4.png"
     alt=""
     />
     <img
     class="item"
-    src="https://images.pexels.com/photos/265856/pexels-photo-265856.jpeg?auto=compress&cs=tinysrgb&w=600"
+    // src="https://images.pexels.com/photos/265856/pexels-photo-265856.jpeg?auto=compress&cs=tinysrgb&w=600"
+    src="https://memenza.fr/wp-content/uploads/2024/10/insta1.png"
     alt=""
     />
     <img
     class="item"
-    src="https://images.pexels.com/photos/2253870/pexels-photo-2253870.jpeg?auto=compress&cs=tinysrgb&w=600"
+    // src="https://images.pexels.com/photos/2253870/pexels-photo-2253870.jpeg?auto=compress&cs=tinysrgb&w=600"
+    src="https://memenza.fr/wp-content/uploads/2024/10/insta2.png"
     alt="photo mariage"
     onClick={onImageClick}
     />
     <img
     class="item"
-    src="https://images.pexels.com/photos/948185/pexels-photo-948185.jpeg?auto=compress&cs=tinysrgb&w=600"
-    alt=""
-    />
-    <img
-    class="item"
-    src="https://images.pexels.com/photos/1024996/pexels-photo-1024996.jpeg?auto=compress&cs=tinysrgb&w=600"
+    // src="https://images.pexels.com/photos/948185/pexels-photo-948185.jpeg?auto=compress&cs=tinysrgb&w=600"
+    src="https://memenza.fr/wp-content/uploads/2024/10/insta5.png"
     alt=""
     />
     </div>
