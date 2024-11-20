@@ -2,7 +2,7 @@ import * as React from "react";
 
 const StylesSliders = `
 .container-carousel {
-  background-color: #f5f5f5;
+  // background-color: #f5f5f5;
   padding: 20px;
   border-radius: 15px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -32,8 +32,10 @@ const StylesSliders = `
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
   transition: 0.5s ease;
   
-  width: 20%;
-  height: 250px;
+  // width: 20%;
+  width: 30%;
+  // height: 250px;
+  height: 350px;
   max-width: 250px;
   margin: 2px;
   object-fit: cover;
