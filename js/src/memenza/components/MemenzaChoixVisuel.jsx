@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 
 const images = [
-  "https://images.unsplash.com/photo-1593642532973-d31b6557fa68?fit=crop&w=500&q=80",
+  // "https://images.unsplash.com/photo-1593642532973-d31b6557fa68?fit=crop&w=500&q=80",
   "https://images.unsplash.com/photo-1517423440428-a5a00ad493e8?fit=crop&w=500&q=80",
   "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?fit=crop&w=500&q=80",
   "https://images.unsplash.com/photo-1498050108023-c5249f4df085?fit=crop&w=500&q=80",
@@ -20,18 +20,42 @@ const images = [
 ];
 
 export default function MemenzaChoixVisuel() {
+
+  const [imagesVisuel, setImagesVisuels] = React.useState([]);
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+        try {
+            const response = await fetch('/wp-json/plugin_memenza/v1/images_sous-categories');
+            if (!response.ok) {
+                throw new Error('Erreur lors de la récupération des données');
+            }
+            const result = await response.json();
+            setImagesVisuels(result);
+            console.log(data);
+            
+        } catch (error) {
+            setError(error.message);
+        }
+    };
+
+    fetchData();
+}, []);
+
   return (
     <Box
       sx={{ textAlign: "center", p: 4, bgcolor: "#f5f5f5", minHeight: "100vh" }}
     >
       <Box sx={{ mb: 4, py: 2, borderBottom: "2px solid #3f51b5" }}>
         <Typography variant="h5" color="textSecondary">
-          Choisissez votre visuel{" "}
+          {/* Choisissez votre visuel{" "} */}
+          test compile
         </Typography>
       </Box>
 
       <Grid container spacing={3} justifyContent="center">
-        {images.map((src, index) => (
+        {/* {images.map((src, index) => ( */}
+        {imagesVisuel.map((src, index) => (
           <Grid item key={index} xs={12} sm={6} md={4} lg={3}>
             <Card
               sx={{

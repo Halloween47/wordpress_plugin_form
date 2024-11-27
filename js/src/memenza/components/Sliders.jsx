@@ -69,14 +69,14 @@ color: #000000 !important;
 
 `;
 
-export default function Sliders({ onImageClick }) {
+export default function Sliders({ onImageClick }) { 
   
-    const [images, setImages] = React.useState([]);
+    const [images, setImages] = React.useState([]); 
 
     const [data, setData] = React.useState([]);
     const [error, setError] = React.useState(null);
     React.useEffect(() => {
-      const fetchData = async () => {
+      const fetchData = async () => { 
           try {
               const response = await fetch('/wp-json/plugin_memenza/v1/images');
               if (!response.ok) {
@@ -100,8 +100,9 @@ export default function Sliders({ onImageClick }) {
   
   return (
     <React.Fragment> 
-    <div className="container-carousel">
+    <div className="container-carousel"> 
       <div className="carousel">
+        <p>test compile 1</p>
         {
           data.map((item, index) => (
             <img

@@ -1,17 +1,17 @@
 import React from "react";
-// import ReactDOM from "react-dom";
 import { createRoot } from "react-dom/client";
-// import QRCode from "react-qr-code";
 import BasicButtonGroup from "./components/ButtonGroup.jsx";
+import MemenzaFormulaire from "./memenza/MemenzaFormulaire.jsx";
 
-// const container = document.getElementById("react-container");
-// const root = createRoot(container);
-// root.render(<QRCode value="http://lestoilesheroiques.fr" />);
+// const containerButtonGroup = document.getElementById(
+//   "react-container-buttongroup",
+// );
+// const rootButtonGroup = createRoot(containerButtonGroup);
+// rootButtonGroup.render(<BasicButtonGroup />);
 
-const containerButtonGroup = document.getElementById(
-  "react-container-buttongroup",
+const pluginBackofficeContainer = document.getElementById(
+  "plugin_backoffice_container",
 );
-const rootButtonGroup = createRoot(containerButtonGroup);
-rootButtonGroup.render(<BasicButtonGroup />);
 
-//////////////////////////////////////////////////////////////////
+const rootAffichagePagePrincipal = createRoot(pluginBackofficeContainer);
+rootAffichagePagePrincipal.render(<MemenzaFormulaire />);

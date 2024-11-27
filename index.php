@@ -9,8 +9,8 @@ Author URI: http://test.com
 License: GPL2
 */
 
-add_action('admin_menu', 'memenza_plugin_menu');
 
+add_action('admin_menu', 'memenza_plugin_menu');
 function memenza_plugin_menu() {
     add_menu_page(
         'Memenza Plugin WooCommerce', // Titre de la page
@@ -27,8 +27,8 @@ function memenza_plugin_page_content() {
     ?>
     <div class="wrap">
     <div id="plugin_backoffice_container">
-    <div id="react-container-buttongroup"></div>
-    <div id="react-container-presentation" class ="react-container-presentation" ></div>
+    <!-- <div id="react-container-buttongroup"></div>
+    <div id="react-container-presentation" class ="react-container-presentation" ></div> -->
     </div>  
     </div>
     <?php
