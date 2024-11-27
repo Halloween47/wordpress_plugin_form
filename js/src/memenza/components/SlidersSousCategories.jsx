@@ -14,7 +14,7 @@ const StylesSlidersSousCategories = `
   .carousel-sous-categories {
   max-width: 80%;
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   transform-style: preserve-3d;
@@ -97,11 +97,54 @@ width: 90%;
 `;
 
 export default function SlidersSousCategories() {
+
+  const [data, setData] = React.useState([]);
+    const [error, setError] = React.useState(null);
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+        try {
+            const response = await fetch('/wp-json/plugin_memenza/v1/images_sous-categories');
+            if (!response.ok) {
+                throw new Error('Erreur lors de la récupération des données');
+            }
+            const result = await response.json();
+            setData(result);
+            console.log(data);
+            
+        } catch (error) {
+            setError(error.message);
+        }
+    };
+
+    fetchData();
+  }, []);
+
   return (
-    <React.Fragment>
+    <React.Fragment> 
       <div className="container-sliders-sous-categories">
+
+        {/* {data.map((item, index) => (
+          <img
+          class="item"
+    src={item.chemin_img_sscat}
+          alt=""
+          />
+        ))} */} 
+
+
         <div className="carousel-sous-categories">
-          <div class="image-container-sous-categories">
+          {data.map((item, index) => (
+            <div class="image-container-sous-categories">
+              <img
+              src={item.chemin_img_sscat}
+          alt=""
+            />
+            <div class="gradient-sous-categories gradient-color-red"></div>
+            <h4>Sous categorie numero 1</h4>
+              </div>
+          ))}
+          {/* <div class="image-container-sous-categories">
             <img
               src="https://images.pexels.com/photos/2072181/pexels-photo-2072181.jpeg"
               alt=""
@@ -140,7 +183,7 @@ export default function SlidersSousCategories() {
             />
             <div class="gradient-sous-categories gradient-color-yellow"></div>
             <h4>Sous categorie 5</h4>
-          </div>
+          </div> */}
         </div>
       </div>
       <style>{StylesSlidersSousCategories}</style>

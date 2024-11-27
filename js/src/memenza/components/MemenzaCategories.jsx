@@ -12,7 +12,7 @@ function MemenzaCategories() {
   return (
     <div className="memenza-categories">
       <h2>Choisissez votre catégorie.</h2>
-      <Sliders onImageClick={handleImageClick} />
+      <Sliders onImageClick={handleImageClick} /> 
       {showSliders && <MemenzaSousCategories />}
     </div>
   );

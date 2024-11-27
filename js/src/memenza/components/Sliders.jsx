@@ -106,9 +106,10 @@ export default function Sliders({ onImageClick }) {
           data.map((item, index) => (
             <img
       class="item"
-src={item.url}
-// src={item.chemin_img_cat}
+// src={item.url}
+src={item.chemin_img_cat}
       alt=""
+      onClick={onImageClick}
       />
           ))
         }

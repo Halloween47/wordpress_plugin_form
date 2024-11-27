@@ -4,11 +4,13 @@ import { Button } from "@mui/material";
 
 const StylesOverlay = `
 .memenza-sous-categories {
-  background-color: rgba(164, 111, 251, 0.9);
+  // background-color: rgba(164, 111, 251, 0.9);
+  background-color: rgba(0, 0, 0, 0.9) !important;
   position: absolute;
   top: 0;
   width: 90%;
-  height: 85vh;
+  // height: 85vh;
+  height: auto;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -46,9 +48,11 @@ const StylesOverlay = `
 `;
 
 function MemenzaSousCategories() {
+
   return (
     <div className="memenza-sous-categories">
       <h2>Choisissez votre sous-catégorie</h2>
+      
       <SlidersSousCategories />
       <Button
         variant="contained"
