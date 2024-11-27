@@ -20,9 +20,11 @@ const StylesSousCategories = `
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 50%;
-  background-color: rgba(164, 111, 251, 0.9);
+  // background-color: rgba(164, 111, 251, 0.9);
+  background-color: rgba(0,0,0, 0.9);
   position: absolute;
-  height: 85vh;
+  // height: 85vh;
+  height: auto;
   padding: 20px;
   display: flex;
   flex-direction: column;

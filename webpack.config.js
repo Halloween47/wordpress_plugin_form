@@ -1,31 +1,33 @@
 const path = require("path");
 
-module.exports = [{
-  mode: "production",
-  entry: "./js/src/index.js",
-  // entry: "./js/src/memenza/MemenzaFormulaire.jsx",
-  // entry: {
-  //   main : './js/src/index.js'
-  // },
-  output: {
-    path: path.resolve(__dirname, "js/dist"),
-    filename: "bundle.js",
-  },
-  module: {
-    rules: [
-      {
-        test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
-        use: {
-          loader: "babel-loader",
-          options: {
-            presets: ["@babel/preset-react"],
+module.exports = [
+  {
+    mode: "development",
+    entry: "./js/src/index.js",
+    // entry: "./js/src/memenza/MemenzaFormulaire.jsx",
+    // entry: {
+    //   main : './js/src/index.js'
+    // },
+    output: {
+      path: path.resolve(__dirname, "js/dist"),
+      filename: "bundle.js",
+    },
+    module: {
+      rules: [
+        {
+          test: /\.(js|jsx)$/,
+          exclude: /node_modules/,
+          use: {
+            loader: "babel-loader",
+            options: {
+              presets: ["@babel/preset-react"],
+            },
           },
         },
-      },
-    ],
+      ],
+    },
   },
-}];
+];
 
 // const path = require("path");
 

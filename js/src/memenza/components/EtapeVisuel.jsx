@@ -76,11 +76,30 @@ const images = [
   "https://images.unsplash.com/photo-1517423440428-a5a00ad493e8?fit=crop&w=500&q=80",
   "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?fit=crop&w=500&q=80",
   "https://images.unsplash.com/photo-1498050108023-c5249f4df085?fit=crop&w=500&q=80",
-]
-;
-
+];
 function EtapeVisuel() {
   const [showTextCustomVisuel, setShowTextCustomVisuel] = useState(false);
+
+  const [imagesVisuels, setImagesVisuels] = React.useState([]);
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          "/wp-json/plugin_memenza/v1/images_visuel",
+        );
+        if (!response.ok) {
+          throw new Error("Erreur lors de la récupération des données");
+        }
+        const result = await response.json();
+        setImagesVisuels(result);
+        console.log(imagesVisuels);
+      } catch (error) {
+        setError(error.message);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleVisuelClickCustom = () => {
     console.log("APPARITION ZONE TEXTE ");
@@ -89,23 +108,24 @@ function EtapeVisuel() {
   return (
     <div>
       <Container className="etape-visuel" maxWidth="lg">
-        <Box className="etape-visuel-intro" sx={{height: "50vh"}}>
+        <Box className="etape-visuel-intro" sx={{ height: "50vh" }}>
           <Box className="etape-visuel-intro-img">
             <img
               src="https://images.pexels.com/photos/265856/pexels-photo-265856.jpeg?auto=compress&cs=tinysrgb&w=600"
               alt=""
-              style={{ width: "100%", 
-                height: "100%", 
+              style={{
+                width: "100%",
+                height: "100%",
                 borderRadius: "8px",
-              objectFit: "cover"
+                objectFit: "cover",
               }}
             />
           </Box>
-          <Box className="etape-visuel-intro-txt" sx={{p:4}}>
-            <Typography variant="h4" color="textPrimary" sx={{mb: 1}}>
+          <Box className="etape-visuel-intro-txt" sx={{ p: 4 }}>
+            <Typography variant="h4" color="textPrimary" sx={{ mb: 1 }}>
               Bienvenue dans la partie Visuel
             </Typography>
-            <Typography variant="body1" color="textPrimary" sx={{pr: 3}}>
+            <Typography variant="body1" color="textPrimary" sx={{ pr: 3 }}>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam
               autem voluptate quia neque, tempore placeat veritatis omnis,
               incidunt ab, corrupti maxime perspiciatis sint eius debitis
@@ -130,43 +150,51 @@ function EtapeVisuel() {
           </Box>
 
           <Grid container spacing={3} justifyContent="center">
-            {images.map((src, index) => (
-              <Grid item key={index} xs={12} sm={6} md={4} lg={3}>
-                <Card
-                  sx={{
-                    transition: "transform 0.3s ease, box-shadow 0.3s ease",
-                    "&:hover": {
-                      transform: "scale(1.05)",
-                      boxShadow: 6,
-                    },
-                  }}
-                  onClick={handleVisuelClickCustom}
-                >
-                  <CardMedia
-                    component="img"
-                    image={src}
-                    alt={`Visuel ${index + 1}`}
-                    sx={{
-                      height: 200,
-                      borderTopLeftRadius: 4,
-                      borderTopRightRadius: 4,
-                      objectFit: "cover",
-                    }}
-                  />
-                  <CardContent>
-                    <Typography
-                      variant="body1"
-                      color="textPrimary"
-                      fontWeight="bold"
-                    >
-                      Visuel {index + 1}
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary">
-                      Description courte pour expliquer l'intérêt de ce visuel.
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
+            {/* {imagesVisuels.map((champ, index) => (
+              <Grid item key={index}>
+                <Typography variant="h5" color="textSecondary">
+              {champ.nom_modele}
+            </Typography>
+            </Grid>
+            ))} */}
+
+            {/* {images.map((src, index) => ( */}
+            {/* {Array.isArray(imagesVisuels) && imagesVisuels.length > 0 ? (
+              imagesVisuels.map((element, index) => (
+                <Grid item key={index} xs={12} sm={6} md={4} lg={3}>
+                  <Card>
+                    <CardMedia
+                      component="img"
+                      image={element.img_modele}
+                      alt={`Visuel ${index + 1}`}
+                    />
+                    <CardContent>
+                      <Typography>{element.nom_modele}</Typography>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              ))
+            ) : (
+              <Typography>Aucune image disponible.</Typography>
+            )} */}
+
+            {imagesVisuels.map((item, index) => (
+              <>
+                {/* <Typography>{JSON.stringify(item.nom_modele)}</Typography> */}
+                <Grid item key={index} xs={12} sm={6} md={4} lg={3}>
+                  <Card onClick={handleVisuelClickCustom}>
+                    <CardMedia
+                      component="img"
+                      // image={item.img_modele}
+                      image="/visuels/cadres/templates/alexandre.png"
+                      alt={`Visuel ${index + 1}`}
+                    />
+                    <CardContent>
+                      <Typography>{item.nom_modele}</Typography>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              </>
             ))}
           </Grid>
           <Divider sx={{ mt: 2 }}> OU </Divider>
