@@ -66,9 +66,24 @@ const StylesSliders = `
 `;
 
 export default function Sliders({ onImageClick }) {
+
+  const [images, setImages] = useState([]);
+
+  useEffect(() => {
+    fetch('/wp-json/my-plugin/v1/images')
+        .then((response) => response.json())
+        .then((data) => setImages(data))
+        .catch((error) => console.error('Error fetching images:', error));
+}, []);
+
   return (
     <React.Fragment>
     <div className="container-carousel">
+    <div>
+            {images.map((image) => (
+                <img key={image.id} src={image.url} alt={`Image ${image.id}`} />
+            ))}
+        </div>
     <div className="carousel">
     <img
     class="item"
