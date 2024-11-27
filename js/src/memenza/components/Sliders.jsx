@@ -63,57 +63,85 @@ const StylesSliders = `
   transform: translateZ(80px) rotateY(-10deg);
 }
 
+.test-data {
+color: #000000 !important;
+}
+
 `;
 
 export default function Sliders({ onImageClick }) {
+  
+    const [images, setImages] = React.useState([]);
 
-  const [images, setImages] = useState([]);
+    const [data, setData] = React.useState([]);
+    const [error, setError] = React.useState(null);
+    React.useEffect(() => {
+      const fetchData = async () => {
+          try {
+              const response = await fetch('/wp-json/plugin_memenza/v1/images');
+              if (!response.ok) {
+                  throw new Error('Erreur lors de la récupération des données');
+              }
+              const result = await response.json();
+              setData(result);
+              console.log(data);
+              
+          } catch (error) {
+              setError(error.message);
+          }
+      };
 
-  useEffect(() => {
-    fetch('/wp-json/my-plugin/v1/images')
-        .then((response) => response.json())
-        .then((data) => setImages(data))
-        .catch((error) => console.error('Error fetching images:', error));
-}, []);
+      fetchData();
+  }, []);
 
-  return (
-    <React.Fragment>
-    <div className="container-carousel">
-    <div>
-            {images.map((image) => (
-                <img key={image.id} src={image.url} alt={`Image ${image.id}`} />
-            ))}
-        </div>
-    <div className="carousel">
-    <img
-    class="item"
-    // src="https://images.pexels.com/photos/1456613/pexels-photo-1456613.jpeg?auto=compress&cs=tinysrgb&w=600"
-    src="https://memenza.fr/wp-content/uploads/2024/10/insta4.png"
-    alt=""
-    />
-    <img
-    class="item"
-    // src="https://images.pexels.com/photos/265856/pexels-photo-265856.jpeg?auto=compress&cs=tinysrgb&w=600"
-    src="https://memenza.fr/wp-content/uploads/2024/10/insta1.png"
-    alt=""
-    />
-    <img
-    class="item"
-    // src="https://images.pexels.com/photos/2253870/pexels-photo-2253870.jpeg?auto=compress&cs=tinysrgb&w=600"
-    src="https://memenza.fr/wp-content/uploads/2024/10/insta2.png"
-    alt="photo mariage"
-    onClick={onImageClick}
-    />
-    <img
-    class="item"
-    // src="https://images.pexels.com/photos/948185/pexels-photo-948185.jpeg?auto=compress&cs=tinysrgb&w=600"
-    src="https://memenza.fr/wp-content/uploads/2024/10/insta5.png"
-    alt=""
-    />
-    </div>
-    </div>
-    <style>{StylesSliders}</style>
-    </React.Fragment>
-  );
+  if (error) {
+    return <div style={{ color: 'red' }}>Erreur : {error}</div>;
 }
-
+  
+  return (
+    <React.Fragment> 
+    <div className="container-carousel">
+      <div className="carousel">
+        {
+          data.map((item, index) => (
+            <img
+      class="item"
+src={item.url}
+// src={item.chemin_img_cat}
+      alt=""
+      />
+          ))
+        }
+      {/* <img
+      class="item"
+      // src="https://images.pexels.com/photos/1456613/pexels-photo-1456613.jpeg?auto=compress&cs=tinysrgb&w=600"
+      src="https://memenza.fr/wp-content/uploads/2024/10/insta4.png"
+      alt=""
+      />
+      <img
+      class="item"
+      // src="https://images.pexels.com/photos/265856/pexels-photo-265856.jpeg?auto=compress&cs=tinysrgb&w=600"
+      src="https://memenza.fr/wp-content/uploads/2024/10/insta1.png"
+      alt=""
+      />
+      <img
+      class="item"
+      // src="https://images.pexels.com/photos/2253870/pexels-photo-2253870.jpeg?auto=compress&cs=tinysrgb&w=600"
+      src="https://memenza.fr/wp-content/uploads/2024/10/insta2.png"
+      alt="photo mariage"
+      onClick={onImageClick}
+      />
+      <img
+      class="item"
+      // src="https://images.pexels.com/photos/948185/pexels-photo-948185.jpeg?auto=compress&cs=tinysrgb&w=600"
+      src="https://memenza.fr/wp-content/uploads/2024/10/insta5.png"
+      alt=""
+      /> */}
+      </div>
+      </div>
+      <style>{StylesSliders}</style>
+      </React.Fragment>
+    );
+  }
+  
+  

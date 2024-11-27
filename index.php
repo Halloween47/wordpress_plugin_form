@@ -26,10 +26,10 @@ function memenza_plugin_menu() {
 function memenza_plugin_page_content() {
     ?>
     <div class="wrap">
-        <div id="plugin_backoffice_container">
-            <div id="react-container-buttongroup"></div>
-            <div id="react-container-presentation" class ="react-container-presentation" ></div>
-        </div>  
+    <div id="plugin_backoffice_container">
+    <div id="react-container-buttongroup"></div>
+    <div id="react-container-presentation" class ="react-container-presentation" ></div>
+    </div>  
     </div>
     <?php
 }
@@ -51,15 +51,26 @@ function enqeue_react_script() {
 }
 
 add_action('rest_api_init', function () {
-    register_rest_route('my-plugin/v1', '/images', [
+    register_rest_route('plugin_memenza/v1', '/images', [
         'methods' => 'GET',
         'callback' => function () {
             return rest_ensure_response([
-                ['id' => 1, 'url' => 'https://via.placeholder.com/150'],
-                ['id' => 2, 'url' => 'https://via.placeholder.com/200'],
-                ['id' => 3, 'url' => 'https://via.placeholder.com/250'],
+                ['id' => 1, 'url' => 'https://memenza.fr/wp-content/uploads/2024/10/insta4.png'],
+                ['id' => 2, 'url' => 'https://memenza.fr/wp-content/uploads/2024/10/insta1.png'],
+                ['id' => 3, 'url' => 'https://memenza.fr/wp-content/uploads/2024/10/insta2.png'],
+                ['id' => 3, 'url' => 'https://memenza.fr/wp-content/uploads/2024/10/insta5.png'],
             ]);
-        },
+                        
+            // // // TEST
+            // // Connexion à la base distante
+            // $db = new mysqli('localhost', 'root', 'root', 'local');
+            // $result = $db->query('SELECT chemin_img_cat FROM categories');
+            // $images = $result->fetch_all(MYSQLI_ASSOC);
+            // $db->close();
+            
+            // return rest_ensure_response($images);
+        
+            },
     ]);
 });
 
