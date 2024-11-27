@@ -72,7 +72,7 @@ add_action('rest_api_init', function () {
         
             },
     ]);
-    // Nouvelle route pour récupérer d'autres images
+    // Nouvelle route pour récupérer image sous categories
     register_rest_route('plugin_memenza/v1', '/images_sous-categories', [
         'methods' => 'GET',
         'callback' => function () {
@@ -87,6 +87,27 @@ add_action('rest_api_init', function () {
             }
 
             $result = $db->query('SELECT chemin_img_sscat FROM souscategories');
+            $images = $result->fetch_all(MYSQLI_ASSOC);
+            $db->close();
+
+            return rest_ensure_response($images);
+        },
+    ]);
+    // Nouvelle route pour récupérer image visuel
+    register_rest_route('plugin_memenza/v1', '/images_visuel', [
+        'methods' => 'GET',
+        'callback' => function () {
+            $db = new mysqli('localhost', 'root', 'root', 'local');
+            
+            if ($db->connect_error) {
+                return new WP_Error(
+                    'db_connection_error',
+                    'Erreur de connexion : ' . $db->connect_error,
+                    ['status' => 500]
+                );
+            }
+
+            $result = $db->query('SELECT img_modele FROM modelescadre');
             $images = $result->fetch_all(MYSQLI_ASSOC);
             $db->close();
 
