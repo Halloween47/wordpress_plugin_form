@@ -50,4 +50,16 @@ function enqeue_react_script() {
     );
 }
 
+add_action('rest_api_init', function () {
+    register_rest_route('my-plugin/v1', '/images', [
+        'methods' => 'GET',
+        'callback' => function () {
+            return rest_ensure_response([
+                ['id' => 1, 'url' => 'https://via.placeholder.com/150'],
+                ['id' => 2, 'url' => 'https://via.placeholder.com/200'],
+                ['id' => 3, 'url' => 'https://via.placeholder.com/250'],
+            ]);
+        },
+    ]);
+});
 
