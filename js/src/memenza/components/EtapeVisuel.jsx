@@ -16,6 +16,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import PopupUpload from "./PopupUpload.jsx";
 import PopupPreview from "./PopupPreview.jsx";
+import VisuelFormTemplate1 from "./VisuelFormTemplate1.jsx";
 
 const StyleEtapeVisuel = `
 .etape-visuel {
@@ -186,7 +187,7 @@ function EtapeVisuel() {
                     <CardMedia
                       component="img"
                       // image={item.img_modele}
-                      image="/visuels/cadres/templates/alexandre.png"
+                      image="/visuels/cadres/templates/alexandre_template.png"
                       alt={`Visuel ${index + 1}`}
                     />
                     <CardContent>
@@ -214,38 +215,39 @@ function EtapeVisuel() {
         </Box>
 
         {showTextCustomVisuel && (
-          <Box className="etape-video-personnalisation-visuel">
-            <Typography variant="h5" gutterBottom>
-              Personnalisez votre vidéo
-            </Typography>
-            <Divider> ICI VOTRE TEXTE </Divider>
-            <Box className="etape-video-personnalisation-video-medias">
-              {[1, 2, 3].map((media) => (
-                <Box className="upload-media" key={media}>
-                  <Typography variant="body2">Média {media} :</Typography>
-                  <Button variant="contained" color="primary">
-                    Upload votre média
-                  </Button>
-                </Box>
-              ))}
-              <Divider style={{ margin: "20px 0" }} />
-              {[1, 2].map((text) => (
-                <Box className="upload-media" key={`text-${text}`}>
-                  <Typography variant="body2">Texte {text} :</Typography>
-                  <TextField
-                    id={`filled-basic-${text}`}
-                    label={`Text ${text}`}
-                    variant="filled"
-                    size="small"
-                  />
-                  <Checkbox
-                    defaultChecked
-                    {...{ inputProps: { "aria-label": "Checkbox demo" } }}
-                  />
-                </Box>
-              ))}
-            </Box>
-          </Box>
+          <VisuelFormTemplate1 />
+          // <Box className="etape-video-personnalisation-visuel">
+          //   <Typography variant="h5" gutterBottom>
+          //     Personnalisez votre vidéo
+          //   </Typography>
+          //   <Divider> ICI VOTRE TEXTE </Divider>
+          //   <Box className="etape-video-personnalisation-video-medias">
+          //     {[1, 2, 3].map((media) => (
+          //       <Box className="upload-media" key={media}>
+          //         <Typography variant="body2">Média {media} :</Typography>
+          //         <Button variant="contained" color="primary">
+          //           Upload votre média
+          //         </Button>
+          //       </Box>
+          //     ))}
+          //     <Divider style={{ margin: "20px 0" }} />
+          //     {[1, 2].map((text) => (
+          //       <Box className="upload-media" key={`text-${text}`}>
+          //         <Typography variant="body2">Texte {text} :</Typography>
+          //         <TextField
+          //           id={`filled-basic-${text}`}
+          //           label={`Text ${text}`}
+          //           variant="filled"
+          //           size="small"
+          //         />
+          //         <Checkbox
+          //           defaultChecked
+          //           {...{ inputProps: { "aria-label": "Checkbox demo" } }}
+          //         />
+          //       </Box>
+          //     ))}
+          //   </Box>
+          // </Box>
         )}
         <ButtonGroup
           sx={{
