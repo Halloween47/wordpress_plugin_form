@@ -8,8 +8,8 @@ $default_settings = [
     'font' => __DIR__ . '/Vibur.ttf', // Chemin de la police
     'font_size1' => 176, // Taille initiale texte 1
     'font_size2' => 70,  // Taille initiale texte 2
-    'image1' => __DIR__ . '/uploads/image1.png', // Chemin image 1
-    'image2' => __DIR__ . '/uploads/image2.png', // Chemin image 2
+    'image1' => __DIR__ . '/uploads/alexandre_template.png', // Chemin image 1
+    // 'image2' => __DIR__ . '/uploads/image2.png', // Chemin image 2
     'text1' => 'Votre texte 1', // Contenu du texte 1
     'text2' => 'Votre texte 2', // Contenu du texte 2
     'text1_position' => ['x_percent' => 0.39, 'y_percent' => 0.16], // Position texte 1
@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $default_settings['text1'] = $_POST['text1'] ?? $default_settings['text1'];
     $default_settings['text2'] = $_POST['text2'] ?? $default_settings['text2'];
     $default_settings['image1'] = $_FILES['image1']['tmp_name'] ?? $default_settings['image1'];
-    $default_settings['image2'] = $_FILES['image2']['tmp_name'] ?? $default_settings['image2'];
+    // $default_settings['image2'] = $_FILES['image2']['tmp_name'] ?? $default_settings['image2'];
 }
 
 // Générer l'image avec les paramètres actuels
@@ -49,10 +49,10 @@ function generateImage($settings) {
 
     // Charger et redimensionner les images
     $image1_resized = loadAndResizeImage($image1, $image_area_width, $image_area_height, "Image 1");
-    $image2_resized = loadAndResizeImage($image2, $image_area_width, $image_area_height, "Image 2");
+    // $image2_resized = loadAndResizeImage($image2, $image_area_width, $image_area_height, "Image 2");
 
     imagecopy($image_with_border, $image1_resized, $border_size, $border_size, 0, 0, $image_area_width, $image_area_height);
-    imagecopy($image_with_border, $image2_resized, $border_size, $border_size, 0, 0, $image_area_width, $image_area_height);
+    // imagecopy($image_with_border, $image2_resized, $border_size, $border_size, 0, 0, $image_area_width, $image_area_height);
 
     // Ajouter les textes
     $text_color = imagecolorallocate($image_with_border, 244, 192, 81); // Couleur texte : #F4C051

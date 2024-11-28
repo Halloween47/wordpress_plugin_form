@@ -28,6 +28,7 @@ function ImageForm() {
       //   const response = await fetch("/generate", {
       const response = await fetch(
         "../wp-content/plugins/memenza-form-test/js/src/memenza/test/process-simplifie.php",
+        // "../wp-content/plugins/memenza-form-test/js/src/memenza/test/process.php",
         {
           method: "POST",
           body: formPayload,

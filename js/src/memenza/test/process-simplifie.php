@@ -6,6 +6,8 @@ $default_settings = [
     'font' => __DIR__ . '/Vibur.ttf', // Chemin de la police
     'font_size1' => 176, // Taille initiale texte 1
     'font_size2' => 70,  // Taille initiale texte 2
+    'image1' => __DIR__ . '/uploads/alexandre_template.png', // Chemin image 1
+
     'text1' => 'Votre texte 1', // Contenu du texte 1
     'text2' => 'Votre texte 2', // Contenu du texte 2
     'text1_position' => ['x_percent' => 0.39, 'y_percent' => 0.16], // Position texte 1
@@ -19,6 +21,8 @@ $default_settings = [
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $default_settings['text1'] = $_POST['text1'] ?? $default_settings['text1'];
     $default_settings['text2'] = $_POST['text2'] ?? $default_settings['text2'];
+    $default_settings['image1'] = $_FILES['image1']['tmp_name'] ?? $default_settings['image1'];
+
 }
 
 // Générer l'image avec les paramètres actuels
@@ -36,6 +40,12 @@ function generateImage($settings) {
     $image_with_border = imagecreatetruecolor($output_width, $output_height);
     $white = imagecolorallocate($image_with_border, 255, 255, 255);
     imagefill($image_with_border, 0, 0, $white);
+
+    // Charger et redimensionner les images
+    $image1_resized = loadAndResizeImage($image1, $image_area_width, $image_area_height, "Image 1");
+
+    imagecopy($image_with_border, $image1_resized, $border_size, $border_size, 0, 0, $image_area_width, $image_area_height);
+
 
     // Ajouter les textes
     $text_color = imagecolorallocate($image_with_border, 244, 192, 81); // Couleur texte : #F4C051
@@ -60,5 +70,21 @@ function generateImage($settings) {
     echo file_get_contents($output_file);
 
     imagedestroy($image_with_border);
+}
+
+// Fonction pour charger et redimensionner une image avec gestion des erreurs
+function loadAndResizeImage($path, $new_width, $new_height, $label) {
+    if (!file_exists($path)) {
+        die("Erreur : Le fichier $label n'existe pas.");
+    }
+    $image = @imagecreatefrompng($path);
+    if ($image === false) {
+        die("Erreur : Impossible de charger $label. Vérifiez que c'est un fichier PNG valide.");
+    }
+    $resized_image = imagecreatetruecolor($new_width, $new_height);
+    imagealphablending($resized_image, false);
+    imagesavealpha($resized_image, true);
+    imagecopyresampled($resized_image, $image, 0, 0, 0, 0, $new_width, $new_height, imagesx($image), imagesy($image));
+    return $resized_image;
 }
 ?>
