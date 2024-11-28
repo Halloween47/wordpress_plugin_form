@@ -114,5 +114,42 @@ add_action('rest_api_init', function () {
             return rest_ensure_response($images);
         },
     ]);
+
+    // Route generate (à faire plus tard)
+    // add_action('rest_api_init', function () {
+    //     register_rest_route('plugin_memenza/v1', '/generate', [
+    //         'methods' => 'GET',
+    //         'callback' => function () {
+    //             // Dossier contenant les images
+    //             $directory = wp_upload_dir()['basedir'] . '../wp-content/plugins/memenza-form-test/js/src/memenza/test/process.php';
+    //             $url_base = wp_upload_dir()['baseurl'] . '../wp-content/plugins/memenza-form-test/js/src/memenza/test/process.php';
+    
+    //             // Vérifier si le dossier existe
+    //             if (!is_dir($directory)) {
+    //                 return new WP_Error(
+    //                     'directory_not_found',
+    //                     'Le dossier des images est introuvable.',
+    //                     ['status' => 404]
+    //                 );
+    //             }
+    
+    //             // Lire les fichiers du dossier
+    //             $files = scandir($directory);
+    //             $images = [];
+    
+    //             foreach ($files as $file) {
+    //                 if (in_array(pathinfo($file, PATHINFO_EXTENSION), ['jpg', 'jpeg', 'png', 'gif'])) {
+    //                     $images[] = [
+    //                         'file_name' => $file,
+    //                         'url' => $url_base . $file,
+    //                     ];
+    //                 }
+    //             }
+    
+    //             return rest_ensure_response($images);
+    //         },
+    //     ]);
+    // });
+    
 });
 

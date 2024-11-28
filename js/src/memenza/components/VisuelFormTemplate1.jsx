@@ -16,44 +16,7 @@ const VisuelFormTemplate1 = () => {
         <Typography variant="h5" gutterBottom>
           Personnalisez votre vidéo
         </Typography>
-        <Box
-          className="upload-media"
-          sx={{ display: "flex", alignItem: "center", my: "10px" }}
-        >
-          <Typography
-            variant="body2"
-            sx={{
-              margin: "inherit",
-              padding: "inherit",
-              display: "flex",
-              alignItem: "center",
-            }}
-          >
-            Image de fond :
-          </Typography>
-          <Button variant="contained" color="primary">
-            Choisir un fichier
-          </Button>
-        </Box>
-        <Box
-          className="upload-media"
-          sx={{ display: "flex", alignItem: "center", my: "10px" }}
-        >
-          <Typography
-            variant="body2"
-            sx={{
-              margin: "inherit",
-              padding: "inherit",
-              display: "flex",
-              alignItem: "center",
-            }}
-          >
-            Image à superposer :
-          </Typography>
-          <Button variant="contained" color="primary">
-            Choisir un fichier
-          </Button>
-        </Box>
+
         <Box
           className="upload-media"
           sx={{ display: "flex", alignItem: "center", my: "10px" }}

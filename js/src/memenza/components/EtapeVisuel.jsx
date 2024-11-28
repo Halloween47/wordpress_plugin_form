@@ -17,6 +17,7 @@ import styled from "styled-components";
 import PopupUpload from "./PopupUpload.jsx";
 import PopupPreview from "./PopupPreview.jsx";
 import VisuelFormTemplate1 from "./VisuelFormTemplate1.jsx";
+import TestGeneration from "./TestGeneration.jsx";
 
 const StyleEtapeVisuel = `
 .etape-visuel {
@@ -215,7 +216,9 @@ function EtapeVisuel() {
         </Box>
 
         {showTextCustomVisuel && (
-          <VisuelFormTemplate1 />
+          // <VisuelFormTemplate1 />
+          <TestGeneration />
+
           // <Box className="etape-video-personnalisation-visuel">
           //   <Typography variant="h5" gutterBottom>
           //     Personnalisez votre vidéo
