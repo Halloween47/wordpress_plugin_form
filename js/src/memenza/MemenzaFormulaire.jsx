@@ -15,11 +15,12 @@ const steps = ["Categorie", "Visuel", "Video", "Validation"];
 function getStepContent(step) {
   switch (step) {
     case 0:
-      return <EtapeCategorie />;
+      // return <EtapeCategorie />;
+      return <EtapeVideo />;
     case 1:
       return <EtapeVisuel />;
     case 2:
-      return <EtapeVideo />;
+      // return <EtapeVideo />;
     case 3:
       return <EtapeValidation />;
     default:

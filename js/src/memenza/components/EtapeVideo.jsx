@@ -11,8 +11,8 @@ import {
   styled,
 } from "@mui/material";
 
-import { purple } from '@mui/material/colors';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import { purple } from "@mui/material/colors";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 import MemenzaChoixVideo from "./MemenzaChoixVideo.jsx";
 import PopupPreview from "./PopupPreview.jsx";
@@ -88,11 +88,11 @@ const imgIntroVideo = [
   "https://images.unsplash.com/photo-1593642532973-d31b6557fa68?fit=crop&w=500&q=80",
 ];
 
-const Root = styled('div')(({ theme }) => ({
-  width: '100%',
+const Root = styled("div")(({ theme }) => ({
+  width: "100%",
   ...theme.typography.body2,
   color: theme.palette.text.secondary,
-  '& > :not(style) ~ :not(style)': {
+  "& > :not(style) ~ :not(style)": {
     marginTop: theme.spacing(2),
   },
 }));
@@ -100,32 +100,54 @@ const Root = styled('div')(({ theme }) => ({
 const ColorButton = styled(Button)(({ theme }) => ({
   color: theme.palette.getContrastText(purple[500]),
   backgroundColor: purple[500],
-  '&:hover': {
+  "&:hover": {
     backgroundColor: purple[700],
   },
 }));
 
-const VisuallyHiddenInput = styled('input')({
-  clip: 'rect(0 0 0 0)',
-  clipPath: 'inset(50%)',
+const VisuallyHiddenInput = styled("input")({
+  clip: "rect(0 0 0 0)",
+  clipPath: "inset(50%)",
   height: 1,
-  overflow: 'hidden',
-  position: 'absolute',
+  overflow: "hidden",
+  position: "absolute",
   bottom: 0,
   left: 0,
-  whiteSpace: 'nowrap',
+  whiteSpace: "nowrap",
   width: 1,
 });
 
-
-
 function EtapeVideo() {
   const [showTextCustomVideo, setShowTextCustomVideo] = useState(false);
+
+  //////////////
+  const [imagesVisuels, setImagesVisuels] = React.useState([]);
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          "/wp-json/plugin_memenza/v1/images_visuel",
+        );
+        if (!response.ok) {
+          throw new Error("Erreur lors de la récupération des données");
+        }
+        const result = await response.json();
+        setImagesVisuels(result);
+        console.log(imagesVisuels);
+      } catch (error) {
+        setError(error.message);
+      }
+    };
+
+    fetchData();
+  }, []);
+  //////////////
+
   const handleVideoClickCustom = () => {
     console.log("APPARITION ZONE TEXTE ");
     setShowTextCustomVideo(true);
-    
-      };
+  };
   return (
     <Container className="etape-video" maxWidth="lg">
       <Box className="etape-video-intro">
@@ -137,7 +159,7 @@ function EtapeVideo() {
           />
         </Box>
         <Box className="etape-video-intro-txt">
-        <Typography variant="h4" color="textPrimary">
+          <Typography variant="h4" color="textPrimary">
             Bienvenue dans la partie Vidéo
           </Typography>
           <Typography variant="body1" color="textPrimary">
@@ -150,71 +172,80 @@ function EtapeVideo() {
       </Box>
 
       <Box className="etape-video-template">
+        {/* ////////////////////////// */}
+        {imagesVisuels.map((item, index) => (
+          <>
+            <Typography>{item.nom_modele}</Typography>
+          </>
+        ))}
+        {/* ////////////////////////// */}
         <MemenzaChoixVideo />
         {/* <ColorButton variant="contained" onClick={handleVideoClickCustom}>Je choisi ce template</ColorButton> */}
-        <Box sx={{ display: "flex", justifyContent: "center"}}>
-
-        <ColorButton variant="contained" sx={{mb: 2}} onClick={handleVideoClickCustom}>Je choisi ce template</ColorButton>
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <ColorButton
+            variant="contained"
+            sx={{ mb: 2 }}
+            onClick={handleVideoClickCustom}
+          >
+            Je choisi ce template
+          </ColorButton>
         </Box>
 
         <Root>
-        <Divider> OU </Divider>
-        <Box className="etape-video-upload-video">
-        {/* <DownloadButton /> */}
-        <Button
-  component="label"
-  role={undefined}
-  variant="contained"
-  tabIndex={-1}
-  startIcon={<CloudUploadIcon />}
->
-Uploader son propre visuel
-  <VisuallyHiddenInput
-    type="file"
-    onChange={(event) => console.log(event.target.files)}
-    multiple
-  />
-</Button>
-      </Box>
-        </Root>
-      </Box>
-      {showTextCustomVideo && 
-      <Box className="etape-video-personnalisation-video">
-      
-      <Typography variant="h5" gutterBottom>
-        Personnalisez votre vidéo
-      </Typography>
-      <Divider> ICI VOTRE TEXTE </Divider>
-      <Box className="etape-video-personnalisation-video-medias">
-        {[1, 2, 3].map((media) => (
-          <Box className="upload-media" key={media}>
-            <Typography variant="body2">Média {media} :</Typography>
-            <Button variant="contained" color="primary">
-              Upload votre média
+          <Divider> OU </Divider>
+          <Box className="etape-video-upload-video">
+            {/* <DownloadButton /> */}
+            <Button
+              component="label"
+              role={undefined}
+              variant="contained"
+              tabIndex={-1}
+              startIcon={<CloudUploadIcon />}
+            >
+              Uploader son propre visuel
+              <VisuallyHiddenInput
+                type="file"
+                onChange={(event) => console.log(event.target.files)}
+                multiple
+              />
             </Button>
           </Box>
-        ))}
-        <Divider style={{ margin: "20px 0" }} />
-        {[1, 2].map((text) => (
-          <Box className="upload-media" key={`text-${text}`}>
-            <Typography variant="body2">Texte {text} :</Typography>
-            <TextField
-              id={`filled-basic-${text}`}
-              label={`Text ${text}`}
-              variant="filled"
-              size="small"
-            />
-            <Checkbox
-              defaultChecked
-              {...{ inputProps: { "aria-label": "Checkbox demo" } }}
-            />
-          </Box>
-        ))}
+        </Root>
       </Box>
-    </Box>
-      }
-
-      
+      {showTextCustomVideo && (
+        <Box className="etape-video-personnalisation-video">
+          <Typography variant="h5" gutterBottom>
+            Personnalisez votre vidéo
+          </Typography>
+          <Divider> ICI VOTRE TEXTE </Divider>
+          <Box className="etape-video-personnalisation-video-medias">
+            {[1, 2, 3].map((media) => (
+              <Box className="upload-media" key={media}>
+                <Typography variant="body2">Média {media} :</Typography>
+                <Button variant="contained" color="primary">
+                  Upload votre média
+                </Button>
+              </Box>
+            ))}
+            <Divider style={{ margin: "20px 0" }} />
+            {[1, 2].map((text) => (
+              <Box className="upload-media" key={`text-${text}`}>
+                <Typography variant="body2">Texte {text} :</Typography>
+                <TextField
+                  id={`filled-basic-${text}`}
+                  label={`Text ${text}`}
+                  variant="filled"
+                  size="small"
+                />
+                <Checkbox
+                  defaultChecked
+                  {...{ inputProps: { "aria-label": "Checkbox demo" } }}
+                />
+              </Box>
+            ))}
+          </Box>
+        </Box>
+      )}
 
       <Box className="etape-video-boutons">
         <ButtonGroup>
