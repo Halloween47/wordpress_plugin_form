@@ -9,6 +9,7 @@ import {
   Box,
   Container,
   styled,
+  Grid,
 } from "@mui/material";
 
 import { purple } from "@mui/material/colors";
@@ -121,20 +122,20 @@ function EtapeVideo() {
   const [showTextCustomVideo, setShowTextCustomVideo] = useState(false);
 
   //////////////
-  const [imagesVisuels, setImagesVisuels] = React.useState([]);
+  // const [imagesVisuels, setImagesVisuels] = React.useState([]);
+  const [visuelsVideos, setvisuelsVideos] = React.useState([]);
 
   React.useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "/wp-json/plugin_memenza/v1/images_visuel",
+          "/wp-json/plugin_memenza/v1/videos_visuel",
         );
         if (!response.ok) {
           throw new Error("Erreur lors de la récupération des données");
         }
         const result = await response.json();
-        setImagesVisuels(result);
-        console.log(imagesVisuels);
+        setvisuelsVideos(result);
       } catch (error) {
         setError(error.message);
       }
@@ -173,9 +174,10 @@ function EtapeVideo() {
 
       <Box className="etape-video-template">
         {/* ////////////////////////// */}
-        {imagesVisuels.map((item, index) => (
+        {/* {imagesVisuels.map((item, index) => ( */}
+        {visuelsVideos.map((item, index) => (
           <>
-            <Typography>{item.nom_modele}</Typography>
+            <Typography>{item.chemin_video_ex}</Typography>
           </>
         ))}
         {/* ////////////////////////// */}

@@ -14,6 +14,26 @@ export default function MemenzaChoixVideo() {
   const videoRefs = useRef([]);
   const [isPlaying, setIsPlaying] = useState(Array(videos.length).fill(false));
   
+  const [visuelsVideos, setvisuelsVideos] = React.useState([]);
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          "/wp-json/plugin_memenza/v1/videos_visuel",
+        );
+        if (!response.ok) {
+          throw new Error("Erreur lors de la récupération des données");
+        }
+        const result = await response.json();
+        setvisuelsVideos(result);
+      } catch (error) {
+        setError(error.message);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const handleVideoClick = (index) => {
     const video = videoRefs.current[index];
     const playingStatus = [...isPlaying];
@@ -41,7 +61,8 @@ export default function MemenzaChoixVideo() {
         (Explication du pourquoi du choix du template)
       </Typography>
       <Grid container spacing={2} justifyContent="center">
-        {videos.map((src, index) => (
+        {/* {videos.map((src, index) => ( */}
+        {visuelsVideos.map((src, index) => (
           <Grid item key={index} xs={6} sm={4} md={3}>
             <Box
               sx={{
@@ -59,7 +80,7 @@ export default function MemenzaChoixVideo() {
             >
               <Box
                 component="video"
-                src={src}
+                src={src.chemin_video_ex}
                 ref={(el) => (videoRefs.current[index] = el)}
                 sx={{
                   width: "100%",

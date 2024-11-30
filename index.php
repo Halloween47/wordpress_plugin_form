@@ -115,6 +115,28 @@ add_action('rest_api_init', function () {
         },
     ]);
 
+    // Nouvelle route pour récupérer VIDEO visuel
+    register_rest_route('plugin_memenza/v1', '/videos_visuel', [
+        'methods' => 'GET',
+        'callback' => function () {
+            $db = new mysqli('localhost', 'root', 'root', 'local');
+            
+            if ($db->connect_error) {
+                return new WP_Error(
+                    'db_connection_error',
+                    'Erreur de connexion : ' . $db->connect_error,
+                    ['status' => 500]
+                );
+            }
+
+            $result = $db->query('SELECT nom_modele_video, chemin_video_ex FROM modelesvideo');
+            $videos = $result->fetch_all(MYSQLI_ASSOC);
+            $db->close();
+
+            return rest_ensure_response($videos);
+        },
+    ]);
+
     // Route generate (à faire plus tard)
     // add_action('rest_api_init', function () {
     //     register_rest_route('plugin_memenza/v1', '/generate', [
