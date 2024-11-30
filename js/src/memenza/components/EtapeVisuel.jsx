@@ -18,6 +18,7 @@ import PopupUpload from "./PopupUpload.jsx";
 import PopupPreview from "./PopupPreview.jsx";
 import TestGeneration from "./TestGeneration.jsx";
 import { useSousCat } from "./SousCatContext.jsx";
+import ImageCustomization from "./ImageCustomizer.jsx";
 
 const StyleEtapeVisuel = `
 .etape-visuel {
@@ -227,7 +228,10 @@ const imagesVisuelsFitred =  imagesVisuels.filter((item) => {
 
         {showTextCustomVisuel && (
           // <VisuelFormTemplate1 />
+          <>
           <TestGeneration />
+          <ImageCustomization />
+          </>
 
           // <Box className="etape-video-personnalisation-visuel">
           //   <Typography variant="h5" gutterBottom>
