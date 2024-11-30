@@ -78,7 +78,7 @@ function EtapeCategorie() {
         Choisissez votre catégorie.
       </Typography>
       <Sliders onImageClick={handleOpen} />
-      <Modal
+      {/* <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
@@ -97,7 +97,7 @@ function EtapeCategorie() {
             <style>{StylesSousCategories}</style>
           </div>
         </Box>
-      </Modal>
+      </Modal> */}
     </Box>
   );
 }
