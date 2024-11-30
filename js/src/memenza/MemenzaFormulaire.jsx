@@ -10,13 +10,15 @@ import EtapeVideo from "./components/EtapeVideo.jsx";
 import EtapeValidation from "./components/EtapeValidation.jsx";
 import EtapeCategorie from "./components/EtapeCategorie.jsx";
 import EtapeVisuel from "./components/EtapeVisuel.jsx";
+import ComingSoon from "./components/ComingSoon.jsx";
 
 const steps = ["Categorie", "Visuel", "Video", "Validation"];
 function getStepContent(step) {
   switch (step) {
     case 0:
       // return <EtapeCategorie />;
-      return <EtapeVideo />;
+      // return <EtapeVideo />;
+      return <ComingSoon />;
     case 1:
       return <EtapeVisuel />;
     case 2:
