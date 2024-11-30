@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { Box, Typography, Grid} from "@mui/material";
+import { Box, Typography, Grid, TextField, Button} from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import Checkbox from '@mui/material/Checkbox';
 
@@ -11,6 +11,53 @@ const videos = [
 
 
 export default function MemenzaChoixVideo() {
+  const [formData, setFormData] = useState({
+    templateId: '',
+    descr: '',
+    variables: {
+      scene1_texte1: "Test écriture variable",
+      scene2_image1: "https://img.freepik.com/photos-gratuite/nuages-stylefantastique_23-2151057680.jpg",
+      scene2_image2: "https://i.pinimg.com/736x/7a/c6/91/7ac69100e88a63a14b9cbe8ba260721f.jpg",
+      scene2_texte1: "Ceci est un message varible postman",
+      scene3_image2: "https://archzine.fr/wp-content/uploads/2020/03/wallpaperordinateur-pc-fond-ecran-kawaii-dessin-cactus-vert-fleurs-roses.webp",
+      scene3_texte1: "Cela fonctionne bien ?",
+      scene3_image3: "https://cdn.futura-sciences.com/cdncgi/image/width=1024,quality=60,format=auto/sources/images/screen/EVENEMENT/Hiver/965-hiver-43.jpg"
+    },
+  });
+  
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    console.log(formData);
+    
+  };
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   const apiUrl = 'https://core-api.memenza.fr/api/wp-media/create-with-tpl'; // Remplacez par l'URL de votre API
+  //   const apiKey = process.env.REACT_APP_MEMENZA_API_KEY; // Clé API depuis .env
+
+  //   try {
+  //     const response = await axios.post(apiUrl, formData, {
+  //       headers: {
+  //         'WP-API-KEY': apiKey,
+  //         'Content-Type': 'application/json',
+  //       },
+  //     });
+
+  //     setResponseData(response.data);
+  //     setError(null); // Réinitialiser les erreurs en cas de succès
+  //   } catch (err) {
+  //     setError(err.response?.data || 'Une erreur est survenue.');
+  //     setResponseData(null);
+  //   }
+  // };
+
   const videoRefs = useRef([]);
   const [isPlaying, setIsPlaying] = useState(Array(videos.length).fill(false));
   
@@ -26,6 +73,8 @@ export default function MemenzaChoixVideo() {
         }
         const result = await response.json();
         setvisuelsVideos(result);
+        console.log(formData);
+        
       } catch (error) {
         setError(error.message);
       }
@@ -110,6 +159,31 @@ export default function MemenzaChoixVideo() {
               )}
             </Box>
             <Checkbox />
+            <Box
+      component="form"
+      onSubmit={handleSubmit}
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 2,
+        width: '100%',
+        margin: 'auto',
+        mt: 5,
+      }}
+    >
+            <TextField
+        label="Votre description"
+        name="descr"
+        value={formData.descr}
+        onChange={handleChange}
+        fullWidth
+        required
+        sx={{ }}
+      />
+      <Button type="submit" variant="contained" color="primary">
+        Envoyer
+      </Button>
+      </Box>
           </Grid>
         ))}
       </Grid>

@@ -121,29 +121,7 @@ const VisuallyHiddenInput = styled("input")({
 function EtapeVideo() {
   const [showTextCustomVideo, setShowTextCustomVideo] = useState(false);
 
-  //////////////
-  // const [imagesVisuels, setImagesVisuels] = React.useState([]);
-  const [visuelsVideos, setvisuelsVideos] = React.useState([]);
-
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          "/wp-json/plugin_memenza/v1/videos_visuel",
-        );
-        if (!response.ok) {
-          throw new Error("Erreur lors de la récupération des données");
-        }
-        const result = await response.json();
-        setvisuelsVideos(result);
-      } catch (error) {
-        setError(error.message);
-      }
-    };
-
-    fetchData();
-  }, []);
-  //////////////
+  
 
   const handleVideoClickCustom = () => {
     console.log("APPARITION ZONE TEXTE ");
@@ -173,14 +151,6 @@ function EtapeVideo() {
       </Box>
 
       <Box className="etape-video-template">
-        {/* ////////////////////////// */}
-        {/* {imagesVisuels.map((item, index) => ( */}
-        {visuelsVideos.map((item, index) => (
-          <>
-            <Typography>{item.chemin_video_ex}</Typography>
-          </>
-        ))}
-        {/* ////////////////////////// */}
         <MemenzaChoixVideo />
         {/* <ColorButton variant="contained" onClick={handleVideoClickCustom}>Je choisi ce template</ColorButton> */}
         <Box sx={{ display: "flex", justifyContent: "center" }}>
