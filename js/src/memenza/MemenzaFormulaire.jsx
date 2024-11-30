@@ -17,12 +17,12 @@ function getStepContent(step) {
   switch (step) {
     case 0:
       return <EtapeCategorie />;
-      // return <EtapeVideo />;
-      // return <ComingSoon />;
+    // return <EtapeVideo />;
+    // return <ComingSoon />;
     case 1:
       return <EtapeVisuel />;
     case 2:
-      // return <EtapeVideo />;
+      return <EtapeVideo />;
     case 3:
       return <EtapeValidation />;
     default:
@@ -76,7 +76,9 @@ const MemenzaFormulaire = () => {
 
   const handleSkip = () => {
     if (!isStepOptional(activeStep)) {
-      throw new Error("Vous ne pouvez pas sauter une étape qui n'est pas facultative.");
+      throw new Error(
+        "Vous ne pouvez pas sauter une étape qui n'est pas facultative.",
+      );
     }
 
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -90,9 +92,9 @@ const MemenzaFormulaire = () => {
   return (
     <div className="memenzaFormulaire">
       <Box sx={{ width: "100%", height: "auto" }}>
-        <Typography variant="h4" gutterBottom sx={{color: "#000",}}>
-        Nom du produit
-      </Typography>
+        <Typography variant="h4" gutterBottom sx={{ color: "#000" }}>
+          Nom du produit
+        </Typography>
         <Stepper
           activeStep={activeStep}
           sx={{
@@ -125,7 +127,7 @@ const MemenzaFormulaire = () => {
         {activeStep === steps.length ? (
           <React.Fragment>
             <Typography sx={{ mt: 2, mb: 1 }}>
-            Toutes les étapes sont terminées : vous avez terminé
+              Toutes les étapes sont terminées : vous avez terminé
             </Typography>
             <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
               <Box sx={{ flex: "1 1 auto" }} />
@@ -153,7 +155,11 @@ const MemenzaFormulaire = () => {
                 </Button>
               )} */}
 
-              <Button  variant="contained" onClick={handleSuivant} sx={{ color: "#ffffff ", backgroundColor: "#A46FFB" }}>
+              <Button
+                variant="contained"
+                onClick={handleSuivant}
+                sx={{ color: "#ffffff ", backgroundColor: "#A46FFB" }}
+              >
                 {activeStep === steps.length - 1 ? "Terminé" : "Suivant"}
               </Button>
             </Box>
