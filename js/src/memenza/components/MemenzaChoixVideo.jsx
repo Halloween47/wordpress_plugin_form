@@ -217,7 +217,20 @@ const videos = [
 
 export default function MemenzaChoixVideo() {
   // Déclaration des états
-  const [formData, setFormData] = useState({ descr: "" });
+  // const [formData, setFormData] = useState({ descr: "" });
+    const [formData, setFormData] = useState({
+    templateId: '1',
+    descr: '',
+    variables: {
+      scene1_texte1: "Test écriture variable",
+      scene2_image1: "https://img.freepik.com/photos-gratuite/nuages-stylefantastique_23-2151057680.jpg",
+      scene2_image2: "https://i.pinimg.com/736x/7a/c6/91/7ac69100e88a63a14b9cbe8ba260721f.jpg",
+      scene2_texte1: "Ceci est un message varible postman",
+      scene3_image2: "https://archzine.fr/wp-content/uploads/2020/03/wallpaperordinateur-pc-fond-ecran-kawaii-dessin-cactus-vert-fleurs-roses.webp",
+      scene3_texte1: "Cela fonctionne bien ?",
+      scene3_image3: "https://cdn.futura-sciences.com/cdncgi/image/width=1024,quality=60,format=auto/sources/images/screen/EVENEMENT/Hiver/965-hiver-43.jpg"
+    },
+  });
   const [responseData, setResponseData] = useState(null);
   const [error, setError] = useState(null);
   const [isPlaying, setIsPlaying] = useState(Array(videos.length).fill(false));
@@ -231,26 +244,28 @@ export default function MemenzaChoixVideo() {
   };
 
   // Fonction de soumission du formulaire
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const apiUrl = 'https://core-api.memenza.fr/api/wp-media/create-with-tpl';
-    const apiKey = process.env.REACT_APP_MEMENZA_API_KEY;
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  const apiUrl = 'https://core-api.memenza.fr/api/wp-media/create-with-tpl';
+  const apiKey = process.env.REACT_APP_MEMENZA_API_KEY;
 
-    try {
-      const response = await axios.post(apiUrl, formData, {
-        headers: {
-          'WP-API-KEY': apiKey,
-          'Content-Type': 'application/json',
-        },
-      });
+  try {
+    const response = await axios.post(apiUrl, formData, {
+      headers: {
+        'WP-API-KEY': apiKey,
+        'Content-Type': 'application/json',
+      },
+      withCredentials: true,  // Ajouter cette option pour inclure les credentials
+    });
 
-      setResponseData(response.data);
-      setError(null); // Réinitialiser les erreurs en cas de succès
-    } catch (err) {
-      setError(err.response?.data || "Une erreur est survenue.");
-      setResponseData(null);
-    }
-  };
+    setResponseData(response.data);
+    setError(null); // Réinitialiser les erreurs en cas de succès
+  } catch (err) {
+    setError(err.response?.data || "Une erreur est survenue.");
+    setResponseData(null);
+  }
+};
+
 
   // Récupération des données des vidéos visuelles depuis l'API
   useEffect(() => {
