@@ -11,6 +11,7 @@ import EtapeValidation from "./components/EtapeValidation.jsx";
 import EtapeCategorie from "./components/EtapeCategorie.jsx";
 import EtapeVisuel from "./components/EtapeVisuel.jsx";
 import ComingSoon from "./components/ComingSoon.jsx";
+import { SousCatProvider } from "./components/SousCatContext.jsx";
 
 const steps = ["Categorie", "Visuel", "Video", "Validation"];
 function getStepContent(step) {
@@ -90,6 +91,7 @@ const MemenzaFormulaire = () => {
   };
 
   return (
+    <SousCatProvider>
     <div className="memenzaFormulaire">
       <Box sx={{ width: "100%", height: "auto" }}>
         <Typography variant="h4" gutterBottom sx={{ color: "#000" }}>
@@ -168,6 +170,7 @@ const MemenzaFormulaire = () => {
       </Box>
       <style>{StylesFormulaire}</style>
     </div>
+    </SousCatProvider>
   );
 };
 

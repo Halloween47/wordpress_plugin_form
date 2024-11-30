@@ -16,8 +16,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import PopupUpload from "./PopupUpload.jsx";
 import PopupPreview from "./PopupPreview.jsx";
-import VisuelFormTemplate1 from "./VisuelFormTemplate1.jsx";
 import TestGeneration from "./TestGeneration.jsx";
+import { useSousCat } from "./SousCatContext.jsx";
 
 const StyleEtapeVisuel = `
 .etape-visuel {
@@ -107,6 +107,15 @@ function EtapeVisuel() {
     console.log("APPARITION ZONE TEXTE ");
     setShowTextCustomVisuel(true);
   };
+
+  const { selectedSousCatId } = useSousCat();
+console.log(selectedSousCatId);
+console.log(imagesVisuels);
+
+const imagesVisuelsFitred =  imagesVisuels.filter((item) => {
+  return item.id_ss_cat === selectedSousCatId;
+})
+
   return (
     <div>
       <Container className="etape-visuel" maxWidth="lg">
@@ -180,7 +189,8 @@ function EtapeVisuel() {
               <Typography>Aucune image disponible.</Typography>
             )} */}
 
-            {imagesVisuels.map((item, index) => (
+            {/* {imagesVisuels.map((item, index) => ( */}
+            {imagesVisuelsFitred.map((item, index) => (
               <>
                 {/* <Typography>{JSON.stringify(item.nom_modele)}</Typography> */}
                 <Grid item key={index} xs={12} sm={6} md={4} lg={3}>

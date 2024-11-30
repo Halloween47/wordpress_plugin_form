@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Sliders from "./Sliders.jsx";
 import { Box, Button, Modal, Typography } from "@mui/material";
 import SlidersSousCategories from "./SlidersSousCategories.jsx";
+import { useSousCat } from "./SousCatContext.jsx";
 
 const style = {
   position: "absolute",
@@ -54,6 +55,14 @@ const StylesSousCategories = `
 `;
 
 function EtapeCategorie() {
+
+  const { setSelectedSousCatId } = useSousCat();
+  const handleSelectSousCat = (id) => {
+    setSelectedSousCatId(id); 
+    console.log(id);
+    
+  };
+
   function handleImageClick() {
     setShowSliders(true);
   }
@@ -77,7 +86,7 @@ function EtapeCategorie() {
       >
         Choisissez votre catégorie.
       </Typography>
-      <Sliders onImageClick={handleOpen} />
+      <Sliders onImageClick={handleOpen} onSousCatClick={handleSelectSousCat} />
       {/* <Modal
         open={open}
         onClose={handleClose}

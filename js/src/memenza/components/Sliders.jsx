@@ -250,6 +250,7 @@
 //   );
 // }
 import React, { useEffect, useState } from "react";
+import { useSousCat } from "./SousCatContext.jsx";
 
 const styles = `
 .container-carousel {
@@ -289,14 +290,20 @@ const styles = `
 }
 `;
 
-export default function Sliders({ onImageClick }) {
+export default function Sliders({ onImageClick, onSousCatClick }) {
   const [data, setData] = useState([]); // Liste des images dans le carousel
   const [dataSousCat, setDataSousCat] = React.useState([]);
 
-  console.log("VERIFICATION CONTENU DATASOUSCAT" + JSON.stringify(dataSousCat));
-
   const [selectedId, setSelectedId] = useState(null); // ID de l'image sélectionnée
+  const [selectedIdSs, setSelectedIdSs] = useState(null); // ID de l'image sélectionnée
   const [error, setError] = useState(null);
+
+  const { setSelectedSousCatId } = useSousCat();
+  const handleSelectSousCat = (id) => {
+    setSelectedSousCatId(id); 
+    console.log(id);
+    
+  };
 
   // Chargement des images du carousel
   useEffect(() => {
@@ -346,8 +353,14 @@ export default function Sliders({ onImageClick }) {
   const filteredSousCat = selectedId
     ? dataSousCat.filter((item) => item.id_cat === selectedId)
     : [];
+    
+    function test() {
 
-  console.log(filteredSousCat);
+      console.log(filteredSousCat);
+      const nouveau = filteredSousCat.filter((item) => item.id_ss_cat === "9");
+      console.log(nouveau);
+      
+    }
 
   return (
     <>
@@ -377,6 +390,12 @@ export default function Sliders({ onImageClick }) {
                   className="item"
                   src={item.chemin_img_sscat}
                   alt={`Image liée ${item.id_image}`}
+                  onClick={() => {
+                    setSelectedIdSs(item.id_ss_cat);
+                    // console.log(item.id_ss_cat);
+                    handleSelectSousCat(item.id_ss_cat)
+                  }
+                  }
                 />
               ))}
             </div>

@@ -9,9 +9,7 @@
 //   "https://samplelib.com/lib/preview/mp4/sample-15s.mp4",
 // ];
 
-
 // export default function MemenzaChoixVideo() {
-  
 
 //   const [formData, setFormData] = useState({
 //     // templateId: '',
@@ -28,7 +26,6 @@
 //   });
 //   const [responseData, setResponseData] = useState(null);
 //   const [error, setError] = useState(null);
-  
 
 //   const handleChange = (e) => {
 //     const { name, value } = e.target;
@@ -42,8 +39,8 @@
 //   const handleSubmit = async (e) => {
 //     e.preventDefault();
 
-//     const apiUrl = 'https://core-api.memenza.fr/api/wp-media/create-with-tpl'; 
-//     const apiKey = process.env.REACT_APP_MEMENZA_API_KEY; 
+//     const apiUrl = 'https://core-api.memenza.fr/api/wp-media/create-with-tpl';
+//     const apiKey = process.env.REACT_APP_MEMENZA_API_KEY;
 
 //     try {
 //       const response = await axios.post(apiUrl, formData, {
@@ -58,11 +55,11 @@
 //         console.log(responseData);
 //       } else {
 //         console.log("Probleme pas de reponse");
-        
+
 //       }
-      
+
 //       setResponseData(response.data);
-//       setError(null); 
+//       setError(null);
 //     } catch (err) {
 //       setError(err.response?.data || 'Une erreur est survenue.');
 //       setResponseData(null);
@@ -72,7 +69,7 @@
 
 //   const videoRefs = useRef([]);
 //   const [isPlaying, setIsPlaying] = useState(Array(videos.length).fill(false));
-  
+
 //   const [visuelsVideos, setvisuelsVideos] = React.useState([]);
 //   React.useEffect(() => {
 //     const fetchData = async () => {
@@ -86,7 +83,7 @@
 //         const result = await response.json();
 //         setvisuelsVideos(result);
 //         console.log(formData);
-        
+
 //       } catch (error) {
 //         setError(error.message);
 //       }
@@ -109,9 +106,6 @@
 
 //     setIsPlaying(playingStatus);
 //   };
-
- 
-
 
 //   return (
 //     <Box sx={{ textAlign: "center", p: 4 }}>
@@ -204,7 +198,14 @@
 // }
 
 import React, { useState, useRef, useEffect } from "react";
-import { Box, Typography, Grid, TextField, Button, Checkbox } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Grid,
+  TextField,
+  Button,
+  Checkbox,
+} from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import axios from "axios";
 
@@ -218,18 +219,16 @@ const videos = [
 export default function MemenzaChoixVideo() {
   // Déclaration des états
   // const [formData, setFormData] = useState({ descr: "" });
-    const [formData, setFormData] = useState({
-    templateId: '1',
-    descr: '',
-    variables: {
-      scene1_texte1: "Test écriture variable",
-      scene2_image1: "https://img.freepik.com/photos-gratuite/nuages-stylefantastique_23-2151057680.jpg",
-      scene2_image2: "https://i.pinimg.com/736x/7a/c6/91/7ac69100e88a63a14b9cbe8ba260721f.jpg",
-      scene2_texte1: "Ceci est un message varible postman",
-      scene3_image2: "https://archzine.fr/wp-content/uploads/2020/03/wallpaperordinateur-pc-fond-ecran-kawaii-dessin-cactus-vert-fleurs-roses.webp",
-      scene3_texte1: "Cela fonctionne bien ?",
-      scene3_image3: "https://cdn.futura-sciences.com/cdncgi/image/width=1024,quality=60,format=auto/sources/images/screen/EVENEMENT/Hiver/965-hiver-43.jpg"
-    },
+  const [formData, setFormData] = useState({
+    template_id: "RdLlSO4FUmAV6fPHvKT1",
+    desc: "",
+    variables: {"scene1_texte1": "Thomas test 3",
+      "scene2_image1": "https://img.freepik.com/photos-gratuite/nuages-style-fantastique_23-2151057680.jpg",
+      "scene2_image2": "https://i.pinimg.com/736x/7a/c6/91/7ac69100e88a63a14b9cbe8ba260721f.jpg",
+      "scene2_texte1": "Ceci est un message variable postman",
+      "scene3_image2": "https://archzine.fr/wp-content/uploads/2020/03/wallpaper-ordinateur-pc-fond-ecran-kawaii-dessin-cactus-vert-fleurs-roses.webp",
+      "scene3_texte1": "Cela fonctionne bien ? ",
+      "scene3_image3": "https://cdn.futura-sciences.com/cdn-cgi/image/width=1024,quality=60,format=auto/sources/images/screen/EVENEMENT/Hiver/965-hiver-43.jpg"},
   });
   const [responseData, setResponseData] = useState(null);
   const [error, setError] = useState(null);
@@ -244,34 +243,47 @@ export default function MemenzaChoixVideo() {
   };
 
   // Fonction de soumission du formulaire
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  const apiUrl = 'https://core-api.memenza.fr/api/wp-media/create-with-tpl';
-  const apiKey = process.env.REACT_APP_MEMENZA_API_KEY;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const apiUrl = "https://core-api.memenza.fr/api/wp-media/create-with-tpl";
+    // const apiUrl =
+    //   "https://core-api.memenza.fr/api/wp-media/create-without-tpl";
+    const apiKey = process.env.REACT_APP_MEMENZA_API_KEY;
 
-  try {
-    const response = await axios.post(apiUrl, formData, {
-      headers: {
-        'WP-API-KEY': apiKey,
-        'Content-Type': 'application/json',
-      },
-      withCredentials: true,  // Ajouter cette option pour inclure les credentials
-    });
+    try {
+      const response = await axios.post(apiUrl,formData, {
+        headers: {
+          "WP-API-KEY": apiKey,
+          "Content-Type": "application/json",
+        },
+        // data: {
+        //   template_id: "RdLlSO4FUmAV6fPHvKT1",
+        //   desc: "",
+        //   variables: {"scene1_texte1": "Test écriture variable",
+        //     "scene2_image1": "https://img.freepik.com/photos-gratuite/nuages-style-fantastique_23-2151057680.jpg",
+        //     "scene2_image2": "https://i.pinimg.com/736x/7a/c6/91/7ac69100e88a63a14b9cbe8ba260721f.jpg",
+        //     "scene2_texte1": "Ceci est un message variable postman",
+        //     "scene3_image2": "https://archzine.fr/wp-content/uploads/2020/03/wallpaper-ordinateur-pc-fond-ecran-kawaii-dessin-cactus-vert-fleurs-roses.webp",
+        //     "scene3_texte1": "Cela fonctionne bien ? ",
+        //     "scene3_image3": "https://cdn.futura-sciences.com/cdn-cgi/image/width=1024,quality=60,format=auto/sources/images/screen/EVENEMENT/Hiver/965-hiver-43.jpg"} ,
+        // },
+      });
 
-    setResponseData(response.data);
-    setError(null); // Réinitialiser les erreurs en cas de succès
-  } catch (err) {
-    setError(err.response?.data || "Une erreur est survenue.");
-    setResponseData(null);
-  }
-};
-
+      setResponseData(response.data);
+      setError(null); // Réinitialiser les erreurs en cas de succès
+    } catch (err) {
+      setError(err.response?.data || "Une erreur est survenue.");
+      setResponseData(null);
+    }
+  };
 
   // Récupération des données des vidéos visuelles depuis l'API
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("/wp-json/plugin_memenza/v1/videos_visuel");
+        const response = await fetch(
+          "/wp-json/plugin_memenza/v1/videos_visuel",
+        );
         if (!response.ok) {
           throw new Error("Erreur lors de la récupération des données");
         }
@@ -373,8 +385,8 @@ const handleSubmit = async (e) => {
             >
               <TextField
                 label="Votre description"
-                name="descr"
-                value={formData.descr}
+                name="desc"
+                value={formData.desc}
                 onChange={handleChange}
                 fullWidth
                 required
@@ -389,4 +401,3 @@ const handleSubmit = async (e) => {
     </Box>
   );
 }
-

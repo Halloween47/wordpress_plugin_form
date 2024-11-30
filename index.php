@@ -107,7 +107,7 @@ add_action('rest_api_init', function () {
                 );
             }
 
-            $result = $db->query('SELECT img_modele, nom_modele FROM modelescadre');
+            $result = $db->query('SELECT img_modele, nom_modele, id_ss_cat, visuels_cadres, textes_cadres FROM modelescadre');
             $images = $result->fetch_all(MYSQLI_ASSOC);
             $db->close();
 
