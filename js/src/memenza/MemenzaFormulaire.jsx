@@ -16,9 +16,9 @@ const steps = ["Categorie", "Visuel", "Video", "Validation"];
 function getStepContent(step) {
   switch (step) {
     case 0:
-      // return <EtapeCategorie />;
+      return <EtapeCategorie />;
       // return <EtapeVideo />;
-      return <ComingSoon />;
+      // return <ComingSoon />;
     case 1:
       return <EtapeVisuel />;
     case 2:
@@ -96,14 +96,14 @@ const MemenzaFormulaire = () => {
         <Stepper
           activeStep={activeStep}
           sx={{
-            "background-color": "black",
+            // "background-color": "black",
             borderRadius: "10px",
             width: "100%",
             margin: "20px auto 50px auto",
             padding: "10px",
-            "& .css-2fdkz6": { color: "#ffffff" },
-            "& .css-2fdkz6.Mui-completed": { color: " #ffffff" },
-            "& .css-2fdkz6.Mui-active": { color: "#ffffff" },
+            "& .css-2fdkz6": { color: "#ffffff !important" },
+            "& .css-2fdkz6.Mui-completed": { color: " #ffffff !important" },
+            "& .css-2fdkz6.Mui-active": { color: "#ffffff !important" },
           }}
         >
           {steps.map((label, index) => {
