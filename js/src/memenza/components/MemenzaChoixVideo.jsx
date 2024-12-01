@@ -1,202 +1,3 @@
-// import React, { useState, useRef } from "react";
-// import { Box, Typography, Grid, TextField, Button} from "@mui/material";
-// import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-// import Checkbox from '@mui/material/Checkbox';
-
-// const videos = [
-//   "https://samplelib.com/lib/preview/mp4/sample-5s.mp4",
-//   "https://samplelib.com/lib/preview/mp4/sample-10s.mp4",
-//   "https://samplelib.com/lib/preview/mp4/sample-15s.mp4",
-// ];
-
-// export default function MemenzaChoixVideo() {
-
-//   const [formData, setFormData] = useState({
-//     // templateId: '',
-//     descr: '',
-//     // variables: {
-//     //   scene1_texte1: "Test écriture variable",
-//     //   scene2_image1: "https://img.freepik.com/photos-gratuite/nuages-stylefantastique_23-2151057680.jpg",
-//     //   scene2_image2: "https://i.pinimg.com/736x/7a/c6/91/7ac69100e88a63a14b9cbe8ba260721f.jpg",
-//     //   scene2_texte1: "Ceci est un message varible postman",
-//     //   scene3_image2: "https://archzine.fr/wp-content/uploads/2020/03/wallpaperordinateur-pc-fond-ecran-kawaii-dessin-cactus-vert-fleurs-roses.webp",
-//     //   scene3_texte1: "Cela fonctionne bien ?",
-//     //   scene3_image3: "https://cdn.futura-sciences.com/cdncgi/image/width=1024,quality=60,format=auto/sources/images/screen/EVENEMENT/Hiver/965-hiver-43.jpg"
-//     // },
-//   });
-//   const [responseData, setResponseData] = useState(null);
-//   const [error, setError] = useState(null);
-
-//   const handleChange = (e) => {
-//     const { name, value } = e.target;
-//     setFormData({ ...formData, [name]: value });
-//   };
-
-//   // const handleSubmit = (e) => {
-//   //   console.log(formData);
-//   // };
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-
-//     const apiUrl = 'https://core-api.memenza.fr/api/wp-media/create-with-tpl';
-//     const apiKey = process.env.REACT_APP_MEMENZA_API_KEY;
-
-//     try {
-//       const response = await axios.post(apiUrl, formData, {
-//         headers: {
-//           'WP-API-KEY': apiKey,
-//           'Content-Type': 'application/json',
-//         },
-//       });
-//       if (response.ok) {
-//         console.log(response.data);
-//         console.log(formData);
-//         console.log(responseData);
-//       } else {
-//         console.log("Probleme pas de reponse");
-
-//       }
-
-//       setResponseData(response.data);
-//       setError(null);
-//     } catch (err) {
-//       setError(err.response?.data || 'Une erreur est survenue.');
-//       setResponseData(null);
-//       console.log(error);
-//     }
-//   };
-
-//   const videoRefs = useRef([]);
-//   const [isPlaying, setIsPlaying] = useState(Array(videos.length).fill(false));
-
-//   const [visuelsVideos, setvisuelsVideos] = React.useState([]);
-//   React.useEffect(() => {
-//     const fetchData = async () => {
-//       try {
-//         const response = await fetch(
-//           "/wp-json/plugin_memenza/v1/videos_visuel",
-//         );
-//         if (!response.ok) {
-//           throw new Error("Erreur lors de la récupération des données");
-//         }
-//         const result = await response.json();
-//         setvisuelsVideos(result);
-//         console.log(formData);
-
-//       } catch (error) {
-//         setError(error.message);
-//       }
-//     };
-
-//     fetchData();
-//   }, []);
-
-//   const handleVideoClick = (index) => {
-//     const video = videoRefs.current[index];
-//     const playingStatus = [...isPlaying];
-
-//     if (video.paused) {
-//       video.play();
-//       playingStatus[index] = true;
-//     } else {
-//       video.pause();
-//       playingStatus[index] = false;
-//     }
-
-//     setIsPlaying(playingStatus);
-//   };
-
-//   return (
-//     <Box sx={{ textAlign: "center", p: 4 }}>
-//       <Typography variant="h4" gutterBottom>
-//         Choisissez votre template
-//       </Typography>
-//       <Typography variant="subtitle1" gutterBottom sx={{ mb: 2 }}>
-//         (Explication du pourquoi du choix du template)
-//       </Typography>
-//       <Grid container spacing={2} justifyContent="center">
-//         {/* {videos.map((src, index) => ( */}
-//         {visuelsVideos.map((src, index) => (
-//           <Grid item key={index} xs={6} sm={4} md={3}>
-//             <Box
-//               sx={{
-//                 position: "relative",
-//                 width: "100%",
-//                 height: 200,
-//                 cursor: "pointer",
-//                 borderRadius: 2,
-//                 overflow: "hidden",
-//                 "&:hover .overlay": {
-//                   opacity: isPlaying[index] ? 0 : 1,
-//                 },
-//               }}
-//               onClick={() => handleVideoClick(index)}
-//             >
-//               <Box
-//                 component="video"
-//                 src={src.chemin_video_ex}
-//                 ref={(el) => (videoRefs.current[index] = el)}
-//                 sx={{
-//                   width: "100%",
-//                   height: "100%",
-//                   objectFit: "cover",
-//                 }}
-//               />
-//               {!isPlaying[index] && (
-//                 <Box
-//                   className="overlay"
-//                   sx={{
-//                     position: "absolute",
-//                     top: 0,
-//                     left: 0,
-//                     width: "100%",
-//                     height: "100%",
-//                     display: "flex",
-//                     alignItems: "center",
-//                     justifyContent: "center",
-//                     backgroundColor: "rgba(0, 0, 0, 0.4)",
-//                     transition: "opacity 0.3s",
-//                     opacity: 1,
-//                   }}
-//                 >
-//                   <PlayArrowIcon sx={{ fontSize: 60, color: "#fff" }} />
-//                 </Box>
-//               )}
-//             </Box>
-//             <Checkbox />
-//             <Box
-//       component="form"
-//       onSubmit={handleSubmit}
-//       sx={{
-//         display: 'flex',
-//         flexDirection: 'column',
-//         gap: 2,
-//         width: '100%',
-//         margin: 'auto',
-//         mt: 5,
-//       }}
-//     >
-//             <TextField
-//         label="Votre description"
-//         name="descr"
-//         value={formData.descr}
-//         onChange={handleChange}
-//         fullWidth
-//         required
-//         sx={{ }}
-//       />
-//       <Button type="submit" variant="contained" color="primary">
-//         Envoyer
-//       </Button>
-//       </Box>
-//           </Grid>
-//         ))}
-//       </Grid>
-//     </Box>
-//   );
-// }
-
 import React, { useState, useRef, useEffect } from "react";
 import {
   Box,
@@ -209,119 +10,53 @@ import {
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import axios from "axios";
 import { useSousCat } from "./SousCatContext.jsx";
-import styled from "styled-components";
-import VideoCustomParam from "./VideoCustomParam.jsx";
 
-// Liste des vidéos par défaut
 const videos = [
   "https://samplelib.com/lib/preview/mp4/sample-5s.mp4",
   "https://samplelib.com/lib/preview/mp4/sample-10s.mp4",
   "https://samplelib.com/lib/preview/mp4/sample-15s.mp4",
 ];
 
-
-
 export default function MemenzaChoixVideo() {
-  // Déclaration des états
-  // const [formData, setFormData] = useState({ descr: "" });
   const [formData, setFormData] = useState({
     template_id: "RdLlSO4FUmAV6fPHvKT1",
     desc: "",
-    variables: {"scene1_texte1": "Thomas test 3",
-      "scene2_image1": "https://img.freepik.com/photos-gratuite/nuages-style-fantastique_23-2151057680.jpg",
-      "scene2_image2": "https://i.pinimg.com/736x/7a/c6/91/7ac69100e88a63a14b9cbe8ba260721f.jpg",
-      "scene2_texte1": "Ceci est un message variable postman",
-      "scene3_image2": "https://archzine.fr/wp-content/uploads/2020/03/wallpaper-ordinateur-pc-fond-ecran-kawaii-dessin-cactus-vert-fleurs-roses.webp",
-      "scene3_texte1": "Cela fonctionne bien ? ",
-      "scene3_image3": "https://cdn.futura-sciences.com/cdn-cgi/image/width=1024,quality=60,format=auto/sources/images/screen/EVENEMENT/Hiver/965-hiver-43.jpg"},
+    variables: {},
   });
-  const [responseData, setResponseData] = useState(null);
-  const [error, setError] = useState(null);
-  const [isPlaying, setIsPlaying] = useState(Array(videos.length).fill(false));
+
   const [visuelsVideos, setVisuelsVideos] = useState([]);
-  const [tabApresClicSurChoixTemplate, setTabApresClicSurChoixTemplate] = useState();
+  const [tabParseTextesVideo, setTabParseTextesVideo] = useState([]);
+  const [tabParseMediasVideo, setTabParseMediasVideo] = useState([]);
+  console.log("TEST FINAL MEDIA : " + JSON.stringify(tabParseMediasVideo));
+  
+  
+  const [isPlaying, setIsPlaying] = useState(Array(videos.length).fill(false));
+  const [apparitionParametrage, setApparitionParametrage] = useState(false);
 
-  const [tabNames, setTabNames] = useState([]);
-  console.log("TABNAMES TABLEAU : "+tabNames);
-  const [tabMaxCharacters, setTabMaxCharacters] = useState([]);
-  const [tabdefaultText, setTabdefaultText] = useState([]);
-  
-  
-  
   const videoRefs = useRef([]);
-
   const { selectedSousCatId } = useSousCat();
-  console.log(selectedSousCatId);
-  const imagesVideosFitred =  visuelsVideos.filter((item) => {
-    return item.id_ss_cat === selectedSousCatId;
-  })
-  
 
-  // Fonction pour gérer le changement dans les champs de formulaire
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+  const imagesVideosFiltered = visuelsVideos.filter(
+    (item) => item.id_ss_cat === selectedSousCatId
+  );
 
-  // Fonction de soumission du formulaire
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const apiUrl = "https://core-api.memenza.fr/api/wp-media/create-with-tpl";
-    // const apiUrl =
-    //   "https://core-api.memenza.fr/api/wp-media/create-without-tpl";
-    const apiKey = process.env.REACT_APP_MEMENZA_API_KEY;
-
-    try {
-      const response = await axios.post(apiUrl,formData, {
-        headers: {
-          "WP-API-KEY": apiKey,
-          "Content-Type": "application/json",
-        },
-        // data: {
-        //   template_id: "RdLlSO4FUmAV6fPHvKT1",
-        //   desc: "",
-        //   variables: {"scene1_texte1": "Test écriture variable",
-        //     "scene2_image1": "https://img.freepik.com/photos-gratuite/nuages-style-fantastique_23-2151057680.jpg",
-        //     "scene2_image2": "https://i.pinimg.com/736x/7a/c6/91/7ac69100e88a63a14b9cbe8ba260721f.jpg",
-        //     "scene2_texte1": "Ceci est un message variable postman",
-        //     "scene3_image2": "https://archzine.fr/wp-content/uploads/2020/03/wallpaper-ordinateur-pc-fond-ecran-kawaii-dessin-cactus-vert-fleurs-roses.webp",
-        //     "scene3_texte1": "Cela fonctionne bien ? ",
-        //     "scene3_image3": "https://cdn.futura-sciences.com/cdn-cgi/image/width=1024,quality=60,format=auto/sources/images/screen/EVENEMENT/Hiver/965-hiver-43.jpg"} ,
-        // },
-      });
-
-      setResponseData(response.data);
-      setError(null); // Réinitialiser les erreurs en cas de succès
-    } catch (err) {
-      setError(err.response?.data || "Une erreur est survenue.");
-      setResponseData(null);
-    }
-  };
-
-  // Récupération des données des vidéos visuelles depuis l'API
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          "/wp-json/plugin_memenza/v1/videos_visuel",
-        );
+        const response = await fetch("/wp-json/plugin_memenza/v1/videos_visuel");
         if (!response.ok) {
           throw new Error("Erreur lors de la récupération des données");
         }
         const result = await response.json();
         setVisuelsVideos(result);
-        console.log("RESULTAT REPONSE " + result);
-        console.log("RESULTAT REPONSE " + JSON.stringify(result));
-        
       } catch (error) {
-        setError(error.message);
+        console.error("Erreur :", error);
       }
     };
 
     fetchData();
   }, []);
 
-  // Fonction pour gérer le clic sur une vidéo (lecture/pause)
   const handleVideoClick = (index) => {
     const video = videoRefs.current[index];
     const playingStatus = [...isPlaying];
@@ -337,120 +72,45 @@ export default function MemenzaChoixVideo() {
     setIsPlaying(playingStatus);
   };
 
-  // const handleVideoClickCustom = () => {
-  //   const test = imagesVideosFitred.filter((item) => {
-  //     console.log("ICI premier filtre : "+item.textes_video);
-  //     setTabApresClicSurChoixTemplate(item.texte_video)
-  //   })
-  //   console.log("SITUATION : "+ tabApresClicSurChoixTemplate);
-  // }
- 
-//   const handleVideoClickCustom = () => {
-//     const selectedTemplate = imagesVideosFitred.find((item) => item.textes_video);
-    
-//     if (selectedTemplate) {
-//       console.log("Template sélectionné :", selectedTemplate.textes_video);
-//       setTabApresClicSurChoixTemplate(selectedTemplate.textes_video);
-//     } else {
-//       console.log("Aucun template trouvé");
-//     }
+  const handleVideoClickCustom = () => {
+    const selectedTemplate = imagesVideosFiltered.find(
+      (item) => item.textes_video && item.medias_video // Vérifie que `medias_video` existe également
+    );
 
-// // Extraction des noms uniquement
-// const names = tabApresClicSurChoixTemplate.videoTextFields.map(field => field.name);
+    if (!selectedTemplate) {
+      console.error("Aucun template sélectionné");
+      return;
+    }
 
-// // Affichage du résultat
-// console.log(names);
+    console.log("TABLEAU COMPLET" + JSON.stringify(selectedTemplate));
 
-//   };
+    try {
+      // Parsing des textes_video et medias_video en un seul bloc try
+      const parsedTemplateTextesVideo = JSON.parse(selectedTemplate.textes_video);
+      console.log("LIGNE PARSE TEXTE VIDEO : " + JSON.stringify(parsedTemplateTextesVideo));
 
-
-
-const handleVideoClickCustom = () => {
-  
-  console.log("imagesVideosFitred:", imagesVideosFitred);
-
-  const selectedTemplate = imagesVideosFitred.find((item) => item.textes_video);
-  const test2 = selectedTemplate.textes_video;
-  const test2Parse = JSON.parse(test2);
-  const tabFinal = test2.videoTextFields;
-
-  const test = {
-    "videoTextFields": [
-      {
-        "name": "s1-txt",
-        "maxCharacters": 30,
-        "defaultText": "9 mois que nous l'attendions",
-        "customizable": true
-      },
-      {
-        "name": "s2-txt",
-        "maxCharacters": 35,
-        "defaultText": "Nous avons d'abord entendu son cœur",
-        "customizable": true
-      },
-      {
-        "name": "s3-txt",
-        "maxCharacters": 25,
-        "defaultText": "Senti ses petites mains",
-        "customizable": true
-      },
-      {
-        "name": "s4-txt",
-        "maxCharacters": 40,
-        "defaultText": "Pas encore là, nous l'aimions déjà ...",
-        "customizable": true
-      },
-      {
-        "name": "s5-txt",
-        "maxCharacters": 42,
-        "defaultText": "... et maintenant, il illumine notre vie !",
-        "customizable": true
-      },
-      {
-        "name": "s6-txt",
-        "maxCharacters": 45,
-        "defaultText": "Alexandre est né le 12 janvier 2025",
-        "customizable": true
+      const parsedTemplateMediasVideo = JSON.parse(selectedTemplate.medias_video);
+      console.log("LIGNE 121 test media video " + selectedTemplate.medias_video);
+      
+      // Vérifier si videoTextFields existe et est valide
+      if (Array.isArray(parsedTemplateTextesVideo.videoTextFields)) {
+        setTabParseTextesVideo(parsedTemplateTextesVideo.videoTextFields);
+      } else {
+        console.error("Le champ `videoTextFields` n'est pas un tableau valide.");
       }
-    ]
-  }
 
-  console.log(test + "TESTIM");
-  console.log(test2 + "DATA Non Parse");
-  console.log(test2Parse + "DATA PARSE");
-  console.log(tabFinal + "DON'T KNOW");
+      // Vérifier si mediaFields existe et est valide
+      if (Array.isArray(parsedTemplateMediasVideo.mediaFields)) {
+        setTabParseMediasVideo(parsedTemplateMediasVideo.mediaFields);
+        setApparitionParametrage(true); // Afficher le paramétrage si les deux sont valides
+      } else {
+        console.error("Le champ `mediaFields` n'est pas un tableau valide.");
+      }
 
-  test2Parse.videoTextFields.forEach(field => {
-    console.log(`Name: ${field.name}`);
-    setTabNames(field.name)
-  })
-
-  const nouveauTabAvecName = test2Parse.videoTextFields.map(field => {
-    return field.name
-  })
-  setTabNames(nouveauTabAvecName)
-
-const nouveauTabAvecMaxCharacters = test2Parse.videoTextFields.map(field => {
-  return field.maxCharacters
-})
-setTabMaxCharacters(nouveauTabAvecMaxCharacters)
-
-const nouveauTabAvecDefaultText = test2Parse.videoTextFields.map(field => {
-  return field.defaultText
-})
-setTabdefaultText(nouveauTabAvecDefaultText)
-
-
-};
-
-console.log("LIGNE 446 : "+ tabNames);
-console.log("LIGNE 447 : "+ tabMaxCharacters);
-console.log("LIGNE 448 : "+ tabdefaultText);
-
-
-
-
-
+    } catch (error) {
+      console.error("Erreur lors du parsing JSON des textes_video ou medias_video :", error);
+    }
+  };
 
   return (
     <Box sx={{ textAlign: "center", p: 4 }}>
@@ -462,8 +122,7 @@ console.log("LIGNE 448 : "+ tabdefaultText);
       </Typography>
 
       <Grid container spacing={2} justifyContent="center">
-        {/* {visuelsVideos.map((src, index) => ( */}
-        {imagesVideosFitred.map((src, index) => (
+        {imagesVideosFiltered.map((src, index) => (
           <Grid item key={index} xs={6} sm={4} md={3}>
             <Box
               sx={{
@@ -512,45 +171,59 @@ console.log("LIGNE 448 : "+ tabdefaultText);
             </Box>
             <Typography>{src.nom_modele_video || "pas d'info"}</Typography>
             <Checkbox />
-            <Box sx={{ display: "flex", justifyContent: "center" }}>
-          <Button
-            variant="contained"
-            sx={{ mb: 2 }}
-            onClick={handleVideoClickCustom}
-          >
-            Je choisi ce template 2
-          </Button>
-          {/* {VideoCustomParam && (
-
-          ) } */}
-        </Box>
-            <Box
-              component="form"
-              onSubmit={handleSubmit}
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                gap: 2,
-                width: "100%",
-                margin: "auto",
-                mt: 5,
-              }}
+            <Button
+              variant="contained"
+              sx={{ mb: 2 }}
+              onClick={handleVideoClickCustom}
             >
-              <TextField
-                label="Votre description"
-                name="desc"
-                value={formData.desc}
-                onChange={handleChange}
-                fullWidth
-                required
-              />
-              <Button type="submit" variant="contained" color="primary">
-                Envoyer
-              </Button>
-            </Box>
+              Je choisis ce template
+            </Button>
           </Grid>
         ))}
       </Grid>
+
+      {/* Affichage des textes vidéo */}
+      {apparitionParametrage && tabParseTextesVideo.length > 0 && (
+        <Box sx={{ mt: 4 }}>
+          <Typography variant="h5">Paramétrage du Template</Typography>
+          {tabParseTextesVideo.map((field, index) => (
+            <Box key={index} display="flex" alignItems="center" gap={2} sx={{ mt: 4 }}>
+              <Typography variant="body1" style={{ whiteSpace: 'nowrap' }}>
+                {field.name}
+              </Typography>
+              <TextField
+                placeholder={field.defaultText || ''}
+                inputProps={{ maxLength: field.maxCharacters }}
+                variant="outlined"
+                size="small"
+              />
+            </Box>
+          ))}
+        </Box>
+      )}
+
+      {/* Affichage des médias vidéo */}
+      {apparitionParametrage && tabParseMediasVideo.length > 0 && (
+        <Box sx={{ mt: 4 }}>
+          <Typography variant="h5">Paramétrage des Médias</Typography>
+          {tabParseMediasVideo.map((field, index) => (
+            <Box key={index} display="flex" alignItems="center" gap={2} sx={{ mt: 4 }}>
+              <Typography variant="body1" style={{ whiteSpace: 'nowrap' }}>
+                {field.name}
+              </Typography>
+              <Button variant="contained" component="label">
+                Importer votre média
+                <input
+                  type="file"
+                  hidden
+                  accept="image/*,video/*"
+                  onChange={(e) => console.log(e.target.files)}
+                />
+              </Button>
+            </Box>
+          ))}
+        </Box>
+      )}
     </Box>
   );
 }
