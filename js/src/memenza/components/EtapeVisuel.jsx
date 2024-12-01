@@ -96,7 +96,6 @@ function EtapeVisuel() {
         }
         const result = await response.json();
         setImagesVisuels(result);
-        console.log(imagesVisuels);
       } catch (error) {
         setError(error.message);
       }
@@ -106,13 +105,10 @@ function EtapeVisuel() {
   }, []);
 
   const handleVisuelClickCustom = () => {
-    console.log("APPARITION ZONE TEXTE ");
     setShowTextCustomVisuel(true);
   };
 
   const { selectedSousCatId } = useSousCat();
-console.log(selectedSousCatId);
-console.log(imagesVisuels);
 
 const imagesVisuelsFitred =  imagesVisuels.filter((item) => {
   return item.id_ss_cat === selectedSousCatId;

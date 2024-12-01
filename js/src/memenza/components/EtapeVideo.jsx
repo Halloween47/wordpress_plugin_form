@@ -17,6 +17,7 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 import MemenzaChoixVideo from "./MemenzaChoixVideo.jsx";
 import PopupPreview from "./PopupPreview.jsx";
+import { useSousCat } from "./SousCatContext.jsx";
 
 const StyleEtapeVideo = `
   .etape-video {
@@ -120,7 +121,6 @@ const VisuallyHiddenInput = styled("input")({
 
 function EtapeVideo() {
   const [showTextCustomVideo, setShowTextCustomVideo] = useState(false);
-
   
 
   const handleVideoClickCustom = () => {

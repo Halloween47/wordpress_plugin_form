@@ -208,6 +208,7 @@ import {
 } from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import axios from "axios";
+import { useSousCat } from "./SousCatContext.jsx";
 
 // Liste des vidéos par défaut
 const videos = [
@@ -235,6 +236,17 @@ export default function MemenzaChoixVideo() {
   const [isPlaying, setIsPlaying] = useState(Array(videos.length).fill(false));
   const [visuelsVideos, setVisuelsVideos] = useState([]);
   const videoRefs = useRef([]);
+
+  const { selectedSousCatId } = useSousCat();
+  console.log(selectedSousCatId);
+  const imagesVideosFitred =  visuelsVideos.filter((item) => {
+    return item.id_ss_cat === selectedSousCatId;
+  })
+  console.log(imagesVideosFitred);
+  console.log('Visuel videos = '+ JSON.stringify(visuelsVideos));
+  console.log('FILTRE Visuel videos  = '+ JSON.stringify(imagesVideosFitred));
+  
+  
 
   // Fonction pour gérer le changement dans les champs de formulaire
   const handleChange = (e) => {
@@ -323,7 +335,8 @@ export default function MemenzaChoixVideo() {
       </Typography>
 
       <Grid container spacing={2} justifyContent="center">
-        {visuelsVideos.map((src, index) => (
+        {/* {visuelsVideos.map((src, index) => ( */}
+        {imagesVideosFitred.map((src, index) => (
           <Grid item key={index} xs={6} sm={4} md={3}>
             <Box
               sx={{
@@ -370,6 +383,7 @@ export default function MemenzaChoixVideo() {
                 </Box>
               )}
             </Box>
+            <Typography>{src.nom_modele_video || "pas d'info"}</Typography>
             <Checkbox />
             <Box
               component="form"
