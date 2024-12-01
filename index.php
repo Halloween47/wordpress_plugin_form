@@ -64,7 +64,7 @@ add_action('rest_api_init', function () {
             // // // TEST
             // // Connexion à la base distante
             $db = new mysqli('localhost', 'root', 'root', 'local');
-            $result = $db->query('SELECT chemin_img_cat, id_cat FROM categories');
+            $result = $db->query('SELECT chemin_img_cat, id_cat, nom_cat FROM categories');
             $images = $result->fetch_all(MYSQLI_ASSOC);
             $db->close();
             
@@ -86,7 +86,7 @@ add_action('rest_api_init', function () {
                 );
             }
 
-            $result = $db->query('SELECT chemin_img_sscat, id_ss_cat, id_cat FROM souscategories');
+            $result = $db->query('SELECT chemin_img_sscat, id_ss_cat, id_cat, nom_ss_cat FROM souscategories');
             $images = $result->fetch_all(MYSQLI_ASSOC);
             $db->close();
 
