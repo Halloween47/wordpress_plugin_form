@@ -209,6 +209,8 @@ import {
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import axios from "axios";
 import { useSousCat } from "./SousCatContext.jsx";
+import styled from "styled-components";
+import VideoCustomParam from "./VideoCustomParam.jsx";
 
 // Liste des vidéos par défaut
 const videos = [
@@ -216,6 +218,8 @@ const videos = [
   "https://samplelib.com/lib/preview/mp4/sample-10s.mp4",
   "https://samplelib.com/lib/preview/mp4/sample-15s.mp4",
 ];
+
+
 
 export default function MemenzaChoixVideo() {
   // Déclaration des états
@@ -235,6 +239,9 @@ export default function MemenzaChoixVideo() {
   const [error, setError] = useState(null);
   const [isPlaying, setIsPlaying] = useState(Array(videos.length).fill(false));
   const [visuelsVideos, setVisuelsVideos] = useState([]);
+  const [tabApresClicSurChoixTemplate, setTabApresClicSurChoixTemplate] = useState();
+  
+  
   const videoRefs = useRef([]);
 
   const { selectedSousCatId } = useSousCat();
@@ -242,10 +249,6 @@ export default function MemenzaChoixVideo() {
   const imagesVideosFitred =  visuelsVideos.filter((item) => {
     return item.id_ss_cat === selectedSousCatId;
   })
-  console.log(imagesVideosFitred);
-  console.log('Visuel videos = '+ JSON.stringify(visuelsVideos));
-  console.log('FILTRE Visuel videos  = '+ JSON.stringify(imagesVideosFitred));
-  
   
 
   // Fonction pour gérer le changement dans les champs de formulaire
@@ -301,6 +304,9 @@ export default function MemenzaChoixVideo() {
         }
         const result = await response.json();
         setVisuelsVideos(result);
+        console.log("RESULTAT REPONSE " + result);
+        console.log("RESULTAT REPONSE " + JSON.stringify(result));
+        
       } catch (error) {
         setError(error.message);
       }
@@ -324,6 +330,133 @@ export default function MemenzaChoixVideo() {
 
     setIsPlaying(playingStatus);
   };
+
+  // const handleVideoClickCustom = () => {
+  //   const test = imagesVideosFitred.filter((item) => {
+  //     console.log("ICI premier filtre : "+item.textes_video);
+  //     setTabApresClicSurChoixTemplate(item.texte_video)
+  //   })
+  //   console.log("SITUATION : "+ tabApresClicSurChoixTemplate);
+  // }
+ 
+//   const handleVideoClickCustom = () => {
+//     const selectedTemplate = imagesVideosFitred.find((item) => item.textes_video);
+    
+//     if (selectedTemplate) {
+//       console.log("Template sélectionné :", selectedTemplate.textes_video);
+//       setTabApresClicSurChoixTemplate(selectedTemplate.textes_video);
+//     } else {
+//       console.log("Aucun template trouvé");
+//     }
+
+// // Extraction des noms uniquement
+// const names = tabApresClicSurChoixTemplate.videoTextFields.map(field => field.name);
+
+// // Affichage du résultat
+// console.log(names);
+
+//   };
+
+
+
+const handleVideoClickCustom = () => {
+  
+  console.log("imagesVideosFitred:", imagesVideosFitred);
+
+  const selectedTemplate = imagesVideosFitred.find((item) => item.textes_video);
+  const test2 = selectedTemplate.textes_video;
+  const test2Parse = JSON.parse(test2);
+  const tabFinal = test2.videoTextFields;
+
+  // imagesVideosFitred.map((champs) => {
+  //   console.log("champs:", champs.textes_video);
+  // })
+  
+  // console.log("tableau selectionner :  "+ JSON.stringify(selectedTemplate));
+  // console.log("ligne selectionne :  "+ JSON.stringify(test));
+  // console.log("TEST "+ JSON.stringify(tabFinal));
+  const test = {
+    "videoTextFields": [
+      {
+        "name": "s1-txt",
+        "maxCharacters": 30,
+        "defaultText": "9 mois que nous l'attendions",
+        "customizable": true
+      },
+      {
+        "name": "s2-txt",
+        "maxCharacters": 35,
+        "defaultText": "Nous avons d'abord entendu son cœur",
+        "customizable": true
+      },
+      {
+        "name": "s3-txt",
+        "maxCharacters": 25,
+        "defaultText": "Senti ses petites mains",
+        "customizable": true
+      },
+      {
+        "name": "s4-txt",
+        "maxCharacters": 40,
+        "defaultText": "Pas encore là, nous l'aimions déjà ...",
+        "customizable": true
+      },
+      {
+        "name": "s5-txt",
+        "maxCharacters": 42,
+        "defaultText": "... et maintenant, il illumine notre vie !",
+        "customizable": true
+      },
+      {
+        "name": "s6-txt",
+        "maxCharacters": 45,
+        "defaultText": "Alexandre est né le 12 janvier 2025",
+        "customizable": true
+      }
+    ]
+  }
+
+  test2Parse.videoTextFields.forEach(field => {
+    console.log(`Name: ${field.name}`);
+  })
+
+  console.log(test);
+  console.log(test2);
+  console.log(test2Parse);
+  console.log(tabFinal);
+  
+
+  // console.log("TEST "+ selectedTemplate);
+  // console.log("TEST "+ test);
+  // console.log("TEST "+ tabFinal);
+
+
+
+  // if (selectedTemplate) {
+  //   console.log("Template sélectionné :", selectedTemplate.textes_video);
+  //   setTabApresClicSurChoixTemplate(selectedTemplate.textes_video);
+
+  //   // Vérifiez si videoTextFields existe et est un tableau
+  //   if (selectedTemplate.textes_video?.videoTextFields) {
+  //     const names = selectedTemplate.textes_video.videoTextFields.map(
+  //       (field) => field.name
+  //     );
+  //     console.log("Noms des champs :", names);
+  //   } else {
+  //     console.log("Pas de champs videoTextFields dans le template sélectionné");
+  //   }
+  // } else {
+  //   console.log("Aucun template trouvé");
+  // }
+
+
+};
+
+
+
+
+
+
 
   return (
     <Box sx={{ textAlign: "center", p: 4 }}>
@@ -385,6 +518,18 @@ export default function MemenzaChoixVideo() {
             </Box>
             <Typography>{src.nom_modele_video || "pas d'info"}</Typography>
             <Checkbox />
+            <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <Button
+            variant="contained"
+            sx={{ mb: 2 }}
+            onClick={handleVideoClickCustom}
+          >
+            Je choisi ce template 2
+          </Button>
+          {/* {VideoCustomParam && (
+
+          ) } */}
+        </Box>
             <Box
               component="form"
               onSubmit={handleSubmit}
