@@ -54,14 +54,6 @@ add_action('rest_api_init', function () {
     register_rest_route('plugin_memenza/v1', '/images-categories', [
         'methods' => 'GET',
         'callback' => function () {
-            // return rest_ensure_response([
-            //     ['id' => 1, 'url' => 'https://memenza.fr/wp-content/uploads/2024/10/insta4.png'],
-            //     ['id' => 2, 'url' => 'https://memenza.fr/wp-content/uploads/2024/10/insta1.png'],
-            //     ['id' => 3, 'url' => 'https://memenza.fr/wp-content/uploads/2024/10/insta2.png'],
-            //     ['id' => 3, 'url' => 'https://memenza.fr/wp-content/uploads/2024/10/insta5.png'],
-            // ]);
-                        
-            // // // TEST
             // // Connexion à la base distante
             $db = new mysqli('localhost', 'root', 'root', 'local');
             $result = $db->query('SELECT chemin_img_cat, id_cat, nom_cat FROM categories');

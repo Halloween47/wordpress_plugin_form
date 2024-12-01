@@ -240,6 +240,12 @@ export default function MemenzaChoixVideo() {
   const [isPlaying, setIsPlaying] = useState(Array(videos.length).fill(false));
   const [visuelsVideos, setVisuelsVideos] = useState([]);
   const [tabApresClicSurChoixTemplate, setTabApresClicSurChoixTemplate] = useState();
+
+  const [tabNames, setTabNames] = useState([]);
+  console.log("TABNAMES TABLEAU : "+tabNames);
+  const [tabMaxCharacters, setTabMaxCharacters] = useState([]);
+  const [tabdefaultText, setTabdefaultText] = useState([]);
+  
   
   
   const videoRefs = useRef([]);
@@ -368,13 +374,6 @@ const handleVideoClickCustom = () => {
   const test2Parse = JSON.parse(test2);
   const tabFinal = test2.videoTextFields;
 
-  // imagesVideosFitred.map((champs) => {
-  //   console.log("champs:", champs.textes_video);
-  // })
-  
-  // console.log("tableau selectionner :  "+ JSON.stringify(selectedTemplate));
-  // console.log("ligne selectionne :  "+ JSON.stringify(test));
-  // console.log("TEST "+ JSON.stringify(tabFinal));
   const test = {
     "videoTextFields": [
       {
@@ -416,42 +415,37 @@ const handleVideoClickCustom = () => {
     ]
   }
 
+  console.log(test + "TESTIM");
+  console.log(test2 + "DATA Non Parse");
+  console.log(test2Parse + "DATA PARSE");
+  console.log(tabFinal + "DON'T KNOW");
+
   test2Parse.videoTextFields.forEach(field => {
     console.log(`Name: ${field.name}`);
+    setTabNames(field.name)
   })
 
-  console.log(test);
-  console.log(test2);
-  console.log(test2Parse);
-  console.log(tabFinal);
-  
+  const nouveauTabAvecName = test2Parse.videoTextFields.map(field => {
+    return field.name
+  })
+  setTabNames(nouveauTabAvecName)
 
-  // console.log("TEST "+ selectedTemplate);
-  // console.log("TEST "+ test);
-  // console.log("TEST "+ tabFinal);
+const nouveauTabAvecMaxCharacters = test2Parse.videoTextFields.map(field => {
+  return field.maxCharacters
+})
+setTabMaxCharacters(nouveauTabAvecMaxCharacters)
 
-
-
-  // if (selectedTemplate) {
-  //   console.log("Template sélectionné :", selectedTemplate.textes_video);
-  //   setTabApresClicSurChoixTemplate(selectedTemplate.textes_video);
-
-  //   // Vérifiez si videoTextFields existe et est un tableau
-  //   if (selectedTemplate.textes_video?.videoTextFields) {
-  //     const names = selectedTemplate.textes_video.videoTextFields.map(
-  //       (field) => field.name
-  //     );
-  //     console.log("Noms des champs :", names);
-  //   } else {
-  //     console.log("Pas de champs videoTextFields dans le template sélectionné");
-  //   }
-  // } else {
-  //   console.log("Aucun template trouvé");
-  // }
+const nouveauTabAvecDefaultText = test2Parse.videoTextFields.map(field => {
+  return field.defaultText
+})
+setTabdefaultText(nouveauTabAvecDefaultText)
 
 
 };
 
+console.log("LIGNE 446 : "+ tabNames);
+console.log("LIGNE 447 : "+ tabMaxCharacters);
+console.log("LIGNE 448 : "+ tabdefaultText);
 
 
 
