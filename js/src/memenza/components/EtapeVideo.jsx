@@ -120,13 +120,10 @@ const VisuallyHiddenInput = styled("input")({
 });
 
 function EtapeVideo() {
-  const [showTextCustomVideo, setShowTextCustomVideo] = useState(false);
-  
-
-  const handleVideoClickCustom = () => {
-    console.log("APPARITION ZONE TEXTE ");
-    setShowTextCustomVideo(true);
-  };
+  // const [showTextCustomVideo, setShowTextCustomVideo] = useState(false);
+  // const handleVideoSend = () => {
+  //   setShowTextCustomVideo(true);
+  // };
   return (
     <Container className="etape-video" maxWidth="lg">
       <Box className="etape-video-intro">
@@ -153,15 +150,15 @@ function EtapeVideo() {
       <Box className="etape-video-template">
         <MemenzaChoixVideo />
         {/* <ColorButton variant="contained" onClick={handleVideoClickCustom}>Je choisi ce template</ColorButton> */}
-        <Box sx={{ display: "flex", justifyContent: "center" }}>
+        {/* <Box sx={{ display: "flex", justifyContent: "center" }}>
           <ColorButton
             variant="contained"
             sx={{ mb: 2 }}
-            onClick={handleVideoClickCustom}
+            onClick={handleVideoSend}
           >
-            Je choisi ce template
+J'envoie mes données de paramétrage.
           </ColorButton>
-        </Box>
+        </Box> */}
 
         <Root>
           <Divider> OU </Divider>
@@ -184,7 +181,7 @@ function EtapeVideo() {
           </Box>
         </Root>
       </Box>
-      {showTextCustomVideo && (
+      {/* {showTextCustomVideo && (
         <Box className="etape-video-personnalisation-video">
           <Typography variant="h5" gutterBottom>
             Personnalisez votre vidéo
@@ -217,7 +214,7 @@ function EtapeVideo() {
             ))}
           </Box>
         </Box>
-      )}
+      )} */}
 
       <Box className="etape-video-boutons">
         <ButtonGroup>

@@ -10,6 +10,8 @@ import {
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import axios from "axios";
 import { useSousCat } from "./SousCatContext.jsx";
+import styled from "styled-components";
+import { purple } from "@mui/material/colors";
 
 const videos = [
   "https://samplelib.com/lib/preview/mp4/sample-5s.mp4",
@@ -18,11 +20,55 @@ const videos = [
 ];
 
 export default function MemenzaChoixVideo() {
+  const { selectedSousCatId } = useSousCat();
+//   const [formData, setFormData] = useState({
+//     "template_id": "RdLlSO4FUmAV6fPHvKT1",
+//     // "template_id": selectedSousCatId,
+//     "desc": "test tom pour champs description",
+//     "variables": {}
+// //     "variables": {
+// //       "scene1_texte1": "Test écriture variable",
+// //       "scene2_image1": "https://img.freepik.com/photos-gratuite/nuages-stylefantastique_23-2151057680.jpg",
+// //       "scene2_image2": "https://i.pinimg.com/736x/7a/c6/91/7ac69100e88a63a14b9cbe8ba260721f.jpg",
+// //       "scene2_texte1": "Ceci est un message varible postman",
+// //       "scene3_image2": "https://archzine.fr/wp-content/uploads/2020/03/wallpaperordinateur-pc-fond-ecran-kawaii-dessin-cactus-vert-fleurs-roses.webp",
+// //       "scene3_texte1": "Cela fonctionne bien ? ",
+// //       "scene3_image3": "https://cdn.futura-sciences.com/cdncgi/image/width=1024,quality=60,format=auto/sources/images/screen/EVENEMENT/Hiver/965-hiver-43.jpg"
+// // },
+//   });
+
+//   const [formData, setFormData] = useState({
+//     "template_id": "RdLlSO4FUmAV6fPHvKT1",
+//     "desc": "test tom desc",
+//     "variables": {
+//       "scene1_texte1": "Test écriture variable",
+//       "scene2_image1": "https://img.freepik.com/photos-gratuite/nuages-stylefantastique_23-2151057680.jpg",
+//       "scene2_image2": "https://i.pinimg.com/736x/7a/c6/91/7ac69100e88a63a14b9cbe8ba260721f.jpg",
+//       "scene2_texte1": "Ceci est un message varible postman",
+//       "scene3_image2": "https://archzine.fr/wp-content/uploads/2020/03/wallpaperordinateur-pc-fond-ecran-kawaii-dessin-cactus-vert-fleurs-roses.webp",
+//       "scene3_texte1": "Cela fonctionne bien ? ",
+//       "scene3_image3": "https://cdn.futura-sciences.com/cdncgi/image/width=1024,quality=60,format=auto/sources/images/screen/EVENEMENT/Hiver/965-hiver-43.jpg"
+// }
+//   });
+const variables = {
+        "scene1_texte1": "Test écriture variable",
+        "scene2_image1": "https://img.freepik.com/photos-gratuite/nuages-stylefantastique_23-2151057680.jpg",
+        "scene2_image2": "https://i.pinimg.com/736x/7a/c6/91/7ac69100e88a63a14b9cbe8ba260721f.jpg",
+        "scene2_texte1": "Ceci est un message varible postman",
+        "scene3_image2": "https://archzine.fr/wp-content/uploads/2020/03/wallpaperordinateur-pc-fond-ecran-kawaii-dessin-cactus-vert-fleurs-roses.webp",
+        "scene3_texte1": "Cela fonctionne bien ? ",
+        "scene3_image3": "https://cdn.futura-sciences.com/cdncgi/image/width=1024,quality=60,format=auto/sources/images/screen/EVENEMENT/Hiver/965-hiver-43.jpg"
+  }
+const variablesParse = JSON.stringify(variables)
+
   const [formData, setFormData] = useState({
-    template_id: "RdLlSO4FUmAV6fPHvKT1",
-    desc: "",
-    variables: {},
+    "template_id": "RdLlSO4FUmAV6fPHvKT1",
+    "desc": "test tom desc",
+    "variables": variablesParse
   });
+
+  console.log(formData);
+  
 
   const [visuelsVideos, setVisuelsVideos] = useState([]);
   const [tabParseTextesVideo, setTabParseTextesVideo] = useState([]);
@@ -34,7 +80,6 @@ export default function MemenzaChoixVideo() {
   const [apparitionParametrage, setApparitionParametrage] = useState(false);
 
   const videoRefs = useRef([]);
-  const { selectedSousCatId } = useSousCat();
 
   const imagesVideosFiltered = visuelsVideos.filter(
     (item) => item.id_ss_cat === selectedSousCatId
@@ -82,7 +127,7 @@ export default function MemenzaChoixVideo() {
       return;
     }
 
-    console.log("TABLEAU COMPLET" + JSON.stringify(selectedTemplate));
+    // console.log("TABLEAU COMPLET" + JSON.stringify(selectedTemplate));
 
     try {
       // Parsing des textes_video et medias_video en un seul bloc try
@@ -112,6 +157,44 @@ export default function MemenzaChoixVideo() {
     }
   };
 
+  const API_KEY = process.env.REACT_APP_MEMENZA_API_KEY || "simulation lecture clé API";
+  const API_URL = "https://core-api.memenza.fr/api/wp-media/create-with-tpl";
+  
+  const handleVideoSend = async () => {
+    try {
+      const response = await axios.post(
+        API_URL , 
+        formData ,
+        // JSON.stringify(formData) ,
+        {
+          headers: {
+            'WP-API-KEY': API_KEY,
+            'Content-Type': 'application/json',
+            },
+        }
+      );
+  console.log("LIGNE 167 REPONSE : "+ response.data);
+  
+      if (response.status === 200) {
+        console.log("Données envoyées avec succès :", response.data);
+      } else {
+        console.error("ICI ERREUR CATCH STATUS Erreur lors de l'envoi des données :", response.statusText);
+      }
+    } catch (error) {
+      console.error("ICI ERREUR CATCH Erreur lors de l'envoi des données :", error);
+      if (error.response) {
+        console.error("Erreur API :", error.response.data);
+        console.error("Statut HTTP :", error.response.status);
+        console.error("Headers :", error.response.headers);
+      } else if (error.request) {
+        console.error("Aucune réponse reçue du serveur :", error.request);
+      } else {
+        console.error("Erreur lors de la configuration de la requête :", error.message);
+      }
+    }
+  };
+  
+
   return (
     <Box sx={{ textAlign: "center", p: 4 }}>
       <Typography variant="h4" gutterBottom>
@@ -121,14 +204,16 @@ export default function MemenzaChoixVideo() {
         (Explication du pourquoi du choix du template)
       </Typography>
 
-      <Grid container spacing={2} justifyContent="center">
+      {/* <Grid  spacing={2} justifyContent="center"> */}
+      <Grid justifyContent="center">
         {imagesVideosFiltered.map((src, index) => (
           <Grid item key={index} xs={6} sm={4} md={3}>
             <Box
               sx={{
                 position: "relative",
                 width: "100%",
-                height: 200,
+                // height: 200,
+                height: 400,
                 cursor: "pointer",
                 borderRadius: 2,
                 overflow: "hidden",
@@ -169,14 +254,14 @@ export default function MemenzaChoixVideo() {
                 </Box>
               )}
             </Box>
-            <Typography>{src.nom_modele_video || "pas d'info"}</Typography>
+            <Typography sx={{my: 2}}>Nom du tempate : {src.nom_modele_video || "pas d'info"}</Typography>
             <Checkbox />
             <Button
               variant="contained"
               sx={{ mb: 2 }}
               onClick={handleVideoClickCustom}
             >
-              Je choisis ce template
+              Je choisis le template sélectionné
             </Button>
           </Grid>
         ))}
@@ -224,6 +309,19 @@ export default function MemenzaChoixVideo() {
           ))}
         </Box>
       )}
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <Button
+            variant="contained"
+            sx={{ m: 2 }}
+            onClick={handleVideoSend}
+          >
+J'envoie mes données de paramétrage.
+          </Button>
+    </Box>
     </Box>
   );
 }
+
+/////////////////////////
+/////////////////////////
+/////////////////////////
