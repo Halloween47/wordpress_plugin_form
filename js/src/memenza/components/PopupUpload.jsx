@@ -129,19 +129,16 @@ function PopupUpload() {
                 },
               }}
             >
-              <Typography variant="h6" color="textPrimary">
-                Explications
-              </Typography>
               <List dense={dense}>
-                {generate(
+                {/* {generate( */}
                   <ListItem disablePadding={true}>
                     <ListItemText
                       primary="Infos qualité media"
-                      secondary={"Critères"}
+                      secondary={"Critères de dimensions : 1086x1086 "}
                       // secondary={secondary ? 'Secondary text' : null}
                     />
                   </ListItem>,
-                )}
+                {/* // )} */}
               </List>
             </Box>
           </div>
@@ -154,12 +151,6 @@ function PopupUpload() {
                 gap: 2,
               }}
             >
-              <Typography
-                variant="subtitle1"
-                sx={{ textDecoration: "underline" }}
-              >
-                J'envoie :
-              </Typography>
               <Button
                 component="label"
                 role={undefined}
@@ -175,7 +166,7 @@ function PopupUpload() {
                 />
               </Button>
               <Button component="label" variant="contained">
-                OK
+                Envoyer
               </Button>
             </Box>
           </div>
