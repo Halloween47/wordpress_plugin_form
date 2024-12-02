@@ -6,15 +6,15 @@ import {
   TextField,
   Button,
   Checkbox,
+  Divider,
 } from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import axios from "axios";
 import { useSousCat } from "./SousCatContext.jsx";
-import styled from "styled-components";
-import { purple } from "@mui/material/colors";
-
 import InfoIcon from '@mui/icons-material/Info';
 import { Tooltip, IconButton } from '@mui/material';
+
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 const videos = [
   "https://samplelib.com/lib/preview/mp4/sample-5s.mp4",
@@ -249,8 +249,8 @@ console.log("VARIABLES PARSE VERIFICATION : "+ variablesParse);
               sx={{
                 position: "relative",
                 width: "100%",
-                // height: 200,
-                height: 400,
+                height: 200,
+                // height: 400,
                 cursor: "pointer",
                 borderRadius: 2,
                 overflow: "hidden",
@@ -357,7 +357,6 @@ console.log("VARIABLES PARSE VERIFICATION : "+ variablesParse);
       {apparitionParametrage && tabParseMediasVideo.length > 0 && (
         <Box sx={{ mt: 4 }}>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Typography variant="h5">Paramétrage des Médias</Typography>
           </Box>
 
           {tabParseMediasVideo.map((field, index) => (
@@ -397,7 +396,7 @@ onChange={(e) => console.log(e.target.files)}
 />
 </Button>
 {/* Tooltip pour restrictions spécifiques à côté du bouton */}
-<Tooltip title={`La dimension de ce media doivent repsectés les dimensions suivantes : ${field.comment}`} arrow>
+<Tooltip title={`Les dimensions de ce média doivent respecter : les dimensions suivantes : ${field.comment}`} arrow>
                   <IconButton>
                     <InfoIcon />
                   </IconButton>
@@ -417,12 +416,14 @@ onChange={(e) => console.log(e.target.files)}
           <Button
             variant="contained"
             sx={{ m: 2 }}
-            // onClick={handleVideoSend}
+            onClick={handleVideoSend}
             // onClick={handleTestCompleteJsonTab}
           >
 J'envoie mes données de paramétrage.
           </Button>
     </Box>
+
+
     </Box>
   );
 }

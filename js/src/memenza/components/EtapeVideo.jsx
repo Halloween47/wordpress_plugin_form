@@ -171,7 +171,7 @@ J'envoie mes données de paramétrage.
               tabIndex={-1}
               startIcon={<CloudUploadIcon />}
             >
-              Uploader son propre visuel
+              Uploader sa propre Video
               <VisuallyHiddenInput
                 type="file"
                 onChange={(event) => console.log(event.target.files)}

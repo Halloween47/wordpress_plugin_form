@@ -133,9 +133,8 @@ function PopupUpload() {
                 {/* {generate( */}
                   <ListItem disablePadding={true}>
                     <ListItemText
-                      primary="Infos qualité media"
-                      secondary={"Critères de dimensions : 1086x1086 "}
-                      // secondary={secondary ? 'Secondary text' : null}
+                      primary="Information sur l'image"
+                      secondary={"Vous pouvez uploader un visuels au format 1086*1086 pixels (ou format carré équivalent)"}
                     />
                   </ListItem>,
                 {/* // )} */}
