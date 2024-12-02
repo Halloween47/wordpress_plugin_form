@@ -86,6 +86,27 @@ function EtapeVisuel() {
 
   const [imageClicked, setImageClicked] = useState(false);
 
+  const [imageFields, setImageFields] = useState([
+    {
+      name: "image1",
+      defaultSize: { width: 1806, height: 1806 },
+      x: 0,
+      y: 0,
+      defaultFile: "visuels/cadres/templates/alexandre_template.png",
+      customizable: false,
+    },
+    {
+      name: "image2",
+      defaultSize: { width: 1806, height: 1806 },
+      x: 0,
+      y: 0,
+      defaultFile: "visuels/cadres/templates/alexandre_template.png",
+      customizable: false,
+    },
+  ]);
+
+  console.log("LIGNE 108 : "+ JSON.stringify(imageFields));
+  
 
   const [imagesVisuels, setImagesVisuels] = React.useState([]);
   React.useEffect(() => {
@@ -239,7 +260,7 @@ const imagesVisuelsFitred =  imagesVisuels.filter((item) => {
       mr={0}
       mb={2}
     >
-      <PopupUpload />
+      <PopupUpload updateImageFields={setImageFields} />
     </FormGrid>
   </>
 )}
