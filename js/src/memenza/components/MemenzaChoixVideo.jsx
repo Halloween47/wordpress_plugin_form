@@ -222,15 +222,6 @@ console.log("VARIABLES PARSE VERIFICATION : "+ variablesParse);
     }
   };
   
-  ////////////////////////////
-  const handleTestCompleteJsonTab = "";
-  const handleTextChange = (name, value) => {
-    setTextValues((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-  ////////////////////////////
 
   return (
     <Box sx={{ textAlign: "center", p: 4 }}>
@@ -356,7 +347,7 @@ console.log("VARIABLES PARSE VERIFICATION : "+ variablesParse);
             variant="contained"
             sx={{ m: 2 }}
             // onClick={handleVideoSend}
-            onClick={handleTestCompleteJsonTab}
+            // onClick={handleTestCompleteJsonTab}
           >
 J'envoie mes données de paramétrage.
           </Button>

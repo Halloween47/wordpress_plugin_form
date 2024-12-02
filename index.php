@@ -51,19 +51,63 @@ function enqeue_react_script() {
 }
 
 add_action('rest_api_init', function () {
+    // register_rest_route('plugin_memenza/v1', '/images-categories', [
+    //     'methods' => 'GET',
+    //     'callback' => function () {
+    //         // // Connexion à la base distante
+    //         $db = new mysqli('localhost', 'root', 'root', 'local');
+    //         $result = $db->query('SELECT chemin_img_cat, id_cat, nom_cat FROM categories');
+    //         $images = $result->fetch_all(MYSQLI_ASSOC);
+    //         $db->close();
+            
+    //         return rest_ensure_response($images);
+        
+    //         },
+    // ]);
     register_rest_route('plugin_memenza/v1', '/images-categories', [
         'methods' => 'GET',
         'callback' => function () {
-            // // Connexion à la base distante
-            $db = new mysqli('localhost', 'root', 'root', 'local');
-            $result = $db->query('SELECT chemin_img_cat, id_cat, nom_cat FROM categories');
-            $images = $result->fetch_all(MYSQLI_ASSOC);
-            $db->close();
+            // Vérifier si les images sont déjà dans le cache
+            $cached_images = wp_cache_get('plugin_memenza_images', 'plugin_memenza');
             
-            return rest_ensure_response($images);
-        
-            },
+            if ($cached_images !== false) {
+                // Retourner les données mises en cache
+                return rest_ensure_response($cached_images);
+            }
+    
+            try {
+                // Connexion à la base distante
+                $db = new mysqli('localhost', 'root', 'root', 'local');
+                // $db = new mysqli('memenzj42.mysql.db', 'memenzj42', 'pAssbdDcompl3x3pourTom', 'memenzj42', '3306');
+                // $db = new mysqli('memenzj42.mysql.db', 'memenzj42', 'pAssbdDcompl3x3pourTom', 'memenzj42');
+                
+                // Vérification de la connexion
+                if ($db->connect_error) {
+                    throw new Exception('Échec de la connexion à la base de données : ' . $db->connect_error);
+                }
+    
+                // Requête SQL avec limitation des résultats à 10 images
+                $result = $db->query('SELECT chemin_img_cat, id_cat, nom_cat FROM categories LIMIT 10');
+                
+                if (!$result) {
+                    throw new Exception('Erreur lors de la récupération des images : ' . $db->error);
+                }
+    
+                $images = $result->fetch_all(MYSQLI_ASSOC);
+                $db->close();
+    
+                // Mise en cache des résultats pour 1 heure
+                wp_cache_set('plugin_memenza_images', $images, 'plugin_memenza', 3600); // Cache pendant 1 heure
+    
+                // Retourner les images dans la réponse
+                return rest_ensure_response($images);
+            } catch (Exception $e) {
+                // En cas d'erreur, retourner une réponse avec le code d'erreur
+                return new WP_Error('database_error', $e->getMessage(), ['status' => 500]);
+            }
+        },
     ]);
+    
     // Nouvelle route pour récupérer image sous categories
     register_rest_route('plugin_memenza/v1', '/images_sous-categories', [
         'methods' => 'GET',

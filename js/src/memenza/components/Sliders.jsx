@@ -264,7 +264,7 @@ export default function Sliders({ onImageClick, onSousCatClick }) {
   }, []);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchSousCatData = async () => {
       try {
         const response = await fetch(
           "/wp-json/plugin_memenza/v1/images_sous-categories"
@@ -279,7 +279,7 @@ export default function Sliders({ onImageClick, onSousCatClick }) {
       }
     };
 
-    fetchData();
+    fetchSousCatData();
   }, []);
 
   if (error) {
@@ -302,6 +302,7 @@ export default function Sliders({ onImageClick, onSousCatClick }) {
                 className="item"
                 src={item.chemin_img_cat}
                 alt={`Image ${item.id_cat}`}
+                loading="lazy"
                 onClick={() => {
                   setSelectedId(item.id_cat);
                   onImageClick && onImageClick(item);
