@@ -27,7 +27,7 @@ export default function MemenzaChoixVideo() {
   const [visuelsVideos, setVisuelsVideos] = useState([]);
   const [tabParseTextesVideo, setTabParseTextesVideo] = useState([]);
   const [tabParseMediasVideo, setTabParseMediasVideo] = useState([]);
-  console.log("TEST FINAL MEDIA : " + JSON.stringify(tabParseMediasVideo));
+  // console.log("TEST FINAL MEDIA : " + JSON.stringify(tabParseMediasVideo));
   
   
   const [isPlaying, setIsPlaying] = useState(Array(videos.length).fill(false));
@@ -87,10 +87,10 @@ export default function MemenzaChoixVideo() {
     try {
       // Parsing des textes_video et medias_video en un seul bloc try
       const parsedTemplateTextesVideo = JSON.parse(selectedTemplate.textes_video);
-      console.log("LIGNE PARSE TEXTE VIDEO : " + JSON.stringify(parsedTemplateTextesVideo));
+      // console.log("LIGNE PARSE TEXTE VIDEO : " + JSON.stringify(parsedTemplateTextesVideo));
 
       const parsedTemplateMediasVideo = JSON.parse(selectedTemplate.medias_video);
-      console.log("LIGNE 121 test media video " + selectedTemplate.medias_video);
+      // console.log("LIGNE 121 test media video " + selectedTemplate.medias_video);
       
       // Vérifier si videoTextFields existe et est valide
       if (Array.isArray(parsedTemplateTextesVideo.videoTextFields)) {
