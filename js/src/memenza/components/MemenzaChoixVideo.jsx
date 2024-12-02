@@ -195,12 +195,12 @@ console.log("VARIABLES PARSE VERIFICATION : "+ variablesParse);
   };
 
   const API_KEY = process.env.REACT_APP_MEMENZA_API_KEY || "simulation lecture clé API";
-  const API_URL = "https://core-api.memenza.fr/api/wp-media/create-with-tpl";
+  const API_URL_WITH_TPL = "https://core-api.memenza.fr/api/wp-media/create-with-tpl";
   
-  const handleVideoSend = async () => {
+  const handleVideoSendWithTemplate = async () => {
     try {
       const response = await axios.post(
-        API_URL , 
+        API_URL_WITH_TPL , 
         formData ,
         // JSON.stringify(formData) ,
         {
@@ -416,7 +416,7 @@ onChange={(e) => console.log(e.target.files)}
           <Button
             variant="contained"
             sx={{ m: 2 }}
-            onClick={handleVideoSend}
+            onClick={handleVideoSendWithTemplate}
             // onClick={handleTestCompleteJsonTab}
           >
 J'envoie mes données de paramétrage.

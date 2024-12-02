@@ -120,10 +120,69 @@ const VisuallyHiddenInput = styled("input")({
 });
 
 function EtapeVideo() {
+
+  const [formData, setFormData] = useState({
+    "video_path": "",
+    "desc": "Version POC (Version template personnel)",
+  });
+
+  console.log("LIGNE 129 : " + JSON.stringify(formData));
+  
+
   // const [showTextCustomVideo, setShowTextCustomVideo] = useState(false);
   // const handleVideoSend = () => {
   //   setShowTextCustomVideo(true);
   // };
+
+  const API_KEY = process.env.REACT_APP_MEMENZA_API_KEY || "simulation lecture clé API";
+  const API_URL_WITHOUT_TPL = "https://core-api.memenza.fr/api/wp-media/create-without-tpl";
+
+  const handleVideoSendWithOutTemplate = async () => {
+    try {
+      const response = await axios.post(
+        API_URL_WITHOUT_TPL , 
+        formData ,
+        {
+          headers: {
+            'WP-API-KEY': API_KEY,
+            'Content-Type': 'application/json',
+            },
+        }
+      );
+  console.log("LIGNE 167 REPONSE : "+ response.data);
+  
+      if (response.status === 200) {
+        console.log("Données envoyées avec succès :", response.data);
+      } else {
+        console.error("ICI ERREUR CATCH STATUS Erreur lors de l'envoi des données :", response.statusText);
+      }
+    } catch (error) {
+      console.error("ICI ERREUR CATCH Erreur lors de l'envoi des données :", error);
+      if (error.response) {
+        console.error("Erreur API :", error.response.data);
+        console.error("Statut HTTP :", error.response.status);
+        console.error("Headers :", error.response.headers);
+      } else if (error.request) {
+        console.error("Aucune réponse reçue du serveur :", error.request);
+      } else {
+        console.error("Erreur lors de la configuration de la requête :", error.message);
+      }
+    }
+  };
+
+  // Fonction pour gérer l'upload de vidéo
+  const handleFileUpload = (event) => {
+    const file = event.target.files[0]; // Récupérer le premier fichier sélectionné
+    if (file) {
+      const videoURL = URL.createObjectURL(file); // Générer une URL locale
+      setFormData((prevData) => ({
+        ...prevData,
+        video_path: videoURL, // Mettre à jour l'état avec le lien vidéo
+      }));
+      console.log("Lien local de la vidéo :", videoURL);
+    }
+  };
+
   return (
     <Container className="etape-video" maxWidth="lg">
       <Box className="etape-video-intro">
@@ -172,13 +231,56 @@ J'envoie mes données de paramétrage.
               startIcon={<CloudUploadIcon />}
             >
               Uploader sa propre Video
-              <VisuallyHiddenInput
+              {/* <VisuallyHiddenInput
                 type="file"
                 onChange={(event) => console.log(event.target.files)}
                 multiple
-              />
+              /> */}
+              <VisuallyHiddenInput
+            type="file"
+            accept="video/*" 
+            onChange={handleFileUpload} 
+          />
             </Button>
           </Box>
+          {formData.video_path && (
+        <Box sx={{ mt: 2 }}>
+          <Typography variant="body2" gutterBottom>
+            Prévisualisation de la vidéo :
+          </Typography>
+          <video
+            src={formData.video_path}
+            controls
+            style={{
+              width: "100%",
+              maxWidth: "500px",
+              borderRadius: "8px",
+              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+            }}
+          >
+            Votre navigateur ne prend pas en charge la vidéo.
+          </video>
+          <Box sx={{ mt: 2, textAlign: "center" }}>
+            <Button
+              variant="contained"
+              color="success"
+              // onClick={handleVideoSendWithOutTemplate}
+            >
+              Envoyer votre vidéo
+            </Button>
+          </Box>
+        </Box>
+      )}
+          {/* <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <Button
+            variant="contained"
+            sx={{ m: 2 }}
+            // onClick={handleVideoSendWithOutTemplate}
+            // onClick={handleTestCompleteJsonTab}
+          >
+Uploader sa propre Video (en cours)
+          </Button>
+    </Box> */}
         </Root>
       </Box>
       {/* {showTextCustomVideo && (
