@@ -13,6 +13,9 @@ import { useSousCat } from "./SousCatContext.jsx";
 import styled from "styled-components";
 import { purple } from "@mui/material/colors";
 
+import InfoIcon from '@mui/icons-material/Info';
+import { Tooltip, IconButton } from '@mui/material';
+
 const videos = [
   "https://samplelib.com/lib/preview/mp4/sample-5s.mp4",
   "https://samplelib.com/lib/preview/mp4/sample-10s.mp4",
@@ -96,7 +99,13 @@ console.log("VARIABLES PARSE VERIFICATION : "+ variablesParse);
 
   const [visuelsVideos, setVisuelsVideos] = useState([]);
   const [tabParseTextesVideo, setTabParseTextesVideo] = useState([]);
-  const [tabParseMediasVideo, setTabParseMediasVideo] = useState([]);
+  // const [tabParseMediasVideo, setTabParseMediasVideo] = useState([]);
+  const [tabParseMediasVideo, setTabParseMediasVideo] = useState([
+    { name: "Video 1", restrictions: "Max 10MB, format .mp4" },
+    { name: "Video 2", restrictions: "Max 5MB, format .avi" },
+    { name: "Video 3", restrictions: "Max 20MB, format .mov" },
+  ]);
+
   // console.log("TEST FINAL MEDIA : " + JSON.stringify(tabParseMediasVideo));
   
   
@@ -321,7 +330,7 @@ console.log("VARIABLES PARSE VERIFICATION : "+ variablesParse);
       )}
 
       {/* Affichage des médias vidéo */}
-      {apparitionParametrage && tabParseMediasVideo.length > 0 && (
+      {/* {apparitionParametrage && tabParseMediasVideo.length > 0 && (
         <Box sx={{ mt: 4 }}>
           <Typography variant="h5">Paramétrage des Médias</Typography>
           {tabParseMediasVideo.map((field, index) => (
@@ -341,7 +350,69 @@ console.log("VARIABLES PARSE VERIFICATION : "+ variablesParse);
             </Box>
           ))}
         </Box>
+      )} */}
+
+<Box>
+      {/* Affichage des médias vidéo */}
+      {apparitionParametrage && tabParseMediasVideo.length > 0 && (
+        <Box sx={{ mt: 4 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Typography variant="h5">Paramétrage des Médias</Typography>
+          </Box>
+
+          {tabParseMediasVideo.map((field, index) => (
+            <Box key={index} display="flex" alignItems="center" gap={2} sx={{ mt: 4 }}>
+              {/* <Button variant="contained" component="label">
+                Importer votre média
+                <input
+                  type="file"
+                  hidden
+                  accept="image/*,video/*"
+                  onChange={(e) => console.log(e.target.files)}
+                />
+              </Button> */}
+              <Box>
+      {/* Affichage des médias vidéo */}
+      {tabParseMediasVideo.length > 0 && (
+        <Box sx={{ mt: 4 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <Typography variant="h5">Paramétrage des Médias</Typography>
+          </Box>
+
+          {tabParseMediasVideo.map((field, index) => (
+              <Box key={index} display="flex" alignItems="center" gap={2} sx={{ mt: 4 }}>
+                <Typography variant="body1" style={{ whiteSpace: 'nowrap' }}>
+                  {field.name}
+                </Typography>
+
+                
+
+<Button variant="contained" component="label">
+Importer votre média
+<input
+type="file"
+hidden
+accept="image/*,video/*"
+onChange={(e) => console.log(e.target.files)}
+/>
+</Button>
+{/* Tooltip pour restrictions spécifiques à côté du bouton */}
+<Tooltip title={`La dimension de ce media doivent repsectés les dimensions suivantes : ${field.comment}`} arrow>
+                  <IconButton>
+                    <InfoIcon />
+                  </IconButton>
+                </Tooltip>
+</Box>
+))}
+</Box>
+)}
+    </Box>
+            </Box>
+          ))}
+        </Box>
       )}
+    </Box>
+
       <Box sx={{ display: "flex", justifyContent: "center" }}>
           <Button
             variant="contained"
