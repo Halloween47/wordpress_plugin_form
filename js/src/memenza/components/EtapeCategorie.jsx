@@ -87,26 +87,6 @@ function EtapeCategorie() {
         Choisissez votre catégorie.
       </Typography>
       <Sliders onImageClick={handleOpen} onSousCatClick={handleSelectSousCat} />
-      {/* <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <div className="memenza-sous-categories">
-            <h2>Choisissez votre sous-catégorie</h2>
-            <SlidersSousCategories />
-            <Button
-              variant="contained"
-              sx={{ position: "absolute", bottom: "5%", right: "5%" }}
-            >
-              Visuel
-            </Button>
-            <style>{StylesSousCategories}</style>
-          </div>
-        </Box>
-      </Modal> */}
     </Box>
   );
 }
