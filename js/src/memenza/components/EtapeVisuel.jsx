@@ -84,6 +84,9 @@ const images = [
 function EtapeVisuel() {
   const [showTextCustomVisuel, setShowTextCustomVisuel] = useState(false);
 
+  const [imageClicked, setImageClicked] = useState(false);
+
+
   const [imagesVisuels, setImagesVisuels] = React.useState([]);
   React.useEffect(() => {
     const fetchData = async () => {
@@ -106,6 +109,7 @@ function EtapeVisuel() {
 
   const handleVisuelClickCustom = () => {
     setShowTextCustomVisuel(true);
+    setImageClicked(true);
   };
 
   const { selectedSousCatId } = useSousCat();
@@ -195,8 +199,8 @@ const imagesVisuelsFitred =  imagesVisuels.filter((item) => {
                   <Card onClick={handleVisuelClickCustom}>
                     <CardMedia
                       component="img"
-                      // image={item.img_modele}
-                      image="/visuels/cadres/templates/alexandre_template.png"
+                      image={item.img_modele}
+                      // image="/visuels/cadres/templates/alexandre_template.png"
                       alt={`Visuel ${index + 1}`}
                     />
                     <CardContent>
@@ -207,7 +211,7 @@ const imagesVisuelsFitred =  imagesVisuels.filter((item) => {
               </>
             ))}
           </Grid>
-          <Divider sx={{ mt: 2 }}> OU </Divider>
+          {/* <Divider sx={{ mt: 2 }}> OU </Divider>
           <FormGrid
             sx={{
               width: "50%",
@@ -220,7 +224,25 @@ const imagesVisuelsFitred =  imagesVisuels.filter((item) => {
             mb={2}
           >
             <PopupUpload />
-          </FormGrid>
+          </FormGrid> */}
+          {!imageClicked && (
+  <>
+    <Divider sx={{ mt: 2 }}> OU </Divider>
+    <FormGrid
+      sx={{
+        width: "50%",
+        display: "flex",
+        justifyContent: "center",
+        mt: 2,
+      }}
+      size={{ xs: 12, md: 6 }}
+      mr={0}
+      mb={2}
+    >
+      <PopupUpload />
+    </FormGrid>
+  </>
+)}
         </Box>
 
         {showTextCustomVisuel && (
