@@ -50,16 +50,33 @@ export default function MemenzaChoixVideo() {
 //       "scene3_image3": "https://cdn.futura-sciences.com/cdncgi/image/width=1024,quality=60,format=auto/sources/images/screen/EVENEMENT/Hiver/965-hiver-43.jpg"
 // }
 //   });
-const variables = {
-        "scene1_texte1": "Test écriture variable",
-        "scene2_image1": "https://img.freepik.com/photos-gratuite/nuages-stylefantastique_23-2151057680.jpg",
-        "scene2_image2": "https://i.pinimg.com/736x/7a/c6/91/7ac69100e88a63a14b9cbe8ba260721f.jpg",
-        "scene2_texte1": "Ceci est un message varible postman",
-        "scene3_image2": "https://archzine.fr/wp-content/uploads/2020/03/wallpaperordinateur-pc-fond-ecran-kawaii-dessin-cactus-vert-fleurs-roses.webp",
-        "scene3_texte1": "Cela fonctionne bien ? ",
-        "scene3_image3": "https://cdn.futura-sciences.com/cdncgi/image/width=1024,quality=60,format=auto/sources/images/screen/EVENEMENT/Hiver/965-hiver-43.jpg"
-  }
+// const variables = {
+  //         "scene1_texte1": "Test écriture variable",
+  //         "scene2_image1": "https://img.freepik.com/photos-gratuite/nuages-stylefantastique_23-2151057680.jpg",
+  //         "scene2_image2": "https://i.pinimg.com/736x/7a/c6/91/7ac69100e88a63a14b9cbe8ba260721f.jpg",
+  //         "scene2_texte1": "Ceci est un message varible postman",
+  //         "scene3_image2": "https://archzine.fr/wp-content/uploads/2020/03/wallpaperordinateur-pc-fond-ecran-kawaii-dessin-cactus-vert-fleurs-roses.webp",
+  //         "scene3_texte1": "Cela fonctionne bien ? ",
+  //         "scene3_image3": "https://cdn.futura-sciences.com/cdncgi/image/width=1024,quality=60,format=auto/sources/images/screen/EVENEMENT/Hiver/965-hiver-43.jpg"
+  //   }
+
+  // const variables = {};
+
+  ///////////////////////////////
+  ///////////////////////////////
+  const [variables, setVariables] = useState({});
+  const handleVariableChange = (key, value) => {
+    setVariables((prevVariables) => ({
+      ...prevVariables,
+      [key]: value, 
+    }));
+  };
+  ///////////////////////////////
+  ///////////////////////////////
+  // console.log("VARIABLES SANS PARSE VERIFICATION : "+ JSON.stringify(variables));
 const variablesParse = JSON.stringify(variables)
+console.log("VARIABLES PARSE VERIFICATION : "+ variablesParse);
+
 
   const [formData, setFormData] = useState({
     "template_id": "RdLlSO4FUmAV6fPHvKT1",
@@ -67,7 +84,7 @@ const variablesParse = JSON.stringify(variables)
     "variables": variablesParse
   });
 
-  console.log(formData);
+  // console.log(formData);
   
 
   const [visuelsVideos, setVisuelsVideos] = useState([]);
@@ -78,6 +95,10 @@ const variablesParse = JSON.stringify(variables)
   
   const [isPlaying, setIsPlaying] = useState(Array(videos.length).fill(false));
   const [apparitionParametrage, setApparitionParametrage] = useState(false);
+
+  ////////////////////////////
+  const [textValues, setTextValues] = useState({});
+  ////////////////////////////
 
   const videoRefs = useRef([]);
 
@@ -194,6 +215,15 @@ const variablesParse = JSON.stringify(variables)
     }
   };
   
+  ////////////////////////////
+  const handleTestCompleteJsonTab = "";
+  const handleTextChange = (name, value) => {
+    setTextValues((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+  ////////////////////////////
 
   return (
     <Box sx={{ textAlign: "center", p: 4 }}>
@@ -281,6 +311,11 @@ const variablesParse = JSON.stringify(variables)
                 inputProps={{ maxLength: field.maxCharacters }}
                 variant="outlined"
                 size="small"
+                ////////////////////////////
+                value={variables[field.name] || ''}
+                onChange={(e) => handleVariableChange(field.name, e.target.value)} // Met à jour la clé avec la valeur saisie
+                ////////////////////////////
+
               />
             </Box>
           ))}
@@ -313,7 +348,8 @@ const variablesParse = JSON.stringify(variables)
           <Button
             variant="contained"
             sx={{ m: 2 }}
-            onClick={handleVideoSend}
+            // onClick={handleVideoSend}
+            onClick={handleTestCompleteJsonTab}
           >
 J'envoie mes données de paramétrage.
           </Button>
@@ -325,3 +361,4 @@ J'envoie mes données de paramétrage.
 /////////////////////////
 /////////////////////////
 /////////////////////////
+
