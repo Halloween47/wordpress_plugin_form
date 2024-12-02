@@ -64,7 +64,14 @@ export default function MemenzaChoixVideo() {
 
   ///////////////////////////////
   ///////////////////////////////
-  const [variables, setVariables] = useState({});
+  const initialVariables = {
+    "scene2_image1": "https://img.freepik.com/photos-gratuite/nuages-stylefantastique_23-2151057680.jpg",
+    "scene2_image2": "https://i.pinimg.com/736x/7a/c6/91/7ac69100e88a63a14b9cbe8ba260721f.jpg",
+    "scene3_image2": "https://archzine.fr/wp-content/uploads/2020/03/wallpaperordinateur-pc-fond-ecran-kawaii-dessin-cactus-vert-fleurs-roses.webp",
+    "scene3_image3": "https://cdn.futura-sciences.com/cdncgi/image/width=1024,quality=60,format=auto/sources/images/screen/EVENEMENT/Hiver/965-hiver-43.jpg",
+  };
+  // const [variables, setVariables] = useState({});
+  const [variables, setVariables] = useState(initialVariables);
   const handleVariableChange = (key, value) => {
     setVariables((prevVariables) => ({
       ...prevVariables,
