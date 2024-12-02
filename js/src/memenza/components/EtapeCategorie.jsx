@@ -55,12 +55,20 @@ const StylesSousCategories = `
 `;
 
 function EtapeCategorie() {
+  const [activeStep, setActiveStep] = useState(0);  // Définir activeStep ici
+
 
   const { setSelectedSousCatId } = useSousCat();
+  // const handleSelectSousCat = (id) => {
+  //   setSelectedSousCatId(id); 
+  //   console.log(id);
+    
+  // };
+
   const handleSelectSousCat = (id) => {
     setSelectedSousCatId(id); 
+    setActiveStep(1);  
     console.log(id);
-    
   };
 
   function handleImageClick() {
@@ -86,7 +94,7 @@ function EtapeCategorie() {
       >
         Choisissez votre catégorie.
       </Typography>
-      <Sliders onImageClick={handleOpen} onSousCatClick={handleSelectSousCat} />
+      <Sliders onImageClick={handleOpen} onSousCatClick={handleSelectSousCat} setActiveStep={setActiveStep} />
     </Box>
   );
 }

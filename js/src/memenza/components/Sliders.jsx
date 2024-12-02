@@ -66,6 +66,13 @@ const styles = `
   font-size: 1.2rem;
   color: white;
 }
+
+.carousel .item-container.selected .overlay {
+  opacity: 1 !important;
+  background: rgba(255, 105, 180, 0.6); /* Fond rose pour la sélection */
+}
+
+
 `;
 
 export default function Sliders({ onImageClick, onSousCatClick }) {
@@ -74,6 +81,8 @@ export default function Sliders({ onImageClick, onSousCatClick }) {
 
   const [selectedId, setSelectedId] = useState(null); // ID de l'image sélectionnée
   const [selectedIdSs, setSelectedIdSs] = useState(null); // ID de l'image sélectionnée
+  console.log("ID SS CAT : " + selectedIdSs);
+  
   const [error, setError] = React.useState(null);
 
   const { setSelectedSousCatId } = useSousCat();
@@ -137,7 +146,11 @@ export default function Sliders({ onImageClick, onSousCatClick }) {
       <div className="container-carousel">
         <div className="carousel">
           {data.map((item, index) => (
-            <div className="item-container" key={index}>
+            // <div className="item-container" key={index}>
+            <div
+  className={`item-container ${selectedId === item.id_cat ? "selected" : ""}`}
+  key={index}
+>
               <img
                 className="item"
                 src={item.chemin_img_cat}
@@ -148,7 +161,10 @@ export default function Sliders({ onImageClick, onSousCatClick }) {
                   onImageClick && onImageClick(item);
                 }}
               />
-              <div className="overlay" onClick={() => {
+              <div 
+              // className="overlay" 
+              className={`overlay ${selectedId === item.id_cat ? "selected" : ""}`}
+                            onClick={() => {
                   setSelectedId(item.id_cat);
                   onImageClick && onImageClick(item);
                 }}>
@@ -159,10 +175,13 @@ export default function Sliders({ onImageClick, onSousCatClick }) {
         </div>
         {selectedId && (
           <div>
-            {/* <h3>Images liées à l'ID sélectionné : {selectedId}</h3> */}
+            {/* <h3>Images liées à l'ID sélectionné : {selectedId} & l'images SOUS CATEGORIES est liées à l'ID : {selectedIdSs}</h3> */}
             <div className="carousel">
               {filteredSousCat.map((item, index) => (
-                <div className="item-container" key={index}>
+                <div 
+                // className="item-container" 
+                className={`item-container ${selectedIdSs === item.id_ss_cat ? "selected" : ""}`}
+                key={index}>
                   <img
                     className="item"
                     src={item.chemin_img_sscat}
@@ -172,7 +191,10 @@ export default function Sliders({ onImageClick, onSousCatClick }) {
                       handleSelectSousCat(item.id_ss_cat);
                     }}
                   />
-                  <div className="overlay" onClick={() => {
+                  <div 
+                  // className="overlay" 
+                  className={`overlay ${selectedIdSs === item.id_ss_cat ? "selected" : ""}`}
+                  onClick={() => {
                       setSelectedIdSs(item.id_ss_cat);
                       handleSelectSousCat(item.id_ss_cat);
                     }}>
@@ -188,3 +210,10 @@ export default function Sliders({ onImageClick, onSousCatClick }) {
     </>
   );
 }
+
+
+
+/////////////////////
+/////////////////////
+/////////////////////
+/////////////////////

@@ -1,17 +1,26 @@
+// import React from "react";
+// import { createRoot } from "react-dom/client";
+// import MemenzaFormulaire from "./memenza/MemenzaFormulaire.jsx";
+
+// const pluginBackofficeContainer = document.getElementById(
+//   "plugin_backoffice_container",
+// );
+
+// const rootAffichagePagePrincipal = createRoot(pluginBackofficeContainer);
+// rootAffichagePagePrincipal.render(<MemenzaFormulaire />);
+
 import React from "react";
 import { createRoot } from "react-dom/client";
-// import BasicButtonGroup from "./components/ButtonGroup.jsx";
-import MemenzaFormulaire from "./memenza/MemenzaFormulaire.jsx";
+import { BrowserRouter as Router } from "react-router-dom"; // Importer BrowserRouter
+import MemenzaFormulaire from "./memenza/MemenzaFormulaire.jsx";  // Votre composant principal
 
-// const containerButtonGroup = document.getElementById(
-//   "react-container-buttongroup",
-// );
-// const rootButtonGroup = createRoot(containerButtonGroup);
-// rootButtonGroup.render(<BasicButtonGroup />);
-
-const pluginBackofficeContainer = document.getElementById(
-  "plugin_backoffice_container",
-);
+const pluginBackofficeContainer = document.getElementById("plugin_backoffice_container");
 
 const rootAffichagePagePrincipal = createRoot(pluginBackofficeContainer);
-rootAffichagePagePrincipal.render(<MemenzaFormulaire />);
+
+// Envelopper votre application avec le Router
+rootAffichagePagePrincipal.render(
+  <Router>
+    <MemenzaFormulaire />
+  </Router>
+);
