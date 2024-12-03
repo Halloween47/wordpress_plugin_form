@@ -87,7 +87,8 @@ const StyleEtapeVideo = `
 `;
 
 const imgIntroVideo = [
-  "https://images.unsplash.com/photo-1593642532973-d31b6557fa68?fit=crop&w=500&q=80",
+  // "https://images.unsplash.com/photo-1593642532973-d31b6557fa68?fit=crop&w=500&q=80",
+  "https://memenza.fr/visuels/personnaliservideo.png",
 ];
 
 const Root = styled("div")(({ theme }) => ({
@@ -207,7 +208,7 @@ function EtapeVideo() {
       lg: '3rem',    // grand écran
     },
   })}>
-            Bienvenue dans la partie Vidéo
+            Créer votre vidéo
           </Typography>
           <Typography variant="body1" color="textPrimary"  sx={(theme) => ({
     pr: 3,
@@ -218,10 +219,7 @@ function EtapeVideo() {
       lg: '1.25rem',  // grand écran
     },
   })}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam
-            autem voluptate quia neque, tempore placeat veritatis omnis,
-            incidunt ab, corrupti maxime perspiciatis sint eius debitis dolores
-            dignissimos officiis ut dolorem.
+            Grâce aux modèles Memenza, créez une vidéo associée à votre produit (accessible via le QR Code). Vous pouvez aussi directement uploader une vidéo d’une minute de votre choix (créée par exemple avec Capcut). La vidéo doit-être en 16/9ème, 50Mo maximum.
           </Typography>
         </Box>
       </Box>

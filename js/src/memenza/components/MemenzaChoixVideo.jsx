@@ -234,7 +234,7 @@ console.log("VARIABLES PARSE VERIFICATION : "+ variablesParse);
   return (
     <Box sx={{ textAlign: "center", p: 4 }}>
       <Typography variant="h4" gutterBottom>
-        Choisissez votre template
+      Choisissez votre modèle 
       </Typography>
       <Typography variant="subtitle1" gutterBottom sx={{ mb: 2 }}>
         (Explication du pourquoi du choix du template)

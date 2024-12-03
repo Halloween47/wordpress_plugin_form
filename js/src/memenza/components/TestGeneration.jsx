@@ -127,7 +127,7 @@ function ImageForm() {
       />
 
       <Button type="submit" variant="contained">
-        Générer l'image
+      Personnaliser le modèle 
       </Button>
     </Box>
   );
