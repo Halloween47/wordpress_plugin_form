@@ -244,11 +244,16 @@ console.log("VARIABLES PARSE VERIFICATION : "+ variablesParse);
       {/* <Grid  spacing={2} justifyContent="center"> */}
       <Grid justifyContent="center">
         {imagesVideosFiltered.map((src, index) => (
-          <Grid item key={index} xs={6} sm={4} md={3}>
+          <Grid item key={index} xs={6} sm={4} md={3}sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}>
             <Box
               sx={{
                 position: "relative",
-                width: "100%",
+                width: "30%",
                 height: 200,
                 // height: 400,
                 cursor: "pointer",
@@ -292,19 +297,20 @@ console.log("VARIABLES PARSE VERIFICATION : "+ variablesParse);
               )}
             </Box>
             <Typography sx={{my: 2}}>Nom du tempate : {src.nom_modele_video || "pas d'info"}</Typography>
-            <Checkbox />
+            {/* <Checkbox /> */}
             <Button
               variant="contained"
               sx={{ mb: 2 }}
               onClick={handleVideoClickCustom}
             >
-              Je choisis le template sélectionné
+              Je choisis ce template
             </Button>
           </Grid>
         ))}
       </Grid>
 
       {/* Affichage des textes vidéo */}
+      {/* {apparitionParametrage && tabParseTextesVideo.length > 0 && tabParseMediasVideo.length > 0 ( */}
       {apparitionParametrage && tabParseTextesVideo.length > 0 && (
         <Box sx={{ mt: 4 }}>
           <Typography variant="h5">Paramétrage du Template</Typography>
@@ -354,13 +360,11 @@ console.log("VARIABLES PARSE VERIFICATION : "+ variablesParse);
 
 <Box>
       {/* Affichage des médias vidéo */}
-      {apparitionParametrage && tabParseMediasVideo.length > 0 && (
+      {apparitionParametrage &&  (
         <Box sx={{ mt: 4 }}>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
           </Box>
 
-          {tabParseMediasVideo.map((field, index) => (
-            <Box key={index} display="flex" alignItems="center" gap={2} sx={{ mt: 4 }}>
               {/* <Button variant="contained" component="label">
                 Importer votre média
                 <input
@@ -370,9 +374,9 @@ console.log("VARIABLES PARSE VERIFICATION : "+ variablesParse);
                   onChange={(e) => console.log(e.target.files)}
                 />
               </Button> */}
-              <Box>
+              
       {/* Affichage des médias vidéo */}
-      {tabParseMediasVideo.length > 0 && (
+      
         <Box sx={{ mt: 4 }}>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <Typography variant="h5">Paramétrage des Médias</Typography>
@@ -404,24 +408,25 @@ onChange={(e) => console.log(e.target.files)}
 </Box>
 ))}
 </Box>
-)}
-    </Box>
-            </Box>
-          ))}
-        </Box>
-      )}
-    </Box>
 
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
+          
+
+<Box sx={{ display: "flex", justifyContent: "center" }}>
           <Button
             variant="contained"
             sx={{ m: 2 }}
             onClick={handleVideoSendWithTemplate}
             // onClick={handleTestCompleteJsonTab}
           >
-J'envoie mes données de paramétrage.
+J'envoie mes données pour paramétrage.
           </Button>
     </Box>
+        </Box>
+        
+      )}
+    </Box>
+
+      
 
 
     </Box>

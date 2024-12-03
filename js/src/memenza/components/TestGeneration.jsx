@@ -19,6 +19,49 @@ function ImageForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // const newWindow = window.open("", "_blank", "width=800,height=600");
+    // if (newWindow) {
+    //   // Ajouter du contenu dans la nouvelle fenêtre
+    //   newWindow.document.write(`
+    //     <!DOCTYPE html>
+    //     <html>
+    //     <head>
+    //       <title>Image Générée</title>
+    //       <style>
+    //         body {
+    //           display: flex;
+    //           justify-content: center;
+    //           align-items: center;
+    //           height: 100vh;
+    //           margin: 0;
+    //           font-family: Arial, sans-serif;
+    //         }
+    //         .generated-content {
+    //           text-align: center;
+    //         }
+    //         .generated-content h1 {
+    //           font-size: 24px;
+    //           color: #333;
+    //         }
+    //         .generated-content p {
+    //           font-size: 18px;
+    //           color: #555;
+    //         }
+    //       </style>
+    //     </head>
+    //     <body>
+    //       <div class="generated-content">
+    //         <h1>Résultat de l'image</h1>
+    //         <p>Texte 1 : ${formData.text1}</p>
+    //         <p>Texte 2 : ${formData.text2}</p>
+    //       </div>
+    //     </body>
+    //     </html>
+    //   `);
+    //   newWindow.document.close();
+    // } else {
+    //   alert("Impossible d'ouvrir une nouvelle fenêtre. Vérifiez les paramètres de votre navigateur.");
+    // }
 
     const formPayload = new FormData();
     formPayload.append("text1", formData.text1);
