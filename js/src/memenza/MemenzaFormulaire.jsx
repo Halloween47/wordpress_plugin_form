@@ -279,9 +279,14 @@ const MemenzaFormulaire = ({ setActiveStep }) => {
               Etape {activeStepLocal + 1}
             </Typography>
             <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+            {activeStepLocal > 0 && (
               <Button disabled={activeStepLocal === 0} onClick={handleBack} sx={{ mr: 1 }}>
                 Retour
               </Button>
+            ) }
+              {/* <Button disabled={activeStepLocal === 0} onClick={handleBack} sx={{ mr: 1 }}>
+                Retour
+              </Button> */}
               <Box sx={{ flex: "1 1 auto" }} />
               <Button variant="contained" onClick={handleSuivant} sx={{ color: "#ffffff ", backgroundColor: "#A46FFB" }}>
                 {activeStepLocal === steps.length - 1 ? "Terminé" : "Suivant"}
