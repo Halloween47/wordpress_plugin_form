@@ -57,6 +57,7 @@ function ImageForm() {
       sx={{
         display: "flex",
         flexDirection: "column",
+        alignItems: "center",
         gap: 2,
         maxWidth: 400,
         margin: "auto",

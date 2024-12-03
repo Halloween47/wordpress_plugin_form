@@ -270,44 +270,15 @@ const imagesVisuelsFitred =  imagesVisuels.filter((item) => {
           // <VisuelFormTemplate1 />
           <>
           <TestGeneration />
-          <ImageCustomization />
-          <TextCustomization />
+          {/* <ImageCustomization /> */}
+          {/* <TextCustomization /> */}
           </>
 
-          // <Box className="etape-video-personnalisation-visuel">
-          //   <Typography variant="h5" gutterBottom>
-          //     Personnalisez votre vidéo
-          //   </Typography>
-          //   <Divider> ICI VOTRE TEXTE </Divider>
-          //   <Box className="etape-video-personnalisation-video-medias">
-          //     {[1, 2, 3].map((media) => (
-          //       <Box className="upload-media" key={media}>
-          //         <Typography variant="body2">Média {media} :</Typography>
-          //         <Button variant="contained" color="primary">
-          //           Upload votre média
-          //         </Button>
-          //       </Box>
-          //     ))}
-          //     <Divider style={{ margin: "20px 0" }} />
-          //     {[1, 2].map((text) => (
-          //       <Box className="upload-media" key={`text-${text}`}>
-          //         <Typography variant="body2">Texte {text} :</Typography>
-          //         <TextField
-          //           id={`filled-basic-${text}`}
-          //           label={`Text ${text}`}
-          //           variant="filled"
-          //           size="small"
-          //         />
-          //         <Checkbox
-          //           defaultChecked
-          //           {...{ inputProps: { "aria-label": "Checkbox demo" } }}
-          //         />
-          //       </Box>
-          //     ))}
-          //   </Box>
-          // </Box>
+          
         )}
-        <ButtonGroup
+
+        
+        {/* <ButtonGroup
           sx={{
             width: "100%",
             display: "flex",
@@ -318,7 +289,7 @@ const imagesVisuelsFitred =  imagesVisuels.filter((item) => {
           <Button variant="contained" color="success">
             J'envoie
           </Button>
-        </ButtonGroup>
+        </ButtonGroup> */}
         <style>{StyleEtapeVisuel}</style>
       </Container>
     </div>

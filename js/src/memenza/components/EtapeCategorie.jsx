@@ -86,6 +86,7 @@ function EtapeCategorie() {
         sx={{
           fontSize: "2.5rem",
           color: "#000000",
+          mt: "1.5rem",
           mb: "1.5rem",
           textAlign: "center",
           fontWeight: 600,

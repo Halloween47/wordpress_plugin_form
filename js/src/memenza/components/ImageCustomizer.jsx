@@ -152,9 +152,9 @@ export default function ImageCustomization() {
       <Typography variant="h5" gutterBottom>
         Personnalisation des Visuels
       </Typography>
-      {imageFields.map((image) => (
+      {/* {imageFields.map((image) => (
         <ImageCustomizer key={image.name} imageData={image} onUpdate={handleImageUpdate} />
-      ))}
+      ))} */}
     </Box>
   );
 }

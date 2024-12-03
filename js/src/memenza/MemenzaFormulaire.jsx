@@ -224,6 +224,7 @@ const MemenzaFormulaire = ({ setActiveStep }) => {
     }
     setActiveStepLocal((prevActiveStep) => prevActiveStep + 1);
     setSkipped(newSkipped);
+    window.scrollTo(0, 0);
   };
 
   const handleBack = () => {
@@ -246,10 +247,10 @@ const MemenzaFormulaire = ({ setActiveStep }) => {
     <SousCatProvider>
       <div className="memenzaFormulaire">
         <Box sx={{ width: "100%", height: "auto" }}>
-          <Typography variant="h4" gutterBottom sx={{ color: "#000" }}>
+          {/* <Typography variant="h4" gutterBottom sx={{ color: "#000" }}>
             Nom du produit
-          </Typography>
-          <Stepper activeStep={activeStepLocal}>
+          </Typography> */}
+          <Stepper activeStep={activeStepLocal} sx={{m:"4em"}}>
             {steps.map((label, index) => {
               const stepProps = {};
               const labelProps = {};
