@@ -7,6 +7,9 @@ import {
   Button,
   Checkbox,
   Divider,
+  Dialog,
+  DialogContent,
+  DialogActions,
 } from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import axios from "axios";
@@ -23,6 +26,10 @@ const videos = [
 ];
 
 export default function MemenzaChoixVideo() {
+  const [openModal, setOpenModal] = useState(false);
+  const [currentVideoSrc, setCurrentVideoSrc] = useState("");
+
+
   const { selectedSousCatId } = useSousCat();
 //   const [formData, setFormData] = useState({
 //     "template_id": "RdLlSO4FUmAV6fPHvKT1",
@@ -189,6 +196,9 @@ console.log("VARIABLES PARSE VERIFICATION : "+ variablesParse);
         console.error("Le champ `mediaFields` n'est pas un tableau valide.");
       }
 
+      setCurrentVideoSrc(selectedTemplate.chemin_video_ex);
+      setOpenModal(true);
+
     } catch (error) {
       console.error("Erreur lors du parsing JSON des textes_video ou medias_video :", error);
     }
@@ -230,6 +240,15 @@ console.log("VARIABLES PARSE VERIFICATION : "+ variablesParse);
     }
   };
   
+  const handleCloseModal = () => {
+    setOpenModal(false);
+    setCurrentVideoSrc(""); 
+  };
+
+  const handleVideoPopUp = (videoSrc) => {
+    setCurrentVideoSrc(videoSrc); 
+    setOpenModal(true); 
+  };
 
   return (
     <Box sx={{ textAlign: "center", p: 4 }}>
@@ -273,6 +292,7 @@ console.log("VARIABLES PARSE VERIFICATION : "+ variablesParse);
                   height: "100%",
                   objectFit: "cover",
                 }}
+                setCurrentVideoSrc={src.chemin_video_ex}
               />
               {!isPlaying[index] && (
                 <Box
@@ -295,6 +315,14 @@ console.log("VARIABLES PARSE VERIFICATION : "+ variablesParse);
                 </Box>
               )}
             </Box>
+            <Button
+              variant="outlined"
+               size="sm"
+              sx={{ m: 2 }}
+              onClick={() => handleVideoPopUp(src.chemin_video_ex)}
+            >
+              Agrandir la video
+            </Button>
             <Typography sx={{my: 2}}>Nom du tempate : {src.nom_modele_video || "pas d'info"}</Typography>
             {/* <Checkbox /> */}
             <Button
@@ -307,6 +335,29 @@ console.log("VARIABLES PARSE VERIFICATION : "+ variablesParse);
           </Grid>
         ))}
       </Grid>
+
+      {/* Modal pour lire la vidéo */}
+      <Dialog open={openModal} onClose={handleCloseModal} maxWidth="md" fullWidth>
+        <DialogContent>
+          <Box sx={{ position: "relative", width: "100%", height: "60vh" }}>
+            <Box
+              component="video"
+              src={currentVideoSrc}
+              controls
+              sx={{
+                width: "100%",
+                height: "100%",
+                objectFit: "contain",
+              }}
+            />
+          </Box>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseModal} color="primary">
+            Fermer
+          </Button>
+        </DialogActions>
+      </Dialog>
 
       {/* Affichage des textes vidéo */}
       {/* {apparitionParametrage && tabParseTextesVideo.length > 0 && tabParseMediasVideo.length > 0 ( */}
@@ -432,3 +483,8 @@ J'envoie mes données pour paramétrage.
   );
 }
 
+
+////////////////
+////////////////
+////////////////
+////////////////
