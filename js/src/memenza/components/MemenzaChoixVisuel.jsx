@@ -37,7 +37,7 @@ export default function MemenzaChoixVisuel() {
         } catch (error) {
             setError(error.message);
         }
-    };
+    }; 
 
     fetchData();
 }, []);

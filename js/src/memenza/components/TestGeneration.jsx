@@ -18,70 +18,45 @@ function ImageForm() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    // const newWindow = window.open("", "_blank", "width=800,height=600");
-    // if (newWindow) {
-    //   // Ajouter du contenu dans la nouvelle fenêtre
-    //   newWindow.document.write(`
-    //     <!DOCTYPE html>
-    //     <html>
-    //     <head>
-    //       <title>Image Générée</title>
-    //       <style>
-    //         body {
-    //           display: flex;
-    //           justify-content: center;
-    //           align-items: center;
-    //           height: 100vh;
-    //           margin: 0;
-    //           font-family: Arial, sans-serif;
-    //         }
-    //         .generated-content {
-    //           text-align: center;
-    //         }
-    //         .generated-content h1 {
-    //           font-size: 24px;
-    //           color: #333;
-    //         }
-    //         .generated-content p {
-    //           font-size: 18px;
-    //           color: #555;
-    //         }
-    //       </style>
-    //     </head>
-    //     <body>
-    //       <div class="generated-content">
-    //         <h1>Résultat de l'image</h1>
-    //         <p>Texte 1 : ${formData.text1}</p>
-    //         <p>Texte 2 : ${formData.text2}</p>
-    //       </div>
-    //     </body>
-    //     </html>
-    //   `);
-    //   newWindow.document.close();
-    // } else {
-    //   alert("Impossible d'ouvrir une nouvelle fenêtre. Vérifiez les paramètres de votre navigateur.");
-    // }
-
+    e.preventDefault(); 
+    
     const formPayload = new FormData();
     formPayload.append("text1", formData.text1);
-    formPayload.append("text2", formData.text2);
+    formPayload.append("text2", formData.text2); 
+    // console.log("VERIFICATION DES DATA AVANT SOUMISSION FORMULAIRE : "+ JSON.stringify(formData.text1));
+    
 
-    try {
-      //   const response = await fetch("/generate", {
+    try {    
       const response = await fetch(
-        "../wp-content/plugins/memenza-form-test/js/src/memenza/test/process-simplifie.php",
-        // "../wp-content/plugins/memenza-form-test/js/src/memenza/test/process.php",
+        // "../wp-content/plugins/memenza-form-test/js/src/memenza/test/process-simplifie.php",
+        // "../wp-content/plugins/Product Image Customizer/js/src/memenza/test/process-simplifie.php",
+        // "../../wp-content/plugins/Product Image Customizer/js/src/memenza/test/process-simplifie.php",
+        
+        
+        "../../wp-content/plugins/Product Image Customizer/js/process-simplifie.php",
         {
           method: "POST",
           body: formPayload,
         },
       );
+      console.log("VERIFICATION FETCH DATA : " + JSON.stringify(formPayload));
+      
+        
+      ////////////////
+      ////////////////
+      // const response = await fetch(process.env.MEMENZA_AJAX_URL, {
+      //   method: "POST",
+      //       body: formPayload,
+      //   });
+
+      //   console.log(response.data);
+      ////////////////
+      ////////////////
 
       if (!response.ok) {
         throw new Error("Erreur lors de la soumission du formulaire");
       } else {
-        console.log("OKKKKKKKKKKK");
+        console.log("soumission du formulaire OK");
       }
 
       const result = await response.blob(); // Récupérer l'image générée

@@ -47,6 +47,15 @@ function enqeue_react_script() {
         '1.0.0',
         true
     );
+////////////////
+////////////////
+// Localisation de l'URL vers `process-simplifie.php`
+wp_localize_script('test_integration_react', 'memenza_vars', array(
+    'ajax_url' => plugins_url('js/src/memenza/test/process-simplifie.php', __FILE__),
+));
+////////////////
+////////////////
+
 }
 
 add_action('rest_api_init', function () {
@@ -76,8 +85,8 @@ add_action('rest_api_init', function () {
     
             try {
                 // Connexion à la base distante
-                $db = new mysqli('localhost', 'root', 'root', 'local');
-                // $db = new mysqli('memenzj42.mysql.db', 'memenzj42', 'pAssbdDcompl3x3pourTom', 'memenzj42', '3306');
+                // $db = new mysqli('localhost', 'root', 'root', 'local');
+                $db = new mysqli('memenzj42.mysql.db', 'memenzj42', 'pAssbdDcompl3x3pourTom', 'memenzj42', '3306');
                 
                 // Vérification de la connexion
                 if ($db->connect_error) {
@@ -110,8 +119,8 @@ add_action('rest_api_init', function () {
     register_rest_route('plugin_memenza/v1', '/images_sous-categories', [
         'methods' => 'GET',
         'callback' => function () {
-            $db = new mysqli('localhost', 'root', 'root', 'local');
-            // $db = new mysqli('memenzj42.mysql.db', 'memenzj42', 'pAssbdDcompl3x3pourTom', 'memenzj42', '3306');
+            // $db = new mysqli('localhost', 'root', 'root', 'local');
+            $db = new mysqli('memenzj42.mysql.db', 'memenzj42', 'pAssbdDcompl3x3pourTom', 'memenzj42', '3306');
             
             if ($db->connect_error) {
                 return new WP_Error(
@@ -132,8 +141,8 @@ add_action('rest_api_init', function () {
     register_rest_route('plugin_memenza/v1', '/images_visuel', [
         'methods' => 'GET',
         'callback' => function () {
-            $db = new mysqli('localhost', 'root', 'root', 'local');
-            // $db = new mysqli('memenzj42.mysql.db', 'memenzj42', 'pAssbdDcompl3x3pourTom', 'memenzj42', '3306');
+            // $db = new mysqli('localhost', 'root', 'root', 'local');
+            $db = new mysqli('memenzj42.mysql.db', 'memenzj42', 'pAssbdDcompl3x3pourTom', 'memenzj42', '3306');
             
             if ($db->connect_error) {
                 return new WP_Error(
@@ -155,8 +164,8 @@ add_action('rest_api_init', function () {
     register_rest_route('plugin_memenza/v1', '/videos_visuel', [
         'methods' => 'GET',
         'callback' => function () {
-            $db = new mysqli('localhost', 'root', 'root', 'local');
-            // $db = new mysqli('memenzj42.mysql.db', 'memenzj42', 'pAssbdDcompl3x3pourTom', 'memenzj42', '3306');
+            // $db = new mysqli('localhost', 'root', 'root', 'local');
+            $db = new mysqli('memenzj42.mysql.db', 'memenzj42', 'pAssbdDcompl3x3pourTom', 'memenzj42', '3306');
             
             if ($db->connect_error) {
                 return new WP_Error(

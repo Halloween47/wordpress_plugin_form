@@ -32,49 +32,7 @@ export default function MemenzaChoixVideo() {
 
 
   const { selectedSousCatId } = useSousCat();
-//   const [formData, setFormData] = useState({
-//     "template_id": "RdLlSO4FUmAV6fPHvKT1",
-//     // "template_id": selectedSousCatId,
-//     "desc": "test tom pour champs description",
-//     "variables": {}
-// //     "variables": {
-// //       "scene1_texte1": "Test écriture variable",
-// //       "scene2_image1": "https://img.freepik.com/photos-gratuite/nuages-stylefantastique_23-2151057680.jpg",
-// //       "scene2_image2": "https://i.pinimg.com/736x/7a/c6/91/7ac69100e88a63a14b9cbe8ba260721f.jpg",
-// //       "scene2_texte1": "Ceci est un message varible postman",
-// //       "scene3_image2": "https://archzine.fr/wp-content/uploads/2020/03/wallpaperordinateur-pc-fond-ecran-kawaii-dessin-cactus-vert-fleurs-roses.webp",
-// //       "scene3_texte1": "Cela fonctionne bien ? ",
-// //       "scene3_image3": "https://cdn.futura-sciences.com/cdncgi/image/width=1024,quality=60,format=auto/sources/images/screen/EVENEMENT/Hiver/965-hiver-43.jpg"
-// // },
-//   });
 
-//   const [formData, setFormData] = useState({
-//     "template_id": "RdLlSO4FUmAV6fPHvKT1",
-//     "desc": "test tom desc",
-//     "variables": {
-//       "scene1_texte1": "Test écriture variable",
-//       "scene2_image1": "https://img.freepik.com/photos-gratuite/nuages-stylefantastique_23-2151057680.jpg",
-//       "scene2_image2": "https://i.pinimg.com/736x/7a/c6/91/7ac69100e88a63a14b9cbe8ba260721f.jpg",
-//       "scene2_texte1": "Ceci est un message varible postman",
-//       "scene3_image2": "https://archzine.fr/wp-content/uploads/2020/03/wallpaperordinateur-pc-fond-ecran-kawaii-dessin-cactus-vert-fleurs-roses.webp",
-//       "scene3_texte1": "Cela fonctionne bien ? ",
-//       "scene3_image3": "https://cdn.futura-sciences.com/cdncgi/image/width=1024,quality=60,format=auto/sources/images/screen/EVENEMENT/Hiver/965-hiver-43.jpg"
-// }
-//   });
-// const variables = {
-  //         "scene1_texte1": "Test écriture variable",
-  //         "scene2_image1": "https://img.freepik.com/photos-gratuite/nuages-stylefantastique_23-2151057680.jpg",
-  //         "scene2_image2": "https://i.pinimg.com/736x/7a/c6/91/7ac69100e88a63a14b9cbe8ba260721f.jpg",
-  //         "scene2_texte1": "Ceci est un message varible postman",
-  //         "scene3_image2": "https://archzine.fr/wp-content/uploads/2020/03/wallpaperordinateur-pc-fond-ecran-kawaii-dessin-cactus-vert-fleurs-roses.webp",
-  //         "scene3_texte1": "Cela fonctionne bien ? ",
-  //         "scene3_image3": "https://cdn.futura-sciences.com/cdncgi/image/width=1024,quality=60,format=auto/sources/images/screen/EVENEMENT/Hiver/965-hiver-43.jpg"
-  //   }
-
-  // const variables = {};
-
-  ///////////////////////////////
-  ///////////////////////////////
   const initialVariables = {
     "scene2_image1": "https://img.freepik.com/photos-gratuite/nuages-stylefantastique_23-2151057680.jpg",
     "scene2_image2": "https://i.pinimg.com/736x/7a/c6/91/7ac69100e88a63a14b9cbe8ba260721f.jpg",
@@ -91,7 +49,6 @@ export default function MemenzaChoixVideo() {
   };
   ///////////////////////////////
   ///////////////////////////////
-  // console.log("VARIABLES SANS PARSE VERIFICATION : "+ JSON.stringify(variables));
 const variablesParse = JSON.stringify(variables)
 console.log("VARIABLES PARSE VERIFICATION : "+ variablesParse);
 
@@ -119,6 +76,7 @@ console.log("VARIABLES PARSE VERIFICATION : "+ variablesParse);
   
   const [isPlaying, setIsPlaying] = useState(Array(videos.length).fill(false));
   const [apparitionParametrage, setApparitionParametrage] = useState(false);
+console.log("APPARITION PARAMETRAGES : " + apparitionParametrage);
 
   ////////////////////////////
   const [textValues, setTextValues] = useState({});
@@ -166,21 +124,14 @@ console.log("VARIABLES PARSE VERIFICATION : "+ variablesParse);
     const selectedTemplate = imagesVideosFiltered.find(
       (item) => item.textes_video && item.medias_video // Vérifie que `medias_video` existe également
     );
-
     if (!selectedTemplate) {
       console.error("Aucun template sélectionné");
       return;
     }
-
-    // console.log("TABLEAU COMPLET" + JSON.stringify(selectedTemplate));
-
     try {
       // Parsing des textes_video et medias_video en un seul bloc try
       const parsedTemplateTextesVideo = JSON.parse(selectedTemplate.textes_video);
-      // console.log("LIGNE PARSE TEXTE VIDEO : " + JSON.stringify(parsedTemplateTextesVideo));
-
       const parsedTemplateMediasVideo = JSON.parse(selectedTemplate.medias_video);
-      // console.log("LIGNE 121 test media video " + selectedTemplate.medias_video);
       
       // Vérifier si videoTextFields existe et est valide
       if (Array.isArray(parsedTemplateTextesVideo.videoTextFields)) {
@@ -188,7 +139,6 @@ console.log("VARIABLES PARSE VERIFICATION : "+ variablesParse);
       } else {
         console.error("Le champ `videoTextFields` n'est pas un tableau valide.");
       }
-
       // Vérifier si mediaFields existe et est valide
       if (Array.isArray(parsedTemplateMediasVideo.mediaFields)) {
         setTabParseMediasVideo(parsedTemplateMediasVideo.mediaFields);
@@ -197,13 +147,10 @@ console.log("VARIABLES PARSE VERIFICATION : "+ variablesParse);
         console.error("Le champ `mediaFields` n'est pas un tableau valide.");
       }
 
-      // setCurrentVideoSrc(selectedTemplate.chemin_video_ex);
-      // setOpenModal(true);
-
     } catch (error) {
-      console.error("Erreur lors du parsing JSON des textes_video ou medias_video :", error);
+      console.error("Erreur lors du parsing JSON des textes_video ou medias_video :", error);       
     }
-  };
+  }; 
 
   const API_KEY = process.env.REACT_APP_MEMENZA_API_KEY || "simulation lecture clé API";
   const API_URL_WITH_TPL = "https://core-api.memenza.fr/api/wp-media/create-with-tpl";

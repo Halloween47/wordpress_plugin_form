@@ -234,8 +234,8 @@ const imagesVisuelsFitred =  imagesVisuels.filter((item) => {
     },
   })}>
             Vous pouvez utiliser les modèles Memenza ou directement uploader votre visuel (créé par exemple avec Canva). La taille d’image attendue est de 1086x1086px.
-            </Typography>
-          </Box>
+            </Typography> 
+          </Box> 
         </Box>
         <Box
           sx={{
@@ -291,8 +291,6 @@ const imagesVisuelsFitred =  imagesVisuels.filter((item) => {
                     
                   {/* <Card onClick={handleVisuelClickCustom}> */}
                   <Card
-                  /////////////////
-                  /////////////////
                   className={`selected-card ${selectedVisuelId === item.id_ss_cat ? "selected" : ""}`}
                   /////////////////
                   /////////////////

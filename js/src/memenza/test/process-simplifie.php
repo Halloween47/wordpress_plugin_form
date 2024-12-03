@@ -1,13 +1,33 @@
 <?php
 ini_set('memory_limit', '512M'); // Augmenter la limite de mémoire
 
+// Inclure WordPress si le script est appelé directement
+if (!defined('ABSPATH')) {
+    require_once __DIR__ . '/../../../wp-load.php';
+}
+
+// Définir le chemin vers l'image
+$image_path = ABSPATH . 'visuels/cadres/templates/alexandre_template.png';
+
+// $upload_dir = wp_upload_dir(); // Obtenir les informations sur le dossier de téléchargement
+// $image_path = $upload_dir['basedir'] . '/visuels/cadres/templates/alexandre_template.png'; // Construire le chemin complet vers l'image
+
+// $file_path = ABSPATH . 'visuels/cadres/templates/alexandre_template.png';
+// if (file_exists($file_path)) {
+//     echo "Le fichier existe à : " . $file_path;
+// } else {
+//     echo "Le fichier n'existe pas.";
+// }
+
 // Arguments par défaut
 $default_settings = [
     'font' => __DIR__ . '/Vibur.ttf', // Chemin de la police
     'font_size1' => 176, // Taille initiale texte 1
     'font_size2' => 70,  // Taille initiale texte 2
-    'image1' => __DIR__ . '/uploads/alexandre_template.png', // Chemin image 1
-
+    // 'image1' => __DIR__ . '/uploads/alexandre_template.png', // Chemin image 1
+    // 'image1' =>  'https://memenza.fr/visuels/cadres/templates/alexandre_template.png', // Chemin image 1
+    'image1' => $image_path,
+    // 'image1' => $image_path, 
     'text1' => 'Votre texte 1', // Contenu du texte 1
     'text2' => 'Votre texte 2', // Contenu du texte 2
     'text1_position' => ['x_percent' => 0.39, 'y_percent' => 0.16], // Position texte 1
@@ -16,6 +36,17 @@ $default_settings = [
     'output_height' => 1806, // Hauteur finale
     'border_mm' => 8, // Taille de la bordure en mm
 ];
+
+
+// echo ABSPATH . 'visuels/cadres/templates/alexandre_template.png';
+echo $image_path;
+if (!defined('ABSPATH')) {
+    die("Erreur : La constante ABSPATH n'est pas définie.");
+} else {
+    echo "ABSPATH : " . ABSPATH;
+}
+
+
 
 // Vérifier si le formulaire a été soumis
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -75,7 +106,7 @@ function generateImage($settings) {
 // Fonction pour charger et redimensionner une image avec gestion des erreurs
 function loadAndResizeImage($path, $new_width, $new_height, $label) {
     if (!file_exists($path)) {
-        die("Erreur : Le fichier $label n'existe pas.");
+        die("Erreur : Le fichier $label n'existe pas. Voici le chemin :  $path");
     }
     $image = @imagecreatefrompng($path);
     if ($image === false) {
