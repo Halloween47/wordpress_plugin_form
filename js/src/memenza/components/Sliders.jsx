@@ -14,9 +14,10 @@ const styles = `
   margin: 50px 0;
 }
 .carousel {
-  max-width: 80%;
+  max-width: 100%;
   display: flex;
   flex-wrap: nowrap;
+  // flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   transform-style: preserve-3d;
@@ -28,7 +29,7 @@ const styles = `
   position: relative;
   width: 40%;
   height: 350px;
-  max-width: 250px;
+  // max-width: 250px;
   cursor: pointer;
 }
 .carousel .item {
