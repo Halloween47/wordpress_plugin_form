@@ -23,9 +23,10 @@ const styles = `
   transform: perspective(1000px);
   gap: 1rem;
 }
+
 .carousel .item-container {
   position: relative;
-  width: 30%;
+  width: 40%;
   height: 350px;
   max-width: 250px;
   cursor: pointer;
@@ -72,6 +73,65 @@ const styles = `
   background: rgba(255, 105, 180, 0.6); /* Fond rose pour la sélection */
 }
 
+.carousel-ss {
+  max-width: 150%;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  transform-style: preserve-3d;
+  transform: perspective(1000px);
+  gap: 1rem;
+}
+  
+.carousel-ss .item-container-ss {
+  position: relative;
+  width: 40%;
+  height: 350px;
+  max-width: 250px;
+  cursor: pointer;
+}
+.carousel-ss .item-ss {
+  border-radius: 10px;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease, filter 0.5s ease;
+}
+  .carousel-ss .item:hover {
+  filter: brightness(0.8);
+  transform: scale(1.05);
+}
+.carousel-ss .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  border-radius: 10px;
+}
+.carousel-ss .item-container-ss:hover .overlay {
+  opacity: 1;
+}
+.carousel-ss .overlay h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: white;
+}
+
+.carousel-ss .item-container-ss.selected .overlay {
+  opacity: 1 !important;
+  background: rgba(255, 105, 180, 0.6); /* Fond rose pour la sélection */
+}
 
 `;
 
@@ -176,14 +236,14 @@ export default function Sliders({ onImageClick, onSousCatClick }) {
         {selectedId && (
           <div>
             {/* <h3>Images liées à l'ID sélectionné : {selectedId} & l'images SOUS CATEGORIES est liées à l'ID : {selectedIdSs}</h3> */}
-            <div className="carousel">
+            <div className="carousel-ss">
               {filteredSousCat.map((item, index) => (
                 <div 
                 // className="item-container" 
-                className={`item-container ${selectedIdSs === item.id_ss_cat ? "selected" : ""}`}
+                className={`item-container-ss ${selectedIdSs === item.id_ss_cat ? "selected" : ""}`}
                 key={index}>
                   <img
-                    className="item"
+                    className="item-ss"
                     src={item.chemin_img_sscat}
                     alt={`Image liée ${item.id_image}`}
                     onClick={() => {
