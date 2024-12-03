@@ -21,6 +21,9 @@ import { useSousCat } from "./SousCatContext.jsx";
 import ImageCustomization from "./ImageCustomizer.jsx";
 import TextCustomization from "./TextCustomizer.jsx";
 
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+
+
 const StyleEtapeVisuel = `
 .etape-visuel {
     background-color: #f5f5f5;
@@ -68,6 +71,42 @@ const StyleEtapeVisuel = `
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
   }
+
+  ////////////////////////////////
+  ////////////////////////////////
+  .selected-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.selected-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 105, 180, 0.6); /* Overlay rose */
+  border-radius: 8px;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  z-index: 1;
+}
+
+.selected-card:hover::after,
+.selected-card.selected::after {
+  opacity: 1;
+  z-index: 0;
+  }
+  
+  .selected-card.selected::after {
+    opacity: 1;
+    z-index: 0;
+}
+
+
+  ////////////////////////////////
+  ////////////////////////////////
   `;
 
 const FormGrid = styled(Grid)(() => ({
@@ -87,6 +126,11 @@ const images = [
   "https://images.unsplash.com/photo-1498050108023-c5249f4df085?fit=crop&w=500&q=80",
 ];
 function EtapeVisuel() {
+  ////////////////////////
+  ////////////////////////
+  const [selectedVisuelId, setSelectedVisuelId] = useState(null);
+  ////////////////////////
+  ////////////////////////
   const [showTextCustomVisuel, setShowTextCustomVisuel] = useState(false);
 
   const [imageClicked, setImageClicked] = useState(false);
@@ -133,10 +177,16 @@ function EtapeVisuel() {
     fetchData();
   }, []);
 
-  const handleVisuelClickCustom = () => {
-    setShowTextCustomVisuel(true);
-    setImageClicked(true);
+  // const handleVisuelClickCustom = () => {
+  //   setShowTextCustomVisuel(true);
+  //   setImageClicked(true);
+  // };
+  const handleVisuelClickCustom = (id) => {
+    setSelectedVisuelId(id); // Stocke l'ID de l'élément sélectionné
+    setShowTextCustomVisuel(true); // Affiche les options de personnalisation
+    setImageClicked(true); // Confirme que l'utilisateur a cliqué
   };
+  
 
   const { selectedSousCatId } = useSousCat();
 
@@ -199,7 +249,7 @@ const imagesVisuelsFitred =  imagesVisuels.filter((item) => {
         >
           <Box sx={{ mb: 4, py: 2, borderBottom: "2px solid #3f51b5" }}>
             <Typography variant="h5" color="textSecondary">
-              Choisissez votre visuel{" "}
+            Choisissez votre modèle
             </Typography>
           </Box>
 
@@ -236,19 +286,56 @@ const imagesVisuelsFitred =  imagesVisuels.filter((item) => {
             {imagesVisuelsFitred.map((item, index) => (
               <>
                 {/* <Typography>{JSON.stringify(item.nom_modele)}</Typography> */}
-                <Grid item key={index} xs={12} sm={6} md={4} lg={3}>
-                  <Card onClick={handleVisuelClickCustom}>
+                {/* <Grid item key={index} xs={12} sm={6} md={4} lg={3}> */}
+                <Grid item key={index} xs={12} sm={6} md={5} lg={4}>
+                    
+                  {/* <Card onClick={handleVisuelClickCustom}> */}
+                  <Card
+                  /////////////////
+                  /////////////////
+                  className={`selected-card ${selectedVisuelId === item.id_ss_cat ? "selected" : ""}`}
+                  /////////////////
+                  /////////////////
+                  //  onClick={handleVisuelClickCustom} 
+                   onClick={() => handleVisuelClickCustom(item.id_ss_cat)}
+
+                  sx={{transform: 'scale(1.1)', // Agrandit légèrement le Card
+                    transition: 'transform 0.3s ease, box-shadow 0.3s ease', // Animation fluide
+                    padding: '20px', // Ajoute de l'espace interne
+                    '&:hover': {
+                      transform: 'scale(1.15)', // Agrandit encore plus au survol
+                      boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)', // Ombre au survol
+                    },
+                  }}
+    >
                     <CardMedia
                       component="img"
                       image={item.img_modele}
                       // image="/visuels/cadres/templates/alexandre_template.png"
                       alt={`Visuel ${index + 1}`}
                     />
+                    
                     <CardContent>
                       <Typography>{item.nom_modele}</Typography>
+                      {/* Icône de check lorsque l'élément est sélectionné */}
+      {selectedVisuelId === item.id_ss_cat && (
+        <CheckCircleIcon
+          sx={{
+            position: 'absolute',
+            bottom: '10px',
+            right: '10px',
+            color: 'green',
+            fontSize: '2rem',
+            zIndex :"3",
+          }}
+        />
+      )}
                     </CardContent>
                   </Card>
+                  
                 </Grid>
+                
+
               </>
             ))}
           </Grid>
