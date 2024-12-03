@@ -65,7 +65,7 @@ function PopupUpload() {
         startIcon={<CloudUploadIcon />}
         onClick={handleOpen}
       >
-        Uploader et personnaliser les visuels
+        Envoyer votre propre visuel
       </Button>
       <Modal
         open={open}

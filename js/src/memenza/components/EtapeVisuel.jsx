@@ -252,22 +252,33 @@ const imagesVisuelsFitred =  imagesVisuels.filter((item) => {
               </>
             ))}
           </Grid>
-          {/* <Divider sx={{ mt: 2 }}> OU </Divider>
-          <FormGrid
-            sx={{
-              width: "50%",
-              display: "flex",
-              justifyContent: "center",
-              mt: 2,
-            }}
-            size={{ xs: 12, md: 6 }}
-            mr={0}
-            mb={2}
-          >
-            <PopupUpload />
-          </FormGrid> */}
-          {!imageClicked && (
+          
+          
+        </Box>
+
+        {showTextCustomVisuel && (
+          // <VisuelFormTemplate1 />
+          <>
+          <TestGeneration />
+          {/* <ImageCustomization /> */}
+          {/* <TextCustomization /> */}
+          </>
+
+          
+        )}
+
+        {/* {!imageClicked && ( */}
   <>
+  <Box
+          sx={{
+            textAlign: "center",
+            p: 4,
+            bgcolor: "#f5f5f5",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
     <Divider sx={{ mt: 2 }}> OU </Divider>
     <FormGrid
       sx={{
@@ -282,20 +293,9 @@ const imagesVisuelsFitred =  imagesVisuels.filter((item) => {
     >
       <PopupUpload updateImageFields={setImageFields} />
     </FormGrid>
+    </Box>
   </>
-)}
-        </Box>
-
-        {showTextCustomVisuel && (
-          // <VisuelFormTemplate1 />
-          <>
-          <TestGeneration />
-          {/* <ImageCustomization /> */}
-          {/* <TextCustomization /> */}
-          </>
-
-          
-        )}
+{/* )} */}
 
         
         {/* <ButtonGroup

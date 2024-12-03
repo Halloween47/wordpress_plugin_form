@@ -132,8 +132,8 @@ add_action('rest_api_init', function () {
     register_rest_route('plugin_memenza/v1', '/images_visuel', [
         'methods' => 'GET',
         'callback' => function () {
-            // $db = new mysqli('localhost', 'root', 'root', 'local');
-            $db = new mysqli('memenzj42.mysql.db', 'memenzj42', 'pAssbdDcompl3x3pourTom', 'memenzj42', '3306');
+            $db = new mysqli('localhost', 'root', 'root', 'local');
+            // $db = new mysqli('memenzj42.mysql.db', 'memenzj42', 'pAssbdDcompl3x3pourTom', 'memenzj42', '3306');
             
             if ($db->connect_error) {
                 return new WP_Error(
