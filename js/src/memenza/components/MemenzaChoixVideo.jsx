@@ -18,6 +18,7 @@ import InfoIcon from '@mui/icons-material/Info';
 import { Tooltip, IconButton } from '@mui/material';
 
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import { Add, KeyboardArrowRight } from "@mui/icons-material";
 
 const videos = [
   "https://samplelib.com/lib/preview/mp4/sample-5s.mp4",
@@ -196,8 +197,8 @@ console.log("VARIABLES PARSE VERIFICATION : "+ variablesParse);
         console.error("Le champ `mediaFields` n'est pas un tableau valide.");
       }
 
-      setCurrentVideoSrc(selectedTemplate.chemin_video_ex);
-      setOpenModal(true);
+      // setCurrentVideoSrc(selectedTemplate.chemin_video_ex);
+      // setOpenModal(true);
 
     } catch (error) {
       console.error("Erreur lors du parsing JSON des textes_video ou medias_video :", error);
@@ -323,14 +324,15 @@ console.log("VARIABLES PARSE VERIFICATION : "+ variablesParse);
             >
               Agrandir la video
             </Button>
-            <Typography sx={{my: 2}}>Nom du tempate : {src.nom_modele_video || "pas d'info"}</Typography>
+            <Typography sx={{my: 2}}>Modèle : {src.nom_modele_video || "pas d'info"}</Typography>
             {/* <Checkbox /> */}
             <Button
               variant="contained"
               sx={{ mb: 2 }}
               onClick={handleVideoClickCustom}
+              endDecorator={<KeyboardArrowRight  />}
             >
-              Je choisis ce template
+              Sélectionner 
             </Button>
           </Grid>
         ))}
