@@ -40,10 +40,15 @@ const StyleEtapeVisuel = `
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }  
-    .etape-visuel-intro-img {
+  //   .etape-visuel-intro-img {
+  //   background-color: #e0e0e0;
+  //   width: 40%;
+  //   height: 100%;
+  //   border-radius: 8px;
+  // }
+  .etape-visuel-intro-img {
     background-color: #e0e0e0;
     width: 40%;
-    height: 100%;
     border-radius: 8px;
   }
     .etape-visuel-intro-txt {
@@ -142,28 +147,43 @@ const imagesVisuelsFitred =  imagesVisuels.filter((item) => {
   return (
     <div>
       <Container className="etape-visuel" maxWidth="lg">
-        <Box className="etape-visuel-intro" sx={{ height: "50vh" }}>
+        {/* <Box className="etape-visuel-intro" sx={{ height: "50vh" }}> */}
+        <Box className="etape-visuel-intro">
           <Box className="etape-visuel-intro-img">
             <img
-              src="https://images.pexels.com/photos/265856/pexels-photo-265856.jpeg?auto=compress&cs=tinysrgb&w=600"
+              // src="https://images.pexels.com/photos/265856/pexels-photo-265856.jpeg?auto=compress&cs=tinysrgb&w=600"
+              src="https://memenza.fr/visuels/personnaliser.png"
               alt=""
-              style={{
-                width: "100%",
+              style={{ width: "100%",
                 height: "100%",
                 borderRadius: "8px",
-                objectFit: "cover",
-              }}
+                objectFit: "cover", }}
             />
           </Box>
           <Box className="etape-visuel-intro-txt" sx={{ p: 4 }}>
-            <Typography variant="h4" color="textPrimary" sx={{ mb: 1 }}>
-              Bienvenue dans la partie Visuel
+            {/* <Typography variant="h4" color="textPrimary" sx={{ mb: 1 }}> */}
+            <Typography variant="h4" color="textPrimary"sx={(theme) => ({
+    mb: 1,
+    fontSize: {
+      xs: '1.5rem',  // petite taille d'écran
+      sm: '2rem',    // taille intermédiaire
+      md: '2.5rem',  // écran moyen
+      lg: '3rem',    // grand écran
+    },
+  })}>
+            Personnaliser le visuel 
             </Typography>
-            <Typography variant="body1" color="textPrimary" sx={{ pr: 3 }}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam
-              autem voluptate quia neque, tempore placeat veritatis omnis,
-              incidunt ab, corrupti maxime perspiciatis sint eius debitis
-              dolores dignissimos officiis ut dolorem.
+            {/* <Typography variant="body1" color="textPrimary" sx={{ pr: 3 }}> */}
+            <Typography variant="body1" color="textPrimary" sx={(theme) => ({
+    pr: 3,
+    fontSize: {
+      xs: '0.875rem', // petite taille d'écran
+      sm: '1rem',     // taille intermédiaire
+      md: '1.125rem', // écran moyen
+      lg: '1.25rem',  // grand écran
+    },
+  })}>
+            Vous pouvez utiliser les modèles Memenza ou directement uploader votre visuel (créé par exemple avec Canva). La taille d’image attendue est de 1086x1086px.
             </Typography>
           </Box>
         </Box>

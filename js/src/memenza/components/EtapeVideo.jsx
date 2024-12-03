@@ -190,14 +190,34 @@ function EtapeVideo() {
           <img
             src={imgIntroVideo}
             alt="Wedding"
-            style={{ width: "100%", height: "auto", borderRadius: "8px" }}
+            // style={{ width: "100%", height: "auto", borderRadius: "8px" }}
+            style={{ width: "100%",
+              height: "100%",
+              borderRadius: "8px",
+              objectFit: "cover", }}
           />
         </Box>
         <Box className="etape-video-intro-txt">
-          <Typography variant="h4" color="textPrimary">
+          <Typography variant="h4" color="textPrimary" sx={(theme) => ({
+    mb: 1,
+    fontSize: {
+      xs: '1.5rem',  // petite taille d'écran
+      sm: '2rem',    // taille intermédiaire
+      md: '2.5rem',  // écran moyen
+      lg: '3rem',    // grand écran
+    },
+  })}>
             Bienvenue dans la partie Vidéo
           </Typography>
-          <Typography variant="body1" color="textPrimary">
+          <Typography variant="body1" color="textPrimary"  sx={(theme) => ({
+    pr: 3,
+    fontSize: {
+      xs: '0.875rem', // petite taille d'écran
+      sm: '1rem',     // taille intermédiaire
+      md: '1.125rem', // écran moyen
+      lg: '1.25rem',  // grand écran
+    },
+  })}>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam
             autem voluptate quia neque, tempore placeat veritatis omnis,
             incidunt ab, corrupti maxime perspiciatis sint eius debitis dolores
