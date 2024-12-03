@@ -336,14 +336,14 @@ Uploader sa propre Video (en cours)
         </Box>
       )} */}
 
-      <Box className="etape-video-boutons">
+      {/* <Box className="etape-video-boutons">
         <ButtonGroup>
           <PopupPreview />
           <Button variant="contained" color="success">
             J'envoie
           </Button>
         </ButtonGroup>
-      </Box>
+      </Box> */}
 
       <style>{StyleEtapeVideo}</style>
     </Container>
