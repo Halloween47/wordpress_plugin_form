@@ -202,7 +202,6 @@ console.log("VARIABLES PARSE VERIFICATION : "+ variablesParse);
       const response = await axios.post(
         API_URL_WITH_TPL , 
         formData ,
-        // JSON.stringify(formData) ,
         {
           headers: {
             'WP-API-KEY': API_KEY,
@@ -432,8 +431,4 @@ J'envoie mes données pour paramétrage.
     </Box>
   );
 }
-
-/////////////////////////
-/////////////////////////
-/////////////////////////
 

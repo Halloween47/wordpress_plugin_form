@@ -264,7 +264,7 @@ J'envoie mes données de paramétrage.
             <Button
               variant="contained"
               color="success"
-              // onClick={handleVideoSendWithOutTemplate}
+              onClick={handleVideoSendWithOutTemplate}
             >
               Envoyer votre vidéo
             </Button>
