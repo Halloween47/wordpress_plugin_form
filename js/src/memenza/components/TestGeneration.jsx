@@ -93,6 +93,7 @@ function ImageForm() {
         gap: 2,
         maxWidth: 400,
         margin: "auto",
+        // height: "200px"
       }}
     >
       <Typography variant="h6">Générer une image</Typography>
@@ -104,6 +105,20 @@ function ImageForm() {
         onChange={handleChange}
         inputProps={{ maxLength: 15 }}
         required
+        InputLabelProps={{
+          sx: {
+            transform: 'translate(0, -8px)', 
+            fontSize: '1rem', 
+            // lineHeight: "2px"
+          },
+          
+        }}
+        sx={{
+          // marginTop: 1.2, 
+          paddingTop: 1.2, 
+          marginBottom: 1.2, 
+          paddingBottom: 1.2, 
+        }}
       />
 
       <TextField
@@ -113,6 +128,20 @@ function ImageForm() {
         onChange={handleChange}
         inputProps={{ maxLength: 17 }}
         required
+        InputLabelProps={{
+          sx: {
+            transform: 'translate(0, -8px)', 
+            fontSize: '1rem', 
+            // lineHeight: "2px"
+          },
+          
+        }}
+        sx={{
+          // marginTop: 1.2, 
+          paddingTop: 1.2, 
+          marginBottom: 1.2, 
+          paddingBottom: 1.2, 
+        }}
       />
 
 <Button
@@ -158,17 +187,16 @@ function ImageForm() {
 
       {/* <Button type="submit" variant="contained"> */}
       <Button type="success" variant="contained">
-      Personnaliser le modèle 
+      Prévisualiser votre cadre 
       </Button>
       {generatedImageUrl ? (<>
-        <Typography>Votre visuel</Typography>
         <CardMedia
           component="img"
           image={generatedImageUrl} 
           alt="Image générée"
         />
         
-      </>
+      </>                         
       ) : (
         <Typography></Typography>
       )}

@@ -29,6 +29,12 @@ const videos = [
 export default function MemenzaChoixVideo() {
   const [openModal, setOpenModal] = useState(false);
   const [currentVideoSrc, setCurrentVideoSrc] = useState("");
+///////////////////
+///////////////////
+// const [selectedParam, setSelectedParam] = useState(null); // Gérer quel modèle vidéo a ses paramètres affichés
+///////////////////
+///////////////////
+
 
 
   const { selectedSousCatId } = useSousCat();
@@ -118,6 +124,18 @@ console.log("APPARITION PARAMETRAGES : " + apparitionParametrage);
     }
 
     setIsPlaying(playingStatus);
+
+    ////////////////////////////
+    ////////////////////////////
+    // Basculer l'affichage des paramètres pour la vidéo cliquée
+    // if (selectedParam === index) {
+    //   setSelectedParam(null); // Si déjà sélectionné, cacher les paramètres
+    // } else {
+    //   setSelectedParam(index); // Afficher les paramètres pour cette vidéo
+    // }
+    ////////////////////////////
+    ////////////////////////////
+
   };
 
   const handleVideoClickCustom = () => {
@@ -206,10 +224,11 @@ console.log("APPARITION PARAMETRAGES : " + apparitionParametrage);
 
       {/* <Grid  spacing={2} justifyContent="center"> */}
       <Grid justifyContent="center">
+      {/* <Grid> */}
         {imagesVideosFiltered.map((src, index) => (
           <Grid item key={index} xs={6} sm={4} md={3}sx={{
             display: "flex",
-            flexDirection: "column",
+            // flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
           }}>
@@ -269,8 +288,6 @@ console.log("APPARITION PARAMETRAGES : " + apparitionParametrage);
             >
               Prévisualiser le modèle
             </Button>
-            
-            {/* <Checkbox /> */}
             <Button
               variant="contained"
               sx={{ mb: 2 }}
@@ -281,7 +298,7 @@ console.log("APPARITION PARAMETRAGES : " + apparitionParametrage);
             </Button>
           </Grid>
         ))}
-      </Grid>
+      </Grid> 
 
       {/* Modal pour lire la vidéo */}
       <Dialog open={openModal} onClose={handleCloseModal} maxWidth="md" fullWidth>
@@ -309,11 +326,14 @@ console.log("APPARITION PARAMETRAGES : " + apparitionParametrage);
       {/* Affichage des textes vidéo */}
       {/* {apparitionParametrage && tabParseTextesVideo.length > 0 && tabParseMediasVideo.length > 0 ( */}
       {apparitionParametrage && tabParseTextesVideo.length > 0 && (
-        <Box sx={{ mt: 4 }}>
-          <Typography variant="h5">Paramétrage du Template</Typography>
+        <Box sx={{ mt: 4 , display: "flex", flexDirection: 'column'}}>
+          <Typography variant="h6">Paramétrage du Template</Typography>
           {tabParseTextesVideo.map((field, index) => (
-            <Box key={index} display="flex" alignItems="center" gap={2} sx={{ mt: 4 }}>
-              <Typography variant="body1" style={{ whiteSpace: 'nowrap' }}>
+            // <Box key={index} display="flex" alignItems="center" gap={2} sx={{ mt: 4 }}>
+            <Box key={index}  gap={1} sx={{ mt: 4, display:"flex" }}>
+            <Box key={index}  gap={1} sx={{ mt: 4, display:"flex" }}>
+              {/* <Typography variant="body1" style={{ whiteSpace: 'nowrap' }}> */}
+              <Typography variant="body1" style={{ whiteSpace: 'wrap' }}>
                 {field.name}
               </Typography>
               <TextField
@@ -327,6 +347,7 @@ console.log("APPARITION PARAMETRAGES : " + apparitionParametrage);
                 ////////////////////////////
 
               />
+            </Box>
             </Box>
           ))}
         </Box>
@@ -375,7 +396,8 @@ console.log("APPARITION PARAMETRAGES : " + apparitionParametrage);
       {/* Affichage des médias vidéo */}
       
         <Box sx={{ mt: 4 }}>
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          {/* <Box sx={{ display: 'flex', alignItems: 'center' }}> */}
+          <Box sx={{ display: 'flex',  }}>
               <Typography variant="h5">Paramétrage des Médias</Typography>
           </Box>
 
@@ -428,6 +450,105 @@ J'envoie mes données pour paramétrage.
 
     </Box>
   );
+
+// return (
+//   <>
+//     <Grid  spacing={2}>
+//       {imagesVideosFiltered.map((src, index) => (
+//         <Grid item key={index} xs={6} sm={4} md={3} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+//           <Typography sx={{ my: 2 }}>Modèle : {src.nom_modele_video || "pas d'info"}</Typography>
+
+//           <Box
+//             sx={{
+//               position: "relative",
+//               width: "30%",
+//               height: 200,
+//               cursor: "pointer",
+//               borderRadius: 2,
+//               overflow: "hidden",
+//               "&:hover .overlay": {
+//                 opacity: isPlaying[index] ? 0 : 1,
+//               },
+//             }}
+//             onClick={() => handleVideoClick(index)} // Clic sur la vidéo pour gérer l'affichage des paramètres
+//           >
+//             <Box
+//               component="video"
+//               src={src.chemin_video_ex}
+//               ref={(el) => (videoRefs.current[index] = el)}
+//               sx={{
+//                 width: "100%",
+//                 height: "100%",
+//                 objectFit: "cover",
+//               }}
+//             />
+//             {!isPlaying[index] && (
+//               <Box
+//                 className="overlay"
+//                 sx={{
+//                   position: "absolute",
+//                   top: 0,
+//                   left: 0,
+//                   width: "100%",
+//                   height: "100%",
+//                   display: "flex",
+//                   alignItems: "center",
+//                   justifyContent: "center",
+//                   backgroundColor: "rgba(0, 0, 0, 0.4)",
+//                   transition: "opacity 0.3s",
+//                   opacity: 1,
+//                 }}
+//               >
+//                 <PlayArrowIcon sx={{ fontSize: 60, color: "#fff" }} />
+//               </Box>
+//             )}
+//           </Box>
+
+//           <Button
+//             variant="outlined"
+//             size="small"
+//             sx={{ m: 2 }}
+//             onClick={() => console.log("Pop-up pour la vidéo:", src.chemin_video_ex)} // Gestion du pop-up
+//           >
+//             Prévisualiser le modèle
+//           </Button>
+
+//           <Button
+//             variant="contained"
+//             sx={{ mb: 2 }}
+//             endDecorator={<KeyboardArrowRight />}
+//           >
+//             Sélectionner
+//           </Button>
+
+//           {/* Affichage des paramètres en dessous de la vidéo si cette vidéo est sélectionnée */}
+//           {selectedParam === index && tabParseTextesVideo.length > 0 && (
+//             <Box sx={{ mt: 2, display: "flex", flexDirection: 'column' }}>
+//               <Typography variant="h6">Paramétrage du Template</Typography>
+//               {tabParseTextesVideo.map((field, idx) => (
+//                 <Box key={idx} gap={1} sx={{ mt: 4, display: "flex" }}>
+//                   <Typography variant="body1" style={{ whiteSpace: 'wrap' }}>
+//                     {field.name}
+//                   </Typography>
+//                   <TextField
+//                     placeholder={field.defaultText || ''}
+//                     inputProps={{ maxLength: field.maxCharacters }}
+//                     variant="outlined"
+//                     size="small"
+//                     value={variables[field.name] || ''}
+//                     onChange={(e) => handleVariableChange(field.name, e.target.value)} // Met à jour la clé avec la valeur saisie
+//                   />
+//                 </Box>
+//               ))}
+//             </Box>
+//           )}
+//         </Grid>
+//       ))}
+//     </Grid>
+//   </>
+// );
+
+
 }
 
 
@@ -435,3 +556,4 @@ J'envoie mes données pour paramétrage.
 ////////////////
 ////////////////
 ////////////////
+
