@@ -68,7 +68,8 @@ function EtapeCategorie() {
   if(!navigationId) {
     // const generateUniqueId = () => uuidv4();
     // setNavigationId(generateUniqueId)
-    const generateUniqueId = () => "ID_" + Math.floor(10000 + Math.random() * 90000); 
+    // const generateUniqueId = () => "cmd" + Math.floor(10000 + Math.random() * 90000); 
+    const generateUniqueId = () => "cmd" + Math.floor(10000 + Math.random() * 90000); 
     const newId = generateUniqueId();
     setNavigationId(newId)
     console.log("TEST NAVIGATION ID : " + navigationId);

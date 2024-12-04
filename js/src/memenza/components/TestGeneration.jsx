@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { TextField, Button, Typography, Box, CardMedia } from "@mui/material";
+import { useSousCat } from "./SousCatContext.jsx";
 
 function ImageForm() {
+  const {navigationId, outputFilePathContext, setOutputFilePathContext } = useSousCat();
+
   const [formData, setFormData] = useState({
     image1: null,
     image2: null,
@@ -26,12 +29,21 @@ function ImageForm() {
     }));
   };
 
+ 
+  
+
   const handleSubmit = async (e) => {
     e.preventDefault(); 
+
+    const outputFilePath = `/home/memenzj/www/visuels/cmd/${navigationId}.png`;
+console.log("TEST URL DE SORTI" + outputFilePath);
+setOutputFilePathContext(outputFilePath);
+console.log("TEST URL DE SORTI" + outputFilePathContext);
     
     const formPayload = new FormData();
     formPayload.append("text1", formData.text1);
     formPayload.append("text2", formData.text2); 
+    formPayload.append("output_file", outputFilePath);
     // console.log("VERIFICATION DES DATA AVANT SOUMISSION FORMULAIRE : "+ JSON.stringify(formData.text1));
     // console.log("CONTENU DU FORMPAYLOAD"+formPayload);
     // console.log(JSON.stringify("CONTENU DU FORMPAYLOAD"+formPayload));
@@ -73,9 +85,19 @@ function ImageForm() {
 
       // const result = await response.blob(); // Récupérer l'image générée
       const result = await response.blob(); // Récupérer l'image générée
+      console.log("EN RECHERCHE DU CMD IMAGE : " + result);
+      console.log("EN RECHERCHE DU CMD IMAGE : " + JSON.stringify(result));
+      
       const url = URL.createObjectURL(result);
       setGeneratedImageUrl(url);
+      
+      console.log("ICI L'URL GENERE' : " + url);
+      console.log("ICI LE LINK CMD : " + generatedImageUrl);
       // window.open(url, "_blank"); 
+
+      await sendImageToServer(result);
+
+      
     } catch (error) {
       console.error("Erreur :", error);
     }
@@ -200,11 +222,9 @@ function ImageForm() {
       ) : (
         <Typography></Typography>
       )}
-      {/* <CardMedia
-                      component="img"
-                      // image={'/home/memenzj/www/visuels/cmd/output_image_674f9aae4dd35.png'}
-                      image={'https://memenza.fr/visuels/cmd/output_image_674f9aae4dd35.png'}
-                    /> */}
+      <Button type="success" variant="contained">
+      Enregistrer votre création
+      </Button>
     </Box>
   );
 }
