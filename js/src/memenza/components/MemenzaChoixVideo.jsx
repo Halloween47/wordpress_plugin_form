@@ -375,7 +375,7 @@ return (
               </Box>
             )}
           </Box>
-          <Button
+          {/* <Button
             variant="outlined"
             size="sm"
             sx={{ m: 2 }}
@@ -390,7 +390,7 @@ return (
             endDecorator={<KeyboardArrowRight />}
           >
             Sélectionner
-          </Button>
+          </Button> */}
         </Grid>
       ))}
     </Grid>
