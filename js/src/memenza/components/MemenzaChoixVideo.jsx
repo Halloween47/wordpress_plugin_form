@@ -216,240 +216,239 @@ console.log("APPARITION PARAMETRAGES : " + apparitionParametrage);
     setOpenModal(true); 
   };
 
-  return (
-    <Box sx={{ textAlign: "center", p: 4 }}>
-      <Typography variant="h4" gutterBottom>
-      Choisissez votre modèle 
-      </Typography>
+//   return (
+//     <Box sx={{ textAlign: "center", p: 4 }}>
+//       <Typography variant="h4" gutterBottom>
+//       Choisissez votre modèle 
+//       </Typography>
 
-      {/* <Grid  spacing={2} justifyContent="center"> */}
-      <Grid justifyContent="center">
-      {/* <Grid> */}
-        {imagesVideosFiltered.map((src, index) => (
-          <Grid item key={index} xs={6} sm={4} md={3}sx={{
-            display: "flex",
-            // flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-          }}>
-            <Typography sx={{my: 2}}>Modèle : {src.nom_modele_video || "pas d'info"}</Typography>
-            <Box
-              sx={{
-                position: "relative",
-                width: "30%",
-                height: 200,
-                // height: 400,
-                cursor: "pointer",
-                borderRadius: 2,
-                overflow: "hidden",
-                "&:hover .overlay": {
-                  opacity: isPlaying[index] ? 0 : 1,
-                },
-              }}
-              onClick={() => handleVideoClick(index)}
-            >
-              <Box
-                component="video"
-                src={src.chemin_video_ex}
-                ref={(el) => (videoRefs.current[index] = el)}
-                sx={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                }}
-                setCurrentVideoSrc={src.chemin_video_ex}
-              />
-              {!isPlaying[index] && (
-                <Box
-                  className="overlay"
-                  sx={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    backgroundColor: "rgba(0, 0, 0, 0.4)",
-                    transition: "opacity 0.3s",
-                    opacity: 1,
-                  }}
-                >
-                  <PlayArrowIcon sx={{ fontSize: 60, color: "#fff" }} />
-                </Box>
-              )}
-            </Box>
-            <Button
-              variant="outlined"
-               size="sm"
-              sx={{ m: 2 }}
-              onClick={() => handleVideoPopUp(src.chemin_video_ex)}
-            >
-              Prévisualiser le modèle
-            </Button>
-            <Button
-              variant="contained"
-              sx={{ mb: 2 }}
-              onClick={handleVideoClickCustom}
-              endDecorator={<KeyboardArrowRight  />}
-            >
-              Sélectionner 
-            </Button>
-          </Grid>
-        ))}
-      </Grid> 
+//       {/* <Grid  spacing={2} justifyContent="center"> */}
+//       <Grid justifyContent="center">
+//       {/* <Grid> */}
+//         {imagesVideosFiltered.map((src, index) => (
+//           <Grid item key={index} xs={6} sm={4} md={3}sx={{
+//             display: "flex",
+//             // flexDirection: "column",
+//             justifyContent: "center",
+//             alignItems: "center",
+//           }}>
+//             <Typography sx={{my: 2}}>Modèle : {src.nom_modele_video || "pas d'info"}</Typography>
+//             <Box
+//               sx={{
+//                 position: "relative",
+//                 width: "30%",
+//                 height: 200,
+//                 // height: 400,
+//                 cursor: "pointer",
+//                 borderRadius: 2,
+//                 overflow: "hidden",
+//                 "&:hover .overlay": {
+//                   opacity: isPlaying[index] ? 0 : 1,
+//                 },
+//               }}
+//               onClick={() => handleVideoClick(index)}
+//             >
+//               <Box
+//                 component="video"
+//                 src={src.chemin_video_ex}
+//                 ref={(el) => (videoRefs.current[index] = el)}
+//                 sx={{
+//                   width: "100%",
+//                   height: "100%",
+//                   objectFit: "cover",
+//                 }}
+//                 setCurrentVideoSrc={src.chemin_video_ex}
+//               />
+//               {!isPlaying[index] && (
+//                 <Box
+//                   className="overlay"
+//                   sx={{
+//                     position: "absolute",
+//                     top: 0,
+//                     left: 0,
+//                     width: "100%",
+//                     height: "100%",
+//                     display: "flex",
+//                     alignItems: "center",
+//                     justifyContent: "center",
+//                     backgroundColor: "rgba(0, 0, 0, 0.4)",
+//                     transition: "opacity 0.3s",
+//                     opacity: 1,
+//                   }}
+//                 >
+//                   <PlayArrowIcon sx={{ fontSize: 60, color: "#fff" }} />
+//                 </Box>
+//               )}
+//             </Box>
+//             <Button
+//               variant="outlined"
+//                size="sm"
+//               sx={{ m: 2 }}
+//               onClick={() => handleVideoPopUp(src.chemin_video_ex)}
+//             >
+//               Prévisualiser le modèle
+//             </Button>
+//             <Button
+//               variant="contained"
+//               sx={{ mb: 2 }}
+//               onClick={handleVideoClickCustom}
+//               endDecorator={<KeyboardArrowRight  />}
+//             >
+//               Sélectionner 
+//             </Button>
+//           </Grid>
+//         ))}
+//       </Grid> 
 
-      {/* Modal pour lire la vidéo */}
-      <Dialog open={openModal} onClose={handleCloseModal} maxWidth="md" fullWidth>
-        <DialogContent>
-          <Box sx={{ position: "relative", width: "100%", height: "60vh" }}>
-            <Box
-              component="video"
-              src={currentVideoSrc}
-              controls
-              sx={{
-                width: "100%",
-                height: "100%",
-                objectFit: "contain",
-              }}
-            />
-          </Box>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseModal} color="primary">
-            Fermer
-          </Button>
-        </DialogActions>
-      </Dialog>
+//       {/* Modal pour lire la vidéo */}
+//       <Dialog open={openModal} onClose={handleCloseModal} maxWidth="md" fullWidth>
+//         <DialogContent>
+//           <Box sx={{ position: "relative", width: "100%", height: "60vh" }}>
+//             <Box
+//               component="video"
+//               src={currentVideoSrc}
+//               controls
+//               sx={{
+//                 width: "100%",
+//                 height: "100%",
+//                 objectFit: "contain",
+//               }}
+//             />
+//           </Box>
+//         </DialogContent>
+//         <DialogActions>
+//           <Button onClick={handleCloseModal} color="primary">
+//             Fermer
+//           </Button>
+//         </DialogActions>
+//       </Dialog>
 
-      {/* Affichage des textes vidéo */}
-      {/* {apparitionParametrage && tabParseTextesVideo.length > 0 && tabParseMediasVideo.length > 0 ( */}
-      {apparitionParametrage && tabParseTextesVideo.length > 0 && (
-        <Box sx={{ mt: 4 , display: "flex", flexDirection: 'column'}}>
-          <Typography variant="h6">Paramétrage du Template</Typography>
-          {tabParseTextesVideo.map((field, index) => (
-            // <Box key={index} display="flex" alignItems="center" gap={2} sx={{ mt: 4 }}>
-            <Box key={index}  gap={1} sx={{ mt: 4, display:"flex" }}>
-            <Box key={index}  gap={1} sx={{ mt: 4, display:"flex" }}>
-              {/* <Typography variant="body1" style={{ whiteSpace: 'nowrap' }}> */}
-              <Typography variant="body1" style={{ whiteSpace: 'wrap' }}>
-                {field.name}
-              </Typography>
-              <TextField
-                placeholder={field.defaultText || ''}
-                inputProps={{ maxLength: field.maxCharacters }}
-                variant="outlined"
-                size="small"
-                ////////////////////////////
-                value={variables[field.name] || ''}
-                onChange={(e) => handleVariableChange(field.name, e.target.value)} // Met à jour la clé avec la valeur saisie
-                ////////////////////////////
+//       {/* Affichage des textes vidéo */}
+//       {/* {apparitionParametrage && tabParseTextesVideo.length > 0 && tabParseMediasVideo.length > 0 ( */}
+//       {apparitionParametrage && tabParseTextesVideo.length > 0 && (
+//         <Box sx={{ mt: 4 , display: "flex", flexDirection: 'column'}}>
+//           <Typography variant="h6">Paramétrage du Template</Typography>
+//           {tabParseTextesVideo.map((field, index) => (
+//             <Box key={index}  gap={1} sx={{ mt: 4, display:"flex" }}>
+//               <Box key={index}  gap={1} sx={{ mt: 4, display:"flex" }}>
+//               {/* <Typography variant="body1" style={{ whiteSpace: 'nowrap' }}> */}
+//               <Typography variant="body1" style={{ whiteSpace: 'wrap' }}>
+//                 {field.name}
+//               </Typography>
+//               <TextField
+//                 placeholder={field.defaultText || ''}
+//                 inputProps={{ maxLength: field.maxCharacters }}
+//                 variant="outlined"
+//                 size="small"
+//                 ////////////////////////////
+//                 value={variables[field.name] || ''}
+//                 onChange={(e) => handleVariableChange(field.name, e.target.value)} // Met à jour la clé avec la valeur saisie
+//                 ////////////////////////////
 
-              />
-            </Box>
-            </Box>
-          ))}
-        </Box>
-      )}
+//               />
+//               </Box>
+//             </Box>
+//           ))}
+//         </Box>
+//       )}
 
-      {/* Affichage des médias vidéo */}
-      {/* {apparitionParametrage && tabParseMediasVideo.length > 0 && (
-        <Box sx={{ mt: 4 }}>
-          <Typography variant="h5">Paramétrage des Médias</Typography>
-          {tabParseMediasVideo.map((field, index) => (
-            <Box key={index} display="flex" alignItems="center" gap={2} sx={{ mt: 4 }}>
-              <Typography variant="body1" style={{ whiteSpace: 'nowrap' }}>
-                {field.name}
-              </Typography>
-              <Button variant="contained" component="label">
-                Importer votre média
-                <input
-                  type="file"
-                  hidden
-                  accept="image/*,video/*"
-                  onChange={(e) => console.log(e.target.files)}
-                />
-              </Button>
-            </Box>
-          ))}
-        </Box>
-      )} */}
+//       {/* Affichage des médias vidéo */}
+//       {/* {apparitionParametrage && tabParseMediasVideo.length > 0 && (
+//         <Box sx={{ mt: 4 }}>
+//           <Typography variant="h5">Paramétrage des Médias</Typography>
+//           {tabParseMediasVideo.map((field, index) => (
+//             <Box key={index} display="flex" alignItems="center" gap={2} sx={{ mt: 4 }}>
+//               <Typography variant="body1" style={{ whiteSpace: 'nowrap' }}>
+//                 {field.name}
+//               </Typography>
+//               <Button variant="contained" component="label">
+//                 Importer votre média
+//                 <input
+//                   type="file"
+//                   hidden
+//                   accept="image/*,video/*"
+//                   onChange={(e) => console.log(e.target.files)}
+//                 />
+//               </Button>
+//             </Box>
+//           ))}
+//         </Box>
+//       )} */}
 
-<Box>
-      {/* Affichage des médias vidéo */}
-      {apparitionParametrage &&  (
-        <Box sx={{ mt: 4 }}>
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          </Box>
+// <Box>
+//       {/* Affichage des médias vidéo */}
+//       {apparitionParametrage &&  (
+//         <Box sx={{ mt: 4 }}>
+//           <Box sx={{ display: 'flex', alignItems: 'center' }}>
+//           </Box>
 
-              {/* <Button variant="contained" component="label">
-                Importer votre média
-                <input
-                  type="file"
-                  hidden
-                  accept="image/*,video/*"
-                  onChange={(e) => console.log(e.target.files)}
-                />
-              </Button> */}
+//               {/* <Button variant="contained" component="label">
+//                 Importer votre média
+//                 <input
+//                   type="file"
+//                   hidden
+//                   accept="image/*,video/*"
+//                   onChange={(e) => console.log(e.target.files)}
+//                 />
+//               </Button> */}
               
-      {/* Affichage des médias vidéo */}
+//       {/* Affichage des médias vidéo */}
       
-        <Box sx={{ mt: 4 }}>
-          {/* <Box sx={{ display: 'flex', alignItems: 'center' }}> */}
-          <Box sx={{ display: 'flex',  }}>
-              <Typography variant="h5">Paramétrage des Médias</Typography>
-          </Box>
+//         <Box sx={{ mt: 4 }}>
+//           {/* <Box sx={{ display: 'flex', alignItems: 'center' }}> */}
+//           <Box sx={{ display: 'flex',  }}>
+//               <Typography variant="h5">Paramétrage des Médias</Typography>
+//           </Box>
 
-          {tabParseMediasVideo.map((field, index) => (
-              <Box key={index} display="flex" alignItems="center" gap={2} sx={{ mt: 4 }}>
-                <Typography variant="body1" style={{ whiteSpace: 'nowrap' }}>
-                  {field.name}
-                </Typography>
+//           {tabParseMediasVideo.map((field, index) => (
+//               <Box key={index} display="flex" alignItems="center" gap={2} sx={{ mt: 4 }}>
+//                 <Typography variant="body1" style={{ whiteSpace: 'nowrap' }}>
+//                   {field.name}
+//                 </Typography>
 
                 
 
-<Button variant="contained" component="label">
-Importer votre média
-<input
-type="file"
-hidden
-accept="image/*,video/*"
-onChange={(e) => console.log(e.target.files)}
-/>
-</Button>
-{/* Tooltip pour restrictions spécifiques à côté du bouton */}
-<Tooltip title={`Les dimensions de ce média doivent respecter : les dimensions suivantes : ${field.comment}`} arrow>
-                  <IconButton>
-                    <InfoIcon />
-                  </IconButton>
-                </Tooltip>
-</Box>
-))}
-</Box>
+// <Button variant="contained" component="label">
+// Importer votre média
+// <input
+// type="file"
+// hidden
+// accept="image/*,video/*"
+// onChange={(e) => console.log(e.target.files)}
+// />
+// </Button>
+// {/* Tooltip pour restrictions spécifiques à côté du bouton */}
+// <Tooltip title={`Les dimensions de ce média doivent respecter : les dimensions suivantes : ${field.comment}`} arrow>
+//                   <IconButton>
+//                     <InfoIcon />
+//                   </IconButton>
+//                 </Tooltip>
+// </Box>
+// ))}
+// </Box>
 
           
 
-<Box sx={{ display: "flex", justifyContent: "center" }}>
-          <Button
-            variant="contained"
-            sx={{ m: 2 }}
-            onClick={handleVideoSendWithTemplate}
-            // onClick={handleTestCompleteJsonTab}
-          >
-J'envoie mes données pour paramétrage.
-          </Button>
-    </Box>
-        </Box>
+// <Box sx={{ display: "flex", justifyContent: "center" }}>
+//           <Button
+//             variant="contained"
+//             sx={{ m: 2 }}
+//             onClick={handleVideoSendWithTemplate}
+//             // onClick={handleTestCompleteJsonTab}
+//           >
+// J'envoie mes données pour paramétrage.
+//           </Button>
+//     </Box>
+//         </Box>
         
-      )}
-    </Box>
+//       )}
+//     </Box>
 
       
 
 
-    </Box>
-  );
+//     </Box>
+//   );
 
 // return (
 //   <>
@@ -548,6 +547,242 @@ J'envoie mes données pour paramétrage.
 //   </>
 // );
 
+
+
+
+//////////////////////
+//////////////////////
+return (
+  <Box sx={{ textAlign: "center", p: 4 }}>
+    <Typography variant="h4" gutterBottom>
+      Choisissez votre modèle
+    </Typography>
+
+    {/* Liste des vidéos */}
+    <Grid justifyContent="center">
+      {imagesVideosFiltered.map((src, index) => (
+        <Grid
+          item
+          key={index}
+          xs={6}
+          sm={4}
+          md={3}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Typography sx={{ my: 2 }}>
+            Modèle : {src.nom_modele_video || "pas d'info"}
+          </Typography>
+          <Box
+            sx={{
+              position: "relative",
+              width: "30%",
+              height: 200,
+              cursor: "pointer",
+              borderRadius: 2,
+              overflow: "hidden",
+              "&:hover .overlay": {
+                opacity: isPlaying[index] ? 0 : 1,
+              },
+            }}
+            onClick={() => handleVideoClick(index)}
+          >
+            <Box
+              component="video"
+              src={src.chemin_video_ex}
+              ref={(el) => (videoRefs.current[index] = el)}
+              sx={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+              }}
+            />
+            {!isPlaying[index] && (
+              <Box
+                className="overlay"
+                sx={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "100%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  backgroundColor: "rgba(0, 0, 0, 0.4)",
+                  transition: "opacity 0.3s",
+                  opacity: 1,
+                }}
+              >
+                <PlayArrowIcon sx={{ fontSize: 60, color: "#fff" }} />
+              </Box>
+            )}
+          </Box>
+          <Button
+            variant="outlined"
+            size="sm"
+            sx={{ m: 2 }}
+            onClick={() => handleVideoPopUp(src.chemin_video_ex)}
+          >
+            Prévisualiser le modèle
+          </Button>
+          <Button
+            variant="contained"
+            sx={{ mb: 2 }}
+            onClick={handleVideoClickCustom}
+            endDecorator={<KeyboardArrowRight />}
+          >
+            Sélectionner
+          </Button>
+        </Grid>
+      ))}
+    </Grid>
+
+    {/* Modal pour lire la vidéo */}
+    <Dialog open={openModal} onClose={handleCloseModal} maxWidth="md" fullWidth>
+      <DialogContent>
+        <Box sx={{ position: "relative", width: "100%", height: "60vh" }}>
+          <Box
+            component="video"
+            src={currentVideoSrc}
+            controls
+            sx={{
+              width: "100%",
+              height: "100%",
+              objectFit: "contain",
+            }}
+          />
+        </Box>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleCloseModal} color="primary">
+          Fermer
+        </Button>
+      </DialogActions>
+    </Dialog>
+
+    {/* Paramétrage des textes vidéo */}
+    {apparitionParametrage && tabParseTextesVideo.length > 0 && (
+      <Box sx={{ mt: 4, display: "flex", flexDirection: "column" }}>
+        <Typography variant="h6">Paramétrage du Template</Typography>
+        {tabParseTextesVideo.map((field, index) => {
+          // Vérifier si le nom correspond au format S<number>-txt
+          const match = field.name.match(/^S(\d+)-txt$/);
+          const dynamicLabel = match ? `Texte ${match[1]}` : field.name;
+
+          return (
+            <Box key={index} gap={1} sx={{ mt: 4, display: "flex" }}>
+              <Typography variant="body1" style={{ whiteSpace: "wrap" }}>
+                {dynamicLabel}
+              </Typography>
+              <TextField
+                placeholder={field.defaultText || ""}
+                inputProps={{ maxLength: field.maxCharacters }}
+                variant="outlined"
+                size="small"
+                value={variables[field.name] || ""}
+                onChange={(e) => handleVariableChange(field.name, e.target.value)}
+              />
+            </Box>
+          );
+        })}
+      </Box>
+    )}
+
+    {/* Paramétrage des médias vidéo */}
+    {/* {apparitionParametrage && tabParseMediasVideo.length > 0 && (
+      <Box sx={{ mt: 4 }}>
+        <Typography variant="h5">Paramétrage des Médias</Typography>
+        {tabParseMediasVideo.map((field, index) => (
+          <Box key={index} display="flex" alignItems="center" gap={2} sx={{ mt: 4 }}>
+            <Typography variant="body1" style={{ whiteSpace: "nowrap" }}>
+              {field.name}
+            </Typography>
+            <Button variant="contained" component="label">
+              Importer votre média
+              <input
+                type="file"
+                hidden
+                accept="image/*,video/*"
+                onChange={(e) => console.log(e.target.files)}
+              />
+            </Button>
+            <Tooltip
+              title={`Les dimensions de ce média doivent respecter : ${field.comment}`}
+              arrow
+            >
+              <IconButton>
+                <InfoIcon />
+              </IconButton>
+            </Tooltip>
+          </Box>
+        ))}
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <Button
+            variant="contained"
+            sx={{ m: 2 }}
+            onClick={handleVideoSendWithTemplate}
+          >
+            J'envoie mes données pour paramétrage.
+          </Button>
+        </Box>
+      </Box>
+    )} */}
+
+{apparitionParametrage && tabParseMediasVideo.length > 0 && (
+  <Box sx={{ mt: 4 }}>
+    <Typography variant="h5">Paramétrage des Médias</Typography>
+    {tabParseMediasVideo.map((field, index) => {
+      // Vérifier si le nom correspond au format S<number>-img<number>
+      const match = field.name.match(/^s\d+-img(\d+)$/);
+      const dynamicLabel = match ? `Media ${match[1]}` : field.name;
+
+      return (
+        <Box key={index} display="flex" alignItems="center" gap={2} sx={{ mt: 4 }}>
+          <Typography variant="body1" style={{ whiteSpace: "nowrap" }}>
+            {dynamicLabel}
+          </Typography>
+          <Button variant="contained" component="label">
+            Importer votre média
+            <input
+              type="file"
+              hidden
+              accept="image/*,video/*"
+              onChange={(e) => console.log(e.target.files)}
+            />
+          </Button>
+          <Tooltip
+            title={`Les dimensions de ce média doivent respecter : ${field.comment}`}
+            arrow
+          >
+            <IconButton>
+              <InfoIcon />
+            </IconButton>
+          </Tooltip>
+        </Box>
+      );
+    })}
+    <Box sx={{ display: "flex", justifyContent: "center" }}>
+      <Button
+        variant="contained"
+        sx={{ m: 2 }}
+        onClick={handleVideoSendWithTemplate}
+      >
+        J'envoie mes données pour paramétrage.
+      </Button>
+    </Box>
+  </Box>
+)}
+
+
+  </Box>
+);
+
+//////////////////////
+//////////////////////
 
 }
 
