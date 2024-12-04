@@ -237,69 +237,7 @@ J'envoie mes données de paramétrage.
           </ColorButton>
         </Box> */}
 
-        <Root>
-          <Divider> OU </Divider>
-          <Box className="etape-video-upload-video">
-            {/* <DownloadButton /> */}
-            <Button
-              component="label"
-              role={undefined}
-              variant="contained"
-              tabIndex={-1}
-              startIcon={<CloudUploadIcon />}
-            >
-              Uploader sa propre Video
-              {/* <VisuallyHiddenInput
-                type="file"
-                onChange={(event) => console.log(event.target.files)}
-                multiple
-              /> */}
-              <VisuallyHiddenInput
-            type="file"
-            accept="video/*" 
-            onChange={handleFileUpload} 
-          />
-            </Button>
-          </Box>
-          {formData.video_path && (
-        <Box sx={{ mt: 2 }}>
-          <Typography variant="body2" gutterBottom>
-            Prévisualisation de la vidéo :
-          </Typography>
-          <video
-            src={formData.video_path}
-            controls
-            style={{
-              width: "100%",
-              maxWidth: "500px",
-              borderRadius: "8px",
-              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-            }}
-          >
-            Votre navigateur ne prend pas en charge la vidéo.
-          </video>
-          <Box sx={{ mt: 2, textAlign: "center" }}>
-            <Button
-              variant="contained"
-              color="success"
-              onClick={handleVideoSendWithOutTemplate}
-            >
-              Envoyer votre vidéo
-            </Button>
-          </Box>
-        </Box>
-      )}
-          {/* <Box sx={{ display: "flex", justifyContent: "center" }}>
-          <Button
-            variant="contained"
-            sx={{ m: 2 }}
-            // onClick={handleVideoSendWithOutTemplate}
-            // onClick={handleTestCompleteJsonTab}
-          >
-Uploader sa propre Video (en cours)
-          </Button>
-    </Box> */}
-        </Root>
+        
       </Box>
       {/* {showTextCustomVideo && (
         <Box className="etape-video-personnalisation-video">

@@ -19,12 +19,26 @@ import { Tooltip, IconButton } from '@mui/material';
 
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { Add, KeyboardArrowRight } from "@mui/icons-material";
+import styled from "styled-components";
 
 const videos = [
   "https://samplelib.com/lib/preview/mp4/sample-5s.mp4",
   "https://samplelib.com/lib/preview/mp4/sample-10s.mp4",
   "https://samplelib.com/lib/preview/mp4/sample-15s.mp4",
 ];
+
+const VisuallyHiddenInput = styled("input")({
+  clip: "rect(0 0 0 0)",
+  clipPath: "inset(50%)",
+  height: 1,
+  overflow: "hidden",
+  position: "absolute",
+  bottom: 0,
+  left: 0,
+  whiteSpace: "nowrap",
+  width: 1,
+});
+
 
 export default function MemenzaChoixVideo() {
   const [openModal, setOpenModal] = useState(false);
@@ -450,126 +464,61 @@ console.log("APPARITION PARAMETRAGES : " + apparitionParametrage);
 //     </Box>
 //   );
 
-// return (
-//   <>
-//     <Grid  spacing={2}>
-//       {imagesVideosFiltered.map((src, index) => (
-//         <Grid item key={index} xs={6} sm={4} md={3} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-//           <Typography sx={{ my: 2 }}>Modèle : {src.nom_modele_video || "pas d'info"}</Typography>
-
-//           <Box
-//             sx={{
-//               position: "relative",
-//               width: "30%",
-//               height: 200,
-//               cursor: "pointer",
-//               borderRadius: 2,
-//               overflow: "hidden",
-//               "&:hover .overlay": {
-//                 opacity: isPlaying[index] ? 0 : 1,
-//               },
-//             }}
-//             onClick={() => handleVideoClick(index)} // Clic sur la vidéo pour gérer l'affichage des paramètres
-//           >
-//             <Box
-//               component="video"
-//               src={src.chemin_video_ex}
-//               ref={(el) => (videoRefs.current[index] = el)}
-//               sx={{
-//                 width: "100%",
-//                 height: "100%",
-//                 objectFit: "cover",
-//               }}
-//             />
-//             {!isPlaying[index] && (
-//               <Box
-//                 className="overlay"
-//                 sx={{
-//                   position: "absolute",
-//                   top: 0,
-//                   left: 0,
-//                   width: "100%",
-//                   height: "100%",
-//                   display: "flex",
-//                   alignItems: "center",
-//                   justifyContent: "center",
-//                   backgroundColor: "rgba(0, 0, 0, 0.4)",
-//                   transition: "opacity 0.3s",
-//                   opacity: 1,
-//                 }}
-//               >
-//                 <PlayArrowIcon sx={{ fontSize: 60, color: "#fff" }} />
-//               </Box>
-//             )}
-//           </Box>
-
-//           <Button
-//             variant="outlined"
-//             size="small"
-//             sx={{ m: 2 }}
-//             onClick={() => console.log("Pop-up pour la vidéo:", src.chemin_video_ex)} // Gestion du pop-up
-//           >
-//             Prévisualiser le modèle
-//           </Button>
-
-//           <Button
-//             variant="contained"
-//             sx={{ mb: 2 }}
-//             endDecorator={<KeyboardArrowRight />}
-//           >
-//             Sélectionner
-//           </Button>
-
-//           {/* Affichage des paramètres en dessous de la vidéo si cette vidéo est sélectionnée */}
-//           {selectedParam === index && tabParseTextesVideo.length > 0 && (
-//             <Box sx={{ mt: 2, display: "flex", flexDirection: 'column' }}>
-//               <Typography variant="h6">Paramétrage du Template</Typography>
-//               {tabParseTextesVideo.map((field, idx) => (
-//                 <Box key={idx} gap={1} sx={{ mt: 4, display: "flex" }}>
-//                   <Typography variant="body1" style={{ whiteSpace: 'wrap' }}>
-//                     {field.name}
-//                   </Typography>
-//                   <TextField
-//                     placeholder={field.defaultText || ''}
-//                     inputProps={{ maxLength: field.maxCharacters }}
-//                     variant="outlined"
-//                     size="small"
-//                     value={variables[field.name] || ''}
-//                     onChange={(e) => handleVariableChange(field.name, e.target.value)} // Met à jour la clé avec la valeur saisie
-//                   />
-//                 </Box>
-//               ))}
-//             </Box>
-//           )}
-//         </Grid>
-//       ))}
-//     </Grid>
-//   </>
-// );
-
-
-
 
 //////////////////////
 //////////////////////
+// Fonction pour gérer l'upload de vidéo
+const handleFileUpload = (event) => {
+  const file = event.target.files[0]; // Récupérer le premier fichier sélectionné
+  if (file) {
+    const videoURL = URL.createObjectURL(file); // Générer une URL locale
+    setFormData((prevData) => ({
+      ...prevData,
+      video_path: videoURL, // Mettre à jour l'état avec le lien vidéo
+    }));
+    console.log("Lien local de la vidéo :", videoURL);
+  }
+};
+
 return (
   <Box sx={{ textAlign: "center", p: 4 }}>
+    <Button
+              component="label"
+              role={undefined}
+              variant="contained"
+              tabIndex={-1}
+              startIcon={<CloudUploadIcon />}
+            >
+              Uploader sa propre Video
+              <VisuallyHiddenInput
+            type="file"
+            accept="video/*" 
+            onChange={handleFileUpload} 
+          />
+            </Button>
+            <Divider sx={{color: "black", opacity: 0.6, margin: "10px"}}> OU </Divider>
     <Typography variant="h4" gutterBottom>
       Choisissez votre modèle
     </Typography>
 
     {/* Liste des vidéos */}
-    <Grid justifyContent="center">
+    {/* <Grid justifyContent="center"> */}
+    <Grid container 
+    spacing={4} 
+    justifyContent="center"
+    // sx={{ flexGrow: 1 }}
+    >
       {imagesVideosFiltered.map((src, index) => (
         <Grid
+        size={6}
           item
           key={index}
-          xs={6}
+          xs={12}
           sm={4}
           md={3}
           sx={{
             display: "flex",
-            justifyContent: "center",
+            flexDirection: "column",
             alignItems: "center",
           }}
         >
@@ -579,7 +528,9 @@ return (
           <Box
             sx={{
               position: "relative",
-              width: "30%",
+              // width: "30%",
+              width: "100%",
+              maxWidth: "300px",
               height: 200,
               cursor: "pointer",
               borderRadius: 2,
