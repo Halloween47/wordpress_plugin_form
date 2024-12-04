@@ -8,9 +8,16 @@ function ImageForm() {
     text1: "Alexandre",
     text2: "12 janvier 2025",
   });
+  console.log("VISUALISATION DE FORMDATA : " + JSON.stringify(formData));
+  
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
+
+    if (files) {
+      console.log("Fichier sélectionné : ", files[0]);  
+    }
+
     setFormData((prevData) => ({
       ...prevData,
       [name]: files ? files[0] : value,
@@ -26,6 +33,12 @@ function ImageForm() {
     // console.log("VERIFICATION DES DATA AVANT SOUMISSION FORMULAIRE : "+ JSON.stringify(formData.text1));
     // console.log("CONTENU DU FORMPAYLOAD"+formPayload);
     // console.log(JSON.stringify("CONTENU DU FORMPAYLOAD"+formPayload));
+    if (formData.image1) {
+      formPayload.append("image1", formData.image1); // Ajouter image1 au payload
+    }
+    if (formData.image2) {
+      formPayload.append("image2", formData.image2); // Ajouter image1 au payload
+    }
     
 
     try {     
@@ -36,7 +49,7 @@ function ImageForm() {
           body: formPayload,
         },
       );
-      // console.log("VERIFICATION  FETCH DATA : " + JSON.stringify(formPayload));
+      console.log("VERIFICATION  FETCH DATA : " + JSON.stringify(formPayload));
       
         
       ////////////////
@@ -99,7 +112,49 @@ function ImageForm() {
         required
       />
 
-      <Button type="submit" variant="contained">
+<Button
+        variant="contained"
+        component="label"
+        sx={{ width: "100%" }}
+      >
+        Télécharger Image 1
+        <input
+          type="file"
+          name="image1"
+          accept="image/*"
+          onChange={handleChange}
+          hidden
+        />
+      </Button>
+      {formData.image1 && (
+        <Typography variant="body2">
+          {formData.image1.name} 
+        </Typography>
+      )}
+
+<Button
+        variant="contained"
+        component="label"
+        sx={{ width: "100%" }}
+      >
+        Télécharger Image 2
+        <input
+          type="file"
+          name="image2"
+          accept="image/*"
+          onChange={handleChange}
+          hidden
+        />
+      </Button>
+      {formData.image2 && (
+        <Typography variant="body2">
+          {formData.image2.name} 
+        </Typography>
+      )}
+      
+
+      {/* <Button type="submit" variant="contained"> */}
+      <Button type="success" variant="contained">
       Personnaliser le modèle 
       </Button>
       <CardMedia
