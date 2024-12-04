@@ -43,7 +43,6 @@ function PopupUpload() {
     },
   ]);
 
-  console.log("LIGNE 250 : " + JSON.stringify(imageFields));
   
 
   const handleFileChange = (index, event) => {

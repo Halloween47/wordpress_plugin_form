@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TextField, Button, Typography, Box } from "@mui/material";
+import { TextField, Button, Typography, Box, CardMedia } from "@mui/material";
 
 function ImageForm() {
   const [formData, setFormData] = useState({
@@ -24,22 +24,19 @@ function ImageForm() {
     formPayload.append("text1", formData.text1);
     formPayload.append("text2", formData.text2); 
     // console.log("VERIFICATION DES DATA AVANT SOUMISSION FORMULAIRE : "+ JSON.stringify(formData.text1));
+    // console.log("CONTENU DU FORMPAYLOAD"+formPayload);
+    // console.log(JSON.stringify("CONTENU DU FORMPAYLOAD"+formPayload));
     
 
-    try {    
+    try {     
       const response = await fetch(
-        // "../wp-content/plugins/memenza-form-test/js/src/memenza/test/process-simplifie.php",
-        // "../wp-content/plugins/Product Image Customizer/js/src/memenza/test/process-simplifie.php",
-        // "../../wp-content/plugins/Product Image Customizer/js/src/memenza/test/process-simplifie.php",
-        
-        
-        "../../wp-content/plugins/Product Image Customizer/js/process-simplifie.php",
+         "../../wp-content/plugins/ProductImageCustomizer/js/process-simplifie.php",
         {
           method: "POST",
           body: formPayload,
         },
       );
-      console.log("VERIFICATION FETCH DATA : " + JSON.stringify(formPayload));
+      // console.log("VERIFICATION  FETCH DATA : " + JSON.stringify(formPayload));
       
         
       ////////////////
@@ -59,6 +56,7 @@ function ImageForm() {
         console.log("soumission du formulaire OK");
       }
 
+      // const result = await response.blob(); // Récupérer l'image générée
       const result = await response.blob(); // Récupérer l'image générée
       const url = URL.createObjectURL(result);
       window.open(url, "_blank"); // Afficher dans un nouvel onglet
@@ -104,6 +102,11 @@ function ImageForm() {
       <Button type="submit" variant="contained">
       Personnaliser le modèle 
       </Button>
+      <CardMedia
+                      component="img"
+                      // image={'/home/memenzj/www/visuels/cmd/output_image_674f9aae4dd35.png'}
+                      image={'https://memenza.fr/visuels/cmd/output_image_674f9aae4dd35.png'}
+                    />
     </Box>
   );
 }

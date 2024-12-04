@@ -70,7 +70,7 @@ console.log("VARIABLES PARSE VERIFICATION : "+ variablesParse);
     { name: "Video 2", restrictions: "Max 5MB, format .avi" },
     { name: "Video 3", restrictions: "Max 20MB, format .mov" },
   ]);
-
+ 
   // console.log("TEST FINAL MEDIA : " + JSON.stringify(tabParseMediasVideo));
   
   

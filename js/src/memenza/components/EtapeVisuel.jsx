@@ -103,11 +103,20 @@ const StyleEtapeVisuel = `
     opacity: 1;
     z-index: 0;
 }
+    .selected-card.selected .check-icon {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  color: green;
+  font-size: 2rem;
+  z-index: 3;
 
 
   ////////////////////////////////
   ////////////////////////////////
   `;
+
+
 
 const FormGrid = styled(Grid)(() => ({
   display: "flex",
@@ -129,6 +138,8 @@ function EtapeVisuel() {
   ////////////////////////
   ////////////////////////
   const [selectedVisuelId, setSelectedVisuelId] = useState(null);
+  console.log("ID sélectionné : ", selectedVisuelId + " id du modele CADRE");
+  
   ////////////////////////
   ////////////////////////
   const [showTextCustomVisuel, setShowTextCustomVisuel] = useState(false);
@@ -154,7 +165,6 @@ function EtapeVisuel() {
     },
   ]);
 
-  console.log("LIGNE 108 : "+ JSON.stringify(imageFields));
   
 
   const [imagesVisuels, setImagesVisuels] = React.useState([]);
@@ -168,10 +178,12 @@ function EtapeVisuel() {
           throw new Error("Erreur lors de la récupération des données");
         }
         const result = await response.json();
+        console.log("ICIC LA R2PONSE DE LA ROUTE : " + JSON.stringify(result));
+        
         setImagesVisuels(result);
       } catch (error) {
         setError(error.message);
-      }
+      } 
     };
 
     fetchData();
@@ -185,6 +197,9 @@ function EtapeVisuel() {
     setSelectedVisuelId(id); // Stocke l'ID de l'élément sélectionné
     setShowTextCustomVisuel(true); // Affiche les options de personnalisation
     setImageClicked(true); // Confirme que l'utilisateur a cliqué
+
+    
+
   };
   
 
@@ -193,6 +208,8 @@ function EtapeVisuel() {
 const imagesVisuelsFitred =  imagesVisuels.filter((item) => {
   return item.id_ss_cat === selectedSousCatId;
 })
+// console.log("CONTENU DU TABLEAU FILTRER : " + JSON.stringify(imagesVisuelsFitred));
+
 
   return (
     <div>
@@ -291,11 +308,17 @@ const imagesVisuelsFitred =  imagesVisuels.filter((item) => {
                     
                   {/* <Card onClick={handleVisuelClickCustom}> */}
                   <Card
-                  className={`selected-card ${selectedVisuelId === item.id_ss_cat ? "selected" : ""}`}
+                  // className={`selected-card ${selectedVisuelId === item.id_ss_cat ? "selected" : ""}`}
+                  className={`selected-card ${selectedVisuelId === item.id_modele_cadre ? "selected" : ""}`}
+                  
                   /////////////////
                   /////////////////
                   //  onClick={handleVisuelClickCustom} 
                    onClick={() => handleVisuelClickCustom(item.id_ss_cat)}
+                  //  onClick={() => handleVisuelClickCustom(item.id_modele_cadre)}
+                  //  onClick={() => console.log("ID sélectionné : ", item.id_modele_cadre)}
+                  //  onClick={() => console.log("ID sélectionné : ", item.id_ss_cat)}
+                  //  onClick={() => console.log("ID sélectionné : ", item.id_modele_cadre)}
 
                   sx={{transform: 'scale(1.1)', // Agrandit légèrement le Card
                     transition: 'transform 0.3s ease, box-shadow 0.3s ease', // Animation fluide
@@ -316,8 +339,8 @@ const imagesVisuelsFitred =  imagesVisuels.filter((item) => {
                     <CardContent>
                       <Typography>{item.nom_modele}</Typography>
                       {/* Icône de check lorsque l'élément est sélectionné */}
-      {selectedVisuelId === item.id_ss_cat && (
-        <CheckCircleIcon
+      {selectedVisuelId === item.id_modele_cadre && (
+        <CheckCircleIcon  className="check-icon" 
           sx={{
             position: 'absolute',
             bottom: '10px',
@@ -329,6 +352,7 @@ const imagesVisuelsFitred =  imagesVisuels.filter((item) => {
         />
       )}
                     </CardContent>
+                    
                   </Card>
                   
                 </Grid>
@@ -395,6 +419,7 @@ const imagesVisuelsFitred =  imagesVisuels.filter((item) => {
             J'envoie
           </Button>
         </ButtonGroup> */}
+        {/* <style>{StyleEtapeVisuel}</style> */}
         <style>{StyleEtapeVisuel}</style>
       </Container>
     </div>
@@ -402,3 +427,137 @@ const imagesVisuelsFitred =  imagesVisuels.filter((item) => {
 }
 
 export default EtapeVisuel;
+
+// import {
+//   Box,
+//   Grid,
+//   Card,
+//   CardMedia,
+//   CardContent,
+//   Typography,
+// } from "@mui/material";
+// import React, { useState } from "react";
+// import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+// import styled from "styled-components";
+
+// const StyleEtapeVisuel = `
+// .selected-card {
+//   position: relative;
+//   overflow: hidden;
+// }
+
+// .selected-card::after {
+//   content: "";
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 100%;
+//   background: rgba(255, 105, 180, 0.6); /* Overlay rose */
+//   border-radius: 8px;
+//   opacity: 0;
+//   transition: opacity 0.3s ease-in-out;
+//   z-index: 1;
+// }
+
+// .selected-card.selected::after {
+//   opacity: 0;  /* Enlever l'overlay lorsque sélectionné */
+//   z-index: 0;
+// }
+
+// .selected-card.selected .MuiCardContent-root {
+//   position: relative;
+// }
+
+// .selected-card.selected .check-icon {
+//   position: absolute;
+//   bottom: 10px;
+//   right: 10px;
+//   color: green;
+//   font-size: 2rem;
+//   z-index: 3;
+// }
+// `;
+
+// function EtapeVisuel() {
+//   const [selectedVisuelId, setSelectedVisuelId] = useState(null);
+  
+//   const imagesVisuels = [
+//     // Remplacer par vos données de visuels
+//     {
+//       id_modele_cadre: 1,
+//       img_modele: "https://images.unsplash.com/photo-1593642532973-d31b6557fa68?fit=crop&w=500&q=80",
+//       nom_modele: "Modèle 1"
+//     },
+//     {
+//       id_modele_cadre: 2,
+//       img_modele: "https://images.unsplash.com/photo-1517423440428-a5a00ad493e8?fit=crop&w=500&q=80",
+//       nom_modele: "Modèle 2"
+//     },
+//     {
+//       id_modele_cadre: 3,
+//       img_modele: "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?fit=crop&w=500&q=80",
+//       nom_modele: "Modèle 3"
+//     }
+//   ];
+
+//   const handleVisuelClickCustom = (id) => {
+//     setSelectedVisuelId(id);  // Met à jour l'ID du visuel sélectionné
+//   };
+
+//   return (
+//     <div>
+//       <Box
+//         sx={{
+//           textAlign: "center",
+//           p: 4,
+//           bgcolor: "#f5f5f5",
+//           display: "flex",
+//           flexDirection: "column",
+//           alignItems: "center",
+//         }}
+//       >
+//         <Typography variant="h5" color="textSecondary">
+//           Choisissez votre modèle
+//         </Typography>
+
+//         <Grid container spacing={3} justifyContent="center">
+//           {imagesVisuels.map((item, index) => (
+//             <Grid item key={index} xs={12} sm={6} md={4} lg={3}>
+//               <Card
+//                 className={`selected-card ${selectedVisuelId === item.id_modele_cadre ? "selected" : ""}`}
+//                 onClick={() => handleVisuelClickCustom(item.id_modele_cadre)}
+//                 sx={{
+//                   transform: "scale(1.1)",
+//                   transition: "transform 0.3s ease, box-shadow 0.3s ease",
+//                   padding: "20px",
+//                   '&:hover': {
+//                     transform: "scale(1.15)",
+//                     boxShadow: "0 8px 16px rgba(0, 0, 0, 0.2)",
+//                   },
+//                 }}
+//               >
+//                 <CardMedia
+//                   component="img"
+//                   image={item.img_modele}
+//                   alt={`Visuel ${index + 1}`}
+//                 />
+//                 <CardContent>
+//                   <Typography>{item.nom_modele}</Typography>
+//                   {/* Icône de check lorsque l'élément est sélectionné */}
+//                   {selectedVisuelId === item.id_modele_cadre && (
+//                     <CheckCircleIcon className="check-icon" />
+//                   )}
+//                 </CardContent>
+//               </Card>
+//             </Grid>
+//           ))}
+//         </Grid>
+//       </Box>
+
+//       <style>{StyleEtapeVisuel}</style>
+//     </div>
+//   );
+// }
+
+// export default EtapeVisuel;

@@ -139,7 +139,7 @@ function EtapeVideo() {
   const API_URL_WITHOUT_TPL = "https://core-api.memenza.fr/api/wp-media/create-without-tpl";
 
   const handleVideoSendWithOutTemplate = async () => {
-    try {
+    try { 
       const response = await axios.post(
         API_URL_WITHOUT_TPL , 
         formData ,
