@@ -41,6 +41,7 @@ const VisuallyHiddenInput = styled("input")({
 
 
 export default function MemenzaChoixVideo() {
+  const [testApparitionParametre, seTestParametre] = React.useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [currentVideoSrc, setCurrentVideoSrc] = useState("");
 ///////////////////
@@ -480,6 +481,11 @@ const handleFileUpload = (event) => {
   }
 };
 
+const handleTest = () => {
+  console.log("Test");
+  seTestParametre(true);
+}
+
 return (
   <Box sx={{ textAlign: "center", p: 4 }}>
     <Button
@@ -521,6 +527,7 @@ return (
             flexDirection: "column",
             alignItems: "center",
           }}
+          onClick={handleTest}
         >
           <Typography sx={{ my: 2 }}>
             Modèle : {src.nom_modele_video || "pas d'info"}
@@ -539,7 +546,7 @@ return (
                 opacity: isPlaying[index] ? 0 : 1,
               },
             }}
-            onClick={() => handleVideoClick(index)}
+            // onClick={() => handleVideoClick(index)}
           >
             <Box
               component="video"
@@ -591,6 +598,18 @@ return (
         </Grid>
       ))}
     </Grid>
+    {testApparitionParametre && (
+      <>
+      <Grid container spacing={2} sx={{ flexGrow: 1, marginTop: 3 }}>
+        <Grid item size={12} xs={6}>APPARITION GAUCHE<Typography sx={{ my: 2 }}>
+        Modèle : PPARITION PARAMETRES
+      </Typography></Grid>
+        <Grid item size={12} xs={6}>APPARITION DROITE<Typography sx={{ my: 2 }}>
+        Modèle : PPARITION PARAMETRES
+      </Typography></Grid>
+      </Grid>
+    </>
+      )}
 
     {/* Modal pour lire la vidéo */}
     <Dialog open={openModal} onClose={handleCloseModal} maxWidth="md" fullWidth>
