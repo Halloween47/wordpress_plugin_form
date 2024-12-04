@@ -10,6 +10,8 @@ function ImageForm() {
   });
   console.log("VISUALISATION DE FORMDATA : " + JSON.stringify(formData));
   
+  const [generatedImageUrl, setGeneratedImageUrl] = useState(null); 
+
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -72,7 +74,8 @@ function ImageForm() {
       // const result = await response.blob(); // Récupérer l'image générée
       const result = await response.blob(); // Récupérer l'image générée
       const url = URL.createObjectURL(result);
-      window.open(url, "_blank"); // Afficher dans un nouvel onglet
+      setGeneratedImageUrl(url);
+      // window.open(url, "_blank"); 
     } catch (error) {
       console.error("Erreur :", error);
     }
@@ -157,11 +160,23 @@ function ImageForm() {
       <Button type="success" variant="contained">
       Personnaliser le modèle 
       </Button>
-      <CardMedia
+      {generatedImageUrl ? (<>
+        <Typography>Votre visuel</Typography>
+        <CardMedia
+          component="img"
+          image={generatedImageUrl} 
+          alt="Image générée"
+        />
+        
+      </>
+      ) : (
+        <Typography></Typography>
+      )}
+      {/* <CardMedia
                       component="img"
                       // image={'/home/memenzj/www/visuels/cmd/output_image_674f9aae4dd35.png'}
                       image={'https://memenza.fr/visuels/cmd/output_image_674f9aae4dd35.png'}
-                    />
+                    /> */}
     </Box>
   );
 }
