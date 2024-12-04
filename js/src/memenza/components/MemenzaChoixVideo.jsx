@@ -49,10 +49,10 @@ export default function MemenzaChoixVideo() {
   const { selectedSousCatId } = useSousCat();
 
   const initialVariables = {
-    "scene2_image1": "https://img.freepik.com/photos-gratuite/nuages-stylefantastique_23-2151057680.jpg",
-    "scene2_image2": "https://i.pinimg.com/736x/7a/c6/91/7ac69100e88a63a14b9cbe8ba260721f.jpg",
-    "scene3_image2": "https://archzine.fr/wp-content/uploads/2020/03/wallpaperordinateur-pc-fond-ecran-kawaii-dessin-cactus-vert-fleurs-roses.webp",
-    "scene3_image3": "https://cdn.futura-sciences.com/cdncgi/image/width=1024,quality=60,format=auto/sources/images/screen/EVENEMENT/Hiver/965-hiver-43.jpg",
+    // "scene2_image1": "https://img.freepik.com/photos-gratuite/nuages-stylefantastique_23-2151057680.jpg",
+    // "scene2_image2": "https://i.pinimg.com/736x/7a/c6/91/7ac69100e88a63a14b9cbe8ba260721f.jpg",
+    // "scene3_image2": "https://archzine.fr/wp-content/uploads/2020/03/wallpaperordinateur-pc-fond-ecran-kawaii-dessin-cactus-vert-fleurs-roses.webp",
+    // "scene3_image3": "https://cdn.futura-sciences.com/cdncgi/image/width=1024,quality=60,format=auto/sources/images/screen/EVENEMENT/Hiver/965-hiver-43.jpg",
   };
   const [variables, setVariables] = useState(initialVariables);
   const handleVariableChange = (key, value) => {
@@ -62,7 +62,7 @@ export default function MemenzaChoixVideo() {
     }));
   };
 const variablesParse = JSON.stringify(variables)
-console.log("VARIABLES PARSE VERIFICATION : "+ variablesParse);
+console.log("ICI LES DATAS DU JSON : "+ variablesParse);
 
 
   const [formData, setFormData] = useState({
@@ -85,7 +85,7 @@ console.log("VARIABLES PARSE VERIFICATION : "+ variablesParse);
   
   const [isPlaying, setIsPlaying] = useState(Array(videos.length).fill(false));
   const [apparitionParametrage, setApparitionParametrage] = useState(false);
-console.log("APPARITION PARAMETRAGES : " + apparitionParametrage);
+// console.log("APPARITION PARAMETRAGES : " + apparitionParametrage);
 
 
   const videoRefs = useRef([]);
@@ -103,6 +103,8 @@ console.log("APPARITION PARAMETRAGES : " + apparitionParametrage);
         }
         const result = await response.json();
         setVisuelsVideos(result);
+        // console.log("OBSERVATION DES REULTATS DU FETCHDATA : " + JSON.stringify(result));
+        
       } catch (error) {
         console.error("Erreur :", error);
       }
@@ -222,6 +224,8 @@ const handleFileUpload = (event) => {
   const file = event.target.files[0]; // Récupérer le premier fichier sélectionné
   if (file) {
     const videoURL = URL.createObjectURL(file); // Générer une URL locale
+    console.log("ICI LE LIEN DE LA VIDEO OU IMAGE : " + videoURL);
+    
     setFormData((prevData) => ({
       ...prevData,
       video_path: videoURL, // Mettre à jour l'état avec le lien vidéo
@@ -537,8 +541,10 @@ return (
                   type="file"
                   hidden
                   accept="image/*,video/*"
-                  onChange={(e) => console.log(e.target.files)}
-                />
+                  // onChange={(e) => console.log("ICI NOM FICHIER : " + JSON.stringify(e.target.files))}
+                  value={variables[field.default] || ""}
+                  onChange={(e) => handleVariableChange(field.name, e.target.value)}
+                  />
               </Button>
               <Tooltip
                 title={`Les dimensions de ce média doivent respecter : ${field.comment}`}
@@ -590,131 +596,12 @@ return (
       </DialogActions>
     </Dialog>
 
-    {/* Paramétrage des textes vidéo */}
-    {/* {apparitionParametrage && tabParseTextesVideo.length > 0 && (
-      <Box sx={{ mt: 4, display: "flex", flexDirection: "column" }}>
-        <Typography variant="h6">Paramétrage du Template</Typography>
-        {tabParseTextesVideo.map((field, index) => {
-          // Vérifier si le nom correspond au format S<number>-txt
-          const match = field.name.match(/^S(\d+)-txt$/);
-          const dynamicLabel = match ? `Texte ${match[1]}` : field.name;
-
-          return (
-            <Box key={index} gap={1} sx={{ mt: 4, display: "flex" }}>
-              <Typography variant="body1" style={{ whiteSpace: "wrap" }}>
-                {dynamicLabel}
-              </Typography>
-              <TextField
-                placeholder={field.defaultText || ""}
-                inputProps={{ maxLength: field.maxCharacters }}
-                variant="outlined"
-                size="small"
-                value={variables[field.name] || ""}
-                onChange={(e) => handleVariableChange(field.name, e.target.value)}
-              />
-            </Box>
-          );
-        })}
-      </Box>
-    )} */}
-
-    {/* Paramétrage des médias vidéo */}
-    {/* {apparitionParametrage && tabParseMediasVideo.length > 0 && (
-      <Box sx={{ mt: 4 }}>
-        <Typography variant="h5">Paramétrage des Médias</Typography>
-        {tabParseMediasVideo.map((field, index) => (
-          <Box key={index} display="flex" alignItems="center" gap={2} sx={{ mt: 4 }}>
-            <Typography variant="body1" style={{ whiteSpace: "nowrap" }}>
-              {field.name}
-            </Typography>
-            <Button variant="contained" component="label">
-              Importer votre média
-              <input
-                type="file"
-                hidden
-                accept="image/*,video/*"
-                onChange={(e) => console.log(e.target.files)}
-              />
-            </Button>
-            <Tooltip
-              title={`Les dimensions de ce média doivent respecter : ${field.comment}`}
-              arrow
-            >
-              <IconButton>
-                <InfoIcon />
-              </IconButton>
-            </Tooltip>
-          </Box>
-        ))}
-        <Box sx={{ display: "flex", justifyContent: "center" }}>
-          <Button
-            variant="contained"
-            sx={{ m: 2 }}
-            onClick={handleVideoSendWithTemplate}
-          >
-            J'envoie mes données pour paramétrage.
-          </Button>
-        </Box>
-      </Box>
-    )} */}
-
-{/* {apparitionParametrage && tabParseMediasVideo.length > 0 && (
-  <Box sx={{ mt: 4 }}>
-    <Typography variant="h5">Paramétrage des Médias</Typography>
-    {tabParseMediasVideo.map((field, index) => {
-      // Vérifier si le nom correspond au format S<number>-img<number>
-      const match = field.name.match(/^s\d+-img(\d+)$/);
-      const dynamicLabel = match ? `Media ${match[1]}` : field.name;
-
-      return (
-        <Box key={index} display="flex" alignItems="center" gap={2} sx={{ mt: 4 }}>
-          <Typography variant="body1" style={{ whiteSpace: "nowrap" }}>
-            {dynamicLabel}
-          </Typography>
-          <Button variant="contained" component="label">
-            Importer votre média
-            <input
-              type="file"
-              hidden
-              accept="image/*,video/*"
-              onChange={(e) => console.log(e.target.files)}
-            />
-          </Button>
-          <Tooltip
-            title={`Les dimensions de ce média doivent respecter : ${field.comment}`}
-            arrow
-          >
-            <IconButton>
-              <InfoIcon />
-            </IconButton>
-          </Tooltip>
-        </Box>
-      );
-    })}
-    <Box sx={{ display: "flex", justifyContent: "center" }}>
-      <Button
-        variant="contained"
-        sx={{ m: 2 }}
-        onClick={handleVideoSendWithTemplate}
-      >
-        J'envoie mes données pour paramétrage.
-      </Button>
-    </Box>
-  </Box>
-)} */}
+    
 
 
   </Box>
 );
 
-//////////////////////
-//////////////////////
 
 }
-
-
-////////////////
-////////////////
-////////////////
-////////////////
 

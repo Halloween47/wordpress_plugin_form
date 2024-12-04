@@ -127,7 +127,7 @@ function EtapeVideo() {
     "desc": "Version POC (Version template personnel)",
   });
 
-  console.log("LIGNE 129 : " + JSON.stringify(formData));
+  // console.log("LIGNE 129 : " + JSON.stringify(formData));
   
 
   // const [showTextCustomVideo, setShowTextCustomVideo] = useState(false);
