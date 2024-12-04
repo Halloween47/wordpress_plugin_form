@@ -3,6 +3,10 @@ import Sliders from "./Sliders.jsx";
 import { Box, Button, Modal, Typography } from "@mui/material";
 import SlidersSousCategories from "./SlidersSousCategories.jsx";
 import { useSousCat } from "./SousCatContext.jsx";
+import { v4 as uuidv4 } from 'uuid';
+
+const uniqueId = uuidv4();
+
 
 const style = {
   position: "absolute",
@@ -55,10 +59,22 @@ const StylesSousCategories = `
 `;
 
 function EtapeCategorie() {
-  const [activeStep, setActiveStep] = useState(0);  // Définir activeStep ici
+  const [activeStep, setActiveStep] = useState(0);  
 
 
-  const { setSelectedSousCatId } = useSousCat();
+  const { setSelectedSousCatId, setNavigationId, selectedSousCatId, navigationId } = useSousCat();
+  console.log("LECTURE DU CONTEXTE : " + selectedSousCatId + " " + navigationId);
+  
+  if(!navigationId) {
+    // const generateUniqueId = () => uuidv4();
+    // setNavigationId(generateUniqueId)
+    const generateUniqueId = () => "ID_" + Math.floor(10000 + Math.random() * 90000); 
+    const newId = generateUniqueId();
+    setNavigationId(newId)
+    console.log("TEST NAVIGATION ID : " + navigationId);
+
+  }
+
   // const handleSelectSousCat = (id) => {
   //   setSelectedSousCatId(id); 
   //   console.log(id);
@@ -67,6 +83,9 @@ function EtapeCategorie() {
 
   const handleSelectSousCat = (id) => {
     setSelectedSousCatId(id); 
+    // const uniqueId = generateUniqueId();
+    // const uniqueId = uuidv4();
+    // setNavigationId(uniqueId);
     setActiveStep(1);  
     console.log(id);
   };
@@ -97,6 +116,7 @@ function EtapeCategorie() {
       </Typography>
       <Sliders onImageClick={handleOpen} onSousCatClick={handleSelectSousCat} setActiveStep={setActiveStep} />
     </Box>
+
   );
 }
 
