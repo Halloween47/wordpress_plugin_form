@@ -203,9 +203,6 @@ console.log("APPARITION PARAMETRAGES : " + apparitionParametrage);
       <Typography variant="h4" gutterBottom>
       Choisissez votre modèle 
       </Typography>
-      <Typography variant="subtitle1" gutterBottom sx={{ mb: 2 }}>
-        (Explication du pourquoi du choix du template)
-      </Typography>
 
       {/* <Grid  spacing={2} justifyContent="center"> */}
       <Grid justifyContent="center">
@@ -216,6 +213,7 @@ console.log("APPARITION PARAMETRAGES : " + apparitionParametrage);
             justifyContent: "center",
             alignItems: "center",
           }}>
+            <Typography sx={{my: 2}}>Modèle : {src.nom_modele_video || "pas d'info"}</Typography>
             <Box
               sx={{
                 position: "relative",
@@ -269,9 +267,9 @@ console.log("APPARITION PARAMETRAGES : " + apparitionParametrage);
               sx={{ m: 2 }}
               onClick={() => handleVideoPopUp(src.chemin_video_ex)}
             >
-              Agrandir la video
+              Prévisualiser le modèle
             </Button>
-            <Typography sx={{my: 2}}>Modèle : {src.nom_modele_video || "pas d'info"}</Typography>
+            
             {/* <Checkbox /> */}
             <Button
               variant="contained"
