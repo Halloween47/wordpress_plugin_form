@@ -221,14 +221,14 @@ console.log("ICI LES DATAS DU JSON : "+ variablesParse);
 
 // Fonction pour gérer l'upload de vidéo
 const handleFileUpload = (event) => {
-  const file = event.target.files[0]; // Récupérer le premier fichier sélectionné
+  const file = event.target.files[0]; 
   if (file) {
-    const videoURL = URL.createObjectURL(file); // Générer une URL locale
+    const videoURL = URL.createObjectURL(file); 
     console.log("ICI LE LIEN DE LA VIDEO OU IMAGE : " + videoURL);
     
     setFormData((prevData) => ({
       ...prevData,
-      video_path: videoURL, // Mettre à jour l'état avec le lien vidéo
+      video_path: videoURL, 
     }));
     console.log("Lien local de la vidéo :", videoURL);
   }
@@ -253,7 +253,7 @@ const selectedTemplate = imagesVideosFiltered.find(
 );
 if (!selectedTemplate) {
   console.error("Aucun template sélectionné");
-  return;
+  return; 
 }
 try {
   // Parsing des textes_video et medias_video en un seul bloc try
@@ -281,6 +281,7 @@ try {
 ////////////////////////////
 
 };
+
 
 return (
   <Box sx={{ textAlign: "center", p: 4 }}>
@@ -418,76 +419,7 @@ return (
           />
         </Box>
         </Grid>
-        {/* <Grid item size={12} xs={6}>APPARITION DROITE<Typography sx={{ my: 2 }}>
-          Modèle : PPARITION PARAMETRES
-          <Box sx={{ mt: 4, display: "flex", flexDirection: "column", alignItems: "flex-end" }}>
-        <Typography variant="h6">Paramétrage du Template</Typography>
-        {tabParseTextesVideo.map((field, index) => {
-          // Vérifier si le nom correspond au format S<number>-txt
-          const match = field.name.match(/^S(\d+)-txt$/);
-          const dynamicLabel = match ? `Texte ${match[1]}` : field.name;
-
-          return (
-            <Box key={index} gap={1} sx={{ mt: 4, display: "flex", height: "10px", overflow: "auto", paddingRight: 2 }}>
-              <Typography variant="body1" style={{ whiteSpace: "wrap" }}>
-                {dynamicLabel}
-              </Typography>
-              <TextField
-                placeholder={field.defaultText || ""}
-                inputProps={{ maxLength: field.maxCharacters }}
-                variant="outlined"
-                size="small"
-                value={variables[field.name] || ""}
-                onChange={(e) => handleVariableChange(field.name, e.target.value)}
-              />
-            </Box>
-          );
-        })}
-        <Box sx={{ mt: 4 }}>
-    <Typography variant="h5">Paramétrage des Médias</Typography>
-    {tabParseMediasVideo.map((field, index) => {
-      // Vérifier si le nom correspond au format S<number>-img<number>
-      const match = field.name.match(/^s\d+-img(\d+)$/);
-      const dynamicLabel = match ? `Media ${match[1]}` : field.name;
-
-      return (
-        <Box key={index} display="flex" justifyContent="flex-end" alignItems="center" gap={2} sx={{ mt: 4 }}>
-          <Typography variant="body1" style={{ whiteSpace: "wrap", textAlign: "end" }}>
-            {dynamicLabel}
-          </Typography>
-          <Button variant="contained" component="label">
-            Importer votre média
-            <input
-              type="file"
-              hidden
-              accept="image/*,video/*"
-              onChange={(e) => console.log(e.target.files)}
-            />
-          </Button>
-          <Tooltip
-            title={`Les dimensions de ce média doivent respecter : ${field.comment}`}
-            arrow
-          >
-            <IconButton>
-              <InfoIcon />
-            </IconButton>
-          </Tooltip>
-        </Box>
-      );
-    })}
-    <Box sx={{ display: "flex", justifyContent: "center" }}>
-      <Button
-        variant="contained"
-        sx={{ m: 2 }}
-        onClick={handleVideoSendWithTemplate}
-      >
-        J'envoie mes données pour paramétrage.
-      </Button>
-    </Box>
-  </Box>
-      </Box>
-          </Typography>
-        </Grid> */}
+       
         <Grid item xs={6}>
 
     {/* Box avec barre de défilement pour la partie droite */}
@@ -495,9 +427,9 @@ return (
       sx={{
         mt: 4,
         mx: 5,
-        maxHeight: "60vh", // Limite la hauteur de la section de droite
-        overflowY: "auto", // Ajoute la barre de défilement verticale
-        paddingRight: 2, // Un petit espace à droite pour éviter que le contenu ne soit caché par la barre de défilement
+        maxHeight: "60vh", 
+        overflowY: "auto", 
+        paddingRight: 2,
       }}
     >
       <Typography variant="h6">Paramétrage du Template</Typography>

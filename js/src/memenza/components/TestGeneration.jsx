@@ -3,17 +3,61 @@ import { TextField, Button, Typography, Box, CardMedia } from "@mui/material";
 import { useSousCat } from "./SousCatContext.jsx";
 
 function ImageForm() {
+  const [generatedImageUrl, setGeneratedImageUrl] = useState(null); 
   const {navigationId, outputFilePathContext, setOutputFilePathContext } = useSousCat();
-
+  const [imagesVisuels, setImagesVisuels] = React.useState([]);
+  console.log("IMAGESVISUEL ALL : " + JSON.stringify(imagesVisuels));
+  console.log("LAAAAAAAAAAAAAAAAAAAAAAAAAAA : " + imagesVisuels.visuels_cadres);
+  
+  const [visuelsCadres, setVisuelsCadres] = React.useState([]);
+  console.log("RESULTAT VISUELS CADRE ICI : " + visuelsCadres);
+  
+  const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
     image1: null,
     image2: null,
     text1: "Alexandre",
     text2: "12 janvier 2025",
   });
+
+  console.log("LIEN de L'IMAGE EN COURS : " + generatedImageUrl);
+
+  
+
+  
   console.log("VISUALISATION DE FORMDATA : " + JSON.stringify(formData));
   
-  const [generatedImageUrl, setGeneratedImageUrl] = useState(null); 
+  
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          "/wp-json/plugin_memenza/v1/images_visuel",
+        );
+        if (!response.ok) {
+          throw new Error("Erreur lors de la récupération des données");
+        }
+        const result = await response.json();
+        console.log("ICIC LA R2PONSE DE LA ROUTE : " + JSON.stringify(result));
+        setImagesVisuels(result);
+        
+      } catch (error) {
+        setError(error.message);
+      } 
+    };
+
+    fetchData();
+  }, [])
+
+  const { selectedSousCatId } = useSousCat();
+  const imagesVisuelsFitred =  imagesVisuels.filter((item) => {
+    return item.id_ss_cat === selectedSousCatId;
+  })
+  
+  
+
+  
+  
 
 
   const handleChange = (e) => {
@@ -36,17 +80,22 @@ function ImageForm() {
     e.preventDefault(); 
 
     const outputFilePath = `/home/memenzj/www/visuels/cmd/${navigationId}.png`;
-console.log("TEST URL DE SORTI" + outputFilePath);
+    const outputFolder = `/home/memenzj/www/visuels/uploads/${navigationId}`;
+
+// console.log("TEST outputFilePath DE SORTI" + outputFilePath);
+// console.log("TEST outputFolder DE SORTI" + outputFolder);
 setOutputFilePathContext(outputFilePath);
-console.log("TEST URL DE SORTI" + outputFilePathContext);
+// console.log("TEST outputFilePathContext DE SORTI" + outputFilePathContext);
     
     const formPayload = new FormData();
     formPayload.append("text1", formData.text1);
     formPayload.append("text2", formData.text2); 
     formPayload.append("output_file", outputFilePath);
+    formPayload.append("dossier", outputFolder );
     // console.log("VERIFICATION DES DATA AVANT SOUMISSION FORMULAIRE : "+ JSON.stringify(formData.text1));
     // console.log("CONTENU DU FORMPAYLOAD"+formPayload);
-    // console.log(JSON.stringify("CONTENU DU FORMPAYLOAD"+formPayload));
+    // console.log("CONTENU DU FORMPAYLOAD"+ formPayload);
+    // console.log("CONTENU DU FORMPAYLOAD"+ JSON.stringify(formPayload));
     if (formData.image1) {
       formPayload.append("image1", formData.image1); // Ajouter image1 au payload
     }
@@ -63,7 +112,7 @@ console.log("TEST URL DE SORTI" + outputFilePathContext);
           body: formPayload,
         },
       );
-      console.log("VERIFICATION  FETCH DATA : " + JSON.stringify(formPayload));
+      // console.log("VERIFICATION  FETCH DATA : " + JSON.stringify(formPayload));
       
         
       ////////////////
@@ -86,16 +135,16 @@ console.log("TEST URL DE SORTI" + outputFilePathContext);
       // const result = await response.blob(); // Récupérer l'image générée
       const result = await response.blob(); // Récupérer l'image générée
       console.log("EN RECHERCHE DU CMD IMAGE : " + result);
-      console.log("EN RECHERCHE DU CMD IMAGE : " + JSON.stringify(result));
+      console.log("ICI ON RECUP TOUS LES RESULTATS Y COMPRIS L'URL : " + JSON.stringify(result));
       
       const url = URL.createObjectURL(result);
+      console.log("RESULTAT DE LURL POUR alimenter l'image de previsualisation: " + JSON.stringify(url));
+      
       setGeneratedImageUrl(url);
       
-      console.log("ICI L'URL GENERE' : " + url);
-      console.log("ICI LE LINK CMD : " + generatedImageUrl);
       // window.open(url, "_blank"); 
 
-      await sendImageToServer(result);
+      // await sendImageToServer(result);
 
       
     } catch (error) {
@@ -118,7 +167,11 @@ console.log("TEST URL DE SORTI" + outputFilePathContext);
         // height: "200px"
       }}
     >
+      {imagesVisuelsFitred.map((item, index) => (
+    <Typography>{item.visuels_cadres.imageFields}</Typography>)
+  )}
       <Typography variant="h6">Générer une image</Typography>
+      {error && <Typography color="error">{error}</Typography>}
 
       <TextField
         label="Texte 1 (max. 15 caractères)"
@@ -165,12 +218,35 @@ console.log("TEST URL DE SORTI" + outputFilePathContext);
           paddingBottom: 1.2, 
         }}
       />
+      
 
-<Button
+  <>
+  {/* {formData.customizable === false ? (
+  <Typography>TEST</Typography>
+) : (
+  <Typography>ECHOUE</Typography>
+)} */}
+  
+  </>
+
+  {imagesVisuelsFitred.map((item, index) => {
+  // Parse visuels_cadres
+  const visuelsCadresParsed = JSON.parse(item.visuels_cadres);
+
+  return (
+    <Box key={index}>
+      {visuelsCadresParsed.imageFields.map((field, fieldIndex) => (
+          <Box>
+        <Box>
+
+        {field.customizable && (
+          <Box>
+          <Typography>TES APPARITION</Typography>
+          <Button
         variant="contained"
         component="label"
         sx={{ width: "100%" }}
-      >
+        >
         Télécharger Image 1
         <input
           type="file"
@@ -178,15 +254,14 @@ console.log("TEST URL DE SORTI" + outputFilePathContext);
           accept="image/*"
           onChange={handleChange}
           hidden
-        />
+          />
       </Button>
       {formData.image1 && (
         <Typography variant="body2">
           {formData.image1.name} 
         </Typography>
       )}
-
-<Button
+      <Button
         variant="contained"
         component="label"
         sx={{ width: "100%" }}
@@ -205,6 +280,20 @@ console.log("TEST URL DE SORTI" + outputFilePathContext);
           {formData.image2.name} 
         </Typography>
       )}
+      </Box>
+        )}
+        </Box>
+        
+        </Box>
+        
+      ))}
+    </Box>
+  );
+})}
+      
+      
+
+
       
 
       {/* <Button type="submit" variant="contained"> */}
@@ -222,9 +311,6 @@ console.log("TEST URL DE SORTI" + outputFilePathContext);
       ) : (
         <Typography></Typography>
       )}
-      <Button type="success" variant="contained">
-      Enregistrer votre création
-      </Button>
     </Box>
   );
 }
