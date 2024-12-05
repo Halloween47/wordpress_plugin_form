@@ -6,11 +6,8 @@ function ImageForm() {
   const [generatedImageUrl, setGeneratedImageUrl] = useState(null); 
   const {navigationId, outputFilePathContext, setOutputFilePathContext } = useSousCat();
   const [imagesVisuels, setImagesVisuels] = React.useState([]);
-  console.log("IMAGESVISUEL ALL : " + JSON.stringify(imagesVisuels));
-  console.log("LAAAAAAAAAAAAAAAAAAAAAAAAAAA : " + imagesVisuels.visuels_cadres);
-  
   const [visuelsCadres, setVisuelsCadres] = React.useState([]);
-  console.log("RESULTAT VISUELS CADRE ICI : " + visuelsCadres);
+  
   
   const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
@@ -20,12 +17,7 @@ function ImageForm() {
     text2: "12 janvier 2025",
   });
 
-  console.log("LIEN de L'IMAGE EN COURS : " + generatedImageUrl);
 
-  
-
-  
-  console.log("VISUALISATION DE FORMDATA : " + JSON.stringify(formData));
   
   
   React.useEffect(() => {
@@ -38,7 +30,6 @@ function ImageForm() {
           throw new Error("Erreur lors de la récupération des données");
         }
         const result = await response.json();
-        console.log("ICIC LA R2PONSE DE LA ROUTE : " + JSON.stringify(result));
         setImagesVisuels(result);
         
       } catch (error) {
@@ -92,10 +83,12 @@ setOutputFilePathContext(outputFilePath);
     formPayload.append("text2", formData.text2); 
     formPayload.append("output_file", outputFilePath);
     formPayload.append("dossier", outputFolder );
+    // formPayload.append("image1", formData.image1); // Ajouter image1 au payload
+    // formPayload.append("image2", formData.image2); // Ajouter image1 au payload
     // console.log("VERIFICATION DES DATA AVANT SOUMISSION FORMULAIRE : "+ JSON.stringify(formData.text1));
     // console.log("CONTENU DU FORMPAYLOAD"+formPayload);
     // console.log("CONTENU DU FORMPAYLOAD"+ formPayload);
-    // console.log("CONTENU DU FORMPAYLOAD"+ JSON.stringify(formPayload));
+    console.log("CONTENU DU FORMPAYLOAD"+ JSON.stringify(formPayload));
     if (formData.image1) {
       formPayload.append("image1", formData.image1); // Ajouter image1 au payload
     }
