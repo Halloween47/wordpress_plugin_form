@@ -28,6 +28,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import EtapeCategorie from "./etapes/EtapeCategorie.jsx";
 import EtapeVisuel from "./etapes/EtapeVisuel.jsx";
+import TestVisuelFusion from "./etapes/TestVisuelFusion.jsx";
 import EtapeVideo from "./etapes/EtapeVideo.jsx";
 import EtapeValidation from "./etapes/EtapeValidation.jsx";
 import { SousCatProvider } from "./componentsMemenza/GestionEtat.jsx";
@@ -41,7 +42,8 @@ function getStepContent(step) {
     case 0:
       return <EtapeCategorie />; 
     case 1:
-      return <EtapeVisuel />;
+      // return <EtapeVisuel />;
+      return <TestVisuelFusion />;
     case 2:
       return <EtapeVideo />;
     case 3:

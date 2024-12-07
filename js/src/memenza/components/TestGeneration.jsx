@@ -33,10 +33,6 @@ function ImageForm() {
 //     console.log("CONTENU DU TABLEAU FILTRER : " + JSON.stringify(imagesVisuelsFitred));
 // setVariablesText1(imagesVisuelsFitred.name)
 
-console.log("CHECK RESULTAT : " + JSON.stringify(imagesVisuels));
-console.log("CHECK RESULTAT CHARLES : " + JSON.stringify(imagesVisuels[1]));
-
-
 
 
 // React.useEffect(() => {
@@ -134,19 +130,7 @@ setOutputFilePathContext(outputFilePath);
           body: formPayload,
         },
       );
-      // console.log("VERIFICATION  FETCH DATA : " + JSON.stringify(formPayload));
       
-        
-      ////////////////
-      ////////////////
-      // const response = await fetch(process.env.MEMENZA_AJAX_URL, {
-      //   method: "POST",
-      //       body: formPayload,
-      //   });
-
-      //   console.log(response.data);
-      ////////////////
-      ////////////////
 
       if (!response.ok) {
         throw new Error("Erreur lors de la soumission du formulaire");
@@ -156,11 +140,11 @@ setOutputFilePathContext(outputFilePath);
 
       // const result = await response.blob(); // Récupérer l'image générée
       const result = await response.blob(); // Récupérer l'image générée
-      console.log("EN RECHERCHE DU CMD IMAGE : " + result);
-      console.log("ICI ON RECUP TOUS LES RESULTATS Y COMPRIS L'URL : " + JSON.stringify(result));
+      // console.log("EN RECHERCHE DU CMD IMAGE : " + result);
+      // console.log("ICI ON RECUP TOUS LES RESULTATS Y COMPRIS L'URL : " + JSON.stringify(result));
       
       const url = URL.createObjectURL(result);
-      console.log("RESULTAT DE LURL POUR alimenter l'image de previsualisation: " + JSON.stringify(url));
+      // console.log("RESULTAT DE LURL POUR alimenter l'image de previsualisation: " + JSON.stringify(url));
       
       setGeneratedImageUrl(url);
       
