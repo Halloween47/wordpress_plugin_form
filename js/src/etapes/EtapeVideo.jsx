@@ -15,9 +15,11 @@ import {
 import { purple } from "@mui/material/colors";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
-import MemenzaChoixVideo from "./MemenzaChoixVideo.jsx";
-import PopupPreview from "./PopupPreview.jsx";
-import { useSousCat } from "./SousCatContext.jsx";
+// import MemenzaChoixVideo from "../memenza/components/MemenzaChoixVideo.jsx";
+import MemenzaChoixVideo from "../memenza/components/MemenzaChoixVideo.jsx";
+import PopupPreview from "../memenza/components/PopupPreview.jsx";
+// import { useSousCat } from "./SousCatContext.jsx";
+import { useSousCat } from "../componentsMemenza/GestionEtat.jsx";
 
 const StyleEtapeVideo = `
   .etape-video {

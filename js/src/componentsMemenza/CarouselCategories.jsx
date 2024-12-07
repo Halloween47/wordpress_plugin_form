@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 // import { useSousCat } from "./SousCatContext.jsx";
-import { useSousCat } from "./SousCatContext.jsx";
+import { useSousCat } from "./GestionEtat.jsx";
 
 const styles = `
 .container-carousel {

@@ -17,7 +17,7 @@ import styled from "styled-components";
 import PopupUpload from "../memenza/components/PopupUpload.jsx";
 import PopupPreview from "../memenza/components/PopupPreview.jsx";
 import TestGeneration from "../memenza/components/TestGeneration.jsx";
-import { useSousCat } from "../componentsMemenza/SousCatContext.jsx";
+import { useSousCat } from "../componentsMemenza/GestionEtat.jsx";
 import ImageCustomization from "../memenza/components/ImageCustomizer.jsx";
 import TextCustomization from "../memenza/components/TextCustomizer.jsx";
 

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import Sliders from "../componentsMemenza/Sliders.jsx";
+import Sliders from "../componentsMemenza/CarouselCategories.jsx";
 import { Box, Button, Modal, Typography } from "@mui/material";
 import SlidersSousCategories from "../memenza/components/SlidersSousCategories.jsx";
-import { useSousCat } from "../componentsMemenza/SousCatContext.jsx";
+import { useSousCat } from "../componentsMemenza/GestionEtat.jsx";
 import { v4 as uuidv4 } from 'uuid';
 
 const uniqueId = uuidv4();

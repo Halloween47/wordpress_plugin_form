@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { TextField, Button, Typography, Box, CardMedia } from "@mui/material";
-import { useSousCat } from "../../componentsMemenza/SousCatContext.jsx";
+import { useSousCat } from "../../componentsMemenza/GestionEtat.jsx";
 
 function ImageForm() {
   const [generatedImageUrl, setGeneratedImageUrl] = useState(null); 

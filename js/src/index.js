@@ -26,11 +26,11 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-// import EtapeVideo from "./components/EtapeVideo.jsx";
-// import EtapeValidation from "./components/EtapeValidation.jsx";
 import EtapeCategorie from "./etapes/EtapeCategorie.jsx";
 import EtapeVisuel from "./etapes/EtapeVisuel.jsx";
-import { SousCatProvider } from "./componentsMemenza/SousCatContext.jsx";
+import EtapeVideo from "./etapes/EtapeVideo.jsx";
+import EtapeValidation from "./etapes/EtapeValidation.jsx";
+import { SousCatProvider } from "./componentsMemenza/GestionEtat.jsx";
 
 // Définition des étapes
 const steps = ["Categorie", "Visuel", "Video", "Validation"];
@@ -43,9 +43,9 @@ function getStepContent(step) {
     case 1:
       return <EtapeVisuel />;
     case 2:
-      // return <EtapeVideo />;
+      return <EtapeVideo />;
     case 3:
-      // return <EtapeValidation />;
+      return <EtapeValidation />;
     default:
       throw new Error("Etape inconnue");
   }
