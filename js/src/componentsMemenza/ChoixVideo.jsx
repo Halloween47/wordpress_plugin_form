@@ -15,7 +15,7 @@ import {
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import axios from "axios";
 // import { useSousCat } from "./SousCatContext.jsx";
-import { useSousCat } from "../../componentsMemenza/GestionEtat.jsx";
+import { useSousCat } from "./GestionEtat.jsx";
 import InfoIcon from '@mui/icons-material/Info';
 import { Tooltip, IconButton } from '@mui/material';
 
@@ -287,7 +287,7 @@ const VisuallyHiddenInput = styled("input")({
 
 
 
-export default function MemenzaChoixVideo() {
+export default function ChoixVideo() {
   const [testApparitionParametre, seTestParametre] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [currentVideoSrc, setCurrentVideoSrc] = useState("");

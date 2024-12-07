@@ -16,7 +16,7 @@ import { purple } from "@mui/material/colors";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 // import MemenzaChoixVideo from "../memenza/components/MemenzaChoixVideo.jsx";
-import MemenzaChoixVideo from "../memenza/components/MemenzaChoixVideo.jsx";
+import ChoixVideo from "../componentsMemenza/ChoixVideo.jsx";
 import PopupPreview from "../memenza/components/PopupPreview.jsx";
 // import { useSousCat } from "./SousCatContext.jsx";
 import { useSousCat } from "../componentsMemenza/GestionEtat.jsx";
@@ -227,7 +227,7 @@ function EtapeVideo() {
       </Box>
 
       <Box className="etape-video-template">
-        <MemenzaChoixVideo />
+        <ChoixVideo />
         {/* <ColorButton variant="contained" onClick={handleVideoClickCustom}>Je choisi ce template</ColorButton> */}
         {/* <Box sx={{ display: "flex", justifyContent: "center" }}>
           <ColorButton
@@ -291,3 +291,10 @@ J'envoie mes données de paramétrage.
 }
 
 export default EtapeVideo;
+
+
+
+/////////////////////////////////////////////////////
+/////////////////////////////////////////////////////
+/////////////////////////////////////////////////////
+/////////////////////////////////////////////////////
