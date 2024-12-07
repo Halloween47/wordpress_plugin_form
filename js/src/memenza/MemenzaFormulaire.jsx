@@ -188,7 +188,8 @@ import EtapeValidation from "./components/EtapeValidation.jsx";
 import EtapeCategorie from "./components/EtapeCategorie.jsx";
 import EtapeVisuel from "./components/EtapeVisuel.jsx";
 import ComingSoon from "./components/ComingSoon.jsx";
-import { SousCatProvider } from "./components/SousCatContext.jsx";
+// import { SousCatProvider } from "./components/SousCatContext.jsx";
+import { SousCatProvider } from "../componentsMemenza/SousCatContext.jsx";
 
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 

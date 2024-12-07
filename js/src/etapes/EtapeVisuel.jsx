@@ -14,12 +14,12 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import styled from "styled-components";
-import PopupUpload from "./PopupUpload.jsx";
-import PopupPreview from "./PopupPreview.jsx";
-import TestGeneration from "./TestGeneration.jsx";
-import { useSousCat } from "./SousCatContext.jsx";
-import ImageCustomization from "./ImageCustomizer.jsx";
-import TextCustomization from "./TextCustomizer.jsx";
+import PopupUpload from "../memenza/components/PopupUpload.jsx";
+import PopupPreview from "../memenza/components/PopupPreview.jsx";
+import TestGeneration from "../memenza/components/TestGeneration.jsx";
+import { useSousCat } from "../componentsMemenza/SousCatContext.jsx";
+import ImageCustomization from "../memenza/components/ImageCustomizer.jsx";
+import TextCustomization from "../memenza/components/TextCustomizer.jsx";
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
@@ -32,7 +32,7 @@ const StyleEtapeVisuel = `
     display: flex;
     flex-direction: column;
     padding: 20px;
-    color: black;
+    color: black; 
   }
   .etape-visuel-intro {
     display: flex;
@@ -138,36 +138,35 @@ function EtapeVisuel() {
   ////////////////////////
   ////////////////////////
   const [selectedVisuelId, setSelectedVisuelId] = useState(null);
+  const [showTextCustomVisuel, setShowTextCustomVisuel] = useState(false);
+  const [imagesVisuels, setImagesVisuels] = React.useState([]);
+  
+  const [imageClicked, setImageClicked] = useState(false);
+  // const [imageFields, setImageFields] = useState([
+  //   {
+  //     name: "image1",
+  //     defaultSize: { width: 1806, height: 1806 },
+  //     x: 0,
+  //     y: 0,
+  //     defaultFile: "visuels/cadres/templates/alexandre_template.png",
+  //     customizable: false,
+  //   },
+  //   {
+  //     name: "image2",
+  //     defaultSize: { width: 1806, height: 1806 },
+  //     x: 0,
+  //     y: 0,
+  //     defaultFile: "visuels/cadres/templates/alexandre_template.png",
+  //     customizable: false,
+  //   },
+  // ]);
+
+
   console.log("ID sélectionné : ", selectedVisuelId + " id du modele CADRE");
   
   ////////////////////////
   ////////////////////////
-  const [showTextCustomVisuel, setShowTextCustomVisuel] = useState(false);
 
-  const [imageClicked, setImageClicked] = useState(false);
-
-  const [imageFields, setImageFields] = useState([
-    {
-      name: "image1",
-      defaultSize: { width: 1806, height: 1806 },
-      x: 0,
-      y: 0,
-      defaultFile: "visuels/cadres/templates/alexandre_template.png",
-      customizable: false,
-    },
-    {
-      name: "image2",
-      defaultSize: { width: 1806, height: 1806 },
-      x: 0,
-      y: 0,
-      defaultFile: "visuels/cadres/templates/alexandre_template.png",
-      customizable: false,
-    },
-  ]);
-
-  
-
-  const [imagesVisuels, setImagesVisuels] = React.useState([]);
   React.useEffect(() => {
     const fetchData = async () => {
       try {
@@ -400,7 +399,8 @@ const imagesVisuelsFitred =  imagesVisuels.filter((item) => {
       mr={0}
       mb={2}
     >
-      <PopupUpload updateImageFields={setImageFields} />
+      {/* <PopupUpload updateImageFields={setImageFields} /> */}
+      <PopupUpload />
     </FormGrid>
     </Box>
   </>

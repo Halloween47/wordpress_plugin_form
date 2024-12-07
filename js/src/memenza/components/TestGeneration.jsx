@@ -1,23 +1,55 @@
 import React, { useState } from "react";
 import { TextField, Button, Typography, Box, CardMedia } from "@mui/material";
-import { useSousCat } from "./SousCatContext.jsx";
+import { useSousCat } from "../../componentsMemenza/SousCatContext.jsx";
 
 function ImageForm() {
   const [generatedImageUrl, setGeneratedImageUrl] = useState(null); 
-  const {navigationId, outputFilePathContext, setOutputFilePathContext } = useSousCat();
+  const {selectedSousCatId, navigationId, outputFilePathContext, setOutputFilePathContext } = useSousCat();
   const [imagesVisuels, setImagesVisuels] = React.useState([]);
   const [visuelsCadres, setVisuelsCadres] = React.useState([]);
   
   
+  
   const [error, setError] = useState(null);
+  // const [formData, setFormData] = useState({
+    //   image1: null,
+    //   image2: null,
+    //   // text1: "Alexandre",
+    //   text1: "Test",
+    //   text2: "12 janvier 2025",
+  // });
+  const [variablesText1, setVariablesText1] = React.useState([]);
   const [formData, setFormData] = useState({
     image1: null,
-    image2: null,
-    text1: "Alexandre",
-    text2: "12 janvier 2025",
-  });
+      image2: null,
+      // text1: "Alexandre",
+      text1: variablesText1,
+      text2: "12 janvier 2025",
+    });
+
+//     const imagesVisuelsFitred =  imagesVisuels.filter((item) => {
+//       return item.id_ss_cat === selectedSousCatId;
+//     })
+//     console.log("CONTENU DU TABLEAU FILTRER : " + JSON.stringify(imagesVisuelsFitred));
+// setVariablesText1(imagesVisuelsFitred.name)
+
+console.log("CHECK RESULTAT : " + JSON.stringify(imagesVisuels));
+console.log("CHECK RESULTAT CHARLES : " + JSON.stringify(imagesVisuels[1]));
 
 
+
+
+// React.useEffect(() => {
+//   if (imagesVisuels.length > 0) {
+//     const filtered = imagesVisuels.filter((item) => item.id_modele_cadre === selectedSousCatId);
+//     console.log("CHECK FILLTREDD : " + JSON.stringify(filtered));
+//     const parsedTextesCadre = JSON.parse(filtered.textes_cadres);
+//     console.log("TEST PARSEEEEE : " + JSON.stringify(filtered.textes_cadres));
+
+//     const names = filtered.map((item) => item.name); // Suppose que chaque item a une propriété `name`
+//     setVariablesText1(names);
+//   }
+// }, [imagesVisuels, selectedSousCatId]);
   
   
   React.useEffect(() => {
@@ -40,10 +72,7 @@ function ImageForm() {
     fetchData();
   }, [])
 
-  const { selectedSousCatId } = useSousCat();
-  const imagesVisuelsFitred =  imagesVisuels.filter((item) => {
-    return item.id_ss_cat === selectedSousCatId;
-  })
+  
   
   
 
@@ -144,6 +173,8 @@ setOutputFilePathContext(outputFilePath);
       console.error("Erreur :", error);
     }
   };
+
+  const imagesVisuelsFitred = imagesVisuels.filter((item) => item.id_ss_cat === selectedSousCatId);
 
   return (
     <Box
