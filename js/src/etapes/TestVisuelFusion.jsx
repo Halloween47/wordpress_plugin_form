@@ -466,8 +466,9 @@ const TestVisuelFusion = () => {
           component="form"
           onSubmit={handleSubmit}
           encType="multipart/form-data"
-          sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 2, maxWidth: 400, margin: "auto" }}
+          sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 2, maxWidth: 400, margin: "auto", mt:"100px" }}
         >
+          <Typography variant="h6">Générer une image</Typography>
           {error && <Typography color="error">{error}</Typography>}
           <TextField
             label="Texte 1 (max. 15 caractères)"
