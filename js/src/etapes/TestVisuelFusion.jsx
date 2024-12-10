@@ -250,7 +250,7 @@
 //////////////////////////////////////
 //////////////////////////////////////
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import {
   Box,
   Grid,
@@ -333,7 +333,7 @@ const VisuelCard = ({ item, isSelected, onClick }) => (
       <CardContent>
         <Typography>{item.nom_modele}</Typography>
         {isSelected && (
-          <CheckCircleIcon className="check-icon" />
+          <CheckCircleIcon className="check-icon" sx={{color: 'green'}}/>
         )}
       </CardContent>
     </Card>
@@ -350,9 +350,12 @@ const TestVisuelFusion = () => {
   const [formData, setFormData] = useState({
     text1: '',
     text2: '',
-    image1: null,
-    image2: null,
+    // image1: null,
+    // image1: '',
+    // image2: null,
   });
+  console.log("CONTENU DE FORMADATA : " + JSON.stringify(formData));
+  
   const [generatedImageUrl, setGeneratedImageUrl] = useState(null);
   const [error, setError] = useState(null);
   const [isFocused, setIsFocused] = useState(false); 
@@ -366,18 +369,80 @@ const TestVisuelFusion = () => {
     ? JSON.parse(dataVignettesClique[0].textes_cadres)
     : null;
 
+    const visuelsCadres = useMemo(() => {
+      return dataVignettesClique.length
+        ? JSON.parse(dataVignettesClique[0].visuels_cadres)
+        : null;
+    }, [dataVignettesClique]);
+    // console.log("ETAT DE VISUELCADRES : " + JSON.stringify(visuelsCadres));
+    
+    const defaultFiles = visuelsCadres?.imageFields.map(field => field.defaultFile) || [];
+    // console.log("Liste des defaultFile : ", defaultFiles);
+
+    
+    // console.log("ETAT DE VISUELCADRES (section : defaultFiles) : " + JSON.parse(visuelsCadres.imageFields));
+    // const test = visuelsCadres.imageFields.find(field => field.name === "image1");
+
   // Initialisation des champs de texte à partir de `textesCadres`
+  // useEffect(() => {
+  //   if (textesCadres) {
+  //     const text1Field = textesCadres.fields.find(field => field.name === "text1");
+  //     const text2Field = textesCadres.fields.find(field => field.name === "text2");
+  //     setFormData(prevFormData => ({
+  //       ...prevFormData,
+  //       text1: prevFormData.text1 || text1Field?.defaultValue || "",
+  //       text2: prevFormData.text2 || text2Field?.defaultValue || "",
+  //     }));
+  //   }
+  // }, [textesCadres]);
   useEffect(() => {
     if (textesCadres) {
-      const text1Field = textesCadres.fields.find(field => field.name === "text1");
-      const text2Field = textesCadres.fields.find(field => field.name === "text2");
-      setFormData(prevFormData => ({
-        ...prevFormData,
-        text1: prevFormData.text1 || text1Field?.defaultValue || "",
-        text2: prevFormData.text2 || text2Field?.defaultValue || "",
-      }));
+      setFormData(prevFormData => {
+        const text1Field = textesCadres.fields.find(field => field.name === "text1");
+        const text2Field = textesCadres.fields.find(field => field.name === "text2");
+        const updatedFormData = {
+          ...prevFormData,
+          text1: prevFormData.text1 || text1Field?.defaultValue || "",
+          text2: prevFormData.text2 || text2Field?.defaultValue || "",
+          // text1: prevFormData.text1 || "",
+          // text2: prevFormData.text2 || "",
+        };
+        return JSON.stringify(prevFormData) === JSON.stringify(updatedFormData)
+          ? prevFormData // Ne pas mettre à jour si les valeurs sont identiques
+          : updatedFormData;
+      });
     }
   }, [textesCadres]);
+
+  // useEffect(() => {
+  //   if (visuelsCadres?.imageFields?.length) {
+  //     setFormData((prevFormData) => ({
+  //       ...prevFormData,
+  //       image1: visuelsCadres.imageFields[0]?.defaultFile || prevFormData.image1,
+  //       image2: visuelsCadres.imageFields[1]?.defaultFile || prevFormData.image2,
+  //     }));
+  //   }
+  // }, [visuelsCadres]);
+  useEffect(() => {
+    if (visuelsCadres?.imageFields?.length) {
+      setFormData((prevFormData) => {
+        const updatedFormData = {
+          ...prevFormData,
+          // image1: prevFormData.image1 || visuelsCadres.imageFields[0]?.defaultFile || null,
+          // image2: prevFormData.image2 || visuelsCadres.imageFields[1]?.defaultFile || null,
+          image1: prevFormData.image1 || "/home/memenzj/www/" + visuelsCadres.imageFields[0]?.defaultFile || null,
+          image2: prevFormData.image2 || "/home/memenzj/www/" + visuelsCadres.imageFields[1]?.defaultFile || null,
+        };
+        
+        // Retourne l'ancien formData si rien n'a changé pour éviter les re-rendus inutiles
+        return JSON.stringify(prevFormData) === JSON.stringify(updatedFormData)
+          ? prevFormData
+          : updatedFormData;
+      });
+    }
+  }, [visuelsCadres]);
+  
+  
   
 
   useEffect(() => {
@@ -423,7 +488,8 @@ const TestVisuelFusion = () => {
     const outputFolder = `/home/memenzj/www/visuels/uploads/${navigationId}`;
 
     setOutputFilePathContext(outputFilePath);
-    console.log("VERIFICATION DU LIEN DE DESTINATION DE LIMAGE GENERE : " + JSON.stringify(outputFilePath));
+    // console.log("VERIFICATION DU LIEN DE DESTINATION DE LIMAGE GENERE : " + JSON.stringify(outputFilePath));
+    // console.log("FormData ORIGINAL (sans formPayload) : " + JSON.stringify(formData));
     
 
     const formPayload = new FormData();
@@ -431,8 +497,19 @@ const TestVisuelFusion = () => {
     formPayload.append("text2", formData.text2);
     formPayload.append("output_file", outputFilePath);
     formPayload.append("dossier", outputFolder);
-    if (formData.image1) formPayload.append("image1", formData.image1);
-    if (formData.image2) formPayload.append("image2", formData.image2);
+    formPayload.append("image1", formData.image1);
+    formPayload.append("image2", formData.image2);
+
+    for (const [key, value] of formPayload.entries()) {
+      // console.log(" TEST VERIF PAYLOAD AVEC LISTE KEYS : " + key, value);
+    }
+    
+
+    // if (formData.image1) formPayload.append("image1", formData.image1);
+    // if (formData.image2) formPayload.append("image2", formData.image2);
+
+    // console.log("VERIFICATION DU FORMPAYLOAD POUR ENVOI DES BONNES DATA : " + JSON.stringify(formPayload));
+    
 
     try {
       const response = await fetch("../../wp-content/plugins/ProductImageCustomizer/js/process-simplifie.php", {
@@ -449,8 +526,8 @@ const TestVisuelFusion = () => {
       const result = await response.blob();
       const url = URL.createObjectURL(result);
       setGeneratedImageUrl(url);
-      console.log("TEST PREVISU VOICI LE RESULT DE LA REPONSE : " + JSON.stringify(result));
-      console.log("TEST PREVISU VOICI LERESULTAT DE LID : " + JSON.stringify(url));
+      // console.log("TEST PREVISU VOICI LE RESULT DE LA REPONSE : " + JSON.stringify(result));
+      // console.log("TEST PREVISU VOICI LERESULTAT DE LID : " + JSON.stringify(url));
       
     } catch (error) {
       setError(error.message);
@@ -484,8 +561,6 @@ const TestVisuelFusion = () => {
           <Typography variant="h6">Générer une image</Typography>
           {error && <Typography color="error">{error}</Typography>}
           <TextField
-            // label="Texte 1 (max. 15 caractères)"
-            // label={formData.text1 + " (max. 15 caractères)"}
             label={isFocused ? "max. 15 caractères" : formData.text1}
             onFocus={handleFocus}
             onBlur={handleBlur}
