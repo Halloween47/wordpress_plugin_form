@@ -355,6 +355,10 @@ const TestVisuelFusion = () => {
   });
   const [generatedImageUrl, setGeneratedImageUrl] = useState(null);
   const [error, setError] = useState(null);
+  const [isFocused, setIsFocused] = useState(false); 
+
+  const handleFocus = () => setIsFocused(true);
+  const handleBlur = () => setIsFocused(false);
 
   const tableauFiltrePourVignette = imagesVisuels.filter(item => item.id_ss_cat === selectedSousCatId);
 
@@ -397,11 +401,19 @@ const TestVisuelFusion = () => {
     setDataVignettesClique(filtreSelonVignetteSelectionne);
   };
 
+  // const handleChange = (e) => {
+  //   const { name, value, files } = e.target;
+  //   setFormData(prevData => ({
+  //     ...prevData,
+  //     [name]: files ? files[0] : value,
+  //   }));
+  // };
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-    setFormData(prevData => ({
+  
+    setFormData((prevData) => ({
       ...prevData,
-      [name]: files ? files[0] : value,
+      [name]: files ? files[0] : value === "" ? "" : value, // Si le champ est effacé, on garde une chaîne vide
     }));
   };
 
@@ -472,22 +484,49 @@ const TestVisuelFusion = () => {
           <Typography variant="h6">Générer une image</Typography>
           {error && <Typography color="error">{error}</Typography>}
           <TextField
-            label="Texte 1 (max. 15 caractères)"
+            // label="Texte 1 (max. 15 caractères)"
+            // label={formData.text1 + " (max. 15 caractères)"}
+            label={isFocused ? "max. 15 caractères" : formData.text1}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
             name="text1"
-            value={formData.text1}
+            // value={formData.text1}
             onChange={handleChange}
             inputProps={{ maxLength: 15 }}
             required
             sx={{ paddingTop: 1.2, marginBottom: 1.2 }}
-          />
+            InputLabelProps={{
+              sx: {
+                paddingTop: 1.2, 
+                marginBottom: 1,
+                "&.MuiInputLabel-shrink": {
+                  transform: "translate(0, -16px) scale(0.75)", 
+                },
+              },
+            }}
+            />
           <TextField
-            label="Texte 2 (max. 17 caractères)"
+            // label="Texte 2 (max. 17 caractères)"
+            // label={formData.text2 + " (max. 17 caractères)"}
+            label={isFocused ? "max. 17 caractères" : formData.text2}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
             name="text2"
-            value={formData.text2}
+            // value={formData.text2}
+            // placeholder={formData.text2}
             onChange={handleChange}
             inputProps={{ maxLength: 17 }}
             required
             sx={{ paddingTop: 1.2, marginBottom: 1.2 }}
+            InputLabelProps={{
+              sx: {
+                paddingTop: 1.2, 
+                marginBottom: 1,
+                "&.MuiInputLabel-shrink": {
+                  transform: "translate(0, -16px) scale(0.75)", 
+                },
+              },
+            }}
           />
           <Button type="success" variant="contained">
       Prévisualiser votre cadre 
