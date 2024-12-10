@@ -112,21 +112,61 @@ const EtapeVideo = () => {
     }));
   };
 
-  const handleFileUpload = (event, fieldName) => {
+  // const handleFileUpload = (event, fieldName) => {
+  //   const file = event.target.files[0];
+  //   if (file) {
+  //     const fileName = `${fieldName}_${file.name.split("\\").pop().split(" ").join("_")}`;
+  //     console.log("VERIFICATION DE FILENAME POUR ENVOI DANS DOSSIER DISTANT : " + fileName);
+  //     console.log("VERIFICATION DE FILENAME POUR ENVOI DANS DOSSIER DISTANT : " + JSON.stringify(fileName));
+      
+  //     const newUrl = `/visuels/upload/${navigationId}/${fileName}`;
+  //     setVariables((prevVariables) => ({
+  //       ...prevVariables,
+  //       [fieldName]: newUrl,
+  //     }));
+  //     console.log(`Media URL ajouté : ${newUrl}`);
+  //   }
+  // };
+
+  const handleFileUpload = async (event, fieldName) => {
     const file = event.target.files[0];
     if (file) {
+      // Construire le nom de fichier et le chemin cible
       const fileName = `${fieldName}_${file.name.split("\\").pop().split(" ").join("_")}`;
-      console.log("VERIFICATION DE FILENAME POUR ENVOI DANS DOSSIER DISTANT : " + fileName);
-      console.log("VERIFICATION DE FILENAME POUR ENVOI DANS DOSSIER DISTANT : " + JSON.stringify(fileName));
-      
       const newUrl = `/visuels/upload/${navigationId}/${fileName}`;
+      console.log("VERIFICATION DE FILENAME POUR ENVOI DANS DOSSIER DISTANT : ", fileName);
+      console.log("Media URL ajouté : ", newUrl);
+  
+      // Mettre à jour les variables pour le frontend
       setVariables((prevVariables) => ({
         ...prevVariables,
         [fieldName]: newUrl,
       }));
-      console.log(`Media URL ajouté : ${newUrl}`);
+  
+      // Créer un objet FormData pour envoyer le fichier
+      const formData = new FormData();
+      formData.append("file", file); // Ajouter le fichier
+      formData.append("destination", newUrl); // Ajouter la destination cible (facultatif)
+  
+      try {
+        // Envoi du fichier vers le serveur avec Axios
+        const response = await axios.post("https://memenza.fr/visuels/uploads/", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+  
+        if (response.status === 200) {
+          console.log("Fichier uploadé avec succès :", response.data);
+        } else {
+          console.error("Erreur lors de l'upload :", response.statusText);
+        }
+      } catch (error) {
+        console.error("Erreur lors de l'envoi du fichier :", error);
+      }
     }
   };
+  
 
   const handleTest = (srcVid) => {
     setOpenModal(true);
