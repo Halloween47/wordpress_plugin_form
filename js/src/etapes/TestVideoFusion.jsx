@@ -116,6 +116,9 @@ const EtapeVideo = () => {
     const file = event.target.files[0];
     if (file) {
       const fileName = `${fieldName}_${file.name.split("\\").pop().split(" ").join("_")}`;
+      console.log("VERIFICATION DE FILENAME POUR ENVOI DANS DOSSIER DISTANT : " + fileName);
+      console.log("VERIFICATION DE FILENAME POUR ENVOI DANS DOSSIER DISTANT : " + JSON.stringify(fileName));
+      
       const newUrl = `/visuels/upload/${navigationId}/${fileName}`;
       setVariables((prevVariables) => ({
         ...prevVariables,
@@ -149,6 +152,8 @@ const EtapeVideo = () => {
   };
 
   const handleVideoSendWithTemplate = async () => {
+    console.log("SIMULATION ENVOI CHLES");
+    
     const formData = {
       template_id: "RdLlSO4FUmAV6fPHvKT1",
       desc: "test tom desc",

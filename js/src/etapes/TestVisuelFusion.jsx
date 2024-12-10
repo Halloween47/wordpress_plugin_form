@@ -367,13 +367,14 @@ const TestVisuelFusion = () => {
     if (textesCadres) {
       const text1Field = textesCadres.fields.find(field => field.name === "text1");
       const text2Field = textesCadres.fields.find(field => field.name === "text2");
-      setFormData({
-        ...formData,
-        text1: text1Field?.defaultValue || "",
-        text2: text2Field?.defaultValue || "",
-      });
+      setFormData(prevFormData => ({
+        ...prevFormData,
+        text1: prevFormData.text1 || text1Field?.defaultValue || "",
+        text2: prevFormData.text2 || text2Field?.defaultValue || "",
+      }));
     }
   }, [textesCadres]);
+  
 
   useEffect(() => {
     const fetchData = async () => {
