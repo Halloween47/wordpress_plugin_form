@@ -89,6 +89,7 @@ const EtapeVideo = () => {
     (item) => item.id_ss_cat === selectedSousCatId
   );
 
+  // Récuperation données de videos_visuel
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -128,28 +129,76 @@ const EtapeVideo = () => {
   //   }
   // };
 
-  const handleFileUpload = async (event, fieldName) => {
+  ////////////////////////////////////
+  ////////////////////////////////////
+  // const handleFileUpload = async (event, fieldName) => {
+  //   const file = event.target.files[0];
+  //   if (file) {
+  //     // Construire le nom de fichier et le chemin cible
+  //     const fileName = `${fieldName}_${file.name.split("\\").pop().split(" ").join("_")}`;
+  //     const newUrl = `/visuels/upload/${navigationId}/${fileName}`;
+  //     console.log("VERIFICATION DE FILENAME POUR ENVOI DANS DOSSIER DISTANT : ", fileName);
+  //     console.log("Media URL ajouté : ", newUrl);
+  
+  //     // Mettre à jour les variables pour le frontend
+  //     setVariables((prevVariables) => ({
+  //       ...prevVariables,
+  //       [fieldName]: newUrl,
+  //     }));
+  
+  //     // Créer un objet FormData pour envoyer le fichier
+  //     const formData = new FormData();
+  //     formData.append("file", file); // Ajouter le fichier
+  //     formData.append("destination", newUrl); // Ajouter la destination cible (facultatif)
+  
+  //     try {
+  //       // Envoi du fichier vers le serveur avec Axios
+  //       const response = await axios.post("https://memenza.fr/visuels/uploads/", formData, {
+  //         headers: {
+  //           "Content-Type": "multipart/form-data",
+  //         },
+  //       });
+  
+  //       if (response.status === 200) {
+  //         console.log("Fichier uploadé avec succès :", response.data);
+  //       } else {
+  //         console.error("Erreur lors de l'upload :", response.statusText);
+  //       }
+  //     } catch (error) {
+  //       console.error("Erreur lors de l'envoi du fichier :", error);
+  //     }
+  //   }
+  // };
+  ////////////////////////////////////
+  ////////////////////////////////////
+
+  const handleFileUpload = (event, fieldName) => {
     const file = event.target.files[0];
     if (file) {
-      // Construire le nom de fichier et le chemin cible
-      const fileName = `${fieldName}_${file.name.split("\\").pop().split(" ").join("_")}`;
-      const newUrl = `/visuels/upload/${navigationId}/${fileName}`;
-      console.log("VERIFICATION DE FILENAME POUR ENVOI DANS DOSSIER DISTANT : ", fileName);
-      console.log("Media URL ajouté : ", newUrl);
-  
-      // Mettre à jour les variables pour le frontend
-      setVariables((prevVariables) => ({
-        ...prevVariables,
-        [fieldName]: newUrl,
+      setVariables((prevState) => ({
+        ...prevState,
+        [fieldName]: file, // Stocker le fichier dans l'état
       }));
-  
-      // Créer un objet FormData pour envoyer le fichier
+      console.log("Fichier sélectionné :", file.name);
+    }
+  };
+  const handleSendMedia = async (fieldName) => {
+    const file = variables[fieldName];
+    if (file) {
+      console.log("Nom du fichier :", file.name);
+      console.log("Type du fichier :", file.type);
+      console.log("Taille du fichier :", file.size);
+    } else {
+      console.error("Aucun fichier sélectionné.");
+    }
+    
+
+    if (file) {
       const formData = new FormData();
-      formData.append("file", file); // Ajouter le fichier
-      formData.append("destination", newUrl); // Ajouter la destination cible (facultatif)
+      formData.append("file", file); 
   
       try {
-        // Envoi du fichier vers le serveur avec Axios
+        // const response = await axios.post("https://memenza.fr/wp-json/custom/v1/upload-media", formData, {
         const response = await axios.post("https://memenza.fr/visuels/uploads/", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
@@ -157,15 +206,40 @@ const EtapeVideo = () => {
         });
   
         if (response.status === 200) {
-          console.log("Fichier uploadé avec succès :", response.data);
+          console.log("Fichier envoyé avec succès :", response.data);
         } else {
-          console.error("Erreur lors de l'upload :", response.statusText);
+          console.error("Erreur lors de l'envoi :", response.statusText);
         }
       } catch (error) {
         console.error("Erreur lors de l'envoi du fichier :", error);
+        //////////////////////////////////
+        //////////////////////////////////
+        console.log("CONTENU DU FILE : " + file.name);
+        console.log("Erreur complète : ", error.response || error.message);
+        if (error.response) {
+          // La requête a été faite et le serveur a répondu avec un code d'état
+          // qui n'est pas dans la plage des 2xx
+          console.log("Réponse d'erreur:", error.response);
+          console.log("Code d'état:", error.response.status);
+          console.log("Données d'erreur:", error.response.data);
+          console.log("Message d'erreur:", error.response.statusText);
+        } else if (error.request) {
+          // La requête a été faite mais aucune réponse n'a été reçue
+          console.log("Erreur de requête:", error.request);
+        } else {
+          // Quelque chose s'est mal passé dans la configuration de la requête
+          console.log("Erreur lors de la configuration de la requête:", error.message);
+        }
+        //////////////////////////////////
+        //////////////////////////////////
+        
       }
+    } else {
+      console.error("Aucun fichier sélectionné pour le champ :", fieldName);
     }
   };
+  
+  
   
 
   const handleTest = (srcVid) => {
@@ -326,32 +400,76 @@ const EtapeVideo = () => {
                 const dynamicLabel = match ? `Media ${match[1]}` : field.name;
 
                 return (
-                    <Box key={index} sx={{ 
-                        mt: 2, 
-                        display: "flex", 
-                        justifyContent:"center", 
-                        alignItems: "center" ,
-                        width: "100%"
-                        }}>
-                        {/* <Typography sx={{ flex: 1 }}>{dynamicLabel}</Typography> */}
-                        <Typography sx={{mr: "30px"}}>{dynamicLabel}</Typography>
-                        <Button component="label" variant="contained" sx={{mr: "10px"}}>
-                        Importer votre média
-                            <input
-                            type="file"
-                            hidden
-                            accept="image/*,video/*"
-                            onChange={(e) => handleFileUpload(e, field.name)}
-                            />
-                        </Button>
-                        <div style={{ padding: "50px" }}>
-                            <Tooltip text="ici les infos correspondant au prérequis du média attendu">
-                                <InfoIcon sx={{color: "black"}} />
-                            </Tooltip>
-                        </div>
+                    // <Box key={index} sx={{ 
+                    //     mt: 2, 
+                    //     display: "flex", 
+                    //     justifyContent:"center", 
+                    //     alignItems: "center" ,
+                    //     width: "100%"
+                    //     }}>
+                    //     {/* <Typography sx={{ flex: 1 }}>{dynamicLabel}</Typography> */}
+                    //     <Typography sx={{mr: "30px"}}>{dynamicLabel}</Typography>
+                    //     <Button component="label" variant="contained" sx={{mr: "10px"}}>
+                    //     Importer votre média
+                    //         <input
+                    //         type="file"
+                    //         hidden
+                    //         accept="image/*,video/*"
+                    //         onChange={(e) => handleFileUpload(e, field.name)}
+                    //         />
+                    //     </Button>
+                    //     <div style={{ padding: "50px" }}>
+                    //         <Tooltip text="ici les infos correspondant au prérequis du média attendu">
+                    //             <InfoIcon sx={{color: "black"}} />
+                    //         </Tooltip>
+                    //     </div>
 
 
-                    </Box>
+                    // </Box>
+                    <Box
+  key={index}
+  sx={{ 
+    mt: 2, 
+    display: "flex", 
+    justifyContent: "center", 
+    alignItems: "center", 
+    width: "100%"
+  }}
+>
+  {/* Label dynamique pour le champ média */}
+  <Typography sx={{ mr: "30px" }}>{dynamicLabel}</Typography>
+
+  {/* Bouton pour importer un média */}
+  <Button component="label" variant="contained" sx={{ mr: "10px" }}>
+    Importer votre média
+    <input
+      type="file"
+      hidden
+      accept="image/*,video/*"
+      onChange={(e) => handleFileUpload(e, field.name)}
+    />
+  </Button>
+
+  {/* Nouveau bouton pour envoyer le média */}
+  <Button
+    variant="contained"
+    color="primary"
+    sx={{ mr: "10px" }}
+    onClick={() => handleSendMedia(field.name)}
+  >
+    Envoyer
+  </Button>
+
+  {/* Tooltip avec informations supplémentaires */}
+  <div style={{ padding: "50px" }}>
+    <Tooltip text="Ici les infos correspondant au prérequis du média attendu">
+      <InfoIcon sx={{ color: "black" }} />
+    </Tooltip>
+  </div>
+</Box>
+
+
+
 )
                 
                 })}

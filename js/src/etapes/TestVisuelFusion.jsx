@@ -441,10 +441,8 @@ const TestVisuelFusion = () => {
       });
     }
   }, [visuelsCadres]);
-  
-  
-  
-
+    
+// Récupération des données de images_visuel
   useEffect(() => {
     const fetchData = async () => {
       try {
