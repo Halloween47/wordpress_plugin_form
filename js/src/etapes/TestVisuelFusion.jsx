@@ -395,6 +395,8 @@ const TestVisuelFusion = () => {
   //     }));
   //   }
   // }, [textesCadres]);
+
+  //////////////////ACTUEL/////////////////////////
   useEffect(() => {
     if (textesCadres) {
       setFormData(prevFormData => {
@@ -423,6 +425,21 @@ const TestVisuelFusion = () => {
   //     }));
   //   }
   // }, [visuelsCadres]);
+  
+  // useEffect(() => {
+  //   if (textesCadres) {
+  //     setFormData(prevFormData => {
+  //       const text1Field = textesCadres.fields.find(field => field.name === "text1");
+  //       const text2Field = textesCadres.fields.find(field => field.name === "text2");
+  //       return {
+  //         ...prevFormData,
+  //         text1: text1Field?.defaultValue || "",
+  //         text2: text2Field?.defaultValue || "",
+  //       };
+  //     });
+  //   }
+  // }, [selectedVisuelId, textesCadres]);
+  
   useEffect(() => {
     if (visuelsCadres?.imageFields?.length) {
       setFormData((prevFormData) => {
@@ -458,11 +475,42 @@ const TestVisuelFusion = () => {
     fetchData();
   }, []);
 
+  /////////////////////ACTUEL//////////////
+  // const handleVisuelClickCustom = (id) => {
+  //   setSelectedVisuelId(id);
+  //   const filtreSelonVignetteSelectionne = tableauFiltrePourVignette.filter(item => item.id_modele_cadre === id);
+  //   setDataVignettesClique(filtreSelonVignetteSelectionne);
+  // };
+
   const handleVisuelClickCustom = (id) => {
     setSelectedVisuelId(id);
+  
     const filtreSelonVignetteSelectionne = tableauFiltrePourVignette.filter(item => item.id_modele_cadre === id);
     setDataVignettesClique(filtreSelonVignetteSelectionne);
+  
+    // Récupération des valeurs par défaut pour les champs texte
+    if (filtreSelonVignetteSelectionne.length) {
+      const textesCadres = JSON.parse(filtreSelonVignetteSelectionne[0].textes_cadres);
+      const text1Field = textesCadres.fields.find(field => field.name === "text1");
+      const text2Field = textesCadres.fields.find(field => field.name === "text2");
+  
+      setFormData({
+        text1: text1Field?.defaultValue || "", // Valeur par défaut ou chaîne vide
+        text2: text2Field?.defaultValue || "", // Valeur par défaut ou chaîne vide
+        image1: null, // Réinitialisation des images si nécessaire
+        image2: null,
+      });
+    } else {
+      // Si aucun cadre n'est trouvé, réinitialisez simplement les champs
+      setFormData({
+        text1: "",
+        text2: "",
+        image1: null,
+        image2: null,
+      });
+    }
   };
+  
 
   // const handleChange = (e) => {
   //   const { name, value, files } = e.target;
@@ -601,6 +649,23 @@ const TestVisuelFusion = () => {
               },
             }}
           />
+          {/* <TextField
+  label="Texte 1 (max. 15 caractères)"
+  name="text1"
+  value={formData.text1} // Lié à l'état
+  onChange={handleChange}
+  inputProps={{ maxLength: 15 }}
+  required
+/>
+<TextField
+  label="Texte 2 (max. 17 caractères)"
+  name="text2"
+  value={formData.text2} // Lié à l'état
+  onChange={handleChange}
+  inputProps={{ maxLength: 17 }}
+  required
+/> */}
+
           <Button type="success" variant="contained">
       Prévisualiser votre cadre 
       </Button>
