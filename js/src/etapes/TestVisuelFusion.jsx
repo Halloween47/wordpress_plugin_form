@@ -484,6 +484,12 @@ const TestVisuelFusion = () => {
 
   const handleVisuelClickCustom = (id) => {
     setSelectedVisuelId(id);
+
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      text1: "", // Effacer la valeur saisie pour text1
+      text2: "", // Effacer la valeur saisie pour text2
+    }));
   
     const filtreSelonVignetteSelectionne = tableauFiltrePourVignette.filter(item => item.id_modele_cadre === id);
     setDataVignettesClique(filtreSelonVignetteSelectionne);
@@ -497,8 +503,8 @@ const TestVisuelFusion = () => {
       setFormData({
         text1: text1Field?.defaultValue || "", // Valeur par défaut ou chaîne vide
         text2: text2Field?.defaultValue || "", // Valeur par défaut ou chaîne vide
-        image1: null, // Réinitialisation des images si nécessaire
-        image2: null,
+        // image1: null, // Réinitialisation des images si nécessaire
+        // image2: null,
       });
     } else {
       // Si aucun cadre n'est trouvé, réinitialisez simplement les champs
@@ -549,14 +555,10 @@ const TestVisuelFusion = () => {
     for (const [key, value] of formPayload.entries()) {
       // console.log(" TEST VERIF PAYLOAD AVEC LISTE KEYS : " + key, value);
     }
-    
-
     // if (formData.image1) formPayload.append("image1", formData.image1);
     // if (formData.image2) formPayload.append("image2", formData.image2);
-
     // console.log("VERIFICATION DU FORMPAYLOAD POUR ENVOI DES BONNES DATA : " + JSON.stringify(formPayload));
     
-
     try {
       const response = await fetch("../../wp-content/plugins/ProductImageCustomizer/js/process-simplifie.php", {
         method: "POST",

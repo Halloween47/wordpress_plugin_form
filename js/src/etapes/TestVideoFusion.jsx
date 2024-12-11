@@ -32,6 +32,14 @@ const ButtonForm = styled("button")({
     padding: "5px 20px",
     backgroundColor: "rgba(0,0,0,0)"
 })
+const StylesTest = `
+.test-modificationButton {
+  background-color: red !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: inherit !mportant;
+}
+`;
 
 const Tooltip = ({ text, children }) => {
     const [isVisible, setIsVisible] = useState(false);
@@ -196,14 +204,24 @@ const EtapeVideo = () => {
     if (file) {
       const formData = new FormData();
       formData.append("file", file); 
+      formData.append("destinationName", "Media1.mp4"); 
+      formData.append("destinationFolder", navigationId);
+      console.log("CONTENU DE FORMDATA POUR TIM : " +  JSON.stringify(formData));
+      
   
       try {
+        const response = await fetch("../../wp-content/plugins/ProductImageCustomizer/js/upload-media.php",{
+          method: "POST",
+          body: formData,
+        } ); 
         // const response = await axios.post("https://memenza.fr/wp-json/custom/v1/upload-media", formData, {
-        const response = await axios.post("https://memenza.fr/visuels/uploads/", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
+        // const response = await axios.post("https://memenza.fr/visuels/uploads/", formData, {
+        // headers: {
+        //     "Content-Type": "multipart/form-data",
+        //   },
+        // });
+          
+        
   
         if (response.status === 200) {
           console.log("Fichier envoyé avec succès :", response.data);
@@ -431,7 +449,8 @@ const EtapeVideo = () => {
   sx={{ 
     mt: 2, 
     display: "flex", 
-    justifyContent: "center", 
+    // justifyContent: "center", 
+    justifyContent: "flex-end", 
     alignItems: "center", 
     width: "100%"
   }}
@@ -456,12 +475,13 @@ const EtapeVideo = () => {
     color="primary"
     sx={{ mr: "10px" }}
     onClick={() => handleSendMedia(field.name)}
+    className="test-modificationButton"
   >
-    Envoyer
+    Test
   </Button>
 
   {/* Tooltip avec informations supplémentaires */}
-  <div style={{ padding: "50px" }}>
+  <div style={{ padding: "10px" }}>
     <Tooltip text="Ici les infos correspondant au prérequis du média attendu">
       <InfoIcon sx={{ color: "black" }} />
     </Tooltip>
@@ -475,7 +495,10 @@ const EtapeVideo = () => {
                 })}
               <Button
                 variant="contained"
-                sx={{ mt: 3 }}
+                sx={{ 
+                  mt: 3,
+                  padding: 0, 
+                }}
                 onClick={handleVideoSendWithTemplate}
               >
                 Envoyer les données
@@ -484,6 +507,7 @@ const EtapeVideo = () => {
           </Grid>
         </Grid>
       )}
+      <style>{StylesTest}</style>
     </Box>
   );
 };
