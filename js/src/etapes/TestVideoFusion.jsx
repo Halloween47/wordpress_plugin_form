@@ -115,6 +115,8 @@ const EtapeVideo = () => {
   const [tabParseMediasVideo, setTabParseMediasVideo] = useState([]);
   const [isPlaying, setIsPlaying] = useState([]);
   const [mediaCounter, setMediaCounter] = useState(1);
+  const [mediaFiles, setMediaFiles] = React.useState([]);
+  const [fileCounter, setFileCounter] = React.useState(1);
   const videoRefs = useRef([]);
   
   const API_KEY = process.env.REACT_APP_MEMENZA_API_KEY || "simulation lecture clé API";
@@ -127,11 +129,11 @@ const EtapeVideo = () => {
     (item) => item.id_ss_cat === selectedSousCatId
     // (item) => item.nom_modele_video === nomTemplate
   );
-  console.log("VERIFICATION TABLEAU imagesVideosFiltered : " + JSON.stringify(imagesVideosFiltered));
+  // console.log("VERIFICATION TABLEAU imagesVideosFiltered : " + JSON.stringify(imagesVideosFiltered));
   const imagesVideosFilteredParNomTemplate = visuelsVideos.filter(
     (item) => item.nom_modele_video === nomTemplate
   );
-  console.log("VERIFICATION TABLEAU imagesVideosFilteredParNomTemplate : " + JSON.stringify(imagesVideosFilteredParNomTemplate));
+  // console.log("VERIFICATION TABLEAU imagesVideosFilteredParNomTemplate : " + JSON.stringify(imagesVideosFilteredParNomTemplate));
 
 
   // Récuperation données de videos_visuel
@@ -144,6 +146,8 @@ const EtapeVideo = () => {
         }
         const result = await response.json();
         setVisuelsVideos(result);
+        console.log("RESULTAT FETCH : " + JSON.stringify(result));
+        
       } catch (error) {
         console.error("Erreur :", error);
       }
@@ -157,70 +161,27 @@ const EtapeVideo = () => {
       [key]: value,
     }));
   };
-
-  // const handleFileUpload = (event, fieldName) => {
-  //   const file = event.target.files[0];
-  //   if (file) {
-  //     const fileName = `${fieldName}_${file.name.split("\\").pop().split(" ").join("_")}`;
-  //     console.log("VERIFICATION DE FILENAME POUR ENVOI DANS DOSSIER DISTANT : " + fileName);
-  //     console.log("VERIFICATION DE FILENAME POUR ENVOI DANS DOSSIER DISTANT : " + JSON.stringify(fileName));
-      
-  //     const newUrl = `/visuels/upload/${navigationId}/${fileName}`;
-  //     setVariables((prevVariables) => ({
-  //       ...prevVariables,
-  //       [fieldName]: newUrl,
-  //     }));
-  //     console.log(`Media URL ajouté : ${newUrl}`);
-  //   }
-  // };
-
-  ////////////////////////////////////
-  ////////////////////////////////////
-  // const handleFileUpload = async (event, fieldName) => {
-  //   const file = event.target.files[0];
-  //   if (file) {
-  //     // Construire le nom de fichier et le chemin cible
-  //     const fileName = `${fieldName}_${file.name.split("\\").pop().split(" ").join("_")}`;
-  //     const newUrl = `/visuels/upload/${navigationId}/${fileName}`;
-  //     console.log("VERIFICATION DE FILENAME POUR ENVOI DANS DOSSIER DISTANT : ", fileName);
-  //     console.log("Media URL ajouté : ", newUrl);
-  
-  //     // Mettre à jour les variables pour le frontend
-  //     setVariables((prevVariables) => ({
-  //       ...prevVariables,
-  //       [fieldName]: newUrl,
-  //     }));
-  
-  //     // Créer un objet FormData pour envoyer le fichier
-  //     const formData = new FormData();
-  //     formData.append("file", file); // Ajouter le fichier
-  //     formData.append("destination", newUrl); // Ajouter la destination cible (facultatif)
-  
-  //     try {
-  //       // Envoi du fichier vers le serveur avec Axios
-  //       const response = await axios.post("https://memenza.fr/visuels/uploads/", formData, {
-  //         headers: {
-  //           "Content-Type": "multipart/form-data",
-  //         },
-  //       });
-  
-  //       if (response.status === 200) {
-  //         console.log("Fichier uploadé avec succès :", response.data);
-  //       } else {
-  //         console.error("Erreur lors de l'upload :", response.statusText);
-  //       }
-  //     } catch (error) {
-  //       console.error("Erreur lors de l'envoi du fichier :", error);
-  //     }
-  //   }
-  // };
-  ////////////////////////////////////
-  ////////////////////////////////////
-
   const handleFileUpload = (event, fieldName) => {
     const file = event.target.files[0];
+    setMediaFiles((prevFiles) => [
+      ...prevFiles,
+      { fieldName, file }, // Ajouter le fichier avec le nom du champ
+    ]);
+  
+    console.log("Mise à jour des fichiers :", mediaFiles);
+
+    console.log("Contenu du file : ", file.name)
     if (file) {
-      const mediaName = `media${mediaCounter}.mp4`;
+
+      if (!file.type.startsWith("image/")) {
+        console.error("Seuls les fichiers d'image sont autorisés.");
+        return;
+      }
+
+      const mediaName = `media${mediaCounter}.jpg`;
+      console.log("Nom généré dans handleFileUpload : ", mediaName)
+
+      // setMediaName(mediaName);
       setVariables((prevState) => ({
         ...prevState,
         // [fieldName]: 'https://memenza.fr/visuels/uploads/' + navigationId + "/" + file.name, 
@@ -230,72 +191,161 @@ const EtapeVideo = () => {
       setMediaCounter((prevCount) => prevCount + 1);
     }
   };
-  const handleSendMedia = async (fieldName) => {
-    const file = variables[fieldName];
-    if (file) {
-      console.log("Nom du fichier :", file.name);
-      console.log("Type du fichier :", file.type);
-      console.log("Taille du fichier :", file.size);
-    } else {
-      console.error("Aucun fichier sélectionné.");
-    }
+  // const handleSendMedia = async (fieldName) => {
+  //   const mediaData = mediaFiles.find((item) => item.fieldName === fieldName);
+  // if (!mediaData) {
+  //   console.error("Aucun fichier trouvé pour ce champ :", fieldName);
+  //   return;
+  // }
+  // const { file } = mediaData;
+  // //   const mediaUrl = variables[fieldName];
+  // // if (!mediaUrl) {
+  // //   console.error("Aucun fichier sélectionné pour ce champ :", fieldName);
+  // //   return;
+  // // }
+  //   // const file = variables[fieldName];
+  //   if (file) {
+  //     console.log("Nom du fichier :", file.name);
+  //     console.log("Type du fichier :", file.type);
+  //     console.log("Taille du fichier :", file.size);
+  //   } else {
+  //     console.error("Aucun fichier sélectionné.");
+  //   }
     
+  //   // const mediaName = mediaUrl.split("/").pop();
+  //   // console.log("Nom utilisé dans handleSendMedia : ", mediaName);
+  //   // const dynamicName = `media${fileCounter}${file.name.substring(file.name.lastIndexOf("."))}`; // Utilise l'extension du fichier original
+  //   // fileCounter += 1;
 
-    if (file) {
-      const formData = new FormData();
-      formData.append("file", file); 
-      formData.append("destinationName", "Media1.mp4"); 
-      formData.append("destinationFolder", navigationId);
-      console.log("CONTENU DE FORMDATA POUR TIM : " +  JSON.stringify(formData));
+  //   if (file) {
+  //   // if (mediaUrl) {
+  //     const formData = new FormData();
+  //     formData.append("file", file); 
+  //     // formData.append("file", mediaUrl); 
+  //     // formData.append("destinationName", mediaName); 
+  //     // formData.append("destinationName", "Media1.mp4"); 
+  //     // formData.append("destinationName", file.name); 
+  //     // formData.append("destinationName", dynamicName); 
+  //     setFileCounter((prevCounter) => {
+  //       const dynamicName = `media${prevCounter}${file.name.substring(file.name.lastIndexOf("."))}`;
+  //       console.log(dynamicName); // "media1.jpg", "media2.jpg", etc.
+  //       return prevCounter + 1; // Incrémente le compteur
+  //     });
+  //     formData.append("destinationFolder", navigationId);
+  //     console.log("CONTENU DE FORMDATA POUR TIM : " +  JSON.stringify(formData));
       
+  //     console.log("Nom du fichier dynamicname : ", dynamicName);
   
-      try {
-        const response = await fetch("../../wp-content/plugins/ProductImageCustomizer/js/upload-media.php",{
-          method: "POST",
-          body: formData,
-        } ); 
-        // const response = await axios.post("https://memenza.fr/wp-json/custom/v1/upload-media", formData, {
-        // const response = await axios.post("https://memenza.fr/visuels/uploads/", formData, {
-        // headers: {
-        //     "Content-Type": "multipart/form-data",
-        //   },
-        // });
+  //     try {
+  //       const response = await fetch("../../wp-content/plugins/ProductImageCustomizer/js/upload-media.php",{
+  //         method: "POST",
+  //         body: formData,
+  //       } ); 
+  //       // const response = await axios.post("https://memenza.fr/wp-json/custom/v1/upload-media", formData, {
+  //       // const response = await axios.post("https://memenza.fr/visuels/uploads/", formData, {
+  //       // headers: {
+  //       //     "Content-Type": "multipart/form-data",
+  //       //   },
+  //       // });
           
         
   
-        if (response.status === 200) {
-          console.log("Fichier envoyé avec succès :", response.data);
-        } else {
-          console.error("Erreur lors de l'envoi :", response.statusText);
-        }
-      } catch (error) {
-        console.error("Erreur lors de l'envoi du fichier :", error);
-        //////////////////////////////////
-        //////////////////////////////////
-        console.log("CONTENU DU FILE : " + file.name);
-        console.log("Erreur complète : ", error.response || error.message);
-        if (error.response) {
-          // La requête a été faite et le serveur a répondu avec un code d'état
-          // qui n'est pas dans la plage des 2xx
-          console.log("Réponse d'erreur:", error.response);
-          console.log("Code d'état:", error.response.status);
-          console.log("Données d'erreur:", error.response.data);
-          console.log("Message d'erreur:", error.response.statusText);
-        } else if (error.request) {
-          // La requête a été faite mais aucune réponse n'a été reçue
-          console.log("Erreur de requête:", error.request);
-        } else {
-          // Quelque chose s'est mal passé dans la configuration de la requête
-          console.log("Erreur lors de la configuration de la requête:", error.message);
-        }
-        //////////////////////////////////
-        //////////////////////////////////
+  //       if (response.status === 200) {
+  //         console.log("Fichier envoyé avec succès :", response.data);
+  //       } else {
+  //         console.error("Erreur lors de l'envoi :", response.statusText);
+  //       }
+  //     } catch (error) {
+  //       console.error("Erreur lors de l'envoi du fichier :", error);
+  //       //////////////////////////////////
+  //       //////////////////////////////////
+  //       console.log("CONTENU DU FILE : " + file.name);
+  //       console.log("Erreur complète : ", error.response || error.message);
+  //       if (error.response) {
+  //         // La requête a été faite et le serveur a répondu avec un code d'état
+  //         // qui n'est pas dans la plage des 2xx
+  //         console.log("Réponse d'erreur:", error.response);
+  //         console.log("Code d'état:", error.response.status);
+  //         console.log("Données d'erreur:", error.response.data);
+  //         console.log("Message d'erreur:", error.response.statusText);
+  //       } else if (error.request) {
+  //         // La requête a été faite mais aucune réponse n'a été reçue
+  //         console.log("Erreur de requête:", error.request);
+  //       } else {
+  //         // Quelque chose s'est mal passé dans la configuration de la requête
+  //         console.log("Erreur lors de la configuration de la requête:", error.message);
+  //       }
+  //       //////////////////////////////////
+  //       //////////////////////////////////
         
+  //     }
+  //   } else {
+  //     console.error("Aucun fichier sélectionné pour le champ :", fieldName);
+  //   }
+  // };
+  
+  const handleSendMedia = async (fieldName) => {
+    const mediaData = mediaFiles.find((item) => item.fieldName === fieldName);
+    if (!mediaData) {
+      console.error("Aucun fichier trouvé pour ce champ :", fieldName);
+      return;
+    }
+  
+    const { file } = mediaData;
+  
+    if (!file) {
+      console.error("Aucun fichier sélectionné.");
+      return;
+    }
+  
+    // Vérifie les informations sur le fichier
+    console.log("Nom du fichier :", file.name);
+    console.log("Type du fichier :", file.type);
+    console.log("Taille du fichier :", file.size);
+  
+    // Génère un nom dynamique basé sur le compteur actuel
+    const dynamicName = `media${fileCounter}${file.name.substring(file.name.lastIndexOf("."))}`;
+    console.log("Nom dynamique généré :", dynamicName);
+  
+    // Prépare les données pour l'envoi
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("destinationName", dynamicName);
+    formData.append("destinationFolder", navigationId);
+  
+    // Incrémente le compteur pour le prochain fichier
+    setFileCounter((prevCounter) => prevCounter + 1);
+  
+    console.log("CONTENU DE FORMDATA POUR TIM : ", formData);
+  
+    try {
+      // Effectue l'envoi des données
+      const response = await fetch("../../wp-content/plugins/ProductImageCustomizer/js/upload-media.php", {
+        method: "POST",
+        body: formData,
+      });
+  
+      if (response.ok) {
+        console.log("Fichier envoyé avec succès :", await response.json());
+      } else {
+        console.error("Erreur lors de l'envoi :", response.statusText);
       }
-    } else {
-      console.error("Aucun fichier sélectionné pour le champ :", fieldName);
+    } catch (error) {
+      console.error("Erreur lors de l'envoi du fichier :", error);
+      if (error.response) {
+        console.log("Réponse d'erreur:", error.response);
+        console.log("Code d'état:", error.response.status);
+        console.log("Données d'erreur:", error.response.data);
+        console.log("Message d'erreur:", error.response.statusText);
+      } else if (error.request) {
+        console.log("Erreur de requête:", error.request);
+      } else {
+        console.log("Erreur lors de la configuration de la requête:", error.message);
+      }
     }
   };
+  
+
   const handleTest = (srcVid, nomVid) => {
     setOpenModal(true);
     setCurrentVideoSrc(srcVid);
@@ -305,7 +355,7 @@ const EtapeVideo = () => {
     const selectedTemplate = imagesVideosFilteredParNomTemplate.find(
       (item) => item.textes_video && item.medias_video
     );
-    console.log("VERIFICATION TABLEAU selectedTemplate : " + JSON.stringify(selectedTemplate));
+    // console.log("VERIFICATION TABLEAU selectedTemplate : " + JSON.stringify(selectedTemplate));
 
     if (!selectedTemplate) {
       console.error("Aucun template sélectionné");

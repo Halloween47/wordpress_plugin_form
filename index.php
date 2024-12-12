@@ -175,7 +175,7 @@ add_action('rest_api_init', function () {
                 );
             }
 
-            $result = $db->query('SELECT nom_modele_video, chemin_video_ex, id_ss_cat, textes_video , medias_video FROM modelesvideo');
+            $result = $db->query('SELECT id_modele_video, id_ss_cat, id_json2video, nom_modele_video, textes_video, medias_video  FROM modelesvideo');
             $videos = $result->fetch_all(MYSQLI_ASSOC);
             $db->close();
 
