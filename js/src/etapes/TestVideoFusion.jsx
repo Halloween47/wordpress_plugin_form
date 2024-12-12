@@ -39,6 +39,32 @@ const StylesTest = `
   padding: 0 !important;
   font-size: inherit !mportant;
 }
+
+.etape-video-intro {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 50px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  .etape-video-intro-img {
+    background-color: #e0e0e0;
+    width: 40%;
+    border-radius: 8px;
+  }
+  .etape-video-intro-txt {
+    width: 50%;
+    color: #333;
+    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: left;
+  }
+
 `;
 
 const Tooltip = ({ text, children }) => {
@@ -311,9 +337,44 @@ const EtapeVideo = () => {
 
   return (
     <Box sx={{ textAlign: "center", p: 4 }}>
-      <Typography variant="h4" gutterBottom>
-        Étape Vidéo
-      </Typography>
+      <Box className="etape-video-intro">
+              <Box className="etape-video-intro-img">
+                <img
+                  // src={imgIntroVideo}
+                  src="https://memenza.fr/visuels/personnaliservideo.png"
+                  alt="Wedding"
+                  // style={{ width: "100%", height: "auto", borderRadius: "8px" }}
+                  style={{ width: "100%",
+                    height: "100%",
+                    borderRadius: "8px",
+                    objectFit: "cover", }}
+                />
+              </Box>
+              <Box className="etape-video-intro-txt">
+                <Typography variant="h4" color="textPrimary" sx={(theme) => ({
+          mb: 1,
+          fontSize: {
+            xs: '1.5rem',  // petite taille d'écran
+            sm: '2rem',    // taille intermédiaire
+            md: '2.5rem',  // écran moyen
+            lg: '3rem',    // grand écran
+          },
+        })}>
+                  Créer votre vidéo
+                </Typography>
+                <Typography variant="body1" color="textPrimary"  sx={(theme) => ({
+          pr: 3,
+          fontSize: {
+            xs: '0.875rem', // petite taille d'écran
+            sm: '1rem',     // taille intermédiaire
+            md: '1.125rem', // écran moyen
+            lg: '1.25rem',  // grand écran
+          },
+        })}>
+                  Grâce aux modèles Memenza, créez une vidéo associée à votre produit (accessible via le QR Code). Vous pouvez aussi directement uploader une vidéo d’une minute de votre choix (créée par exemple avec Capcut). La vidéo doit-être en 16/9ème, 50Mo maximum.
+                </Typography>
+              </Box>
+            </Box>
       <Button
         component="label"
         variant="contained"
