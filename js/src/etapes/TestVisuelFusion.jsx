@@ -275,7 +275,28 @@ const FormGrid = styled(Grid)({
   alignItems: "space-between",
 });
 
-const StyleEtapeVisuel = styled.div`
+const StyleEtapeVisuel = `
+.etape-visuel-intro {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 50px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }  
+     .etape-visuel-intro-txt {
+//     // background-color: green;
+     width: 50%;
+     color: #333;
+     font-size: 16px;
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     align-items: flex-start;
+     text-align: left;
+   }
+
   .selected-card {
     position: relative;
     overflow: hidden;
@@ -585,6 +606,43 @@ const TestVisuelFusion = () => {
 
   return (
     <Box sx={{ textAlign: "center", p: 4, bgcolor: "#f5f5f5" }}>
+      <Box className="etape-visuel-intro">
+           <Box className="etape-visuel-intro-img">
+             <img
+              // src="https://images.pexels.com/photos/265856/pexels-photo-265856.jpeg?auto=compress&cs=tinysrgb&w=600"
+              src="https://memenza.fr/visuels/personnaliser.png"
+              alt=""
+              style={{ width: "100%",
+                height: "100%",
+                borderRadius: "8px",
+                objectFit: "cover", }}
+            />
+          </Box>
+          <Box className="etape-visuel-intro-txt" sx={{ p: 4 }}>
+          <Typography variant="h4" color="textPrimary"sx={(theme) => ({
+    mb: 1,
+    fontSize: {
+      xs: '1.5rem',
+      sm: '2rem',    
+      md: '2.5rem',  
+      lg: '3rem',   
+    },
+  })}>
+            Personnaliser le visuel 
+            </Typography>
+            <Typography variant="body1" color="textPrimary" sx={(theme) => ({
+    pr: 3,
+    fontSize: {
+      xs: '0.875rem', // petite taille d'écran
+      sm: '1rem',     // taille intermédiaire
+      md: '1.125rem', // écran moyen
+      lg: '1.25rem',  // grand écran
+    },
+  })}>
+            Vous pouvez utiliser les modèles Memenza ou directement uploader votre visuel (créé par exemple avec Canva). La taille d’image attendue est de 1086x1086px.
+            </Typography> 
+          </Box>
+      </Box>
       <ChoixPropreVisuel />
       <Divider sx={{ mt: 2 }}> OU </Divider>
       <Box sx={{ mb: 4, py: 2, borderBottom: "2px solid #3f51b5" }}>
@@ -690,6 +748,8 @@ const TestVisuelFusion = () => {
           <CardMedia component="img" image={generatedImageUrl} alt="Image générée" />
         </Box>
       )} */}
+  <style>{StyleEtapeVisuel}</style>
+
     </Box>
   );
 };
