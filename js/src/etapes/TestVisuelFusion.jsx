@@ -265,6 +265,7 @@ import {
 import styled from "styled-components";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useSousCat } from "../componentsMemenza/GestionEtat.jsx";
+import ChoixPropreVisuel from "../componentsMemenza/ChoixPropreVisuel.jsx";
 
 
 // Styled Components
@@ -584,6 +585,8 @@ const TestVisuelFusion = () => {
 
   return (
     <Box sx={{ textAlign: "center", p: 4, bgcolor: "#f5f5f5" }}>
+      <ChoixPropreVisuel />
+      <Divider sx={{ mt: 2 }}> OU </Divider>
       <Box sx={{ mb: 4, py: 2, borderBottom: "2px solid #3f51b5" }}>
         <Typography variant="h5" color="textSecondary">Choisissez votre modèle</Typography>
       </Box>
