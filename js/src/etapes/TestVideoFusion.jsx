@@ -111,11 +111,12 @@ const EtapeVideo = () => {
   const [variables, setVariables] = useState({});
   const [visuelsVideos, setVisuelsVideos] = useState([]);
   const [tabParseTextesVideo, setTabParseTextesVideo] = useState([]);
-  // console.log("VERIFICATION TABLEAU tabParseTextesVideo : " + JSON.stringify(tabParseTextesVideo));
+  console.log("VERIFICATION TABLEAU tabParseTextesVideo : " + JSON.stringify(tabParseTextesVideo));
   const [tabParseMediasVideo, setTabParseMediasVideo] = useState([]);
+  console.log("VERIFICATION TABLEAU tabParseMediasVideo : " + JSON.stringify(tabParseMediasVideo));
   const [isPlaying, setIsPlaying] = useState([]);
   const [mediaCounter, setMediaCounter] = useState(1);
-  const [mediaFiles, setMediaFiles] = React.useState([]);
+  const [mediaFiles, setMediaFiles] = React.useState([]);  
   const [fileCounter, setFileCounter] = React.useState(1);
   const videoRefs = useRef([]);
   
@@ -285,6 +286,8 @@ const EtapeVideo = () => {
   // };
   
   const handleSendMedia = async (fieldName) => {
+    console.log("CONTENU DE MEDIA");
+    
     const mediaData = mediaFiles.find((item) => item.fieldName === fieldName);
     if (!mediaData) {
       console.error("Aucun fichier trouvé pour ce champ :", fieldName);
@@ -429,6 +432,58 @@ const EtapeVideo = () => {
     }
   };
 
+  const handleSendAllMedia = async () => {
+    if (mediaFiles.length === 0) {
+      console.error("Aucun média enregistré à envoyer.");
+      return;
+    }
+  
+    const formData = new FormData();
+  
+    // Ajout de chaque fichier au FormData
+    mediaFiles.forEach((mediaData, index) => {
+      const { file } = mediaData;
+      if (file) {
+        const dynamicName = `media${index + 1}${file.name.substring(file.name.lastIndexOf("."))}`;
+        formData.append(`files[]`, file); // Vous pouvez ajouter les fichiers dans un tableau côté serveur
+        formData.append(`fileNames[]`, dynamicName); // Ajout des noms dynamiques correspondants
+        console.log(`Ajout du fichier : ${dynamicName}`);
+      }
+    });
+  
+    // Ajout du dossier de destination (si nécessaire)
+    formData.append("destinationFolder", navigationId);
+  
+    console.log("FormData complet pour envoi : ", JSON.stringify(formData));
+  
+    try {
+      // Effectuer une seule requête pour envoyer tous les fichiers
+      const response = await fetch("../../wp-content/plugins/ProductImageCustomizer/js/upload-media.php", {
+        method: "POST",
+        body: formData,
+      });
+  
+      if (response.ok) {
+        console.log("Tous les fichiers ont été envoyés avec succès :", await response.json());
+      } else {
+        console.error("Erreur lors de l'envoi des fichiers :", response.statusText);
+      }
+    } catch (error) {
+      console.error("Erreur lors de l'envoi des fichiers :", error);
+      if (error.response) {
+        console.log("Réponse d'erreur:", error.response);
+        console.log("Code d'état:", error.response.status);
+        console.log("Données d'erreur:", error.response.data);
+        console.log("Message d'erreur:", error.response.statusText);
+      } else if (error.request) {
+        console.log("Erreur de requête:", error.request);
+      } else {
+        console.log("Erreur lors de la configuration de la requête:", error.message);
+      }
+    }
+  };
+  
+
   return (
     <Box sx={{ textAlign: "center", p: 4 }}>
       <Box className="etape-video-intro">
@@ -570,6 +625,13 @@ const EtapeVideo = () => {
 
                 const match = field.name.match(/^s\d+-img(\d+)$/);
                 const dynamicLabel = match ? `Media ${match[1]}` : field.name;
+                console.log("VERIFICATIONS dynamiclabel pour MEDIA : " + JSON.stringify(dynamicLabel));
+                
+                tabParseMediasVideo.forEach((item, index) => {
+                  item.name = `Media ${index + 1}`;
+                    console.log(item.name);
+                    
+                });
 
                 return (
                     // <Box key={index} sx={{ 
@@ -647,6 +709,15 @@ const EtapeVideo = () => {
 )
                 
                 })}
+                {/* <Button
+    variant="contained"
+    color="primary"
+    sx={{ mr: "10px" }}
+    onClick={handleSendAllMedia}
+    className="test-modificationButton"
+  >
+    Enregistrement des medias
+  </Button> */}
               <Button
                 variant="contained"
                 sx={{ 
