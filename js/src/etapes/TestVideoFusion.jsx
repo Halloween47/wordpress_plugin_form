@@ -106,23 +106,33 @@ const EtapeVideo = () => {
   const { selectedSousCatId, navigationId } = useSousCat();
   const [openModal, setOpenModal] = useState(false);
   const [currentVideoSrc, setCurrentVideoSrc] = useState("");
+  const [nomTemplate, setNomTemplate] = useState("");
+  console.log("VERIFICATION TABLEAU nomTemplate : " + JSON.stringify(nomTemplate));
   const [variables, setVariables] = useState({});
   const [visuelsVideos, setVisuelsVideos] = useState([]);
   const [tabParseTextesVideo, setTabParseTextesVideo] = useState([]);
+  // console.log("VERIFICATION TABLEAU tabParseTextesVideo : " + JSON.stringify(tabParseTextesVideo));
   const [tabParseMediasVideo, setTabParseMediasVideo] = useState([]);
   const [isPlaying, setIsPlaying] = useState([]);
   const [mediaCounter, setMediaCounter] = useState(1);
   const videoRefs = useRef([]);
-
+  
   const API_KEY = process.env.REACT_APP_MEMENZA_API_KEY || "simulation lecture clé API";
   const API_URL_WITH_TPL = "https://core-api.memenza.fr/api/wp-media/create-with-tpl";
-
+  
   const variablesParse = JSON.stringify(variables);
   console.log("ICI LES DATAS DU JSON : " + variablesParse);
-
+  
   const imagesVideosFiltered = visuelsVideos.filter(
     (item) => item.id_ss_cat === selectedSousCatId
+    // (item) => item.nom_modele_video === nomTemplate
   );
+  console.log("VERIFICATION TABLEAU imagesVideosFiltered : " + JSON.stringify(imagesVideosFiltered));
+  const imagesVideosFilteredParNomTemplate = visuelsVideos.filter(
+    (item) => item.nom_modele_video === nomTemplate
+  );
+  console.log("VERIFICATION TABLEAU imagesVideosFilteredParNomTemplate : " + JSON.stringify(imagesVideosFilteredParNomTemplate));
+
 
   // Récuperation données de videos_visuel
   useEffect(() => {
@@ -286,13 +296,17 @@ const EtapeVideo = () => {
       console.error("Aucun fichier sélectionné pour le champ :", fieldName);
     }
   };
-  const handleTest = (srcVid) => {
+  const handleTest = (srcVid, nomVid) => {
     setOpenModal(true);
     setCurrentVideoSrc(srcVid);
+    setNomTemplate(nomVid);    
 
-    const selectedTemplate = visuelsVideos.find(
+    // const selectedTemplate = visuelsVideos.find(
+    const selectedTemplate = imagesVideosFilteredParNomTemplate.find(
       (item) => item.textes_video && item.medias_video
     );
+    console.log("VERIFICATION TABLEAU selectedTemplate : " + JSON.stringify(selectedTemplate));
+
     if (!selectedTemplate) {
       console.error("Aucun template sélectionné");
       return;
@@ -308,6 +322,36 @@ const EtapeVideo = () => {
       console.error("Erreur lors du parsing JSON :", error);
     }
   };
+  
+  // const handleTest = (srcVid, nomVid) => {
+  //   setOpenModal(true);
+  //   setCurrentVideoSrc(srcVid);
+  //   setNomTemplate(nomVid); // Cela déclenche le useEffect ci-dessous
+  // };
+  // useEffect(() => {
+  //   if (nomTemplate) {
+  //     const selectedTemplate = imagesVideosFilteredParNomTemplate.find(
+  //       (item) => item.nom_modele_video === nomTemplate && item.textes_video && item.medias_video
+  //     );
+
+  //     if (selectedTemplate) {
+  //       try {
+  //         // Parsing des données de textes et médias vidéo
+  //         const parsedTextesVideo = JSON.parse(selectedTemplate.textes_video);
+  //         const parsedMediasVideo = JSON.parse(selectedTemplate.medias_video);
+
+  //         // Mise à jour des états
+  //         setTabParseTextesVideo(parsedTextesVideo.videoTextFields || []);
+  //         setTabParseMediasVideo(parsedMediasVideo.mediaFields || []);
+  //       } catch (error) {
+  //         console.error("Erreur lors du parsing JSON :", error);
+  //       }
+  //     }
+  //   }
+  // }, [nomTemplate, imagesVideosFilteredParNomTemplate]); // Cette dépendance déclenche le useEffect à chaque changement
+
+
+
   const handleVideoSendWithTemplate = async () => {
     console.log("SIMULATION ENVOI CHLES");
     
@@ -395,7 +439,7 @@ const EtapeVideo = () => {
             xs={12}
             sm={6}
             md={4}
-            onClick={() => handleTest(src.chemin_video_ex)}
+            onClick={() => handleTest(src.chemin_video_ex, src.nom_modele_video)}
             sx={{ textAlign: "center", cursor: "pointer" }}
           >
             <Typography sx={{ mb: 1 }}>{src.nom_modele_video || "Modèle inconnu"}</Typography>
