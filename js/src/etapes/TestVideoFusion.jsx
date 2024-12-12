@@ -77,6 +77,7 @@ const Tooltip = ({ text, children }) => {
   };
 
 const EtapeVideo = () => {
+  const { selectedSousCatId, navigationId } = useSousCat();
   const [openModal, setOpenModal] = useState(false);
   const [currentVideoSrc, setCurrentVideoSrc] = useState("");
   const [variables, setVariables] = useState({});
@@ -84,7 +85,7 @@ const EtapeVideo = () => {
   const [tabParseTextesVideo, setTabParseTextesVideo] = useState([]);
   const [tabParseMediasVideo, setTabParseMediasVideo] = useState([]);
   const [isPlaying, setIsPlaying] = useState([]);
-  const { selectedSousCatId, navigationId } = useSousCat();
+  const [mediaCounter, setMediaCounter] = useState(1);
   const videoRefs = useRef([]);
 
   const API_KEY = process.env.REACT_APP_MEMENZA_API_KEY || "simulation lecture clé API";
@@ -183,11 +184,14 @@ const EtapeVideo = () => {
   const handleFileUpload = (event, fieldName) => {
     const file = event.target.files[0];
     if (file) {
+      const mediaName = `media${mediaCounter}.mp4`;
       setVariables((prevState) => ({
         ...prevState,
-        [fieldName]: file, // Stocker le fichier dans l'état
+        // [fieldName]: 'https://memenza.fr/visuels/uploads/' + navigationId + "/" + file.name, 
+        [fieldName]: `https://memenza.fr/visuels/uploads/${navigationId}/${mediaName}`, 
       }));
       console.log("Fichier sélectionné :", file.name);
+      setMediaCounter((prevCount) => prevCount + 1);
     }
   };
   const handleSendMedia = async (fieldName) => {
@@ -256,10 +260,6 @@ const EtapeVideo = () => {
       console.error("Aucun fichier sélectionné pour le champ :", fieldName);
     }
   };
-  
-  
-  
-
   const handleTest = (srcVid) => {
     setOpenModal(true);
     setCurrentVideoSrc(srcVid);
@@ -282,7 +282,6 @@ const EtapeVideo = () => {
       console.error("Erreur lors du parsing JSON :", error);
     }
   };
-
   const handleVideoSendWithTemplate = async () => {
     console.log("SIMULATION ENVOI CHLES");
     
