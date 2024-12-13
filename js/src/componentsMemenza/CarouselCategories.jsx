@@ -378,6 +378,7 @@ export default function CarouselCategories({ onImageClick, onSousCatClick }) {
   const handleSelectSousCat = (id) => {
     setSelectedSousCatId(id);
     console.log("Sous-catégorie sélectionnée :", id);
+    setIsSousCatSelect(true);
   };
 
   // Chargement des images des catégories

@@ -128,9 +128,9 @@
 /////////////////////////////////////////////
 /////////////////////////////////////////////
 
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import CarouselCategories from "../componentsMemenza/CarouselCategories.jsx";
-import { Box, Typography, Modal } from "@mui/material";
+import { Box, Typography, Modal, Button } from "@mui/material";
 import { useSousCat } from "../componentsMemenza/GestionEtat.jsx";
 import { v4 as uuidv4 } from "uuid";
 
@@ -184,9 +184,14 @@ const StylesSousCategories = `
 }
 `;
 
-function EtapeCategorie() {
-  const [activeStep, setActiveStep] = useState(0);
+function EtapeCategorie({ activeStep, setActiveStep }) {
+  const [isSousCatSelect, setIsSousCatSelect] = useState(false);
+  const handleNext = () => {
+    setActiveStep(prevStep => prevStep + 1); // Incrémenter l'étape
+  };
+  // const [activeStep, setActiveStep] = useState(0);
   const [open, setOpen] = useState(false);
+  const buttonRef = useRef(null);
 
   const { setSelectedSousCatId, setNavigationId, selectedSousCatId, navigationId } = useSousCat();
 
@@ -200,7 +205,12 @@ function EtapeCategorie() {
   // Gestion de la sélection d'une sous-catégorie
   const handleSelectSousCat = (id) => {
     setSelectedSousCatId(id);
-    setActiveStep(1);
+    if (buttonRef.current) {
+      buttonRef.current.disabled = false;
+    }
+    setIsSousCatSelect(true);
+    // setActiveStep(1);
+
     console.log("Sous-catégorie sélectionnée :", id);
   };
 
@@ -226,8 +236,12 @@ function EtapeCategorie() {
       </Typography>
       <CarouselCategories
         onImageClick={handleOpen}
-        onSousCatClick={handleSelectSousCat}
-        setActiveStep={setActiveStep}
+        // onSousCatClick={handleSelectSousCat}
+        onSousCatClick={(id) => {
+          setSelectedSousCatId(id); 
+          setIsSousCatSelect(true); 
+        }}
+        // setActiveStep={setActiveStep}
       />
       <Modal open={open} onClose={handleClose} aria-labelledby="modal-title">
         <Box sx={modalStyle}>
@@ -237,6 +251,15 @@ function EtapeCategorie() {
           </Typography>
         </Box>
       </Modal>
+      <Button
+        type="button"
+        variant="contained"
+        disabled={!selectedSousCatId}
+        onClick={handleNext}
+        sx={{ mt: 2 }}
+      >
+        Suivant après choix categories
+      </Button>
     </Box>
   );
 }

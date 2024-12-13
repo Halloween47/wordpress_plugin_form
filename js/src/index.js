@@ -60,7 +60,7 @@ const App = () => {
   function getStepContent(step) {
     switch (step) {
       case 0:
-        return <EtapeCategorie />; 
+        return <EtapeCategorie setActiveStep={setActiveStep} />; 
       case 1:
         // return <EtapeVisuel />;
         return <TestVisuelFusion setActiveStep={setActiveStep}/>;
