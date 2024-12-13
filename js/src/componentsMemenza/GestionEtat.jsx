@@ -8,9 +8,10 @@ export const SousCatProvider = ({ children }) => {
   const [selectedSousCatId, setSelectedSousCatId] = useState(null);
   const [navigationId, setNavigationId] = useState(null);
   const [outputFilePathContext, setOutputFilePathContext] = useState(null);
+  const [isGenerate, setIsGenerate] = useState(false);
 
   return (
-    <SousCatContext.Provider value={{ selectedSousCatId, setSelectedSousCatId,navigationId, setNavigationId, outputFilePathContext, setOutputFilePathContext }}>
+    <SousCatContext.Provider value={{ selectedSousCatId, setSelectedSousCatId,navigationId, setNavigationId, outputFilePathContext, setOutputFilePathContext, isGenerate, setIsGenerate }}>
       {children}
     </SousCatContext.Provider>
   );

@@ -18,7 +18,7 @@
 /////////////////////////////////////
 /////////////////////////////////////
 
-import React from "react";
+import React, { useState } from "react";
 import { createRoot } from "react-dom/client";
 import Box from "@mui/material/Box";
 import Stepper from "@mui/material/Stepper";
@@ -32,31 +32,47 @@ import TestVisuelFusion from "./etapes/TestVisuelFusion.jsx";
 // import EtapeVideo from "./etapes/EtapeVideo.jsx";
 import TestVideoFusion from "./etapes/TestVideoFusion.jsx";
 import EtapeValidation from "./etapes/EtapeValidation.jsx";
-import { SousCatProvider } from "./componentsMemenza/GestionEtat.jsx";
+import { SousCatProvider, useSousCat } from "./componentsMemenza/GestionEtat.jsx";
 
 // Définition des étapes
 const steps = ["Categorie", "Visuel", "Video", "Validation"];
 
 // Fonction pour retourner le contenu de chaque étape
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return <EtapeCategorie />; 
-    case 1:
-      // return <EtapeVisuel />;
-      return <TestVisuelFusion />;
-      case 2:
-        // return <EtapeVideo />;
-        return <TestVideoFusion />;
-    case 3:
-      return <EtapeValidation />;
-    default:
-      throw new Error("Etape inconnue");
-  }
-}
+// function getStepContent(step) {
+//   switch (step) {
+//     case 0:
+//       return <EtapeCategorie />; 
+//     case 1:
+//       // return <EtapeVisuel />;
+//       return <TestVisuelFusion setActiveStep={setActiveStep}/>;
+//       case 2:
+//         // return <EtapeVideo />;
+//         return <TestVideoFusion setActiveStep={setActiveStep}/>;
+//     case 3:
+//       return <EtapeValidation />;
+//     default:
+//       throw new Error("Etape inconnue");
+//   }
+// }
 
 const App = () => {
   const [activeStep, setActiveStep] = React.useState(0);
+  function getStepContent(step) {
+    switch (step) {
+      case 0:
+        return <EtapeCategorie />; 
+      case 1:
+        // return <EtapeVisuel />;
+        return <TestVisuelFusion setActiveStep={setActiveStep}/>;
+        case 2:
+          // return <EtapeVideo />;
+          return <TestVideoFusion setActiveStep={setActiveStep}/>;
+      case 3:
+        return <EtapeValidation />;
+      default:
+        throw new Error("Etape inconnue");
+    }
+  }
   const [skipped, setSkipped] = React.useState(new Set());
 
   const isStepOptional = (step) => step === 1; // Définir si une étape est facultative
@@ -106,6 +122,7 @@ const App = () => {
               {activeStep > 0 && (
                 <Button
                   disabled={activeStep === 0}
+                  // disabled={activeStep === 0 || !isGenerate}
                   onClick={handleBack}
                   sx={{ mr: 1 }}
                 >
@@ -116,6 +133,7 @@ const App = () => {
               <Button
                 variant="contained"
                 onClick={handleSuivant}
+                // disabled={!isGenerate}
                 sx={{ color: "#ffffff ", backgroundColor: "#A46FFB" }}
               >
                 {activeStep === steps.length - 1 ? "Terminé" : "Suivant"}

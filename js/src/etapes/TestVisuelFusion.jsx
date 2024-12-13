@@ -364,8 +364,13 @@ const VisuelCard = ({ item, isSelected, onClick }) => (
 
 
 
-const TestVisuelFusion = () => {
-  const { selectedSousCatId, navigationId, outputFilePathContext, setOutputFilePathContext } = useSousCat();
+// const TestVisuelFusion = () => {
+const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
+  const handleNext = () => {
+    setActiveStep(prevStep => prevStep + 1); // Incrémenter l'étape
+  };
+  const { isGenerate, setIsGenerate, selectedSousCatId, navigationId, outputFilePathContext, setOutputFilePathContext } = useSousCat();
+  console.log(isGenerate);
   const [selectedVisuelId, setSelectedVisuelId] = useState(null);
   const [imagesVisuels, setImagesVisuels] = useState([]);
   const [dataVignettesClique, setDataVignettesClique] = useState([]);
@@ -376,7 +381,7 @@ const TestVisuelFusion = () => {
     // image1: '',
     // image2: null,
   });
-  console.log("CONTENU DE FORMADATA : " + JSON.stringify(formData));
+  // console.log("CONTENU DE FORMADATA : " + JSON.stringify(formData));
   
   const [generatedImageUrl, setGeneratedImageUrl] = useState(null);
   const [error, setError] = useState(null);
@@ -596,6 +601,7 @@ const TestVisuelFusion = () => {
       const result = await response.blob();
       const url = URL.createObjectURL(result);
       setGeneratedImageUrl(url);
+      setIsGenerate(true)
       // console.log("TEST PREVISU VOICI LE RESULT DE LA REPONSE : " + JSON.stringify(result));
       // console.log("TEST PREVISU VOICI LERESULTAT DE LID : " + JSON.stringify(url));
       
@@ -612,8 +618,11 @@ const TestVisuelFusion = () => {
               // src="https://images.pexels.com/photos/265856/pexels-photo-265856.jpeg?auto=compress&cs=tinysrgb&w=600"
               src="https://memenza.fr/visuels/personnaliser.png"
               alt=""
-              style={{ width: "100%",
-                height: "100%",
+              style={{ 
+                // width: "100%",
+                // height: "100%",
+                width: "100px", 
+                height: "100px",
                 borderRadius: "8px",
                 objectFit: "cover", }}
             />
@@ -737,6 +746,19 @@ const TestVisuelFusion = () => {
           <CardMedia component="img" image={generatedImageUrl} alt="Image générée" />
         </Box>
       )}
+      <Button
+    type="button"
+    variant="contained"
+    // disabled={!generatedImageUrl}  // Désactiver si l'image n'est pas générée
+    disabled={!generatedImageUrl}
+    onClick={handleNext}
+    sx={{ mt: 2 }}
+  >
+    Suivant après image
+  </Button>
+  {/* <Button onClick={handleSuivant}>
+                {activeStep === steps.length - 1 ? "Finish" : "Suivant"}
+              </Button> */}
         </Box>
       )}
 
