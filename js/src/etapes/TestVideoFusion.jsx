@@ -270,7 +270,7 @@ const EtapeVideo = () => {
     setCurrentVideoSrc(srcVid);
     setNomTemplate(nomVid);    
 
-    console.log("Dans la console, personne ne vous entendra crier : "  + JSON.stringify(visuelsVideos));
+    // console.log("Dans la console, personne ne vous entendra crier : "  + JSON.stringify(visuelsVideos));
     const imagesVideosFilteredParNomTemplate = visuelsVideos.filter(
       // (item) => item.nom_modele_video === nomTemplate
       (item) => item.nom_modele_video === nomVid
@@ -496,14 +496,14 @@ const EtapeVideo = () => {
           <Grid item xs={6}>
             <Box sx={{ overflowY: "auto", maxHeight: "60vh" }}>
               <Typography variant="h6">Paramétrage du Template</Typography>
-              {console.log(tabParseTextesVideo)} 
+              {/* {console.log(tabParseTextesVideo)}  */}
               {/* {isClicked && tabParseTextesVideo.map((field, index) => { */}
               {tabParseTextesVideo.map((field, index) => {
                 console.log(field);
                 const match = field.name.match(/^S(\d+)-txt$/);
                 const dynamicLabel = match ? `Texte ${match[1]}` : field.name;
                 return (
-                    <Box key={index} sx={{ mt: 2 }}>
+                  <Box key={index} sx={{ mt: 2 }}>
                         <Typography>{dynamicLabel}</Typography>
                         <TextField
                             fullWidth
@@ -511,56 +511,26 @@ const EtapeVideo = () => {
                             placeholder={field.defaultText || ""}
                             value={variables[field.name] || ""}
                             onChange={(e) => handleVariableChange(field.name, e.target.value)}
-                        />
+                            />
                     </Box>
                 )
                 
-})}
+              })}
 
               <Typography variant="h6" sx={{ mt: 4 }}>
                 Paramétrage des Médias
               </Typography>
+              {/* {console.log(tabParseMediasVideo)}  */}
               {tabParseMediasVideo.map((field, index) => {
-
-                // field.name = `Media ${index + 1}`;
+                
+                field.name = `Media ${index + 1}`;
                 // console.log(field.name);
+                
 
                 const match = field.name.match(/^s\d+-img(\d+)$/);
                 const dynamicLabel = match ? `Media ${match[1]}` : field.name;
-                // console.log("VERIFICATIONS dynamiclabel pour MEDIA : " + JSON.stringify(dynamicLabel));
-                
-                // tabParseMediasVideo.forEach((item, index) => {
-                //   item.name = `Media ${index + 1}`;
-                //     console.log(item.name);
-                // });
 
                 return (
-                    // <Box key={index} sx={{ 
-                    //     mt: 2, 
-                    //     display: "flex", 
-                    //     justifyContent:"center", 
-                    //     alignItems: "center" ,
-                    //     width: "100%"
-                    //     }}>
-                    //     {/* <Typography sx={{ flex: 1 }}>{dynamicLabel}</Typography> */}
-                    //     <Typography sx={{mr: "30px"}}>{dynamicLabel}</Typography>
-                    //     <Button component="label" variant="contained" sx={{mr: "10px"}}>
-                    //     Importer votre média
-                    //         <input
-                    //         type="file"
-                    //         hidden
-                    //         accept="image/*,video/*"
-                    //         onChange={(e) => handleFileUpload(e, field.name)}
-                    //         />
-                    //     </Button>
-                    //     <div style={{ padding: "50px" }}>
-                    //         <Tooltip text="ici les infos correspondant au prérequis du média attendu">
-                    //             <InfoIcon sx={{color: "black"}} />
-                    //         </Tooltip>
-                    //     </div>
-
-
-                    // </Box>
                     <Box
                       key={index}
                       sx={{ 
@@ -573,7 +543,8 @@ const EtapeVideo = () => {
                       }}
                       >
                         {/* Label dynamique pour le champ média */}
-                        <Typography sx={{ mr: "30px" }}>{dynamicLabel}</Typography>
+                        {/* <Typography sx={{ mr: "30px" }}>{dynamicLabel}</Typography> */}
+                        <Typography sx={{ mr: "30px" }}>{field.name}</Typography>
 
                           {/* Bouton pour importer un média */}
                           <Button component="label" variant="contained" sx={{ mr: "10px" }}>
