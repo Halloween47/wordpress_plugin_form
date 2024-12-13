@@ -107,13 +107,13 @@ const EtapeVideo = () => {
   const [openModal, setOpenModal] = useState(false);
   const [currentVideoSrc, setCurrentVideoSrc] = useState("");
   const [nomTemplate, setNomTemplate] = useState("");
-  console.log("VERIFICATION TABLEAU nomTemplate : " + JSON.stringify(nomTemplate));
+  // console.log("VERIFICATION TABLEAU nomTemplate : " + JSON.stringify(nomTemplate));
   const [variables, setVariables] = useState({});
   const [visuelsVideos, setVisuelsVideos] = useState([]);
   const [tabParseTextesVideo, setTabParseTextesVideo] = useState([]);
-  console.log("VERIFICATION TABLEAU tabParseTextesVideo : " + JSON.stringify(tabParseTextesVideo));
+  // console.log("VERIFICATION TABLEAU tabParseTextesVideo : " + JSON.stringify(tabParseTextesVideo));
   const [tabParseMediasVideo, setTabParseMediasVideo] = useState([]);
-  console.log("VERIFICATION TABLEAU tabParseMediasVideo : " + JSON.stringify(tabParseMediasVideo));
+  // console.log("VERIFICATION TABLEAU tabParseMediasVideo : " + JSON.stringify(tabParseMediasVideo));
   const [isPlaying, setIsPlaying] = useState([]);
   const [mediaCounter, setMediaCounter] = useState(1);
   const [mediaFiles, setMediaFiles] = React.useState([]);  
@@ -147,7 +147,7 @@ const EtapeVideo = () => {
         }
         const result = await response.json();
         setVisuelsVideos(result);
-        console.log("RESULTAT FETCH : " + JSON.stringify(result));
+        // console.log("RESULTAT FETCH : " + JSON.stringify(result));
         
       } catch (error) {
         console.error("Erreur :", error);
@@ -313,7 +313,25 @@ const EtapeVideo = () => {
     // Prépare les données pour l'envoi
     const formData = new FormData();
     formData.append("file", file);
+    // formData.append("destinationName", dynamicName);
+    ///////////////////////////////////
+    ///////////////////////////////////
+    // Identifier le champ en cours dans `tabParseMediasVideo` et générer un nom dynamique
+  const fieldIndex = tabParseMediasVideo.findIndex((field) => field.name === fieldName);
+
+  if (fieldIndex !== -1) {
+    const dynamicName = `Media${fieldIndex + 1}`; // Génère "Media1", "Media2", etc., basé sur l'index
+    console.log("Nom dynamique généré :", dynamicName);
+
+    // Ajouter le nom dynamique dans formData
     formData.append("destinationName", dynamicName);
+  } else {
+    console.error("Champ non trouvé dans tabParseMediasVideo :", fieldName);
+    return;
+  }
+    ///////////////////////////////////
+    ///////////////////////////////////
+
     formData.append("destinationFolder", navigationId);
   
     // Incrémente le compteur pour le prochain fichier
@@ -623,15 +641,17 @@ const EtapeVideo = () => {
               </Typography>
               {tabParseMediasVideo.map((field, index) => {
 
+                // field.name = `Media ${index + 1}`;
+                console.log(field.name);
+
                 const match = field.name.match(/^s\d+-img(\d+)$/);
                 const dynamicLabel = match ? `Media ${match[1]}` : field.name;
-                console.log("VERIFICATIONS dynamiclabel pour MEDIA : " + JSON.stringify(dynamicLabel));
+                // console.log("VERIFICATIONS dynamiclabel pour MEDIA : " + JSON.stringify(dynamicLabel));
                 
-                tabParseMediasVideo.forEach((item, index) => {
-                  item.name = `Media ${index + 1}`;
-                    console.log(item.name);
-                    
-                });
+                // tabParseMediasVideo.forEach((item, index) => {
+                //   item.name = `Media ${index + 1}`;
+                //     console.log(item.name);
+                // });
 
                 return (
                     // <Box key={index} sx={{ 
@@ -661,48 +681,49 @@ const EtapeVideo = () => {
 
                     // </Box>
                     <Box
-  key={index}
-  sx={{ 
-    mt: 2, 
-    display: "flex", 
-    // justifyContent: "center", 
-    justifyContent: "flex-end", 
-    alignItems: "center", 
-    width: "100%"
-  }}
->
-  {/* Label dynamique pour le champ média */}
-  <Typography sx={{ mr: "30px" }}>{dynamicLabel}</Typography>
+                      key={index}
+                      sx={{ 
+                        mt: 2, 
+                        display: "flex", 
+                        // justifyContent: "center", 
+                        justifyContent: "flex-end", 
+                        alignItems: "center", 
+                        width: "100%"
+                      }}
+                      >
+                        {/* Label dynamique pour le champ média */}
+                        <Typography sx={{ mr: "30px" }}>{dynamicLabel}</Typography>
 
-  {/* Bouton pour importer un média */}
-  <Button component="label" variant="contained" sx={{ mr: "10px" }}>
-    Importer votre média
-    <input
-      type="file"
-      hidden
-      accept="image/*,video/*"
-      onChange={(e) => handleFileUpload(e, field.name)}
-    />
-  </Button>
+                          {/* Bouton pour importer un média */}
+                          <Button component="label" variant="contained" sx={{ mr: "10px" }}>
+                            Importer votre média
+                            <input
+                              type="file"
+                              hidden
+                              accept="image/*,video/*"
+                              onChange={(e) => handleFileUpload(e, field.name)}
+                              // onChange={(e) => handleVariableChange(field.name, e.target.value)}
+                            />
+                          </Button>
 
-  {/* Nouveau bouton pour envoyer le média */}
-  <Button
-    variant="contained"
-    color="primary"
-    sx={{ mr: "10px" }}
-    onClick={() => handleSendMedia(field.name)}
-    className="test-modificationButton"
-  >
-    Test
-  </Button>
+                          {/* Nouveau bouton pour envoyer le média */}
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            sx={{ mr: "10px" }}
+                            onClick={() => handleSendMedia(field.name)}
+                            className="test-modificationButton"
+                          >
+                            Test
+                          </Button>
 
-  {/* Tooltip avec informations supplémentaires */}
-  <div style={{ padding: "10px" }}>
-    <Tooltip text="Ici les infos correspondant au prérequis du média attendu">
+                          {/* Tooltip avec informations supplémentaires */}
+                          <div style={{ padding: "10px" }}>
+                            <Tooltip text="Ici les infos correspondant au prérequis du média attendu">
       <InfoIcon sx={{ color: "black" }} />
-    </Tooltip>
-  </div>
-</Box>
+                            </Tooltip>
+                          </div>
+                        </Box>
 
 
 
