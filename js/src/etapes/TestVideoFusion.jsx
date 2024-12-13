@@ -361,8 +361,6 @@ console.log("AVANT ENVOI, VERIF FORMDATA : " + JSON.stringify(variables));
   
     console.log("Envoi de tous les fichiers terminé.");
   };
-  
-  
 
   return (
     <Box sx={{ textAlign: "center", p: 4 }}>
