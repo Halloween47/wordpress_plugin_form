@@ -370,7 +370,7 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
     setActiveStep(prevStep => prevStep + 1); // Incrémenter l'étape
   };
   const { isGenerate, setIsGenerate, selectedSousCatId, navigationId, outputFilePathContext, setOutputFilePathContext } = useSousCat();
-  console.log(isGenerate);
+  // console.log(isGenerate);
   const [selectedVisuelId, setSelectedVisuelId] = useState(null);
   const [imagesVisuels, setImagesVisuels] = useState([]);
   const [dataVignettesClique, setDataVignettesClique] = useState([]);
@@ -573,6 +573,8 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
 
     const formPayload = new FormData();
     formPayload.append("text1", formData.text1);
+    console.log("verif de formdataTEXT1 : " + JSON.stringify(dataVignettesClique));
+    
     formPayload.append("text2", formData.text2);
     formPayload.append("output_file", outputFilePath);
     formPayload.append("dossier", outputFolder);

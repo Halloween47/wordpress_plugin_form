@@ -32,6 +32,7 @@ import TestVisuelFusion from "./etapes/TestVisuelFusion.jsx";
 // import EtapeVideo from "./etapes/EtapeVideo.jsx";
 import TestVideoFusion from "./etapes/TestVideoFusion.jsx";
 import EtapeValidation from "./etapes/EtapeValidation.jsx";
+import EtapeTim from "./etapes/EtapeTim.jsx";
 import { SousCatProvider, useSousCat } from "./componentsMemenza/GestionEtat.jsx";
 
 // Définition des étapes
@@ -68,7 +69,8 @@ const App = () => {
           // return <EtapeVideo />;
           return <TestVideoFusion setActiveStep={setActiveStep}/>;
       case 3:
-        return <EtapeValidation />;
+        // return <EtapeValidation />;
+        return <EtapeTim />;
       default:
         throw new Error("Etape inconnue");
     }
