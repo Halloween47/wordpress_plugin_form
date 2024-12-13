@@ -287,29 +287,23 @@ const EtapeVideo = () => {
   
   const handleSendMedia = async (fieldName) => {
     console.log("CONTENU DE MEDIA");
-    
     const mediaData = mediaFiles.find((item) => item.fieldName === fieldName);
     if (!mediaData) {
       console.error("Aucun fichier trouvé pour ce champ :", fieldName);
       return;
     }
-  
     const { file } = mediaData;
-  
     if (!file) {
       console.error("Aucun fichier sélectionné.");
       return;
     }
-  
     // Vérifie les informations sur le fichier
     console.log("Nom du fichier :", file.name);
     console.log("Type du fichier :", file.type);
     console.log("Taille du fichier :", file.size);
-  
     // Génère un nom dynamique basé sur le compteur actuel
     const dynamicName = `media${fileCounter}${file.name.substring(file.name.lastIndexOf("."))}`;
     console.log("Nom dynamique généré :", dynamicName);
-  
     // Prépare les données pour l'envoi
     const formData = new FormData();
     formData.append("file", file);
@@ -318,11 +312,10 @@ const EtapeVideo = () => {
     ///////////////////////////////////
     // Identifier le champ en cours dans `tabParseMediasVideo` et générer un nom dynamique
   const fieldIndex = tabParseMediasVideo.findIndex((field) => field.name === fieldName);
-
   if (fieldIndex !== -1) {
-    const dynamicName = `Media${fieldIndex + 1}`; // Génère "Media1", "Media2", etc., basé sur l'index
-    console.log("Nom dynamique généré :", dynamicName);
-
+    // const dynamicName = `Media${fieldIndex + 1}`; // Génère "Media1", "Media2", etc., basé sur l'index
+    const dynamicName = `Media${fieldIndex + 1}${file.name.substring(file.name.lastIndexOf("."))}`; // Génère "Media1", "Media2", etc., basé sur l'index
+    console.log("Nom dynamique généré (2) :", dynamicName);
     // Ajouter le nom dynamique dans formData
     formData.append("destinationName", dynamicName);
   } else {
@@ -425,11 +418,31 @@ const EtapeVideo = () => {
 
   const handleVideoSendWithTemplate = async () => {
     console.log("SIMULATION ENVOI CHLES");
+
+    const exemplePourTest = {
+      "scene1_texte1": "Test écriture variable",
+      "scene2_image1": "https://img.freepik.com/photos-gratuite/nuages-style-fantastique_23-2151057680.jpg",
+      "scene2_image2": "https://i.pinimg.com/736x/7a/c6/91/7ac69100e88a63a14b9cbe8ba260721f.jpg",
+      "scene2_texte1": "Ceci est un message varible postman",
+      "scene3_image2": "https://archzine.fr/wp-content/uploads/2020/03/wallpaper-ordinateur-pc-fond-ecran-kawaii-dessin-cactus-vert-fleurs-roses.webp",
+      "scene3_texte1": "Cela fonctionne bien ? ",
+      "scene3_image3": "https://cdn.futura-sciences.com/cdn-cgi/image/width=1024,quality=60,format=auto/sources/images/screen/EVENEMENT/Hiver/965-hiver-43.jpg", 
+      }
+      const exemplePourTestV2 = {
+        "S1-txt": "Test écriture variable",
+        "scene2_image1": "https://img.freepik.com/photos-gratuite/nuages-style-fantastique_23-2151057680.jpg",
+        "scene2_image2": "https://i.pinimg.com/736x/7a/c6/91/7ac69100e88a63a14b9cbe8ba260721f.jpg",
+        "scene2_texte1": "Ceci est un message varible postman",
+        "scene3_image2": "https://archzine.fr/wp-content/uploads/2020/03/wallpaper-ordinateur-pc-fond-ecran-kawaii-dessin-cactus-vert-fleurs-roses.webp",
+        "scene3_texte1": "Cela fonctionne bien ? ",
+        "scene3_image3": "https://cdn.futura-sciences.com/cdn-cgi/image/width=1024,quality=60,format=auto/sources/images/screen/EVENEMENT/Hiver/965-hiver-43.jpg", 
+        }
     
     const formData = {
       template_id: "RdLlSO4FUmAV6fPHvKT1",
       desc: "test tom desc",
       variables,
+      // exemplePourTest,
     };
 
     try {
@@ -456,50 +469,23 @@ const EtapeVideo = () => {
       return;
     }
   
-    const formData = new FormData();
+    console.log("Démarrage de l'envoi des fichiers individuellement...");
+    
+    for (const mediaData of mediaFiles) {
+      const { fieldName } = mediaData;
   
-    // Ajout de chaque fichier au FormData
-    mediaFiles.forEach((mediaData, index) => {
-      const { file } = mediaData;
-      if (file) {
-        const dynamicName = `media${index + 1}${file.name.substring(file.name.lastIndexOf("."))}`;
-        formData.append(`files[]`, file); // Vous pouvez ajouter les fichiers dans un tableau côté serveur
-        formData.append(`fileNames[]`, dynamicName); // Ajout des noms dynamiques correspondants
-        console.log(`Ajout du fichier : ${dynamicName}`);
-      }
-    });
-  
-    // Ajout du dossier de destination (si nécessaire)
-    formData.append("destinationFolder", navigationId);
-  
-    console.log("FormData complet pour envoi : ", JSON.stringify(formData));
-  
-    try {
-      // Effectuer une seule requête pour envoyer tous les fichiers
-      const response = await fetch("../../wp-content/plugins/ProductImageCustomizer/js/upload-media.php", {
-        method: "POST",
-        body: formData,
-      });
-  
-      if (response.ok) {
-        console.log("Tous les fichiers ont été envoyés avec succès :", await response.json());
-      } else {
-        console.error("Erreur lors de l'envoi des fichiers :", response.statusText);
-      }
-    } catch (error) {
-      console.error("Erreur lors de l'envoi des fichiers :", error);
-      if (error.response) {
-        console.log("Réponse d'erreur:", error.response);
-        console.log("Code d'état:", error.response.status);
-        console.log("Données d'erreur:", error.response.data);
-        console.log("Message d'erreur:", error.response.statusText);
-      } else if (error.request) {
-        console.log("Erreur de requête:", error.request);
-      } else {
-        console.log("Erreur lors de la configuration de la requête:", error.message);
+      try {
+        // Utilisation de handleSendMedia pour chaque fichier
+        await handleSendMedia(fieldName);
+        console.log(`Fichier associé au champ ${fieldName} envoyé avec succès.`);
+      } catch (error) {
+        console.error(`Erreur lors de l'envoi du fichier pour le champ ${fieldName} :`, error);
       }
     }
+  
+    console.log("Envoi de tous les fichiers terminé.");
   };
+  
   
 
   return (
@@ -706,8 +692,8 @@ const EtapeVideo = () => {
                             />
                           </Button>
 
-                          {/* Nouveau bouton pour envoyer le média */}
-                          <Button
+                          {/* Nouveau bouton pour envoyer le (1)média */}
+                          {/* <Button
                             variant="contained"
                             color="primary"
                             sx={{ mr: "10px" }}
@@ -715,7 +701,7 @@ const EtapeVideo = () => {
                             className="test-modificationButton"
                           >
                             Test
-                          </Button>
+                          </Button> */}
 
                           {/* Tooltip avec informations supplémentaires */}
                           <div style={{ padding: "10px" }}>
@@ -730,15 +716,15 @@ const EtapeVideo = () => {
 )
                 
                 })}
-                {/* <Button
-    variant="contained"
-    color="primary"
-    sx={{ mr: "10px" }}
-    onClick={handleSendAllMedia}
-    className="test-modificationButton"
-  >
-    Enregistrement des medias
-  </Button> */}
+                <Button
+                  variant="contained"
+                  color="primary"
+                  sx={{ mr: "10px" }}
+                  onClick={handleSendAllMedia}
+                  className="test-modificationButton"
+                >
+                  Enregistrement des medias
+              </Button>
               <Button
                 variant="contained"
                 sx={{ 
