@@ -103,6 +103,7 @@ const Tooltip = ({ text, children }) => {
   };
 
 const EtapeVideo = () => {
+  // const [isClicked, setIsClicked] = useState(false);
   const { selectedSousCatId, navigationId } = useSousCat();
   const [openModal, setOpenModal] = useState(false);
   const [currentVideoSrc, setCurrentVideoSrc] = useState("");
@@ -128,6 +129,8 @@ const EtapeVideo = () => {
   const imagesVideosFilteredParNomTemplate = visuelsVideos.filter(
     (item) => item.nom_modele_video === nomTemplate
   );
+  // console.log("VERIF imagesVideosFilteredParNomTemplate en premiere position : "  + JSON.stringify(imagesVideosFilteredParNomTemplate));
+  
 
   // Récuperation données de videos_visuel
   useEffect(() => {
@@ -161,9 +164,9 @@ const EtapeVideo = () => {
       { fieldName, file }, // Ajouter le fichier avec le nom du champ
     ]);
   
-    console.log("Mise à jour des fichiers :", mediaFiles);
+    // console.log("Mise à jour des fichiers :", mediaFiles);
 
-    console.log("Contenu du file : ", file.name)
+    // console.log("Contenu du file : ", file.name)
     if (file) {
 
       if (!file.type.startsWith("image/")) {
@@ -172,7 +175,7 @@ const EtapeVideo = () => {
       }
 
       const mediaName = `media${mediaCounter}.jpg`;
-      console.log("Nom généré dans handleFileUpload : ", mediaName)
+      // console.log("Nom généré dans handleFileUpload : ", mediaName)
 
       // setMediaName(mediaName);
       setVariables((prevState) => ({
@@ -180,13 +183,13 @@ const EtapeVideo = () => {
         // [fieldName]: 'https://memenza.fr/visuels/uploads/' + navigationId + "/" + file.name, 
         [fieldName]: `https://memenza.fr/visuels/uploads/${navigationId}/${mediaName}`, 
       }));
-      console.log("Fichier sélectionné :", file.name);
+      // console.log("Fichier sélectionné :", file.name);
       setMediaCounter((prevCount) => prevCount + 1);
     }
   };
   
   const handleSendMedia = async (fieldName) => {
-    console.log("CONTENU DE MEDIA");
+    // console.log("CONTENU DE MEDIA");
     const mediaData = mediaFiles.find((item) => item.fieldName === fieldName);
     if (!mediaData) {
       console.error("Aucun fichier trouvé pour ce champ :", fieldName);
@@ -198,12 +201,12 @@ const EtapeVideo = () => {
       return;
     }
     // Vérifie les informations sur le fichier
-    console.log("Nom du fichier :", file.name);
-    console.log("Type du fichier :", file.type);
-    console.log("Taille du fichier :", file.size);
+    // console.log("Nom du fichier :", file.name);
+    // console.log("Type du fichier :", file.type);
+    // console.log("Taille du fichier :", file.size);
     // Génère un nom dynamique basé sur le compteur actuel
     const dynamicName = `media${fileCounter}${file.name.substring(file.name.lastIndexOf("."))}`;
-    console.log("Nom dynamique généré :", dynamicName);
+    // console.log("Nom dynamique généré :", dynamicName);
     // Prépare les données pour l'envoi
     const formData = new FormData();
     formData.append("file", file);
@@ -215,7 +218,7 @@ const EtapeVideo = () => {
   if (fieldIndex !== -1) {
     // const dynamicName = `Media${fieldIndex + 1}`; // Génère "Media1", "Media2", etc., basé sur l'index
     const dynamicName = `media${fieldIndex + 1}${file.name.substring(file.name.lastIndexOf("."))}`; // Génère "Media1", "Media2", etc., basé sur l'index
-    console.log("Nom dynamique généré (2) :", dynamicName);
+    // console.log("Nom dynamique généré (2) :", dynamicName);
     // Ajouter le nom dynamique dans formData
     formData.append("destinationName", dynamicName);
   } else {
@@ -230,7 +233,7 @@ const EtapeVideo = () => {
     // Incrémente le compteur pour le prochain fichier
     setFileCounter((prevCounter) => prevCounter + 1);
   
-    console.log("CONTENU DE FORMDATA POUR TIM : ", formData);
+    // console.log("CONTENU DE FORMDATA POUR TIM : ", formData);
   
     try {
       // Effectue l'envoi des données
@@ -240,7 +243,7 @@ const EtapeVideo = () => {
       });
   
       if (response.ok) {
-        console.log("Fichier envoyé avec succès :", await response.json());
+        // console.log("Fichier envoyé avec succès :", await response.json());
       } else {
         console.error("Erreur lors de l'envoi :", response.statusText);
       }
@@ -261,10 +264,18 @@ const EtapeVideo = () => {
   
 
   const handleTest = (srcVid, nomVid) => {
+    // setIsClicked(true);
     setOpenModal(true);
     setCurrentVideoSrc(srcVid);
     setNomTemplate(nomVid);    
 
+    console.log("Dans la console, personne ne vous entendra crier : "  + JSON.stringify(visuelsVideos));
+    const imagesVideosFilteredParNomTemplate = visuelsVideos.filter(
+      // (item) => item.nom_modele_video === nomTemplate
+      (item) => item.nom_modele_video === nomVid
+    );
+    // console.log("VERIF imagesVideosFilteredParNomTemplate en DEUXIEME position : "  + JSON.stringify(imagesVideosFilteredParNomTemplate));
+    
     // const selectedTemplate = visuelsVideos.find(
     const selectedTemplate = imagesVideosFilteredParNomTemplate.find(
       (item) => item.textes_video && item.medias_video
@@ -275,23 +286,28 @@ const EtapeVideo = () => {
       console.error("Aucun template sélectionné");
       return;
     }
+    const parsedTemplateTextesVideo = JSON.parse(selectedTemplate.textes_video);
+    setTabParseTextesVideo(parsedTemplateTextesVideo.videoTextFields);
+    const parsedTemplateMediasVideo = JSON.parse(selectedTemplate.medias_video);
+    setTabParseMediasVideo(parsedTemplateMediasVideo.mediaFields || []);
 
-    try {
-      const parsedTemplateTextesVideo = JSON.parse(selectedTemplate.textes_video);
-      const parsedTemplateMediasVideo = JSON.parse(selectedTemplate.medias_video);
+    // try {
+    //   const parsedTemplateTextesVideo = JSON.parse(selectedTemplate.textes_video);
+    //   const parsedTemplateMediasVideo = JSON.parse(selectedTemplate.medias_video);
 
-      setTabParseTextesVideo(parsedTemplateTextesVideo.videoTextFields || []);
-      setTabParseMediasVideo(parsedTemplateMediasVideo.mediaFields || []);
-    } catch (error) {
-      console.error("Erreur lors du parsing JSON :", error);
-    }
+    //   setTabParseTextesVideo(parsedTemplateTextesVideo.videoTextFields || []);
+    //   setTabParseMediasVideo(parsedTemplateMediasVideo.mediaFields || []);
+    // } catch (error) {
+    //   console.error("Erreur lors du parsing JSON :", error);
+    // }
+
   };
   
   
 
 
   const handleVideoSendWithTemplate = async () => {
-    console.log("SIMULATION ENVOI CHLES");
+    // console.log("SIMULATION ENVOI CHLES");
 
     const variablesTest = {
       "S1-txt": "9 mois que nous l'attendions",
@@ -318,7 +334,7 @@ const EtapeVideo = () => {
       "variables": JSON.stringify(variables),
       // "variables": JSON.stringify(variablesTest),
     };
-console.log("AVANT ENVOI, VERIF FORMDATA : " + JSON.stringify(variables));
+// console.log("AVANT ENVOI, VERIF FORMDATA : " + JSON.stringify(variables));
 
 
     try {
@@ -345,7 +361,7 @@ console.log("AVANT ENVOI, VERIF FORMDATA : " + JSON.stringify(variables));
       return;
     }
   
-    console.log("Démarrage de l'envoi des fichiers individuellement...");
+    // console.log("Démarrage de l'envoi des fichiers individuellement...");
     
     for (const mediaData of mediaFiles) {
       const { fieldName } = mediaData;
@@ -478,7 +494,10 @@ console.log("AVANT ENVOI, VERIF FORMDATA : " + JSON.stringify(variables));
           <Grid item xs={6}>
             <Box sx={{ overflowY: "auto", maxHeight: "60vh" }}>
               <Typography variant="h6">Paramétrage du Template</Typography>
+              {console.log(tabParseTextesVideo)} 
+              {/* {isClicked && tabParseTextesVideo.map((field, index) => { */}
               {tabParseTextesVideo.map((field, index) => {
+                console.log(field);
                 const match = field.name.match(/^S(\d+)-txt$/);
                 const dynamicLabel = match ? `Texte ${match[1]}` : field.name;
                 return (
@@ -502,7 +521,7 @@ console.log("AVANT ENVOI, VERIF FORMDATA : " + JSON.stringify(variables));
               {tabParseMediasVideo.map((field, index) => {
 
                 // field.name = `Media ${index + 1}`;
-                console.log(field.name);
+                // console.log(field.name);
 
                 const match = field.name.match(/^s\d+-img(\d+)$/);
                 const dynamicLabel = match ? `Media ${match[1]}` : field.name;
