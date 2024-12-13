@@ -104,6 +104,7 @@ const Tooltip = ({ text, children }) => {
 
 const EtapeVideo = () => {
   // const [isClicked, setIsClicked] = useState(false);
+  const [isMediaSaved, setIsMediaSaved] = useState(false);
   const { selectedSousCatId, navigationId } = useSousCat();
   const [openModal, setOpenModal] = useState(false);
   const [currentVideoSrc, setCurrentVideoSrc] = useState("");
@@ -356,6 +357,7 @@ const EtapeVideo = () => {
   };
 
   const handleSendAllMedia = async () => {
+    setIsMediaSaved(true);
     if (mediaFiles.length === 0) {
       console.error("Aucun média enregistré à envoyer.");
       return;
@@ -620,6 +622,7 @@ const EtapeVideo = () => {
               </Button>
               <Button
                 variant="contained"
+                disabled={!isMediaSaved}
                 sx={{ 
                   mt: 3,
                   padding: 0, 
