@@ -107,13 +107,10 @@ const EtapeVideo = () => {
   const [openModal, setOpenModal] = useState(false);
   const [currentVideoSrc, setCurrentVideoSrc] = useState("");
   const [nomTemplate, setNomTemplate] = useState("");
-  // console.log("VERIFICATION TABLEAU nomTemplate : " + JSON.stringify(nomTemplate));
   const [variables, setVariables] = useState({});
   const [visuelsVideos, setVisuelsVideos] = useState([]);
   const [tabParseTextesVideo, setTabParseTextesVideo] = useState([]);
-  // console.log("VERIFICATION TABLEAU tabParseTextesVideo : " + JSON.stringify(tabParseTextesVideo));
   const [tabParseMediasVideo, setTabParseMediasVideo] = useState([]);
-  // console.log("VERIFICATION TABLEAU tabParseMediasVideo : " + JSON.stringify(tabParseMediasVideo));
   const [isPlaying, setIsPlaying] = useState([]);
   const [mediaCounter, setMediaCounter] = useState(1);
   const [mediaFiles, setMediaFiles] = React.useState([]);  
@@ -123,19 +120,14 @@ const EtapeVideo = () => {
   const API_KEY = process.env.REACT_APP_MEMENZA_API_KEY || "simulation lecture clé API";
   const API_URL_WITH_TPL = "https://core-api.memenza.fr/api/wp-media/create-with-tpl";
   
-  const variablesParse = JSON.stringify(variables);
-  console.log("ICI LES DATAS DU JSON : " + variablesParse);
+  const variablesString = JSON.stringify(variables);
   
   const imagesVideosFiltered = visuelsVideos.filter(
     (item) => item.id_ss_cat === selectedSousCatId
-    // (item) => item.nom_modele_video === nomTemplate
   );
-  // console.log("VERIFICATION TABLEAU imagesVideosFiltered : " + JSON.stringify(imagesVideosFiltered));
   const imagesVideosFilteredParNomTemplate = visuelsVideos.filter(
     (item) => item.nom_modele_video === nomTemplate
   );
-  // console.log("VERIFICATION TABLEAU imagesVideosFilteredParNomTemplate : " + JSON.stringify(imagesVideosFilteredParNomTemplate));
-
 
   // Récuperation données de videos_visuel
   useEffect(() => {
@@ -192,98 +184,6 @@ const EtapeVideo = () => {
       setMediaCounter((prevCount) => prevCount + 1);
     }
   };
-  // const handleSendMedia = async (fieldName) => {
-  //   const mediaData = mediaFiles.find((item) => item.fieldName === fieldName);
-  // if (!mediaData) {
-  //   console.error("Aucun fichier trouvé pour ce champ :", fieldName);
-  //   return;
-  // }
-  // const { file } = mediaData;
-  // //   const mediaUrl = variables[fieldName];
-  // // if (!mediaUrl) {
-  // //   console.error("Aucun fichier sélectionné pour ce champ :", fieldName);
-  // //   return;
-  // // }
-  //   // const file = variables[fieldName];
-  //   if (file) {
-  //     console.log("Nom du fichier :", file.name);
-  //     console.log("Type du fichier :", file.type);
-  //     console.log("Taille du fichier :", file.size);
-  //   } else {
-  //     console.error("Aucun fichier sélectionné.");
-  //   }
-    
-  //   // const mediaName = mediaUrl.split("/").pop();
-  //   // console.log("Nom utilisé dans handleSendMedia : ", mediaName);
-  //   // const dynamicName = `media${fileCounter}${file.name.substring(file.name.lastIndexOf("."))}`; // Utilise l'extension du fichier original
-  //   // fileCounter += 1;
-
-  //   if (file) {
-  //   // if (mediaUrl) {
-  //     const formData = new FormData();
-  //     formData.append("file", file); 
-  //     // formData.append("file", mediaUrl); 
-  //     // formData.append("destinationName", mediaName); 
-  //     // formData.append("destinationName", "Media1.mp4"); 
-  //     // formData.append("destinationName", file.name); 
-  //     // formData.append("destinationName", dynamicName); 
-  //     setFileCounter((prevCounter) => {
-  //       const dynamicName = `media${prevCounter}${file.name.substring(file.name.lastIndexOf("."))}`;
-  //       console.log(dynamicName); // "media1.jpg", "media2.jpg", etc.
-  //       return prevCounter + 1; // Incrémente le compteur
-  //     });
-  //     formData.append("destinationFolder", navigationId);
-  //     console.log("CONTENU DE FORMDATA POUR TIM : " +  JSON.stringify(formData));
-      
-  //     console.log("Nom du fichier dynamicname : ", dynamicName);
-  
-  //     try {
-  //       const response = await fetch("../../wp-content/plugins/ProductImageCustomizer/js/upload-media.php",{
-  //         method: "POST",
-  //         body: formData,
-  //       } ); 
-  //       // const response = await axios.post("https://memenza.fr/wp-json/custom/v1/upload-media", formData, {
-  //       // const response = await axios.post("https://memenza.fr/visuels/uploads/", formData, {
-  //       // headers: {
-  //       //     "Content-Type": "multipart/form-data",
-  //       //   },
-  //       // });
-          
-        
-  
-  //       if (response.status === 200) {
-  //         console.log("Fichier envoyé avec succès :", response.data);
-  //       } else {
-  //         console.error("Erreur lors de l'envoi :", response.statusText);
-  //       }
-  //     } catch (error) {
-  //       console.error("Erreur lors de l'envoi du fichier :", error);
-  //       //////////////////////////////////
-  //       //////////////////////////////////
-  //       console.log("CONTENU DU FILE : " + file.name);
-  //       console.log("Erreur complète : ", error.response || error.message);
-  //       if (error.response) {
-  //         // La requête a été faite et le serveur a répondu avec un code d'état
-  //         // qui n'est pas dans la plage des 2xx
-  //         console.log("Réponse d'erreur:", error.response);
-  //         console.log("Code d'état:", error.response.status);
-  //         console.log("Données d'erreur:", error.response.data);
-  //         console.log("Message d'erreur:", error.response.statusText);
-  //       } else if (error.request) {
-  //         // La requête a été faite mais aucune réponse n'a été reçue
-  //         console.log("Erreur de requête:", error.request);
-  //       } else {
-  //         // Quelque chose s'est mal passé dans la configuration de la requête
-  //         console.log("Erreur lors de la configuration de la requête:", error.message);
-  //       }
-  //       //////////////////////////////////
-  //       //////////////////////////////////
-        
-  //     }
-  //   } else {
-  //     console.error("Aucun fichier sélectionné pour le champ :", fieldName);
-  //   }
-  // };
   
   const handleSendMedia = async (fieldName) => {
     console.log("CONTENU DE MEDIA");
@@ -314,7 +214,7 @@ const EtapeVideo = () => {
   const fieldIndex = tabParseMediasVideo.findIndex((field) => field.name === fieldName);
   if (fieldIndex !== -1) {
     // const dynamicName = `Media${fieldIndex + 1}`; // Génère "Media1", "Media2", etc., basé sur l'index
-    const dynamicName = `Media${fieldIndex + 1}${file.name.substring(file.name.lastIndexOf("."))}`; // Génère "Media1", "Media2", etc., basé sur l'index
+    const dynamicName = `media${fieldIndex + 1}${file.name.substring(file.name.lastIndexOf("."))}`; // Génère "Media1", "Media2", etc., basé sur l'index
     console.log("Nom dynamique généré (2) :", dynamicName);
     // Ajouter le nom dynamique dans formData
     formData.append("destinationName", dynamicName);
@@ -387,63 +287,39 @@ const EtapeVideo = () => {
     }
   };
   
-  // const handleTest = (srcVid, nomVid) => {
-  //   setOpenModal(true);
-  //   setCurrentVideoSrc(srcVid);
-  //   setNomTemplate(nomVid); // Cela déclenche le useEffect ci-dessous
-  // };
-  // useEffect(() => {
-  //   if (nomTemplate) {
-  //     const selectedTemplate = imagesVideosFilteredParNomTemplate.find(
-  //       (item) => item.nom_modele_video === nomTemplate && item.textes_video && item.medias_video
-  //     );
-
-  //     if (selectedTemplate) {
-  //       try {
-  //         // Parsing des données de textes et médias vidéo
-  //         const parsedTextesVideo = JSON.parse(selectedTemplate.textes_video);
-  //         const parsedMediasVideo = JSON.parse(selectedTemplate.medias_video);
-
-  //         // Mise à jour des états
-  //         setTabParseTextesVideo(parsedTextesVideo.videoTextFields || []);
-  //         setTabParseMediasVideo(parsedMediasVideo.mediaFields || []);
-  //       } catch (error) {
-  //         console.error("Erreur lors du parsing JSON :", error);
-  //       }
-  //     }
-  //   }
-  // }, [nomTemplate, imagesVideosFilteredParNomTemplate]); // Cette dépendance déclenche le useEffect à chaque changement
-
+  
 
 
   const handleVideoSendWithTemplate = async () => {
     console.log("SIMULATION ENVOI CHLES");
 
-    const exemplePourTest = {
-      "scene1_texte1": "Test écriture variable",
-      "scene2_image1": "https://img.freepik.com/photos-gratuite/nuages-style-fantastique_23-2151057680.jpg",
-      "scene2_image2": "https://i.pinimg.com/736x/7a/c6/91/7ac69100e88a63a14b9cbe8ba260721f.jpg",
-      "scene2_texte1": "Ceci est un message varible postman",
-      "scene3_image2": "https://archzine.fr/wp-content/uploads/2020/03/wallpaper-ordinateur-pc-fond-ecran-kawaii-dessin-cactus-vert-fleurs-roses.webp",
-      "scene3_texte1": "Cela fonctionne bien ? ",
-      "scene3_image3": "https://cdn.futura-sciences.com/cdn-cgi/image/width=1024,quality=60,format=auto/sources/images/screen/EVENEMENT/Hiver/965-hiver-43.jpg", 
-      }
-      const exemplePourTestV2 = {
-        "S1-txt": "Test écriture variable",
-        "scene2_image1": "https://img.freepik.com/photos-gratuite/nuages-style-fantastique_23-2151057680.jpg",
-        "scene2_image2": "https://i.pinimg.com/736x/7a/c6/91/7ac69100e88a63a14b9cbe8ba260721f.jpg",
-        "scene2_texte1": "Ceci est un message varible postman",
-        "scene3_image2": "https://archzine.fr/wp-content/uploads/2020/03/wallpaper-ordinateur-pc-fond-ecran-kawaii-dessin-cactus-vert-fleurs-roses.webp",
-        "scene3_texte1": "Cela fonctionne bien ? ",
-        "scene3_image3": "https://cdn.futura-sciences.com/cdn-cgi/image/width=1024,quality=60,format=auto/sources/images/screen/EVENEMENT/Hiver/965-hiver-43.jpg", 
-        }
-    
-    const formData = {
-      template_id: "RdLlSO4FUmAV6fPHvKT1",
-      desc: "test tom desc",
-      variables,
-      // exemplePourTest,
+    const variablesTest = {
+      "S1-txt": "9 mois que nous l'attendions",
+      "S2-txt": "Nous avons d'abord attendus ça sœur",
+      "S3-txt": "Senti ses petites mains",
+      "S4-txt": "Pas encore là, nous l'aimions déjà",
+      "S5-txt": "... et maintenant, il illumine notre vie",
+      "S6-txt": "Alexandre est né le 12 janvier 2025",
+      "s1-img1": "https://memenza.fr/visuels/uploads/cmd48320/media1.jpg",
+      "s1-img2": "https://memenza.fr/visuels/uploads/cmd48320/media2.jpg",
+      "s2-img1": "https://memenza.fr/visuels/uploads/cmd48320/media3.jpg",
+      "s2-img2": "https://memenza.fr/visuels/uploads/cmd48320/media4.jpg",
+      "s3-img1": "https://memenza.fr/visuels/uploads/cmd48320/media5.jpg",
+      "s4-img1": "https://memenza.fr/visuels/uploads/cmd48320/media6.jpg",
+      "s4-img2": "https://memenza.fr/visuels/uploads/cmd48320/media7.jpg",
+      "s5-img1": "https://memenza.fr/visuels/uploads/cmd48320/media8.jpg",
+      "s5-img2": "https://memenza.fr/visuels/uploads/cmd48320/media9.jpg",
+      "s6-img1": "https://memenza.fr/visuels/uploads/cmd48320/media10.jpg"
     };
+
+    const formData = {
+      "template_id": "g7Jhb10BQEGbDK5wO8l8",
+      "desc": "test tom desc",
+      "variables": JSON.stringify(variables),
+      // "variables": JSON.stringify(variablesTest),
+    };
+console.log("AVANT ENVOI, VERIF FORMDATA : " + JSON.stringify(variables));
+
 
     try {
       const response = await axios.post(API_URL_WITH_TPL, formData, {
@@ -453,7 +329,7 @@ const EtapeVideo = () => {
         },
       });
 
-      if (response.status === 200) {
+      if (response.status === 200 || 201) {
         console.log("Données envoyées avec succès :", response.data);
       } else {
         console.error("Erreur lors de l'envoi des données :", response.statusText);
