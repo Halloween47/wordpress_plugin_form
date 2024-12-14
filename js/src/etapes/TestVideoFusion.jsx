@@ -182,13 +182,24 @@ const EtapeVideo = () => {
     // console.log("Contenu du file : ", file.name)
     if (file) {
 
-      if (!file.type.startsWith("image/")) {
-        console.error("Seuls les fichiers d'image sont autorisés.");
+      // if (!file.type.startsWith("image/")) {
+      //   console.error("Seuls les fichiers d'image sont autorisés.");
+      //   return;
+      // }
+
+      if (!file.type.startsWith("image/") && !file.type.startsWith("video/")) {
+        console.error("Seuls les fichiers d'image ou de vidéo sont autorisés.");
         return;
       }
+      
+      const fileExtension = file.name.split('.').pop(); // Récupère la partie après le dernier "."
 
-      const mediaName = `media${mediaCounter}.jpg`;
+      const validExtension = fileExtension && fileExtension.length <= 5 ? fileExtension : 'unknown';
+
+      // const mediaName = `media${mediaCounter}.jpg`;
       // console.log("Nom généré dans handleFileUpload : ", mediaName)
+      const mediaName = `media${mediaCounter}.${validExtension}`;
+      console.log("Nom de fichier généré : ", mediaName);
 
       // setMediaName(mediaName);
       setVariables((prevState) => ({
@@ -323,41 +334,13 @@ const EtapeVideo = () => {
     const pourIdTemplateDynamique = imagesVideosFilteredParNomTemplate.find(
       (item) => item.id_json2video
     );
-    // console.log("VERIF TIM : " + JSON.stringify(imagesVideosFilteredParNomTemplate));
-    console.log("VERIFICATION POUR JSON2VIDEO : " + JSON.stringify(pourIdTemplateDynamique.id_json2video));
     console.log("En attente ....");
 
-    const variablesTest = {
-      "s1-txt": "TA MERE",
-      "s2-txt": "texte VT person 2",
-      "s3-txt": "texte VT person 3",
-      "s4-txt": "et là, un petit géranium",
-      "s5-txt": "texte VT person 5",
-      "s6-txt": "Tim and Furious",
-      "s1-img1": "https://memenza.fr/visuels/uploads/cmd38646/media1.jpg",
-      "s1-img2": "https://memenza.fr/visuels/uploads/cmd38646/media2.jpg",
-      "s2-img1": "https://memenza.fr/visuels/uploads/cmd38646/media3.jpg",
-      "s2-img2": "https://memenza.fr/visuels/uploads/cmd38646/media4.jpg",
-      "s3-img1": "https://memenza.fr/visuels/uploads/cmd38646/media5.jpg",
-      "s4-img1": "https://memenza.fr/visuels/uploads/cmd38646/media6.jpg",
-      "s4-img2": "https://memenza.fr/visuels/uploads/cmd38646/media7.jpg",
-      "s5-img1": "https://memenza.fr/visuels/uploads/cmd38646/media8.jpg",
-      "s5-img2": "https://memenza.fr/visuels/uploads/cmd38646/media9.jpg",
-      "s6-img1": "https://memenza.fr/visuels/uploads/cmd38646/media10.jpg"
-    };
-    console.log("VERIF VARIBLE TEST : " + JSON.stringify(variables));
-    // console.log("VERIF VARIBLE TEST : " + JSON.stringify(variablesTest));
-    
-
     const formData = {
-      // "template_id": "g7Jhb10BQEGbDK5wO8l8",
       "template_id": pourIdTemplateDynamique.id_json2video,
       "desc": "test",
       "variables": JSON.stringify(variables),
-      // "variables": JSON.stringify(variablesTest),
     };
-// console.log("AVANT ENVOI, VERIF FORMDATA : " + JSON.stringify(variables));
-
 
     try {
       const response = await axios.post(API_URL_WITH_TPL, formData, {

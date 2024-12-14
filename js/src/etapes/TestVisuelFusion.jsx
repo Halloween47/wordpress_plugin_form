@@ -261,6 +261,7 @@ import {
   Divider,
   Button,
   TextField,
+  Tooltip,
 } from "@mui/material";
 import styled from "styled-components";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -751,18 +752,55 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
         </Box>
       )}
       <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}>
-        <Button
+        {/* <Button
           type="button"
           variant="contained"
           // disabled={!generatedImageUrl}  // Désactiver si l'image n'est pas générée
           disabled={!generatedImageUrl}
           onClick={handleNext}
-          sx={{ mt: 4, 
-            mr: "1rem" }}
+          sx={{ 
+            mt: 4, 
+            mr: "1rem",
+            position: "relative",
+            "&:disabled": {
+      pointerEvents: "none", // Désactiver les interactions
+      "&::after": {
+        content: '""', // Nécessaire pour afficher le pseudo-élément
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        backgroundColor: "rgba(0, 0, 0, 0.5)", // Overlay semi-transparent
+        borderRadius: "4px", // Assurez-vous qu'il suit la forme du bouton
+        zIndex: 1, // Assurez-vous qu'il est au-dessus du texte du bouton
+      },
+    },
+          }}
         >
           {/* Suivant après image */}
-          Suivant
-        </Button>
+          {/* Suivant */} 
+        {/* </Button> */}
+        
+        <Tooltip
+  title={!generatedImageUrl ? "Veuillez générer l'image d'abord" : "Veuillez générer l'image d'abord"}
+  arrow
+  sx={{ zIndex: "9999 !important" }} 
+>
+  <span>
+    {/* Le bouton est encapsulé dans un span pour que Tooltip fonctionne aussi quand le bouton est désactivé */}
+    <Button
+      type="button"
+      variant="contained"
+      disabled={!generatedImageUrl} // Le bouton est désactivé si `generatedImageUrl` est null
+      onClick={handleNext}
+      sx={{ mt: 4, mr: "1rem" }}
+    >
+      Suivant
+    </Button>
+  </span>
+</Tooltip>
+
       </Box>
 
 {/* <Button type="success" variant="contained">
