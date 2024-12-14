@@ -132,14 +132,14 @@ const App = () => {
                 </Button>
               )}
               <Box sx={{ flex: "1 1 auto" }} />
-              <Button
+              {/* <Button
                 variant="contained"
                 onClick={handleSuivant}
                 // disabled={!isGenerate}
                 sx={{ color: "#ffffff ", backgroundColor: "#A46FFB" }}
               >
                 {activeStep === steps.length - 1 ? "Terminé" : "Suivant"}
-              </Button>
+              </Button> */}
             </Box>
           </React.Fragment>
         </Box>

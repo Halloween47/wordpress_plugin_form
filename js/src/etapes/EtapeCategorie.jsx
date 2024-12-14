@@ -251,15 +251,24 @@ function EtapeCategorie({ activeStep, setActiveStep }) {
           </Typography>
         </Box>
       </Modal>
-      <Button
-        type="button"
-        variant="contained"
-        disabled={!selectedSousCatId}
-        onClick={handleNext}
-        sx={{ mt: 2 }}
-      >
-        Suivant après choix categories
-      </Button>
+      <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}>
+        <Button
+          type="button"
+          variant="contained"
+          disabled={!selectedSousCatId}
+          onClick={handleNext}
+          sx={{ 
+            mt: 2, 
+            mr: "1rem",
+            // position: "absolute", 
+            // right: "1.5rem", // Distance du bord droit de l'écran
+            // bottom: "1rem",
+          }}
+        >     
+          {/* Suivant après choix categories */}
+          Suivant
+        </Button>
+      </Box>
     </Box>
   );
 }
