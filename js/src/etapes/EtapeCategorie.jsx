@@ -187,7 +187,8 @@ const StylesSousCategories = `
 function EtapeCategorie({ activeStep, setActiveStep }) {
   const [isSousCatSelect, setIsSousCatSelect] = useState(false);
   const handleNext = () => {
-    setActiveStep(prevStep => prevStep + 1); // Incrémenter l'étape
+    setActiveStep(prevStep => prevStep + 1);
+    window.scrollTo(0, 0);
   };
   // const [activeStep, setActiveStep] = useState(0);
   const [open, setOpen] = useState(false);

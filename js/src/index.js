@@ -93,6 +93,7 @@ const App = () => {
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    window.scrollTo(0, 0);
   };
 
   return (

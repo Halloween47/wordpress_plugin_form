@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import CloseIcon from "@mui/icons-material/Close";
-import { Paper } from "@mui/material";
+import { CardMedia, Paper } from "@mui/material";
 
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -17,7 +17,7 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "40%",
+  width: "30%",
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
@@ -26,6 +26,10 @@ const style = {
 };
 
 function ChoixPropreVisuel() {
+  const [fileUrl, setFileUrl] = useState(null);
+
+
+  const [ownFile, setOwnFile] = useState("");
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -44,15 +48,32 @@ function ChoixPropreVisuel() {
       defaultFile: "/visuels/cadres/templates/bebe.png",
     },
   ]);
-  const handleFileChange = (index, event) => {
+  const handleFileChange = (event, index) => {
     const file = event.target.files[0];
+    
     if (file) {
       const fileUrl = URL.createObjectURL(file); // URL temporaire pour la prévisualisation
+      console.log("Test file URL : " + fileUrl);
       const updatedFields = [...imageFields];
       updatedFields[index].defaultFile = fileUrl;
       setImageFields(updatedFields);
     }
   };
+  const handleFileChange2 = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const generatedUrl = URL.createObjectURL(file); // Génère une URL temporaire pour le fichier
+      console.log("Generated file URL:", generatedUrl);
+      setFileUrl(generatedUrl); 
+    }
+  };
+  useEffect(() => {
+    if (fileUrl) {
+      console.log("FILEURL CONTENU (après mise à jour): " + fileUrl);
+    }
+  }, [fileUrl]);
+  
+  
 
   return (
     <div>
@@ -107,6 +128,7 @@ function ChoixPropreVisuel() {
             >
               <List dense={dense}>
                 {/* {generate( */}
+                  {/* <ListItem disablePadding={true}> */}
                   <ListItem disablePadding={true}>
                     <ListItemText
                       primary="Information sur l'image : Vous pouvez uploader un visuels au format 1086*1086 pixels (ou format carré équivalent)"
@@ -117,22 +139,26 @@ function ChoixPropreVisuel() {
               </List>
             </Box>
 
-            <Button
-                  component="label"
+            <Box sx={{display: "flex", flexDirection: "column"}}>
+              <CardMedia
+                component="img"
+                height="194"
+                image={fileUrl ||"https://memenza.fr/visuels/placeholder.webp"}
+                alt="Paella dish"
+              />
+              <Button
+              component="label"
                   variant="contained"
-                  startIcon={<CloudUploadIcon />}
-                >
-                  Choisir un fichier
-                  <input
-                    type="file"
+              startIcon={<CloudUploadIcon />}
+            >
+              Choisir un fichier
+              <input
+                type="file"
                     hidden
-                    onChange={(event) => handleFileChange(index, event)}
-                  />
-                </Button>
-
-          
-
-          <Button
+                onChange={(event) => handleFileChange2(event)}
+              />
+              </Button>
+              <Button
             variant="contained"
             color="success"
             onClick={() => {
@@ -141,8 +167,11 @@ function ChoixPropreVisuel() {
             }}
           >
             Sauvegarder
-          </Button>
-        </Box>
+              </Button>
+            </Box>
+            
+
+          </Box>
       </Modal>
     </div>
   );
