@@ -384,6 +384,70 @@ const EtapeVideo = () => {
     console.log("Envoi de tous les fichiers terminé.");
   };
 
+  const handleSendAllMediaAndCreateVideo = async () => {
+    console.log("Démarrage de l'envoi des médias et création de la vidéo...");
+  
+    // Étape 1 : Envoi de tous les médias
+    if (mediaFiles.length === 0) {
+      console.error("Aucun média enregistré à envoyer.");
+      return;
+    }
+  
+    try {
+      for (const mediaData of mediaFiles) {
+        const { fieldName } = mediaData;
+  
+        try {
+          // Utilisation de handleSendMedia pour chaque fichier
+          await handleSendMedia(fieldName);
+          console.log(`Fichier associé au champ ${fieldName} envoyé avec succès.`);
+        } catch (error) {
+          console.error(`Erreur lors de l'envoi du fichier pour le champ ${fieldName} :`, error);
+          throw new Error("Erreur dans l'envoi des médias. Interruption du processus.");
+        }
+      }
+  
+      console.log("Envoi de tous les fichiers terminé.");
+    } catch (mediaError) {
+      console.error("Erreur globale lors de l'envoi des médias :", mediaError);
+      return; // Arrêter si l'envoi des médias échoue
+    }
+  
+    // Étape 2 : Création de la vidéo avec le template
+    const pourIdTemplateDynamique = imagesVideosFilteredParNomTemplate.find(
+      (item) => item.id_json2video
+    );
+  
+    if (!pourIdTemplateDynamique) {
+      console.error("Template dynamique non trouvé !");
+      return;
+    }
+  
+    const formData = {
+      "template_id": pourIdTemplateDynamique.id_json2video,
+      "desc": "test",
+      "variables": JSON.stringify(variables),
+    };
+  
+    try {
+      const response = await axios.post(API_URL_WITH_TPL, formData, {
+        headers: {
+          "WP-API-KEY": API_KEY,
+          "Content-Type": "application/json",
+        },
+      });
+  
+      if (response.status === 200 || response.status === 201) {
+        console.log("Données envoyées avec succès :", response.data);
+      } else {
+        console.error("Erreur lors de l'envoi des données :", response.statusText);
+      }
+    } catch (error) {
+      console.error("Erreur lors de l'envoi des données pour la création de la vidéo :", error);
+    }
+  };
+  
+
   return (
     <Box sx={{ textAlign: "center", p: 4 }}>
       <Box className="etape-video-intro">
@@ -587,7 +651,7 @@ const EtapeVideo = () => {
 )
                 
                 })}
-                <Button
+                {/* <Button
                   variant="contained"
                   color="primary"
                   sx={{ mr: "10px" }}
@@ -595,7 +659,7 @@ const EtapeVideo = () => {
                   className="test-modificationButton"
                 >
                   Enregistrement des medias
-              </Button>
+              </Button> */}
               <Button
                 variant="contained"
                 // disabled={!isMediaSaved}
@@ -603,7 +667,8 @@ const EtapeVideo = () => {
                   mt: 3,
                   padding: 0, 
                 }}
-                onClick={handleVideoSendWithTemplate}
+                // onClick={handleVideoSendWithTemplate}
+                onClick={handleSendAllMediaAndCreateVideo}
               >
                 Envoyer les données
               </Button>
