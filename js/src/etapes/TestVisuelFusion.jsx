@@ -116,6 +116,10 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
   const handleNext = () => {
     setActiveStep(prevStep => prevStep + 1); // Incrémenter l'étape
   };
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    window.scrollTo(0, 0);
+  };
   const { isGenerate, setIsGenerate, selectedSousCatId, navigationId, outputFilePathContext, setOutputFilePathContext } = useSousCat();
   // console.log(isGenerate);
   const [selectedVisuelId, setSelectedVisuelId] = useState(null);
@@ -496,24 +500,34 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
       )}
         </Box>
       )}
-      <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}>
+      <Box sx={{ display: "flex", justifyContent: "space-between", mt: 2 }}>
+        
+                        <Button
+                          disabled={activeStep === 0}
+                          // disabled={activeStep === 0 || !isGenerate}
+                          onClick={handleBack}
+                          sx={{ mr: 1 }}
+                        >
+                          Retour
+                        </Button>
+                    
         <Tooltip
-  title={!generatedImageUrl ? "Veuillez générer l'image d'abord" : "Veuillez générer l'image d'abord"}
-  arrow
-  sx={{ zIndex: "9999 !important" }} 
->
-  <span>
-    {/* Le bouton est encapsulé dans un span pour que Tooltip fonctionne aussi quand le bouton est désactivé */}
-    <Button
-      type="button"
-      variant="contained"
-      disabled={!generatedImageUrl} // Le bouton est désactivé si `generatedImageUrl` est null
-      onClick={handleNext}
-      sx={{ mt: 4, mr: "1rem" }}
-    >
-      Suivant
-    </Button>
-  </span>
+          title={!generatedImageUrl ? "Veuillez générer l'image d'abord" : "Veuillez générer l'image d'abord"}
+          arrow
+          sx={{ zIndex: "9999 !important" }} 
+        >
+        <span>
+        {/* Le bouton est encapsulé dans un span pour que Tooltip fonctionne aussi quand le bouton est désactivé */}
+          <Button
+            type="button"
+            variant="contained"
+            disabled={!generatedImageUrl} // Le bouton est désactivé si `generatedImageUrl` est null
+            onClick={handleNext}
+            sx={{ mt: 4, mr: "1rem" }}
+          >
+            Suivant
+          </Button>
+        </span>
         </Tooltip>
       </Box>
 

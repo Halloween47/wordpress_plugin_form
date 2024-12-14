@@ -27,7 +27,7 @@ import StepLabel from "@mui/material/StepLabel";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import EtapeCategorie from "./etapes/EtapeCategorie.jsx";
-import EtapeVisuel from "./etapes/EtapeVisuel.jsx";
+// import EtapeVisuel from "./etapes/EtapeVisuel.jsx";
 import TestVisuelFusion from "./etapes/TestVisuelFusion.jsx";
 // import EtapeVideo from "./etapes/EtapeVideo.jsx";
 import TestVideoFusion from "./etapes/TestVideoFusion.jsx";
@@ -122,7 +122,7 @@ const App = () => {
               Etape {activeStep + 1}
             </Typography>
             <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-              {activeStep > 0 && (
+              {/* {activeStep > 0 && (
                 <Button
                   disabled={activeStep === 0}
                   // disabled={activeStep === 0 || !isGenerate}
@@ -131,7 +131,7 @@ const App = () => {
                 >
                   Retour
                 </Button>
-              )}
+              )} */}
               <Box sx={{ flex: "1 1 auto" }} />
               {/* <Button
                 variant="contained"
