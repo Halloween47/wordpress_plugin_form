@@ -86,7 +86,7 @@ function ChoixPropreVisuel() {
             <CloseIcon />
           </Box>
           <Typography variant="h6" sx={{ mb: 2 }}>
-            Personnalisez vos images
+            Envoyer votre propre visuel
           </Typography>
           <Box
               className="popup-upload_zone-infos-qualite"
@@ -109,44 +109,15 @@ function ChoixPropreVisuel() {
                 {/* {generate( */}
                   <ListItem disablePadding={true}>
                     <ListItemText
-                      primary="Information sur l'image"
-                      secondary={"Vous pouvez uploader un visuels au format 1086*1086 pixels (ou format carré équivalent)"}
+                      primary="Information sur l'image : Vous pouvez uploader un visuels au format 1086*1086 pixels (ou format carré équivalent)"
+                      // secondary={"Vous pouvez uploader un visuels au format 1086*1086 pixels (ou format carré équivalent)"}
                     />
                   </ListItem>
                 {/* // )} */}
               </List>
             </Box>
 
-          {imageFields.map((field, index) => (
-            <Box
-              key={index}
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                mb: 3,
-                gap: 2,
-                width: "100%"
-              }}
-            >
-              <Typography variant="subtitle1">{field.name}</Typography>
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 2,
-                }}
-              >
-                <Paper
-                  elevation={3}
-                  sx={{
-                    width: 100,
-                    height: 100,
-                    backgroundImage: `url(${field.defaultFile})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                  }}
-                />
-                <Button
+            <Button
                   component="label"
                   variant="contained"
                   startIcon={<CloudUploadIcon />}
@@ -158,9 +129,8 @@ function ChoixPropreVisuel() {
                     onChange={(event) => handleFileChange(index, event)}
                   />
                 </Button>
-              </Box>
-            </Box>
-          ))}
+
+          
 
           <Button
             variant="contained"
