@@ -613,7 +613,7 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
   };
 
   return (
-    <Box sx={{ textAlign: "center", p: 4, bgcolor: "#f5f5f5" }}>
+    <Box sx={{ textAlign: "center", bgcolor: "#f5f5f5" }}>
       <Box className="etape-visuel-intro">
            <Box className="etape-visuel-intro-img">
              <img
@@ -748,21 +748,22 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
           <CardMedia component="img" image={generatedImageUrl} alt="Image générée" />
         </Box>
       )}
-      <Button
-    type="button"
-    variant="contained"
-    // disabled={!generatedImageUrl}  // Désactiver si l'image n'est pas générée
-    disabled={!generatedImageUrl}
-    onClick={handleNext}
-    sx={{ mt: 2 }}
-  >
-    Suivant après image
-  </Button>
-  {/* <Button onClick={handleSuivant}>
-                {activeStep === steps.length - 1 ? "Finish" : "Suivant"}
-              </Button> */}
         </Box>
       )}
+      <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}>
+        <Button
+          type="button"
+          variant="contained"
+          // disabled={!generatedImageUrl}  // Désactiver si l'image n'est pas générée
+          disabled={!generatedImageUrl}
+          onClick={handleNext}
+          sx={{ mt: 4, 
+            mr: "1rem" }}
+        >
+          {/* Suivant après image */}
+          Suivant
+        </Button>
+      </Box>
 
 {/* <Button type="success" variant="contained">
       Prévisualiser votre cadre 
