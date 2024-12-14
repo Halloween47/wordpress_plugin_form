@@ -110,6 +110,8 @@ const EtapeVideo = () => {
   const [currentVideoSrc, setCurrentVideoSrc] = useState("");
   const [nomTemplate, setNomTemplate] = useState("");
   const [variables, setVariables] = useState({});
+  console.log("VARIABLES CE COMPLETE A CHAQUE ENTREE : " + JSON.stringify(variables));
+  
   const [visuelsVideos, setVisuelsVideos] = useState([]);
   const [tabParseTextesVideo, setTabParseTextesVideo] = useState([]);
   const [tabParseMediasVideo, setTabParseMediasVideo] = useState([]);
@@ -117,6 +119,7 @@ const EtapeVideo = () => {
   const [mediaCounter, setMediaCounter] = useState(1);
   const [mediaFiles, setMediaFiles] = React.useState([]);  
   const [fileCounter, setFileCounter] = React.useState(1);
+  const [idJ2V, setIdJ2V] = React.useState(1);
   const videoRefs = useRef([]);
   
   const API_KEY = process.env.REACT_APP_MEMENZA_API_KEY || "simulation lecture clé API";
@@ -127,9 +130,18 @@ const EtapeVideo = () => {
   const imagesVideosFiltered = visuelsVideos.filter(
     (item) => item.id_ss_cat === selectedSousCatId
   );
+  // console.log("POUR AFFICHADE IMAGE VIDEO : " + JSON.stringify(imagesVideosFiltered));
+
   const imagesVideosFilteredParNomTemplate = visuelsVideos.filter(
     (item) => item.nom_modele_video === nomTemplate
   );
+  // console.log("REPONSE imagesVideosFilteredParNomTemplate : " + JSON.stringify(imagesVideosFilteredParNomTemplate));
+
+  const imagesVideosFilteredPourIdJ2V = visuelsVideos.find(
+    (item) => item.id_json2video
+  );
+  // console.log("REPONSE J2V : " + JSON.stringify(imagesVideosFilteredPourIdJ2V));
+  
   // console.log("VERIF imagesVideosFilteredParNomTemplate en premiere position : "  + JSON.stringify(imagesVideosFilteredParNomTemplate));
   
 
@@ -308,30 +320,39 @@ const EtapeVideo = () => {
 
 
   const handleVideoSendWithTemplate = async () => {
-    // console.log("SIMULATION ENVOI CHLES");
+    const pourIdTemplateDynamique = imagesVideosFilteredParNomTemplate.find(
+      (item) => item.id_json2video
+    );
+    // console.log("VERIF TIM : " + JSON.stringify(imagesVideosFilteredParNomTemplate));
+    console.log("VERIFICATION POUR JSON2VIDEO : " + JSON.stringify(pourIdTemplateDynamique.id_json2video));
+    console.log("En attente ....");
 
     const variablesTest = {
-      "S1-txt": "9 mois que nous l'attendions",
-      "S2-txt": "Nous avons d'abord attendus ça sœur",
-      "S3-txt": "Senti ses petites mains",
-      "S4-txt": "Pas encore là, nous l'aimions déjà",
-      "S5-txt": "... et maintenant, il illumine notre vie",
-      "S6-txt": "Alexandre est né le 12 janvier 2025",
-      "s1-img1": "https://memenza.fr/visuels/uploads/cmd48320/media1.jpg",
-      "s1-img2": "https://memenza.fr/visuels/uploads/cmd48320/media2.jpg",
-      "s2-img1": "https://memenza.fr/visuels/uploads/cmd48320/media3.jpg",
-      "s2-img2": "https://memenza.fr/visuels/uploads/cmd48320/media4.jpg",
-      "s3-img1": "https://memenza.fr/visuels/uploads/cmd48320/media5.jpg",
-      "s4-img1": "https://memenza.fr/visuels/uploads/cmd48320/media6.jpg",
-      "s4-img2": "https://memenza.fr/visuels/uploads/cmd48320/media7.jpg",
-      "s5-img1": "https://memenza.fr/visuels/uploads/cmd48320/media8.jpg",
-      "s5-img2": "https://memenza.fr/visuels/uploads/cmd48320/media9.jpg",
-      "s6-img1": "https://memenza.fr/visuels/uploads/cmd48320/media10.jpg"
+      "s1-txt": "TA MERE",
+      "s2-txt": "texte VT person 2",
+      "s3-txt": "texte VT person 3",
+      "s4-txt": "et là, un petit géranium",
+      "s5-txt": "texte VT person 5",
+      "s6-txt": "Tim and Furious",
+      "s1-img1": "https://memenza.fr/visuels/uploads/cmd38646/media1.jpg",
+      "s1-img2": "https://memenza.fr/visuels/uploads/cmd38646/media2.jpg",
+      "s2-img1": "https://memenza.fr/visuels/uploads/cmd38646/media3.jpg",
+      "s2-img2": "https://memenza.fr/visuels/uploads/cmd38646/media4.jpg",
+      "s3-img1": "https://memenza.fr/visuels/uploads/cmd38646/media5.jpg",
+      "s4-img1": "https://memenza.fr/visuels/uploads/cmd38646/media6.jpg",
+      "s4-img2": "https://memenza.fr/visuels/uploads/cmd38646/media7.jpg",
+      "s5-img1": "https://memenza.fr/visuels/uploads/cmd38646/media8.jpg",
+      "s5-img2": "https://memenza.fr/visuels/uploads/cmd38646/media9.jpg",
+      "s6-img1": "https://memenza.fr/visuels/uploads/cmd38646/media10.jpg"
     };
+    console.log("VERIF VARIBLE TEST : " + JSON.stringify(variables));
+    // console.log("VERIF VARIBLE TEST : " + JSON.stringify(variablesTest));
+    
 
     const formData = {
       "template_id": "g7Jhb10BQEGbDK5wO8l8",
-      "desc": "test tom desc",
+      // "template_id": pourIdTemplateDynamique.id_json2video,
+      "desc": "test",
       "variables": JSON.stringify(variables),
       // "variables": JSON.stringify(variablesTest),
     };
@@ -523,7 +544,7 @@ const EtapeVideo = () => {
               {/* {console.log(tabParseMediasVideo)}  */}
               {tabParseMediasVideo.map((field, index) => {
                 
-                field.name = `Media ${index + 1}`;
+                // field.name = `Media ${index + 1}`;
                 // console.log(field.name);
                 
 
@@ -544,7 +565,8 @@ const EtapeVideo = () => {
                       >
                         {/* Label dynamique pour le champ média */}
                         {/* <Typography sx={{ mr: "30px" }}>{dynamicLabel}</Typography> */}
-                        <Typography sx={{ mr: "30px" }}>{field.name}</Typography>
+                        {/* <Typography sx={{ mr: "30px" }}>{field.name}</Typography> */}
+                        <Typography sx={{ mr: "30px" }}>Media {index + 1}</Typography>
 
                           {/* Bouton pour importer un média */}
                           <Button component="label" variant="contained" sx={{ mr: "10px" }}>
@@ -593,7 +615,7 @@ const EtapeVideo = () => {
               </Button>
               <Button
                 variant="contained"
-                disabled={!isMediaSaved}
+                // disabled={!isMediaSaved}
                 sx={{ 
                   mt: 3,
                   padding: 0, 

@@ -1,51 +1,45 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-const CustomizerComponent = () => {
-    const [customText, setCustomText] = useState('');
-    const [productId, setProductId] = useState(123); // ID du produit à personnaliser (à adapter dynamiquement si nécessaire)
+const handleCustomize = async () => {
+    try {
+        // Étape 1 : Récupérer l'ID du produit via la route REST
+        const productResponse = await fetch('/wp-json/plugin_memenza/v1/id_produit_perso');
+        const productData = await productResponse.json();
 
-    const handleCustomize = () => {
-        // Préparation des données à envoyer
+        // if (!productResponse.ok  !productData.product_id) {
+        if (!productResponse.ok || !productData.product_id) {
+        // if (!productResponse.ok && !productData.product_id) {
+            alert('Impossible de récupérer l\'ID du produit.');
+            return;
+        }
+
+        const productId = productData.product_id;
+
+        // Étape 2 : Envoyer les données de personnalisation via AJAX
         const formData = new URLSearchParams({
-            action: 'add_custom_product_to_cart', // Action définie dans WordPress
-            product_id: productId,              // ID du produit
-            custom_text: customText,            // Texte de personnalisation
-            nonce: ajaxConfig.nonce,            // Nonce pour sécuriser la requête
+            action: 'customize_product',
+            product_id: productId,
+            custom_text: 'Personnalisée youpitralala',
+            nonce: ajaxConfig.nonce,
         });
 
-        // Envoi de la requête AJAX
-        fetch(ajaxConfig.ajaxUrl, {
+        const response = await fetch(ajaxConfig.ajaxUrl, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: formData.toString(),
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                if (data.success) {
-                    alert('Produit ajouté au panier avec succès !');
-                } else {
-                    alert('Erreur : ' + data.data);
-                }
-            })
-            .catch((error) => {
-                console.error('Erreur lors de l\'envoi des données :', error);
-            });
-    };
+        });
 
-    return (
-        <div>
-            <h3>Personnalisez votre produit</h3>
-            <input
-                type="text"
-                placeholder="Entrez votre texte personnalisé"
-                value={customText}
-                onChange={(e) => setCustomText(e.target.value)}
-            />
-            <button onClick={handleCustomize}>Ajouter au panier</button>
-        </div>
-    );
+        const result = await response.json();
+        if (result.success) {
+            alert(result.message);
+            window.location.href = '/cart';
+        } else {
+            alert(result.message + 'Une erreur est survenue.');
+        }
+    } catch (error) {
+        console.error('Erreur lors de la personnalisation du produit :', error);
+        alert('Une erreur est survenue lors de la personnalisation du produit.');
+    }
 };
 
-export default CustomizerComponent;
+export default handleCustomize;
