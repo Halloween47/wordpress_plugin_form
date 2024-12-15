@@ -280,7 +280,7 @@
 // /////////////////////
 // /////////////////////
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSousCat } from "./GestionEtat.jsx";
 
 // Styles CSS pour le carousel
@@ -373,12 +373,22 @@ export default function CarouselCategories({ onImageClick, onSousCatClick }) {
   const [error, setError] = useState(null);
 
   const { setSelectedSousCatId } = useSousCat();
+  const sousCatContainerRef = useRef(null);
+  useEffect(() => {
+    if (selectedId && sousCatContainerRef.current) {
+      sousCatContainerRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [selectedId]);
 
   // Fonction pour sélectionner une sous-catégorie
   const handleSelectSousCat = (id) => {
     setSelectedSousCatId(id);
     console.log("Sous-catégorie sélectionnée :", id);
     setIsSousCatSelect(true);
+    // Scroll vers la section cible
+    if (sousCatRef.current) {
+      sousCatRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
   };
 
   // Chargement des images des catégories
@@ -397,6 +407,14 @@ export default function CarouselCategories({ onImageClick, onSousCatClick }) {
     fetchCategories();
   }, []);
 
+  // Fonction pour scroller vers les sous-catégories
+  const scrollToSousCategories = () => {
+    console.log(sousCatContainerRef.current);
+    
+    if (sousCatContainerRef.current) {
+      sousCatContainerRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
   // Chargement des images des sous-catégories
   useEffect(() => {
     const fetchSousCategories = async () => {
@@ -435,6 +453,7 @@ export default function CarouselCategories({ onImageClick, onSousCatClick }) {
               onClick={() => {
                 setSelectedId(item.id_cat);
                 onImageClick && onImageClick(item);
+                scrollToSousCategories();
               }}
             >
               <img
@@ -452,7 +471,7 @@ export default function CarouselCategories({ onImageClick, onSousCatClick }) {
 
         {/* Carousel des sous-catégories (si une catégorie est sélectionnée) */}
         {selectedId && (
-          <div className="carousel-ss">
+          <div className="carousel-ss" ref={sousCatContainerRef}>
             {filteredSousCat.map((item) => (
               <div
                 key={item.id_ss_cat}
