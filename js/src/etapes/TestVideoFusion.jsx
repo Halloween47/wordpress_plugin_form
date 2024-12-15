@@ -164,6 +164,9 @@ const EtapeVideo = () => {
     };
     fetchData();
   }, []);
+  if (!imagesVideosFiltered.length) {
+      return <Typography>Chargement des template...</Typography>;
+    }
 
   const handleVariableChange = (key, value) => {
     setVariables((prevVariables) => ({

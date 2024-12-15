@@ -264,7 +264,6 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
   // };
 
   const handleVisuelClickCustom = (id) => {
-    preventDefault()
     setSelectedVisuelId(id);
 
     setFormData((prevFormData) => ({
@@ -422,7 +421,6 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
             item={item}
             isSelected={selectedVisuelId === item.id_modele_cadre}
             onClick={() => handleVisuelClickCustom(item.id_modele_cadre)}
-            sx={{outline: " !important"}}
           />
         ))}
       </Grid>
