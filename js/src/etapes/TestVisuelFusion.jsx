@@ -120,7 +120,7 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
     window.scrollTo(0, 0);
   };
-  const { isGenerate, setIsGenerate, selectedSousCatId, navigationId, outputFilePathContext, setOutputFilePathContext } = useSousCat();
+  const { previsuOwnVisu, isGenerate, setIsGenerate, selectedSousCatId, navigationId, outputFilePathContext, setOutputFilePathContext } = useSousCat();
   // console.log(isGenerate);
   const [selectedVisuelId, setSelectedVisuelId] = useState(null);
   const [imagesVisuels, setImagesVisuels] = useState([]);
@@ -180,6 +180,7 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
       setFormData(prevFormData => {
         const text1Field = textesCadres.fields.find(field => field.name === "text1");
         const text2Field = textesCadres.fields.find(field => field.name === "text2");
+        
         const updatedFormData = {
           ...prevFormData,
           text1: prevFormData.text1 || text1Field?.defaultValue || "",
@@ -327,7 +328,7 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
 
     const formPayload = new FormData();
     formPayload.append("text1", formData.text1);
-    console.log("verif de formdataTEXT1 : " + JSON.stringify(dataVignettesClique));
+    console.log("FORMDATA : " + JSON.stringify(formData));
     
     formPayload.append("text2", formData.text2);
     formPayload.append("output_file", outputFilePath);
@@ -409,6 +410,22 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
           </Box>
       </Box>
       <ChoixPropreVisuel />
+      { previsuOwnVisu && (
+        <Box sx={{ mt: 2 }}>
+        <CardMedia
+          component="img"
+          image={previsuOwnVisu}
+          alt="Image générée"
+          sx={{
+            maxWidth: '70%',  // L'image occupe toute la largeur du conteneur, sans dépasser
+            height: 'auto',    // La hauteur de l'image s'ajuste proportionnellement
+            maxHeight: '200px',  // Hauteur maximale pour ne pas déborder
+            objectFit: 'contain', // Assure que l'image est bien ajustée sans déformation
+          }}
+        />
+      </Box>
+      )
+      }
       <Divider sx={{ mt: 2 }}> OU </Divider>
       <Box sx={{ mb: 4, py: 2, borderBottom: "2px solid #3f51b5" }}>
         <Typography variant="h5" color="textSecondary">Choisissez votre modèle</Typography>

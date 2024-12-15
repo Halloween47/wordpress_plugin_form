@@ -11,6 +11,7 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import zIndex from "@mui/material/styles/zIndex";
+import { useSousCat } from "./GestionEtat.jsx";
 
 const style = {
   position: "absolute",
@@ -25,16 +26,17 @@ const style = {
   zIndex: 10000,
 };
 
+// function ChoixPropreVisuel({fileUrl}) {
 function ChoixPropreVisuel() {
+  const { navigationId, previsuOwnVisu, setPrevisuOwnVisu } = useSousCat();
+  const [fileForSend, setFileForSend] = useState(null);
   const [fileUrl, setFileUrl] = useState(null);
-
-
   const [ownFile, setOwnFile] = useState("");
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [dense, setDense] = React.useState(false);
 
-    const [dense, setDense] = React.useState(false);
 
   const [imageFields, setImageFields] = useState([
     {
@@ -60,21 +62,83 @@ function ChoixPropreVisuel() {
     }
   };
   const handleFileChange2 = (event) => {
+  //   console.log("Event object:", event);
+  // console.log("Target:", event.target);
+  // console.log("Files:", event.target.files);
+  console.log("Files0:", event.target.files[0]);
     const file = event.target.files[0];
+    setFileForSend(file);
+    // console.log("FILE DU HANDLECHANGE2 : " + JSON.stringify(file.name));
+    
     if (file) {
       const generatedUrl = URL.createObjectURL(file); // Génère une URL temporaire pour le fichier
-      console.log("Generated file URL:", generatedUrl);
+      // console.log("Generated file URL:", generatedUrl);
       setFileUrl(generatedUrl); 
+      setPrevisuOwnVisu(generatedUrl)
     }
   };
-  useEffect(() => {
-    if (fileUrl) {
-      console.log("FILEURL CONTENU (après mise à jour): " + fileUrl);
+  // useEffect(() => {
+  //   if (fileUrl) {
+  //     console.log("FILEURL CONTENU (après mise à jour): " + fileUrl);
+  //   }
+  // }, [fileUrl]);
+  
+  const handleSubmitOwnFile = async (e) => {
+    e.preventDefault(); // Empêche le rechargement de la page par défaut
+  
+    // Vérifie si un fichier a été sélectionné
+    if (!fileForSend) {
+      console.error("Aucun fichier sélectionné.");
+      alert("Veuillez sélectionner un fichier avant de le sauvegarder.");
+      return;
     }
-  }, [fileUrl]);
-  
-  
+    
+    // console.log("fileForSend === :", JSON.stringify(fileForSend.name));
+    try {
+      // Crée un FormData pour inclure les données du fichier
+      const formData = new FormData();
+      formData.append("file", fileForSend); 
+      // formData.append("destinationName", "testTom"); 
+      
+      // const dynamicName = `test${fileForSend.name.substring(fileForSend.name.lastIndexOf("."))}`; // Génère "Media1", "Media2", etc., basé sur l'index
+      // formData.append("destinationName", dynamicName); 
 
+      const fileExtension = fileForSend.name.substring(fileForSend.name.lastIndexOf("."));
+      const dynamicName = navigationId + fileExtension; // Combine l'ID avec l'extension du fichier
+      formData.append("destinationName", dynamicName);
+
+      // formData.append("destinationName", navigationId); 
+      formData.append("destinationFolder", "default"); 
+  
+      // Affiche le contenu de formData pour déboguer (facultatif)
+      // console.log("Contenu de FormData :", Array.from(formData.entries()));
+      // console.log("FormData :", JSON.stringify(formData));
+  
+      // Envoie le fichier via une requête POST
+      const uploadResponse = await fetch(
+        "../../wp-content/plugins/ProductImageCustomizer/js/upload-media.php",{
+          method: "POST",
+          body: formData,
+        }
+      );
+  
+      // Gère la réponse du serveur
+      // if (uploadResponse.ok) {
+      //   const result = await uploadResponse.json(); 
+      //   console.log("Fichier envoyé avec succès :", result);
+      // } else {
+      //   console.error(
+      //     "Erreur lors de l'envoi :",
+      //     uploadResponse.status,
+      //     uploadResponse.statusText
+      //   );
+      // }
+    } catch (error) {
+      console.error("Erreur lors de l'envoi du fichier :", error);
+    }
+  };
+  
+  
   return (
     <div>
       <Button
@@ -131,7 +195,7 @@ function ChoixPropreVisuel() {
                   {/* <ListItem disablePadding={true}> */}
                   <ListItem disablePadding={true}>
                     <ListItemText
-                      primary="Information sur l'image : Vous pouvez uploader un visuels au format 1086*1086 pixels (ou format carré équivalent)"
+                      primary="Information sur l'image : Vous pouvez uploader un visuel au format 1086*1086 pixels (ou format carré équivalent)"
                       // secondary={"Vous pouvez uploader un visuels au format 1086*1086 pixels (ou format carré équivalent)"}
                     />
                   </ListItem>
@@ -161,10 +225,11 @@ function ChoixPropreVisuel() {
               <Button
             variant="contained"
             color="success"
-            onClick={() => {
-              console.log("Final imageFields:", imageFields);
-              handleClose();
-            }}
+            // onClick={() => {
+            //   console.log("Final imageFields:", imageFields);
+            //   handleClose();
+            // }}
+            onClick={(event) => handleSubmitOwnFile(event, fileForSend)}
           >
             Sauvegarder
               </Button>

@@ -10,8 +10,21 @@ export const SousCatProvider = ({ children }) => {
   const [outputFilePathContext, setOutputFilePathContext] = useState(null);
   const [isGenerate, setIsGenerate] = useState(false);
 
+  const [previsuOwnVisu, setPrevisuOwnVisu] = useState(false);
+
   return (
-    <SousCatContext.Provider value={{ selectedSousCatId, setSelectedSousCatId,navigationId, setNavigationId, outputFilePathContext, setOutputFilePathContext, isGenerate, setIsGenerate }}>
+    <SousCatContext.Provider value={{ 
+      selectedSousCatId, 
+      setSelectedSousCatId,
+      navigationId, 
+      setNavigationId, 
+      outputFilePathContext, 
+      setOutputFilePathContext, 
+      isGenerate, 
+      setIsGenerate,
+      previsuOwnVisu, 
+      setPrevisuOwnVisu 
+      }}>
       {children}
     </SousCatContext.Provider>
   );

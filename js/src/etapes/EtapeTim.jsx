@@ -7,8 +7,8 @@ const handleCustomize = async () => {
         const productData = await productResponse.json();
 
         // if (!productResponse.ok  !productData.product_id) {
-        if (!productResponse.ok || !productData.product_id) {
-        // if (!productResponse.ok && !productData.product_id) {
+        // if (!productResponse.ok || !productData.product_id) {
+        if (!productResponse.ok && !productData.product_id) {
             alert('Impossible de récupérer l\'ID du produit.');
             return;
         }

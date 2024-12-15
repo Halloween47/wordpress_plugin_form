@@ -103,7 +103,10 @@ const Tooltip = ({ text, children }) => {
     );
   };
 
-const EtapeVideo = () => {
+const EtapeVideo = ({ activeStep, setActiveStep }) => {
+  const handleNext = () => {
+    setActiveStep(prevStep => prevStep + 1); // Incrémenter l'étape
+  };
   // const [isClicked, setIsClicked] = useState(false);
   const [isMediaSaved, setIsMediaSaved] = useState(false);
   const { selectedSousCatId, navigationId } = useSousCat();
@@ -165,7 +168,7 @@ const EtapeVideo = () => {
     fetchData();
   }, []);
   if (!imagesVideosFiltered.length) {
-      return <Typography>Chargement des template...</Typography>;
+      return <Typography>Chargement des templates...</Typography>;
     }
 
   const handleVariableChange = (key, value) => {
@@ -178,30 +181,17 @@ const EtapeVideo = () => {
     const file = event.target.files[0];
     setMediaFiles((prevFiles) => [
       ...prevFiles,
-      { fieldName, file }, // Ajouter le fichier avec le nom du champ
+      { fieldName, file }, 
     ]);
-  
-    // console.log("Mise à jour des fichiers :", mediaFiles);
-
-    // console.log("Contenu du file : ", file.name)
     if (file) {
-
-      // if (!file.type.startsWith("image/")) {
-      //   console.error("Seuls les fichiers d'image sont autorisés.");
-      //   return;
-      // }
-
       if (!file.type.startsWith("image/") && !file.type.startsWith("video/")) {
         console.error("Seuls les fichiers d'image ou de vidéo sont autorisés.");
         return;
       }
       
       const fileExtension = file.name.split('.').pop(); // Récupère la partie après le dernier "."
-
       const validExtension = fileExtension && fileExtension.length <= 5 ? fileExtension : 'unknown';
 
-      // const mediaName = `media${mediaCounter}.jpg`;
-      // console.log("Nom généré dans handleFileUpload : ", mediaName)
       const mediaName = `media${mediaCounter}.${validExtension}`;
       console.log("Nom de fichier généré : ", mediaName);
 
@@ -224,23 +214,19 @@ const EtapeVideo = () => {
       return;
     }
     const { file } = mediaData;
+    console.log("VIDEO CONTENT FILE : " + JSON.stringify(file));
+    
     if (!file) {
       console.error("Aucun fichier sélectionné.");
       return;
     }
-    // Vérifie les informations sur le fichier
-    // console.log("Nom du fichier :", file.name);
-    // console.log("Type du fichier :", file.type);
-    // console.log("Taille du fichier :", file.size);
     // Génère un nom dynamique basé sur le compteur actuel
     const dynamicName = `media${fileCounter}${file.name.substring(file.name.lastIndexOf("."))}`;
     // console.log("Nom dynamique généré :", dynamicName);
     // Prépare les données pour l'envoi
     const formData = new FormData();
     formData.append("file", file);
-    // formData.append("destinationName", dynamicName);
-    ///////////////////////////////////
-    ///////////////////////////////////
+    
     // Identifier le champ en cours dans `tabParseMediasVideo` et générer un nom dynamique
   const fieldIndex = tabParseMediasVideo.findIndex((field) => field.name === fieldName);
   if (fieldIndex !== -1) {
@@ -253,15 +239,11 @@ const EtapeVideo = () => {
     console.error("Champ non trouvé dans tabParseMediasVideo :", fieldName);
     return;
   }
-    ///////////////////////////////////
-    ///////////////////////////////////
 
     formData.append("destinationFolder", navigationId);
   
     // Incrémente le compteur pour le prochain fichier
     setFileCounter((prevCounter) => prevCounter + 1);
-  
-    // console.log("CONTENU DE FORMDATA POUR TIM : ", formData);
   
     try {
       // Effectue l'envoi des données
@@ -331,9 +313,6 @@ const EtapeVideo = () => {
 
   };
   
-  
-
-
   const handleVideoSendWithTemplate = async () => {
     const pourIdTemplateDynamique = imagesVideosFilteredParNomTemplate.find(
       (item) => item.id_json2video
@@ -683,6 +662,17 @@ const EtapeVideo = () => {
               </Button>
             </Box>
           </Grid>
+          <span>
+                  {/* Le bouton est encapsulé dans un span pour que Tooltip fonctionne aussi quand le bouton est désactivé */}
+                    <Button
+                      type="button"
+                      variant="contained"
+                      onClick={handleNext}
+                      sx={{ mt: 4, mr: "1rem" }}
+                    >
+                      Suivant
+                    </Button>
+                  </span>
         </Grid>
       )}
       <style>{StylesTest}</style>

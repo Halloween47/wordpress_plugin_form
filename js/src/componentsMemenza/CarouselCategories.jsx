@@ -384,11 +384,6 @@ export default function CarouselCategories({ onImageClick, onSousCatClick }) {
   const handleSelectSousCat = (id) => {
     setSelectedSousCatId(id);
     console.log("Sous-catégorie sélectionnée :", id);
-    setIsSousCatSelect(true);
-    // Scroll vers la section cible
-    if (sousCatRef.current) {
-      sousCatRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
-    }
   };
 
   // Chargement des images des catégories
@@ -409,7 +404,7 @@ export default function CarouselCategories({ onImageClick, onSousCatClick }) {
 
   // Fonction pour scroller vers les sous-catégories
   const scrollToSousCategories = () => {
-    console.log(sousCatContainerRef.current);
+    // console.log(sousCatContainerRef.current);
     
     if (sousCatContainerRef.current) {
       sousCatContainerRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
