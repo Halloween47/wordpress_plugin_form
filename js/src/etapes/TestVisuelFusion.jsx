@@ -252,6 +252,9 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
 
     fetchData();
   }, []);
+  if (!imagesVisuels.length) {
+    return <Typography>Chargement des visuels...</Typography>;
+  }
 
   /////////////////////ACTUEL//////////////
   // const handleVisuelClickCustom = (id) => {
@@ -261,6 +264,7 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
   // };
 
   const handleVisuelClickCustom = (id) => {
+    preventDefault()
     setSelectedVisuelId(id);
 
     setFormData((prevFormData) => ({
@@ -418,6 +422,7 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
             item={item}
             isSelected={selectedVisuelId === item.id_modele_cadre}
             onClick={() => handleVisuelClickCustom(item.id_modele_cadre)}
+            sx={{outline: " !important"}}
           />
         ))}
       </Grid>

@@ -42,6 +42,7 @@ const StylesTest = `
 
 .etape-video-intro {
     display: flex;
+    align-items: center;
     gap: 20px;
     margin-bottom: 50px;
     background-color: #fff;
@@ -51,11 +52,11 @@ const StylesTest = `
   }
   .etape-video-intro-img {
     background-color: #e0e0e0;
-    width: 40%;
+    // width: 40%;
     border-radius: 8px;
   }
   .etape-video-intro-txt {
-    width: 50%;
+    width: 100%;
     color: #333;
     font-size: 16px;
     display: flex;
@@ -457,8 +458,11 @@ const EtapeVideo = () => {
                   src="https://memenza.fr/visuels/personnaliservideo.png"
                   alt="Wedding"
                   // style={{ width: "100%", height: "auto", borderRadius: "8px" }}
-                  style={{ width: "100%",
-                    height: "100%",
+                  style={{ 
+                    // width: "100%",
+                    // height: "100%",
+                    width: "100px", 
+                    height: "100px",
                     borderRadius: "8px",
                     objectFit: "cover", }}
                 />
