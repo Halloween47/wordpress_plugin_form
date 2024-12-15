@@ -412,6 +412,7 @@ const EtapeVideo = () => {
       }
   
       console.log("Envoi de tous les fichiers terminé.");
+      console.log("Création du média en cours...");
     } catch (mediaError) {
       console.error("Erreur globale lors de l'envoi des médias :", mediaError);
       return; // Arrêter si l'envoi des médias échoue
