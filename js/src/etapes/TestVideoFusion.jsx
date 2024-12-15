@@ -16,6 +16,7 @@ import axios from "axios";
 import styled from "styled-components";
 import { useSousCat } from "../componentsMemenza/GestionEtat.jsx";
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
+import ChoixPropreVideo from "../componentsMemenza/ChoixPropreVideo.jsx";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -523,6 +524,7 @@ const Tooltip = ({ text, children }) => {
         Uploader sa propre Vidéo
         <VisuallyHiddenInput type="file" accept="video/*" onChange={handleFileUpload} />
       </Button>
+      <ChoixPropreVideo />
       <Divider sx={{ color: "black", opacity: 0.6, margin: "10px" }}>OU</Divider>
 
       <Typography variant="h5">Choisissez votre modèle</Typography>
