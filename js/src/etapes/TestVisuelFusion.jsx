@@ -532,7 +532,8 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
                         </Button>
                     
         <Tooltip
-          title={!generatedImageUrl ? "Veuillez générer l'image d'abord" : "Veuillez générer l'image d'abord"}
+          // title={!generatedImageUrl ? "Veuillez générer l'image d'abord" : "Veuillez générer l'image d'abord"}
+          title={!previsuOwnVisu && !generatedImageUrl ? "Veuillez uploader ou générer une image d'abord" : ""}
           arrow
           sx={{ zIndex: "9999 !important" }} 
         >
@@ -541,7 +542,8 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
           <Button
             type="button"
             variant="contained"
-            disabled={!generatedImageUrl} // Le bouton est désactivé si `generatedImageUrl` est null
+            // disabled={!generatedImageUrl} // Le bouton est désactivé si `generatedImageUrl` est null
+            disabled={!previsuOwnVisu && !generatedImageUrl}
             onClick={handleNext}
             sx={{ mt: 4, mr: "1rem" }}
           >

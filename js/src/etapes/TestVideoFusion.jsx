@@ -131,6 +131,7 @@ const Tooltip = ({ text, children }) => {
   
   const API_KEY = process.env.REACT_APP_MEMENZA_API_KEY || "simulation lecture clé API";
   const API_URL_WITH_TPL = "https://core-api.memenza.fr/api/wp-media/create-with-tpl";
+  const API_URL_WITHOUT_TPL = "https://core-api.memenza.fr/api/wp-media/create-without-tpl";
   
   const variablesString = JSON.stringify(variables);
   
@@ -381,6 +382,29 @@ const Tooltip = ({ text, children }) => {
   
     console.log("Envoi de tous les fichiers terminé.");
   };
+
+  const handleVideoSendWithoutTemplate = async () => {
+    const formData = {
+      "video_path": pourIdTemplateDynamique.id_json2video,
+      "desc": "",
+    };
+    try {
+      const response = await axios.post(API_URL_WITHOUT_TPL, formData, {
+        headers: {
+          "WP-API-KEY": API_KEY,
+          "Content-Type": "application/json",
+        },
+      });
+  
+      if (response.status === 200 || response.status === 201) {
+        console.log("Données envoyées avec succès :", response.data);
+      } else {
+        console.error("Erreur lors de l'envoi des données :", response.statusText);
+      }
+    } catch (error) {
+      console.error("Erreur lors de l'envoi des données pour la création de la vidéo :", error);
+    }
+  }
 
   const handleSendAllMediaAndCreateVideo = async () => {
     console.log("Démarrage de l'envoi des médias et création de la vidéo...");
