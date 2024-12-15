@@ -515,7 +515,7 @@ const Tooltip = ({ text, children }) => {
                 </Typography>
               </Box>
             </Box>
-      <Button
+      {/* <Button
         component="label"
         variant="contained"
         startIcon={<CloudUploadIcon />}
@@ -523,7 +523,7 @@ const Tooltip = ({ text, children }) => {
       >
         Uploader sa propre Vidéo
         <VisuallyHiddenInput type="file" accept="video/*" onChange={handleFileUpload} />
-      </Button>
+      </Button> */}
       <ChoixPropreVideo />
       <Divider sx={{ color: "black", opacity: 0.6, margin: "10px" }}>OU</Divider>
 

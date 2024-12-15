@@ -181,28 +181,57 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
   //////////////////ACTUEL/////////////////////////
   // useEffect(() => {
   //   if (textesCadres) {
+  //     // Extraire les champs pour text1 et text2
+  //     const text1Field = textesCadres.fields.find(field => field.name === "text1");
+  //     const text2Field = textesCadres.fields.find(field => field.name === "text2");
+  
+  //     // Définir les constantes pour text1
+  //     const text1_fontfamily = text1Field?.font.family  || "";
+  //     const text1_size = text1Field?.font.size  || 0;
+  //     const text1_x = text1Field?.x_percent  || 0;
+  //     const text1_y = text1Field?.y_percent  || 0;
+  
+  //     // Définir les constantes pour text2
+  //     const text2_fontfamily = text2Field?.font.family  || "";
+  //     const text2_size = text2Field?.font.size  || 0;
+  //     const text2_x = text2Field?.x_percent  || 0;
+  //     const text2_y = text2Field?.y_percent  || 0;
+
+  //     // console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!" + 
+  //     //   JSON.stringify(text1_fontfamily) + 
+  //     //   JSON.stringify(text1_size) + 
+  //     //   JSON.stringify(text1_x) + 
+  //     //   JSON.stringify(text1_y) + 
+  //     //   JSON.stringify(text2_fontfamily) + 
+  //     //   JSON.stringify(text2_size) + 
+  //     //   JSON.stringify(text2_x) + 
+  //     //   JSON.stringify(text2_x)  
+  //     // );
+      
+  
+  //     // Mettre à jour formData avec les nouvelles constantes
   //     setFormData(prevFormData => {
-  //       const text1Field = textesCadres.fields.find(field => field.name === "text1");
-  //       const text2Field = textesCadres.fields.find(field => field.name === "text2");
-        
   //       const updatedFormData = {
   //         ...prevFormData,
-  //         text1: prevFormData.text1 || text1Field?.defaultValue || "",
-  //         text2: prevFormData.text2 || text2Field?.defaultValue || "",
-  //         // text1: prevFormData.text1 || "",
-  //         // text2: prevFormData.text2 || "",
+  //         text1: prevFormData.text1 || text1Field?.defaultValue  || "",
+  //         text2: prevFormData.text2 || text2Field?.defaultValue  || "",
+  //         "text1-fontfamily": text1_fontfamily,
+  //         "text1-size": text1_size,
+  //         "text1-x": text1_x,
+  //         "text1-y": text1_y,
+  //         "text2-fontfamily": text2_fontfamily,
+  //         "text2-size": text2_size,
+  //         "text2-x": text2_x,
+  //         "text2-y": text2_y,
   //       };
+  
+  //       // Ne pas mettre à jour si les valeurs sont identiques
   //       return JSON.stringify(prevFormData) === JSON.stringify(updatedFormData)
-  //         ? prevFormData // Ne pas mettre à jour si les valeurs sont identiques
+  //         ? prevFormData
   //         : updatedFormData;
   //     });
   //   }
   // }, [textesCadres]);
- //////////////////ACTUEL/////////////////////////
-  //////////////////ACTUEL/////////////////////////
-  //////////////////ACTUEL/////////////////////////
-  //////////////////ACTUEL/////////////////////////
-  //////////////////ACTUEL/////////////////////////
   useEffect(() => {
     if (textesCadres) {
       // Extraire les champs pour text1 et text2
@@ -210,43 +239,45 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
       const text2Field = textesCadres.fields.find(field => field.name === "text2");
   
       // Définir les constantes pour text1
-      const text1_fontfamily = text1Field?.font.family  || "";
-      const text1_size = text1Field?.font.size  || 0;
-      const text1_x = text1Field?.x_percent  || 0;
-      const text1_y = text1Field?.y_percent  || 0;
+      const text1_fontfamily = text1Field?.font.family || "";
+      const text1_size = text1Field?.font.size || 0;
+      const text1_x = text1Field?.x_percent || 0;
+      const text1_y = text1Field?.y_percent || 0;
+      const text1_colorR = text1Field?.color?.R || 0;
+      console.log("!!!!!!!!!!!!!!!!!!" + JSON.stringify(text1_colorR));
+      
+      const text1_colorV = text1Field?.color?.V || 0;
+      const text1_colorB = text1Field?.color?.B || 0;
   
       // Définir les constantes pour text2
-      const text2_fontfamily = text2Field?.font.family  || "";
-      const text2_size = text2Field?.font.size  || 0;
-      const text2_x = text2Field?.x_percent  || 0;
-      const text2_y = text2Field?.y_percent  || 0;
-
-      // console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!" + 
-      //   JSON.stringify(text1_fontfamily) + 
-      //   JSON.stringify(text1_size) + 
-      //   JSON.stringify(text1_x) + 
-      //   JSON.stringify(text1_y) + 
-      //   JSON.stringify(text2_fontfamily) + 
-      //   JSON.stringify(text2_size) + 
-      //   JSON.stringify(text2_x) + 
-      //   JSON.stringify(text2_x)  
-      // );
-      
+      const text2_fontfamily = text2Field?.font.family || "";
+      const text2_size = text2Field?.font.size || 0;
+      const text2_x = text2Field?.x_percent || 0;
+      const text2_y = text2Field?.y_percent || 0;
+      const text2_colorR = text2Field?.color?.R || 0;
+      const text2_colorV = text2Field?.color?.V || 0;
+      const text2_colorB = text2Field?.color?.B || 0;
   
       // Mettre à jour formData avec les nouvelles constantes
       setFormData(prevFormData => {
         const updatedFormData = {
           ...prevFormData,
-          text1: prevFormData.text1 || text1Field?.defaultValue  || "",
-          text2: prevFormData.text2 || text2Field?.defaultValue  || "",
+          text1: prevFormData.text1 || text1Field?.defaultValue || "",
+          text2: prevFormData.text2 || text2Field?.defaultValue || "",
           "text1-fontfamily": text1_fontfamily,
           "text1-size": text1_size,
           "text1-x": text1_x,
           "text1-y": text1_y,
+          "text1-colorR": text1_colorR,
+          "text1-colorV": text1_colorV,
+          "text1-colorB": text1_colorB,
           "text2-fontfamily": text2_fontfamily,
           "text2-size": text2_size,
           "text2-x": text2_x,
           "text2-y": text2_y,
+          "text2-colorR": text2_colorR,
+          "text2-colorV": text2_colorV,
+          "text2-colorB": text2_colorB,
         };
   
         // Ne pas mettre à jour si les valeurs sont identiques
@@ -256,6 +287,12 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
       });
     }
   }, [textesCadres]);
+ //////////////////ACTUEL/////////////////////////
+  //////////////////ACTUEL/////////////////////////
+  //////////////////ACTUEL/////////////////////////
+  //////////////////ACTUEL/////////////////////////
+  //////////////////ACTUEL/////////////////////////
+  
   // useEffect(() => {
   //   if (visuelsCadres?.imageFields?.length) {
   //     setFormData((prevFormData) => ({
@@ -401,28 +438,56 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
     // formPayload.append("image2", formData.image2);
 
     ///////////////////////////////////////
-///////////////////////////////////////
-///////////////////////////////////////
+    const formPayload = new FormData();
+    formPayload.append("text1", formData.text1);
+    formPayload.append("text2", formData.text2);
+    formPayload.append("output_file", outputFilePath);
+    formPayload.append("dossier", outputFolder);
+    formPayload.append("image1", formData.image1);
+    formPayload.append("image2", formData.image2);
 
-const formPayload = new FormData();
-formPayload.append("text1", formData.text1);
-formPayload.append("text2", formData.text2);
-formPayload.append("output_file", outputFilePath);
-formPayload.append("dossier", outputFolder);
-formPayload.append("image1", formData.image1);
-formPayload.append("image2", formData.image2);
+    // Ajouter les nouveaux champs pour text1
+    formPayload.append("text1-fontfamily", formData["text1-fontfamily"]);
+    formPayload.append("text1-size", formData["text1-size"]);
+    formPayload.append("text1-x", formData["text1-x"]);
+    formPayload.append("text1-y", formData["text1-y"]);
+    formPayload.append("text1-colorR", formData["text1-colorR"]);
+    formPayload.append("text1-colorV", formData["text1-colorV"]);
+    formPayload.append("text1-colorB", formData["text1-colorB"]);
 
-formPayload.append("text1-fontfamily", formData["text1-fontfamily"]);
-formPayload.append("text1-size", formData["text1-size"]);
-formPayload.append("text1-x", formData["text1-x"]);
-formPayload.append("text1-y", formData["text1-y"]);
-formPayload.append("text2-fontfamily", formData["text2-fontfamily"]);
-formPayload.append("text2-size", formData["text2-size"]);
-formPayload.append("text2-x", formData["text2-x"]);
-formPayload.append("text2-y", formData["text2-y"]);
+    // Ajouter les nouveaux champs pour text2
+    formPayload.append("text2-fontfamily", formData["text2-fontfamily"]);
+    formPayload.append("text2-size", formData["text2-size"]);
+    formPayload.append("text2-x", formData["text2-x"]);
+    formPayload.append("text2-y", formData["text2-y"]);
+    formPayload.append("text2-colorR", formData["text2-colorR"]);
+    formPayload.append("text2-colorV", formData["text2-colorV"]);
+    formPayload.append("text2-colorB", formData["text2-colorB"]);
 
-// Log pour vérifier
+// Log pour débogage
 console.log("FormPayload:", Array.from(formPayload.entries()));
+///////////////////////////////////////
+///////////////////////////////////////
+
+// const formPayload = new FormData();
+// formPayload.append("text1", formData.text1);
+// formPayload.append("text2", formData.text2);
+// formPayload.append("output_file", outputFilePath);
+// formPayload.append("dossier", outputFolder);
+// formPayload.append("image1", formData.image1);
+// formPayload.append("image2", formData.image2);
+
+// formPayload.append("text1-fontfamily", formData["text1-fontfamily"]);
+// formPayload.append("text1-size", formData["text1-size"]);
+// formPayload.append("text1-x", formData["text1-x"]);
+// formPayload.append("text1-y", formData["text1-y"]);
+// formPayload.append("text2-fontfamily", formData["text2-fontfamily"]);
+// formPayload.append("text2-size", formData["text2-size"]);
+// formPayload.append("text2-x", formData["text2-x"]);
+// formPayload.append("text2-y", formData["text2-y"]);
+
+// // Log pour vérifier
+// console.log("FormPayload:", Array.from(formPayload.entries()));
 
     for (const [key, value] of formPayload.entries()) {
       // console.log(" TEST VERIF PAYLOAD AVEC LISTE KEYS : " + key, value);

@@ -103,7 +103,14 @@ const { navigationId } = useSousCat();
 
   return (
     <React.Fragment>
-      <Button variant="outlined" onClick={handleClickOpen}>
+      <Button 
+      // variant="outlined"
+      component="label"
+        variant="contained" 
+      onClick={handleClickOpen} 
+      startIcon={<CloudUploadIcon />}
+      sx={{backgroundColor : "#1976d2"}}
+      >
       Uploader sa propre Vidéo
       </Button>
       <Dialog
@@ -128,8 +135,15 @@ const { navigationId } = useSousCat();
             Détails sur les conditions
           </DialogContentText>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Fermer</Button>
+        <DialogActions sx={{display: "flex", flexDirection: 'column'}}>
+          <Button 
+            onClick={handleClose} 
+            component="label"
+            variant="contained" 
+            sx={{ marginBottom: "10px"}}
+            >
+              Fermer
+          </Button>
           <Button
         component="label"
         variant="contained"
