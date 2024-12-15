@@ -15,6 +15,7 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import axios from "axios";
 import styled from "styled-components";
 import { useSousCat } from "../componentsMemenza/GestionEtat.jsx";
+import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -103,11 +104,13 @@ const Tooltip = ({ text, children }) => {
     );
   };
 
-const EtapeVideo = ({ activeStep, setActiveStep }) => {
+  const EtapeVideo = ({ activeStep, setActiveStep }) => {
+    const [checkedFields, setCheckedFields] = useState({});
+
+  const [check, setCheck] = useState(false);
   const handleNext = () => {
     setActiveStep(prevStep => prevStep + 1); // Incrémenter l'étape
   };
-  // const [isClicked, setIsClicked] = useState(false);
   const [isMediaSaved, setIsMediaSaved] = useState(false);
   const { selectedSousCatId, navigationId } = useSousCat();
   const [openModal, setOpenModal] = useState(false);
@@ -179,6 +182,13 @@ const EtapeVideo = ({ activeStep, setActiveStep }) => {
   };
   const handleFileUpload = (event, fieldName) => {
     const file = event.target.files[0];
+    ////////////////////
+    ////////////////////
+    if (file) {
+      setCheck(true);      
+    }
+    ////////////////////
+    ////////////////////
     setMediaFiles((prevFiles) => [
       ...prevFiles,
       { fieldName, file }, 
@@ -202,6 +212,11 @@ const EtapeVideo = ({ activeStep, setActiveStep }) => {
         [fieldName]: `https://memenza.fr/visuels/uploads/${navigationId}/${mediaName}`, 
       }));
       // console.log("Fichier sélectionné :", file.name);
+      setCheckedFields((prevChecked) => ({
+        ...prevChecked,
+        [fieldName]: true,
+      }));
+
       setMediaCounter((prevCount) => prevCount + 1);
     }
   };
@@ -614,6 +629,12 @@ const EtapeVideo = ({ activeStep, setActiveStep }) => {
                               // onChange={(e) => handleVariableChange(field.name, e.target.value)}
                             />
                           </Button>
+                          {/* {check && (
+                            <CheckCircleRoundedIcon  sx={{ color: 'green' }} />
+                          )} */}
+                          {checkedFields[field.name] && (
+                            <CheckCircleRoundedIcon sx={{ color: 'green' }} />
+                          )}
 
                           {/* Nouveau bouton pour envoyer le (1)média */}
                           {/* <Button
