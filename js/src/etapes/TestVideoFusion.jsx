@@ -575,7 +575,7 @@ const EtapeVideo = () => {
               {/* {console.log(tabParseTextesVideo)}  */}
               {/* {isClicked && tabParseTextesVideo.map((field, index) => { */}
               {tabParseTextesVideo.map((field, index) => {
-                console.log(field);
+                // console.log(field);
                 const match = field.name.match(/^S(\d+)-txt$/);
                 const dynamicLabel = match ? `Texte ${match[1]}` : field.name;
                 return (
@@ -629,7 +629,8 @@ const EtapeVideo = () => {
                             <input
                               type="file"
                               hidden
-                              accept="image/*,video/*"
+                              // accept="image/*,video/*"
+                              accept={field.type === "image" ? "image/*" : field.type === "video" ? "video/*" : "*/*"}
                               onChange={(e) => handleFileUpload(e, field.name)}
                               // onChange={(e) => handleVariableChange(field.name, e.target.value)}
                             />
