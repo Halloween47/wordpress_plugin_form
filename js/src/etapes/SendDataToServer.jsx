@@ -52,6 +52,7 @@ const SendDataToServer = () => {
   const { idProduit, navigationId, previsuOwnVisu, imageVisuelPath, pathImageGenerate, outputFilePathContext } = useSousCat(); // Récupère l'ID produit via le hook personnalisé
   const [productId, setProductId] = useState(null); // État local pour l'ID produit
 console.log("CHEMIN POUR IMAGE : " + JSON.stringify(previsuOwnVisu));
+console.log("CHEMIN POUR pathImageGenerate : " + JSON.stringify(pathImageGenerate));
 
   // Effet pour récupérer l'ID produit à partir du modal (DOM)
   useEffect(() => {
@@ -82,7 +83,10 @@ console.log("CHEMIN POUR IMAGE : " + JSON.stringify(previsuOwnVisu));
           body: new URLSearchParams({
             action: 'add_custom_product_to_cart', // Action WordPress
             product_id: idProduit, // ID produit depuis le hook
-            custom_text: 'toto', // Texte personnalisé
+            // custom_text: 'toto', // Texte personnalisé
+            // custom_text: '<p>ID cadre : '+ {navigationId} + '</p><p><img src="' + {pathImageGenerate} + "\""+ " alt=\"Image\" with=\"100\" height=\"100\" /></p>",
+            // custom_text: `<p>ID cadre : ${navigationId}</p>` + `<p><img src="${outputFilePathContext}" alt="Image" width="100" height="100" /></p>`,
+            custom_text: `<p>ID cadre : ${navigationId}</p>` + `<p><img src="${pathImageGenerate}" alt="Image" width="100" height="100" /></p>`,
           }),
         });
 
@@ -92,6 +96,7 @@ console.log("CHEMIN POUR IMAGE : " + JSON.stringify(previsuOwnVisu));
 
         const result = await response.json();
         console.log('Résultat de la requête AJAX :', result);
+        // const customText = `<p>ID cadre : ${navigationId}</p><p><img src="${pathImageGenerate}" alt="Image" /></p>`;
         window.location.href = '/panier/';
       } catch (error) {
         console.error('Erreur AJAX :', error);
