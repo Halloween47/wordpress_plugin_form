@@ -92,6 +92,7 @@ console.log("CHEMIN POUR IMAGE : " + JSON.stringify(previsuOwnVisu));
 
         const result = await response.json();
         console.log('Résultat de la requête AJAX :', result);
+        window.location.href = '/panier/';
       } catch (error) {
         console.error('Erreur AJAX :', error);
       }

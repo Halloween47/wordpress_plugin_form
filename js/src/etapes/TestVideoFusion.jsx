@@ -17,6 +17,7 @@ import styled from "styled-components";
 import { useSousCat } from "../componentsMemenza/GestionEtat.jsx";
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 import ChoixPropreVideo from "../componentsMemenza/ChoixPropreVideo.jsx";
+import SendDataToServer from "./SendDataToServer.jsx";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -106,6 +107,7 @@ const Tooltip = ({ text, children }) => {
   };
 
   const EtapeVideo = ({ activeStep, setActiveStep }) => {
+    const [reponseJ2VOK, setReponseJ2VOK] = useState(false);
     const [checkedFields, setCheckedFields] = useState({});
 
   const [check, setCheck] = useState(false);
@@ -462,6 +464,7 @@ const Tooltip = ({ text, children }) => {
       });
   
       if (response.status === 200 || response.status === 201) {
+        setReponseJ2VOK(true);
         console.log("!!!!!!!!!!!!!!!!!!!!!! REPONSE : " + JSON.stringify(response.data));
         const qrCode = JSON.parse(response.data.match(/({.*})/)[1]).data.qrcode;
         console.log("ICI LE QR CODE : "+ qrCode);
@@ -750,6 +753,9 @@ const Tooltip = ({ text, children }) => {
             </Box>
           </Grid>
           <span>
+            {reponseJ2VOK && (
+              <SendDataToServer />
+            )}
                   {/* Le bouton est encapsulé dans un span pour que Tooltip fonctionne aussi quand le bouton est désactivé */}
                     <Button
                       type="button"
