@@ -11,9 +11,19 @@ export const SousCatProvider = ({ children }) => {
   const [isGenerate, setIsGenerate] = useState(false);
 
   const [previsuOwnVisu, setPrevisuOwnVisu] = useState(false);
+  const [imageVisuelPath, setImageVisuelPath] = useState(false);
+  const [pathImageGenerate, setPathImageGenerate] = useState(false);
+  
+  const [idProduit, setIdProduit] = useState(null);
 
   return (
-    <SousCatContext.Provider value={{ 
+    <SousCatContext.Provider value={{
+      pathImageGenerate, 
+      setPathImageGenerate,
+      idProduit, 
+      setIdProduit, 
+      imageVisuelPath, 
+      setImageVisuelPath,
       selectedSousCatId, 
       setSelectedSousCatId,
       navigationId, 

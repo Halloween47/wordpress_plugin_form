@@ -96,6 +96,24 @@ const App = () => {
     window.scrollTo(0, 0);
   };
 
+  // const productId = '<?php echo esc_js(get_the_ID()); ?>';
+  //       const data = {
+  //           action: 'add_custom_product_to_cart',
+  //           product_id: productId,
+  //           custom_text: "coucou",
+  //       };
+
+  //       jQuery.post('<?php echo admin_url(\'admin-ajax.php\'); ?>', data, function(response) {
+  //           if (response.success) {
+  //               window.location.href = '<?php echo wc_get_cart_url(); ?>';
+  //           } else {
+  //               alert('Erreur : ' + response.data);
+  //           }
+  //       });
+
+  //       console.log("DATA TIM : " + JSON.stringify(productId));
+        
+
   return (
     <SousCatProvider>
       <div className="memenzaFormulaire">
@@ -115,6 +133,7 @@ const App = () => {
             })}
           </Stepper>
 
+
           {getStepContent(activeStep)}
 
           <React.Fragment>
@@ -133,14 +152,14 @@ const App = () => {
                 </Button>
               )} */}
               <Box sx={{ flex: "1 1 auto" }} />
-              {/* <Button
+              <Button
                 variant="contained"
                 onClick={handleSuivant}
                 // disabled={!isGenerate}
                 sx={{ color: "#ffffff ", backgroundColor: "#A46FFB" }}
               >
                 {activeStep === steps.length - 1 ? "Terminé" : "Suivant"}
-              </Button> */}
+              </Button>
             </Box>
           </React.Fragment>
         </Box>

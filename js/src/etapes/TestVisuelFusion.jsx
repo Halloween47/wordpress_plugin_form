@@ -120,7 +120,7 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
     window.scrollTo(0, 0);
   };
-  const { previsuOwnVisu, isGenerate, setIsGenerate, selectedSousCatId, navigationId, outputFilePathContext, setOutputFilePathContext } = useSousCat();
+  const { setPathImageGenerate, setImageVisuelPath, previsuOwnVisu, isGenerate, setIsGenerate, selectedSousCatId, navigationId, outputFilePathContext, setOutputFilePathContext } = useSousCat();
   // console.log(isGenerate);
   const [selectedVisuelId, setSelectedVisuelId] = useState(null);
   const [imagesVisuels, setImagesVisuels] = useState([]);
@@ -508,9 +508,18 @@ console.log("FormPayload:", Array.from(formPayload.entries()));
         throw new Error("Erreur lors de la soumission du formulaire");
       }
 
+
+      // const responseJson = await response.json();
       const result = await response.blob();
+      // const data = await response.json();
       const url = URL.createObjectURL(result);
+      // console.log("LIENDE responseJson : " + JSON.stringify(responseJson));
       setGeneratedImageUrl(url);
+      setPathImageGenerate(url)
+
+      // console.log("LIENDE DATA !!!E : " + JSON.stringify(response));
+      // setImageVisuelPath(result.imageUrl);
+      
       setIsGenerate(true)
       // console.log("TEST PREVISU VOICI LE RESULT DE LA REPONSE : " + JSON.stringify(result));
       // console.log("TEST PREVISU VOICI LERESULTAT DE LID : " + JSON.stringify(url));

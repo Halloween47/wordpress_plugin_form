@@ -113,7 +113,7 @@ const Tooltip = ({ text, children }) => {
     setActiveStep(prevStep => prevStep + 1); // Incrémenter l'étape
   };
   const [isMediaSaved, setIsMediaSaved] = useState(false);
-  const { selectedSousCatId, navigationId } = useSousCat();
+  const { imageVisuelPath, selectedSousCatId, navigationId,outputFilePathContext } = useSousCat();
   const [openModal, setOpenModal] = useState(false);
   const [currentVideoSrc, setCurrentVideoSrc] = useState("");
   const [nomTemplate, setNomTemplate] = useState("");
@@ -462,6 +462,46 @@ const Tooltip = ({ text, children }) => {
       });
   
       if (response.status === 200 || response.status === 201) {
+        console.log("!!!!!!!!!!!!!!!!!!!!!! REPONSE : " + JSON.stringify(response.data));
+        const qrCode = JSON.parse(response.data.match(/({.*})/)[1]).data.qrcode;
+        console.log("ICI LE QR CODE : "+ qrCode);
+        const imagePath = 'visuels/cmd/' + navigationId + '.png';
+        console.log("LIEN DE L IMAGE : " + JSON.stringify(imagePath));
+        //////////////////////
+        //////////////////////
+        
+        // const imagePath = ;
+        const formQR = new FormData();
+        formQR.append("qrcode", qrCode);
+
+        formQR.append("imagecmd", imagePath);
+        // formQR.append("imagecmd", );
+        try {
+          const responseQR = await fetch("../../wp-content/plugins/ProductImageCustomizer/js/process-simplifie.php", {
+            method: "POST",
+            body: formQR,
+            // Pour test sans envoi de data
+            // body: "",
+          });
+    
+          if (!responseQR.ok) {
+            throw new Error("Erreur lors de la soumission du formulaire");
+          }
+    
+          const result = await responseQR.blob();
+          const url = URL.createObjectURL(result);
+          setGeneratedImageUrl(url);
+          setIsGenerate(true)
+          // console.log("TEST PREVISU VOICI LE RESULT DE LA REPONSE : " + JSON.stringify(result));
+          // console.log("TEST PREVISU VOICI LERESULTAT DE LID : " + JSON.stringify(url));
+          
+        } catch (error) {
+          console.log(error.message);
+        }
+        //////////////////////
+        //////////////////////
+
+        
         console.log("Données envoyées avec succès :", response.data);
       } else {
         console.error("Erreur lors de l'envoi des données :", response.statusText);

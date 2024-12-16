@@ -3,6 +3,8 @@ import CarouselCategories from "../componentsMemenza/CarouselCategories.jsx";
 import { Box, Typography, Modal, Button } from "@mui/material";
 import { useSousCat } from "../componentsMemenza/GestionEtat.jsx";
 import { v4 as uuidv4 } from "uuid";
+import IdProduit from "./Test.jsx";
+import SendDataToServer from "./SendDataToServer.jsx";
 
 // Style pour la modal
 const modalStyle = {
@@ -55,6 +57,7 @@ const StylesSousCategories = `
 `;
 
 function EtapeCategorie({ activeStep, setActiveStep }) {
+  const [productId, setProductId] = useState();
   const [isSousCatSelect, setIsSousCatSelect] = useState(false);
   const handleNext = () => {
     setActiveStep(prevStep => prevStep + 1);
@@ -65,7 +68,8 @@ function EtapeCategorie({ activeStep, setActiveStep }) {
   const buttonRef = useRef(null);
   const sousCatRef = useRef(null);
 
-  const { setSelectedSousCatId, setNavigationId, selectedSousCatId, navigationId } = useSousCat();
+  const { idProduit, setIdProduit, setSelectedSousCatId, setNavigationId, selectedSousCatId, navigationId } = useSousCat();
+console.log("l'id pruit est bien passé : " + JSON.stringify(idProduit));
 
   // Générer un identifiant unique si non défini
   if (!navigationId) {
@@ -95,8 +99,51 @@ function EtapeCategorie({ activeStep, setActiveStep }) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  React.useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const response = await fetch("/wp-json/plugin_memenza/v1/id_produit_perso");
+          if (!response.ok) {
+            throw new Error("Erreur lors de la récupération des données");
+          }
+          const result = await response.json();
+          console.log("ID PERSO RESPONSE : " + JSON.stringify(result));
+          
+        } catch (error) {
+          console.error("Erreur :", error);
+        }
+      };
+      fetchData();
+    }, []);
+
+    // React.useEffect(() => {
+    //   const fetchData = async () => {
+    //     try {
+    //       const response = await fetch("/wp-json/plugin_memenza/v1/id_produit_perso");
+    //       if (!response.ok) {
+    //         throw new Error("Erreur lors de la récupération des données");
+    //       }
+    //       const result = await response.json();
+    //       console.log("ID PERSO RESPONSE : " + JSON.stringify(result));
+    //       // Assurez-vous que l'ID du produit est bien extrait de la réponse
+    //       const productId = result?.product_id; // Exemple, selon la structure de la réponse
+    //       setProductId(productId)
+    //       // Vous pouvez alors utiliser cet ID pour le transmettre à d'autres parties de votre application
+    //       console.log("ID du produit récupéré : ", productId);
+    //     } catch (error) {
+    //       console.error("Erreur :", error);
+    //     }
+    //   };
+    //   fetchData();
+    // }, []);
+    
+
   return (
     <Box className="memenza-categories">
+      {/* <IdProduit productId={productId} /> */}
+      {/* <SendDataToServer idProduit={idProduit}/> */}
+      {/* <IdProduit /> */}
+      {/* <SendDataToServer/> */}
       <Typography
         variant="h4"
         sx={{
