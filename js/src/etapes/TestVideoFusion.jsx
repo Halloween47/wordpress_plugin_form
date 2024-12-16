@@ -8,6 +8,7 @@ import {
   Divider,
 //   Tooltip,
   IconButton,
+  Modal,
 } from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import InfoIcon from "@mui/icons-material/Info";
@@ -18,6 +19,7 @@ import { useSousCat } from "../componentsMemenza/GestionEtat.jsx";
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 import ChoixPropreVideo from "../componentsMemenza/ChoixPropreVideo.jsx";
 import SendDataToServer from "./SendDataToServer.jsx";
+import zIndex from "@mui/material/styles/zIndex.js";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -35,6 +37,23 @@ const ButtonForm = styled("button")({
     padding: "5px 20px",
     backgroundColor: "rgba(0,0,0,0)"
 })
+const stylePrevisu = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: "60%",
+  bgcolor: 'background.paper',
+  // bgcolor: 'black',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  zIndex: 9999,
+};
 const StylesTest = `
 .test-modificationButton {
   background-color: red !important;
@@ -107,6 +126,10 @@ const Tooltip = ({ text, children }) => {
   };
 
   const EtapeVideo = ({ activeStep, setActiveStep }) => {
+    const [openPrevisu, setOpenPrevisu] = React.useState(true);
+      const handleOpenPrevisu = () => setOpen(true);
+      const handleClosePrevisu = () => setOpen(false);
+
     const [reponseJ2VOK, setReponseJ2VOK] = useState(false);
     const [checkedFields, setCheckedFields] = useState({});
 
@@ -675,8 +698,8 @@ const Tooltip = ({ text, children }) => {
                       sx={{ 
                         mt: 2, 
                         display: "flex", 
-                        // justifyContent: "center", 
-                        justifyContent: "flex-end", 
+                        justifyContent: "center", 
+                        // justifyContent: "flex-end", 
                         alignItems: "center", 
                         width: "100%"
                       }}
@@ -718,7 +741,8 @@ const Tooltip = ({ text, children }) => {
 
                           {/* Tooltip avec informations supplémentaires */}
                           <div style={{ padding: "10px" }}>
-                            <Tooltip text="Ici les infos correspondant au prérequis du média attendu">
+                            {/* <Tooltip text="Ici les infos correspondant au prérequis du média attendu"> */}
+                            <Tooltip text={field.comment}>
       <InfoIcon sx={{ color: "black" }} />
                             </Tooltip>
                           </div>
@@ -738,6 +762,7 @@ const Tooltip = ({ text, children }) => {
                 >
                   Enregistrement des medias
               </Button> */}
+              <Box sx={{display: "flex", flexDirection: "column", gap: 3}}>
               <Button
                 variant="contained"
                 // disabled={!isMediaSaved}
@@ -750,6 +775,23 @@ const Tooltip = ({ text, children }) => {
               >
                 Envoyer les données
               </Button>
+              {/* {reponseJ2VOK && (
+                <Button onClick={handleOpenPrevisu}>Prévisualisation</Button>
+              )} */}
+              {/* <Modal
+                open={openPrevisu}
+                onClose={handleClosePrevisu}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+                sx={{position: "relative", zIndex: 10000, width: "100%", height: "100%"}}
+              >
+                <Box sx={stylePrevisu}>
+                  <Typography id="modal-modal-title" variant="h5" component="h2">
+                            Envoi des données au serveur...
+                  </Typography>
+                </Box>
+              </Modal> */}
+              </Box>
             </Box>
           </Grid>
           <span>
@@ -763,7 +805,7 @@ const Tooltip = ({ text, children }) => {
                       onClick={handleNext}
                       sx={{ mt: 4, mr: "1rem" }}
                     >
-                      Suivant
+                      Vers le panier
                     </Button>
                   </span>
         </Grid>

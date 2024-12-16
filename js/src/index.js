@@ -34,6 +34,7 @@ import TestVideoFusion from "./etapes/TestVideoFusion.jsx";
 import EtapeValidation from "./etapes/EtapeValidation.jsx";
 import EtapeTim from "./etapes/EtapeTim.jsx";
 import { SousCatProvider, useSousCat } from "./componentsMemenza/GestionEtat.jsx";
+import SendDataToServer from "./etapes/SendDataToServer.jsx";
 
 // Définition des étapes
 const steps = ["Categorie", "Visuel", "Video", "Validation"];
@@ -71,6 +72,7 @@ const App = () => {
       case 3:
         // return <EtapeValidation />;
         return <EtapeTim />;
+        // return <SendDataToServer />;
       default:
         throw new Error("Etape inconnue");
     }
@@ -152,14 +154,14 @@ const App = () => {
                 </Button>
               )} */}
               <Box sx={{ flex: "1 1 auto" }} />
-              <Button
+              {/* <Button
                 variant="contained"
                 onClick={handleSuivant}
                 // disabled={!isGenerate}
                 sx={{ color: "#ffffff ", backgroundColor: "#A46FFB" }}
               >
                 {activeStep === steps.length - 1 ? "Terminé" : "Suivant"}
-              </Button>
+              </Button> */}
             </Box>
           </React.Fragment>
         </Box>

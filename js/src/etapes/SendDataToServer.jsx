@@ -47,6 +47,25 @@
 
 import React, { useState, useEffect } from 'react';
 import { useSousCat } from "../componentsMemenza/GestionEtat.jsx";
+import { Box, Button, CircularProgress, Modal, Typography } from '@mui/material';
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: "100%",
+  height: "100%",
+  bgcolor: 'background.paper',
+  // bgcolor: 'black',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+};
 
 const SendDataToServer = () => {
   const { idProduit, navigationId, previsuOwnVisu, imageVisuelPath, pathImageGenerate, outputFilePathContext } = useSousCat(); // Récupère l'ID produit via le hook personnalisé
@@ -106,20 +125,45 @@ console.log("CHEMIN POUR pathImageGenerate : " + JSON.stringify(pathImageGenerat
     fetchData();
   }, [idProduit]); // L'effet se déclenche uniquement lorsque `idProduit` change
 
-console.log("RESULTAT previsuOwnVisu : " + JSON.stringify(previsuOwnVisu));
-console.log("RESULTAT pathImageGenerate : " + JSON.stringify(pathImageGenerate));
-console.log("RESULTAT outputFilePathContext : " + JSON.stringify(outputFilePathContext));
-console.log("RESULTAT imageVisuelPath : " + JSON.stringify(imageVisuelPath));
+// console.log("RESULTAT previsuOwnVisu : " + JSON.stringify(previsuOwnVisu));
+// console.log("RESULTAT pathImageGenerate : " + JSON.stringify(pathImageGenerate));
+// console.log("RESULTAT outputFilePathContext : " + JSON.stringify(outputFilePathContext));
+// console.log("RESULTAT imageVisuelPath : " + JSON.stringify(imageVisuelPath));
 
-
+// const [open, setOpen] = React.useState(false);
+const [open, setOpen] = React.useState(true);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   return (
-    <div>
-      <p>Envoi des données au serveur...</p>
-      {productId && <p>ID produit détecté : {productId}</p>}
+    <Box sx={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+      <Typography variant="h4">Envoi des données au serveur...</Typography>
+      {/* {productId && <p>ID produit détecté : {productId}</p>}
       <p>ID cadre : {navigationId}   </p>
       <p><img src={previsuOwnVisu} alt="Image" /></p>
-      <p><img src={pathImageGenerate} alt="Image" /></p>
+      <p><img src={pathImageGenerate} alt="Image" /></p> */}
+      <div>
+      {/* <Button onClick={handleOpen}>Open modal</Button>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      > */}
+        <Box sx={style}>
+        <CircularProgress disableShrink sx={{marginBottom: "10px"}}/>
+          <Typography id="modal-modal-title" variant="h5" component="h2">
+          Envoi des données au serveur...
+          </Typography>
+          <Typography id="modal-modal-title" variant="h5" component="h2">
+          .... Ici Prévisualisation lors de la réception
+          </Typography>
+          {/* <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+          </Typography> */}
+        </Box>
+      {/* </Modal> */}
     </div>
+    </Box>
   );
 };
 
