@@ -9,6 +9,7 @@ import {
 //   Tooltip,
   IconButton,
   Modal,
+  CircularProgress,
 } from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import InfoIcon from "@mui/icons-material/Info";
@@ -126,6 +127,9 @@ const Tooltip = ({ text, children }) => {
   };
 
   const EtapeVideo = ({ activeStep, setActiveStep }) => {
+    const { setLienResultatJ2V, imageVisuelPath, selectedSousCatId, navigationId,outputFilePathContext } = useSousCat();
+    
+    const [isSendClick, setIsSendClick] = React.useState(false);
     const [openPrevisu, setOpenPrevisu] = React.useState(true);
       const handleOpenPrevisu = () => setOpen(true);
       const handleClosePrevisu = () => setOpen(false);
@@ -138,13 +142,10 @@ const Tooltip = ({ text, children }) => {
     setActiveStep(prevStep => prevStep + 1); // Incrémenter l'étape
   };
   const [isMediaSaved, setIsMediaSaved] = useState(false);
-  const { imageVisuelPath, selectedSousCatId, navigationId,outputFilePathContext } = useSousCat();
   const [openModal, setOpenModal] = useState(false);
   const [currentVideoSrc, setCurrentVideoSrc] = useState("");
   const [nomTemplate, setNomTemplate] = useState("");
-  const [variables, setVariables] = useState({});
-  console.log("VARIABLES CE COMPLETE A CHAQUE ENTREE : " + JSON.stringify(variables));
-  
+  const [variables, setVariables] = useState({});  
   const [visuelsVideos, setVisuelsVideos] = useState([]);
   const [tabParseTextesVideo, setTabParseTextesVideo] = useState([]);
   const [tabParseMediasVideo, setTabParseMediasVideo] = useState([]);
@@ -256,7 +257,7 @@ const Tooltip = ({ text, children }) => {
       return;
     }
     const { file } = mediaData;
-    console.log("VIDEO CONTENT FILE : " + JSON.stringify(file));
+    // console.log("VIDEO CONTENT FILE : " + JSON.stringify(file));
     
     if (!file) {
       console.error("Aucun fichier sélectionné.");
@@ -433,6 +434,7 @@ const Tooltip = ({ text, children }) => {
   }
 
   const handleSendAllMediaAndCreateVideo = async () => {
+    setIsSendClick(true)
     console.log("Démarrage de l'envoi des médias et création de la vidéo...");
   
     // Étape 1 : Envoi de tous les médias
@@ -489,8 +491,16 @@ const Tooltip = ({ text, children }) => {
       if (response.status === 200 || response.status === 201) {
         setReponseJ2VOK(true);
         console.log("!!!!!!!!!!!!!!!!!!!!!! REPONSE : " + JSON.stringify(response.data));
+
+        // Extraction du lien Movie URL
+        const movieUrl = response.data.match(/Movie URL: (https:\/\/[^\s]+)/)[1];
+        // Affichage du lien dans la console
+        console.log("Movie URL:", movieUrl);
+        setLienResultatJ2V(movieUrl);
+
         const qrCode = JSON.parse(response.data.match(/({.*})/)[1]).data.qrcode;
         console.log("ICI LE QR CODE : "+ qrCode);
+
         const imagePath = 'visuels/cmd/' + navigationId + '.png';
         console.log("LIEN DE L IMAGE : " + JSON.stringify(imagePath));
         //////////////////////
@@ -762,7 +772,7 @@ const Tooltip = ({ text, children }) => {
                 >
                   Enregistrement des medias
               </Button> */}
-              <Box sx={{display: "flex", flexDirection: "column", gap: 3}}>
+              <Box sx={{display: "flex", flexDirection: "column", gap: 3, alignItems: "center"}}>
               <Button
                 variant="contained"
                 // disabled={!isMediaSaved}
@@ -775,6 +785,14 @@ const Tooltip = ({ text, children }) => {
               >
                 Envoyer les données
               </Button>
+              {isSendClick && 
+               (
+                <Box>
+                  <CircularProgress disableShrink sx={{marginBottom: "10px"}}/>
+                  <SendDataToServer />
+                </Box>
+               )
+              }
               {/* {reponseJ2VOK && (
                 <Button onClick={handleOpenPrevisu}>Prévisualisation</Button>
               )} */}
@@ -795,19 +813,18 @@ const Tooltip = ({ text, children }) => {
             </Box>
           </Grid>
           <span>
-            {reponseJ2VOK && (
+            {/* {reponseJ2VOK && (
               <SendDataToServer />
-            )}
-                  {/* Le bouton est encapsulé dans un span pour que Tooltip fonctionne aussi quand le bouton est désactivé */}
-                    <Button
+            )} */}
+                    {/* <Button
                       type="button"
                       variant="contained"
                       onClick={handleNext}
                       sx={{ mt: 4, mr: "1rem" }}
                     >
                       Vers le panier
-                    </Button>
-                  </span>
+                    </Button> */}
+            </span>
         </Grid>
       )}
       <style>{StylesTest}</style>

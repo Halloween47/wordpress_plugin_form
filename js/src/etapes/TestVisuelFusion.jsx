@@ -243,9 +243,7 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
       const text1_size = text1Field?.font.size || 0;
       const text1_x = text1Field?.x_percent || 0;
       const text1_y = text1Field?.y_percent || 0;
-      const text1_colorR = text1Field?.color?.R || 0;
-      console.log("!!!!!!!!!!!!!!!!!!" + JSON.stringify(text1_colorR));
-      
+      const text1_colorR = text1Field?.color?.R || 0;      
       const text1_colorV = text1Field?.color?.V || 0;
       const text1_colorB = text1Field?.color?.B || 0;
   
@@ -442,10 +440,11 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
     formPayload.append("text1", formData.text1);
     formPayload.append("text2", formData.text2);
     formPayload.append("output_file", outputFilePath);
+    // console.log("VERIF DUPLICA DOSSIER (outpufilepath) : " + JSON.stringify(outputFilePath));
     formPayload.append("dossier", outputFolder);
     formPayload.append("image1", formData.image1);
     formPayload.append("image2", formData.image2);
-
+    
     // Ajouter les nouveaux champs pour text1
     formPayload.append("text1-fontfamily", formData["text1-fontfamily"]);
     formPayload.append("text1-size", formData["text1-size"]);
@@ -465,7 +464,7 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
     formPayload.append("text2-colorB", formData["text2-colorB"]);
 
 // Log pour débogage
-console.log("FormPayload:", Array.from(formPayload.entries()));
+// console.log("FormPayload:", Array.from(formPayload.entries()));
 ///////////////////////////////////////
 ///////////////////////////////////////
 

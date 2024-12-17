@@ -69,7 +69,7 @@ function EtapeCategorie({ activeStep, setActiveStep }) {
   const sousCatRef = useRef(null);
 
   const { idProduit, setIdProduit, setSelectedSousCatId, setNavigationId, selectedSousCatId, navigationId } = useSousCat();
-console.log("l'id pruit est bien passé : " + JSON.stringify(idProduit));
+// console.log("l'id pruit est bien passé : " + JSON.stringify(idProduit));
 
   // Générer un identifiant unique si non défini
   if (!navigationId) {
@@ -107,7 +107,7 @@ console.log("l'id pruit est bien passé : " + JSON.stringify(idProduit));
             throw new Error("Erreur lors de la récupération des données");
           }
           const result = await response.json();
-          console.log("ID PERSO RESPONSE : " + JSON.stringify(result));
+          // console.log("ID PERSO RESPONSE : " + JSON.stringify(result));
           
         } catch (error) {
           console.error("Erreur :", error);

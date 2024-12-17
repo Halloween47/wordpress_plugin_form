@@ -15,9 +15,12 @@ export const SousCatProvider = ({ children }) => {
   const [pathImageGenerate, setPathImageGenerate] = useState(false);
   
   const [idProduit, setIdProduit] = useState(null);
+  const [lienResultatJ2V, setLienResultatJ2V] = useState(null);
 
   return (
     <SousCatContext.Provider value={{
+      lienResultatJ2V, 
+      setLienResultatJ2V,
       pathImageGenerate, 
       setPathImageGenerate,
       idProduit, 
