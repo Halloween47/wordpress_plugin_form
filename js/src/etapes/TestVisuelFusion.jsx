@@ -146,13 +146,30 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
   const textesCadres = dataVignettesClique.length
     ? JSON.parse(dataVignettesClique[0].textes_cadres)
     : null;
-
+    console.log("VALEURS DE TEXTE_CADRES : " + JSON.stringify(textesCadres));
+    
+    if (textesCadres && Array.isArray(textesCadres.fields)) {
+      textesCadres.fields.forEach((field, index) => {
+          console.log(`Champ ${index + 1} - customizable : ${field.customizable}`);
+      });
+  } else {
+      console.log("Aucune donnée dans textesCadres ou le format est invalide.");
+  }
+    
     const visuelsCadres = useMemo(() => {
       return dataVignettesClique.length
         ? JSON.parse(dataVignettesClique[0].visuels_cadres)
         : null;
     }, [dataVignettesClique]);
     // console.log("ETAT DE VISUELCADRES : " + JSON.stringify(visuelsCadres));
+
+    if (visuelsCadres && Array.isArray(visuelsCadres.imageFields)) {
+      visuelsCadres.imageFields.forEach((field, index) => {
+          console.log(`Champ ${index + 1} - customizable IMAGEFIELDS : ${field.customizable}`);
+      });
+  } else {
+      console.log("Aucune donnée dans textesCadres ou le format est invalide.");
+  }
     
     const defaultFiles = visuelsCadres?.imageFields.map(field => field.defaultFile) || [];
     // console.log("Liste des defaultFile : ", defaultFiles);
@@ -609,9 +626,10 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
           encType="multipart/form-data"
           sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 2, maxWidth: 400, margin: "auto", mt:"100px" }}
         >
+          
           <Typography variant="h6">Générer une image</Typography>
           {error && <Typography color="error">{error}</Typography>}
-          <TextField
+          {/* <TextField
             label={isFocused ? "max. 15 caractères" : formData.text1}
             onFocus={handleFocus}
             onBlur={handleBlur}
@@ -632,8 +650,6 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
             }}
             />
           <TextField
-            // label="Texte 2 (max. 17 caractères)"
-            // label={formData.text2 + " (max. 17 caractères)"}
             label={isFocused ? "max. 17 caractères" : formData.text2}
             onFocus={handleFocus}
             onBlur={handleBlur}
@@ -653,32 +669,51 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
                 },
               },
             }}
-          />
-          {/* <TextField
-  label="Texte 1 (max. 15 caractères)"
-  name="text1"
-  value={formData.text1} // Lié à l'état
-  onChange={handleChange}
-  inputProps={{ maxLength: 15 }}
-  required
-/>
-<TextField
-  label="Texte 2 (max. 17 caractères)"
-  name="text2"
-  value={formData.text2} // Lié à l'état
-  onChange={handleChange}
-  inputProps={{ maxLength: 17 }}
-  required
-/> */}
+          /> */}
+{textesCadres.fields.map((field, index) => 
+  field.customizable && (
+    <TextField
+      key={index}
+      label={isFocused ? "max. 17 caractères" : formData[`text${index + 1}`]}
+      onFocus={handleFocus}
+      onBlur={handleBlur}
+      name={`text${index + 1}`}
+      onChange={handleChange}
+      inputProps={{ maxLength: field.length || 17 }} // Utilise la longueur si définie
+      required
+      sx={{ paddingTop: 1.2, marginBottom: 1.2 }}
+      InputLabelProps={{
+        sx: {
+          paddingTop: 1.2,
+          marginBottom: 1,
+          "&.MuiInputLabel-shrink": {
+            transform: "translate(0, -16px) scale(0.75)",
+          },
+        },
+      }}
+    />
+  )
+)}
+<Box>
+{visuelsCadres.imageFields.map((field, index) => 
+  field.customizable && (
+    <Button type="success" variant="contained">
+            Personnaliser l'image 
+    </Button>
+  )
+)}
+</Box>
+
+
 
           <Button type="success" variant="contained">
-      Prévisualiser votre cadre 
-      </Button>
-      {generatedImageUrl && (
-        <Box sx={{ mt: 2 }}>
-          <CardMedia component="img" image={generatedImageUrl} alt="Image générée" />
-        </Box>
-      )}
+            Prévisualiser votre cadre
+          </Button>
+          {generatedImageUrl && (
+            <Box sx={{ mt: 2 }}>
+              <CardMedia component="img" image={generatedImageUrl} alt="Image générée" />
+            </Box>
+          )}
         </Box>
       )}
       <Box sx={{ display: "flex", justifyContent: "space-between", mt: 2 }}>

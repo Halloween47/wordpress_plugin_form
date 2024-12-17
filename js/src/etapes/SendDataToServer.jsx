@@ -229,7 +229,7 @@ const [open, setOpen] = React.useState(true);
                 Envoi des données au serveur...
               </Typography>
               <Typography id="modal-modal-title" variant="h5" component="h2">
-                .... Ici Prévisualisation lors de la réception
+                .... Opération entre 1-3min selon les médias envoyés
               </Typography>
             </Box>
           ) : 
