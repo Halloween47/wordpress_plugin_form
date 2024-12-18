@@ -116,7 +116,8 @@ function ChoixPropreVisuel() {
   
       // Envoie le fichier via une requête POST
       const uploadResponse = await fetch(
-        "../../wp-content/plugins/ProductImageCustomizer/js/upload-media.php",{
+        // "../../wp-content/plugins/ProductImageCustomizer/js/upload-media.php",{
+        "../../wp-content/plugins/ProductImageCustomizer/js/upload-media2.php",{
           method: "POST",
           body: formData,
         }

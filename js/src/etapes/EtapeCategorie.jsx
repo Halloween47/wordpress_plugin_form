@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import CarouselCategories from "../componentsMemenza/CarouselCategories.jsx";
 import { Box, Typography, Modal, Button } from "@mui/material";
 import { useSousCat } from "../componentsMemenza/GestionEtat.jsx";
@@ -72,11 +72,20 @@ function EtapeCategorie({ activeStep, setActiveStep }) {
 // console.log("l'id pruit est bien passé : " + JSON.stringify(idProduit));
 
   // Générer un identifiant unique si non défini
-  if (!navigationId) {
-    const newId = `cmd${Math.floor(10000 + Math.random() * 90000)}`;
-    setNavigationId(newId);
-    console.log("Navigation ID généré :", newId);
-  }
+  useEffect(() => {
+    if (!navigationId) {
+      const newId = `cmd${Math.floor(10000 + Math.random() * 90000)}`;
+      setNavigationId(newId);
+      console.log("Navigation ID généré :", newId); 
+    }
+  }), [];
+  // console.log(`Navigation ID généré : ${navigationId}, Contexte :`, new Error().stack);
+  // useEffect(() => {
+  //   console.log("Navigation ID généré");
+  // }, []); // Cela pourrait s’exécuter deux fois en mode strict.
+  
+
+  
 
   // Gestion de la sélection d'une sous-catégorie
   const handleSelectSousCat = (id) => {

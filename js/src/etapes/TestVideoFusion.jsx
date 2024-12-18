@@ -284,6 +284,8 @@ const Tooltip = ({ text, children }) => {
   }
 
     formData.append("destinationFolder", navigationId);
+    console.log("ID A LENVOI de navigatonId : " + JSON.stringify(navigationId));
+    
   
     // Incrémente le compteur pour le prochain fichier
     setFileCounter((prevCounter) => prevCounter + 1);

@@ -15,6 +15,7 @@ import styled from "styled-components";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useSousCat } from "../componentsMemenza/GestionEtat.jsx";
 import ChoixPropreVisuel from "../componentsMemenza/ChoixPropreVisuel.jsx";
+import ImageUploader from "../componentsMemenza/ImageUploader.jsx";
 
 // Styled Components
 const FormGrid = styled(Grid)({
@@ -128,6 +129,8 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
   const [formData, setFormData] = useState({
     text1: '',
     text2: '',
+    image1: '',
+    image2: '',
     // image1: null,
     // image1: '',
     // image2: null,
@@ -146,11 +149,12 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
   const textesCadres = dataVignettesClique.length
     ? JSON.parse(dataVignettesClique[0].textes_cadres)
     : null;
-    console.log("VALEURS DE TEXTE_CADRES : " + JSON.stringify(textesCadres));
+    // console.log("VALEURS DE TEXTE_CADRES : " + JSON.stringify(textesCadres));
     
     if (textesCadres && Array.isArray(textesCadres.fields)) {
       textesCadres.fields.forEach((field, index) => {
-          console.log(`Champ ${index + 1} - customizable : ${field.customizable}`);
+          // console.log(`Champ ${index + 1} - customizable : ${field.customizable}`);
+          // console.log(`Champ test`);
       });
   } else {
       console.log("Aucune donnée dans textesCadres ou le format est invalide.");
@@ -165,98 +169,28 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
 
     if (visuelsCadres && Array.isArray(visuelsCadres.imageFields)) {
       visuelsCadres.imageFields.forEach((field, index) => {
-          console.log(`Champ ${index + 1} - customizable IMAGEFIELDS : ${field.customizable}`);
+          // console.log(`Champ ${index + 1} - customizable IMAGEFIELDS : ${field.customizable}`);
       });
   } else {
       console.log("Aucune donnée dans textesCadres ou le format est invalide.");
   }
     
     const defaultFiles = visuelsCadres?.imageFields.map(field => field.defaultFile) || [];
-    // console.log("Liste des defaultFile : ", defaultFiles);
-
     
-    // console.log("ETAT DE VISUELCADRES (section : defaultFiles) : " + JSON.parse(visuelsCadres.imageFields));
-    // const test = visuelsCadres.imageFields.find(field => field.name === "image1");
-
-  // Initialisation des champs de texte à partir de `textesCadres`
-  // useEffect(() => {
-  //   if (textesCadres) {
-  //     const text1Field = textesCadres.fields.find(field => field.name === "text1");
-  //     const text2Field = textesCadres.fields.find(field => field.name === "text2");
-  //     setFormData(prevFormData => ({
-  //       ...prevFormData,
-  //       text1: prevFormData.text1 || text1Field?.defaultValue || "",
-  //       text2: prevFormData.text2 || text2Field?.defaultValue || "",
-  //     }));
-  //   }
-  // }, [textesCadres]);
-
-  //////////////////ACTUEL/////////////////////////
-  //////////////////ACTUEL/////////////////////////
-  //////////////////ACTUEL/////////////////////////
-  //////////////////ACTUEL/////////////////////////
-  //////////////////ACTUEL/////////////////////////
-  // useEffect(() => {
-  //   if (textesCadres) {
-  //     // Extraire les champs pour text1 et text2
-  //     const text1Field = textesCadres.fields.find(field => field.name === "text1");
-  //     const text2Field = textesCadres.fields.find(field => field.name === "text2");
-  
-  //     // Définir les constantes pour text1
-  //     const text1_fontfamily = text1Field?.font.family  || "";
-  //     const text1_size = text1Field?.font.size  || 0;
-  //     const text1_x = text1Field?.x_percent  || 0;
-  //     const text1_y = text1Field?.y_percent  || 0;
-  
-  //     // Définir les constantes pour text2
-  //     const text2_fontfamily = text2Field?.font.family  || "";
-  //     const text2_size = text2Field?.font.size  || 0;
-  //     const text2_x = text2Field?.x_percent  || 0;
-  //     const text2_y = text2Field?.y_percent  || 0;
-
-  //     // console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!" + 
-  //     //   JSON.stringify(text1_fontfamily) + 
-  //     //   JSON.stringify(text1_size) + 
-  //     //   JSON.stringify(text1_x) + 
-  //     //   JSON.stringify(text1_y) + 
-  //     //   JSON.stringify(text2_fontfamily) + 
-  //     //   JSON.stringify(text2_size) + 
-  //     //   JSON.stringify(text2_x) + 
-  //     //   JSON.stringify(text2_x)  
-  //     // );
-      
-  
-  //     // Mettre à jour formData avec les nouvelles constantes
-  //     setFormData(prevFormData => {
-  //       const updatedFormData = {
-  //         ...prevFormData,
-  //         text1: prevFormData.text1 || text1Field?.defaultValue  || "",
-  //         text2: prevFormData.text2 || text2Field?.defaultValue  || "",
-  //         "text1-fontfamily": text1_fontfamily,
-  //         "text1-size": text1_size,
-  //         "text1-x": text1_x,
-  //         "text1-y": text1_y,
-  //         "text2-fontfamily": text2_fontfamily,
-  //         "text2-size": text2_size,
-  //         "text2-x": text2_x,
-  //         "text2-y": text2_y,
-  //       };
-  
-  //       // Ne pas mettre à jour si les valeurs sont identiques
-  //       return JSON.stringify(prevFormData) === JSON.stringify(updatedFormData)
-  //         ? prevFormData
-  //         : updatedFormData;
-  //     });
-  //   }
-  // }, [textesCadres]);
   useEffect(() => {
     if (textesCadres) {
       // Extraire les champs pour text1 et text2
       const text1Field = textesCadres.fields.find(field => field.name === "text1");
       const text2Field = textesCadres.fields.find(field => field.name === "text2");
-  
+      // console.log("Verif text2Field : " + JSON.stringify(text2Field));
+      const image2Field = visuelsCadres.imageFields.find(field => field.name === "image2");
+      // console.log("Verif image2Field : " + JSON.stringify(image2Field));
+      
+      
       // Définir les constantes pour text1
       const text1_fontfamily = text1Field?.font.family || "";
+      // const image2_defaultFile = image2Field?.defaultFile || "";
+      // console.log("Verif image2_defaultFile : " + JSON.stringify(image2_defaultFile));
       const text1_size = text1Field?.font.size || 0;
       const text1_x = text1Field?.x_percent || 0;
       const text1_y = text1Field?.y_percent || 0;
@@ -280,6 +214,7 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
           text1: prevFormData.text1 || text1Field?.defaultValue || "",
           text2: prevFormData.text2 || text2Field?.defaultValue || "",
           "text1-fontfamily": text1_fontfamily,
+          // "image2": image2_defaultFile,
           "text1-size": text1_size,
           "text1-x": text1_x,
           "text1-y": text1_y,
@@ -302,36 +237,7 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
       });
     }
   }, [textesCadres]);
- //////////////////ACTUEL/////////////////////////
-  //////////////////ACTUEL/////////////////////////
-  //////////////////ACTUEL/////////////////////////
-  //////////////////ACTUEL/////////////////////////
-  //////////////////ACTUEL/////////////////////////
-  
-  // useEffect(() => {
-  //   if (visuelsCadres?.imageFields?.length) {
-  //     setFormData((prevFormData) => ({
-  //       ...prevFormData,
-  //       image1: visuelsCadres.imageFields[0]?.defaultFile || prevFormData.image1,
-  //       image2: visuelsCadres.imageFields[1]?.defaultFile || prevFormData.image2,
-  //     }));
-  //   }
-  // }, [visuelsCadres]);
-  
-  // useEffect(() => {
-  //   if (textesCadres) {
-  //     setFormData(prevFormData => {
-  //       const text1Field = textesCadres.fields.find(field => field.name === "text1");
-  //       const text2Field = textesCadres.fields.find(field => field.name === "text2");
-  //       return {
-  //         ...prevFormData,
-  //         text1: text1Field?.defaultValue || "",
-  //         text2: text2Field?.defaultValue || "",
-  //       };
-  //     });
-  //   }
-  // }, [selectedVisuelId, textesCadres]);
-  
+   
   useEffect(() => {
     if (visuelsCadres?.imageFields?.length) {
       setFormData((prevFormData) => {
@@ -339,8 +245,8 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
           ...prevFormData,
           // image1: prevFormData.image1 || visuelsCadres.imageFields[0]?.defaultFile || null,
           // image2: prevFormData.image2 || visuelsCadres.imageFields[1]?.defaultFile || null,
-          image1: prevFormData.image1 || "/home/memenzj/www/" + visuelsCadres.imageFields[0]?.defaultFile || null,
-          image2: prevFormData.image2 || "/home/memenzj/www/" + visuelsCadres.imageFields[1]?.defaultFile || null,
+          // image1: prevFormData.image1 || "/home/memenzj/www/" + visuelsCadres.imageFields[0]?.defaultFile || null,
+          // image2: prevFormData.image2 || "/home/memenzj/www/" + visuelsCadres.imageFields[1]?.defaultFile || null,
         };
         
         // Retourne l'ancien formData si rien n'a changé pour éviter les re-rendus inutiles
@@ -370,13 +276,6 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
     return <Typography>Chargement des visuels...</Typography>;
   }
 
-  /////////////////////ACTUEL//////////////
-  // const handleVisuelClickCustom = (id) => {
-  //   setSelectedVisuelId(id);
-  //   const filtreSelonVignetteSelectionne = tableauFiltrePourVignette.filter(item => item.id_modele_cadre === id);
-  //   setDataVignettesClique(filtreSelonVignetteSelectionne);
-  // };
-
   const handleVisuelClickCustom = (id) => {
     setSelectedVisuelId(id);
 
@@ -394,12 +293,14 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
       const textesCadres = JSON.parse(filtreSelonVignetteSelectionne[0].textes_cadres);
       const text1Field = textesCadres.fields.find(field => field.name === "text1");
       const text2Field = textesCadres.fields.find(field => field.name === "text2");
+      const image1Field = visuelsCadres.imageFields.find(field => field.name === "image1");
+      const image2Field = visuelsCadres.imageFields.find(field => field.name === "image2");
   
       setFormData({
         text1: text1Field?.defaultValue || "", // Valeur par défaut ou chaîne vide
         text2: text2Field?.defaultValue || "", // Valeur par défaut ou chaîne vide
-        // image1: null, // Réinitialisation des images si nécessaire
-        // image2: null,
+        // image1: image1Field?.defaultFile || "", // Réinitialisation des images si nécessaire
+        // image2: image2Field?.defaultFile || "", // Réinitialisation des images si nécessaire
       });
     } else {
       // Si aucun cadre n'est trouvé, réinitialisez simplement les champs
@@ -411,16 +312,9 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
       });
     }
   };
-  
-
-  // const handleChange = (e) => {
-  //   const { name, value, files } = e.target;
-  //   setFormData(prevData => ({
-  //     ...prevData,
-  //     [name]: files ? files[0] : value,
-  //   }));
-  // };
   const handleChange = (e) => {
+    console.log("HANDLECHANGE contenu e : " + JSON.stringify(e.target));
+    
     const { name, value, files } = e.target;
   
     setFormData((prevData) => ({
@@ -435,32 +329,17 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
     const outputFolder = `/home/memenzj/www/visuels/uploads/${navigationId}`;
 
     setOutputFilePathContext(outputFilePath);
-    // console.log("VERIFICATION DU LIEN DE DESTINATION DE LIMAGE GENERE : " + JSON.stringify(outputFilePath));
-    // console.log("FormData ORIGINAL (sans formPayload) : " + JSON.stringify(formData));
-    
-///////////////////////////////////////
-///////////////////////////////////////
-///////////////////////////////////////
-///////////////////////////////////////
-    // const formPayload = new FormData();
-    // formPayload.append("text1", formData.text1);
-    // console.log("FORMDATA : " + JSON.stringify(formData));
-    
-    // formPayload.append("text2", formData.text2);
-    // formPayload.append("output_file", outputFilePath);
-    // formPayload.append("dossier", outputFolder);
-    // formPayload.append("image1", formData.image1);
-    // formPayload.append("image2", formData.image2);
-
-    ///////////////////////////////////////
     const formPayload = new FormData();
     formPayload.append("text1", formData.text1);
     formPayload.append("text2", formData.text2);
     formPayload.append("output_file", outputFilePath);
     // console.log("VERIF DUPLICA DOSSIER (outpufilepath) : " + JSON.stringify(outputFilePath));
     formPayload.append("dossier", outputFolder);
-    formPayload.append("image1", formData.image1);
-    formPayload.append("image2", formData.image2);
+    // console.log("VERIF DUPLICA DOSSIER (outputFolder) : " + JSON.stringify(outputFolder));
+    formPayload.append("image1", generatedImageUrl);
+    // console.log("VERIF DUPLICA DOSSIER (image1) : " + JSON.stringify(formData.image1));
+    formPayload.append("image2", generatedImageUrl);
+    console.log("VERIF DUPLICA DOSSIER (image2) : " + JSON.stringify(formData.image2));
     
     // Ajouter les nouveaux champs pour text1
     formPayload.append("text1-fontfamily", formData["text1-fontfamily"]);
@@ -479,31 +358,6 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
     formPayload.append("text2-colorR", formData["text2-colorR"]);
     formPayload.append("text2-colorV", formData["text2-colorV"]);
     formPayload.append("text2-colorB", formData["text2-colorB"]);
-
-// Log pour débogage
-// console.log("FormPayload:", Array.from(formPayload.entries()));
-///////////////////////////////////////
-///////////////////////////////////////
-
-// const formPayload = new FormData();
-// formPayload.append("text1", formData.text1);
-// formPayload.append("text2", formData.text2);
-// formPayload.append("output_file", outputFilePath);
-// formPayload.append("dossier", outputFolder);
-// formPayload.append("image1", formData.image1);
-// formPayload.append("image2", formData.image2);
-
-// formPayload.append("text1-fontfamily", formData["text1-fontfamily"]);
-// formPayload.append("text1-size", formData["text1-size"]);
-// formPayload.append("text1-x", formData["text1-x"]);
-// formPayload.append("text1-y", formData["text1-y"]);
-// formPayload.append("text2-fontfamily", formData["text2-fontfamily"]);
-// formPayload.append("text2-size", formData["text2-size"]);
-// formPayload.append("text2-x", formData["text2-x"]);
-// formPayload.append("text2-y", formData["text2-y"]);
-
-// // Log pour vérifier
-// console.log("FormPayload:", Array.from(formPayload.entries()));
 
     for (const [key, value] of formPayload.entries()) {
       // console.log(" TEST VERIF PAYLOAD AVEC LISTE KEYS : " + key, value);
@@ -544,6 +398,103 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
       setError(error.message);
     }
   };
+
+  const handleFileUpload = (event, fieldName) => {
+    const { name, value, files } = event.target;
+    if (files) {
+      console.log("Fichier sélectionné : ", files[0]);  
+      console.log("Fichier name : ", name);  
+      console.log("Fichier value : ", value);  
+    }
+    setFormData((prevData) => ({
+      ...prevData,
+      // [fieldName]: files ? files[0] : value,
+      [fieldName]: value,
+    }));
+    console.log("Fichier formadata : ", formData);  
+    // console.log("Contenu de formdata FIELDNAME :" + JSON.stringify(fieldName));
+    // const file = event.target.files[0];
+    // if (file) {
+    //   const imageUrl = URL.createObjectURL(file); // Crée une URL temporaire pour prévisualiser l'image
+    //   console.log("Lien temporaire de l'image : " + imageUrl);
+  
+    //   // Met à jour l'URL générée avec le fichier sélectionné
+    //   setGeneratedImageUrl(imageUrl);
+    //   console.log("Contenu de generatedimageurl :" + JSON.stringify(generatedImageUrl));
+      
+    //   // Si vous souhaitez ajouter le fichier au formData
+    //   setFormData((prevData) => ({
+    //     ...prevData,
+    //     [fieldName]: file, // Enregistre le fichier pour une soumission ultérieure
+    //     // [fieldName]: imageUrl, // Enregistre le fichier pour une soumission ultérieure
+    //   }));
+    //   console.log("Contenu de formdata après chargement fichier :" + JSON.stringify(formData));
+    // }
+  };
+
+  const handleFileUpload2 = (event, fieldName) => {
+    console.log("Fichier fieldname : ", fieldName);
+    const { files } = event.target;
+  
+    if (files && files[0]) {
+      const file = files[0];
+      const imageUrl = URL.createObjectURL(file); // Crée une URL temporaire pour la prévisualisation
+  
+      console.log("Fichier sélectionné : ", file);
+      console.log("Lien temporaire de l'image : ", imageUrl);
+  
+      // Met à jour le formData avec le fichier et l'URL temporaire
+      setFormData((prevData) => ({
+        ...prevData,
+        [fieldName]: file, // Stocke le fichier pour l'upload final
+        [`${fieldName}Preview`]: imageUrl, // Stocke l'URL temporaire pour la prévisualisation
+      }));
+    } else {
+      console.error("Aucun fichier sélectionné.");
+    }
+  
+    // Affiche le formData actuel dans la console
+    setTimeout(() => {
+      console.log("Contenu actuel de formData :", formData);
+    }, 0); // Utilisation d'un timeout pour s'assurer que le state est mis à jour avant l'affichage
+  };
+  const handleFileUpload3 = (event, fieldName) => {
+    const file = event.target.files[0];
+    console.log("handleFileUpload3 (file\"string\") : " + JSON.stringify(file));
+    console.log("handleFileUpload3 (file) : " + file);
+    // console.log("handleFileUpload3 (file\"parse\") : " + fileParse);
+    
+    // if (file) {
+      //   setCheck(true);      
+      // }
+      setFormData((prevFiles) => [
+        ...(Array.isArray(prevFiles) ? prevFiles : []),
+        { fieldName, file },
+      ]);
+      
+      console.log("handleFileUpload3 (formadata) : " + JSON.stringify(formData));
+    // if (file) {
+    //   if (!file.type.startsWith("image/") && !file.type.startsWith("video/")) {
+    //     console.error("Seuls les fichiers d'image ou de vidéo sont autorisés.");
+    //     return;
+    //   }
+    //   const fileExtension = file.name.split('.').pop(); // Récupère la partie après le dernier "."
+    //   const validExtension = fileExtension && fileExtension.length <= 5 ? fileExtension : 'unknown';
+    //   const mediaName = `media${mediaCounter}.${validExtension}`;
+    //   console.log("Nom de fichier généré : ", mediaName);
+    //   setVariables((prevState) => ({
+    //     ...prevState, 
+    //     [fieldName]: `https://memenza.fr/visuels/uploads/${navigationId}/${mediaName}`, 
+    //   }));
+    //   setCheckedFields((prevChecked) => ({
+    //     ...prevChecked,
+    //     [fieldName]: true,
+    //   }));
+    //   setMediaCounter((prevCount) => prevCount + 1);
+    // }
+  };
+  
+  
 
   return (
     <Box sx={{ textAlign: "center", bgcolor: "#f5f5f5" }}>
@@ -697,9 +648,18 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
 <Box>
 {visuelsCadres.imageFields.map((field, index) => 
   field.customizable && (
-    <Button type="success" variant="contained">
-            Personnaliser l'image 
-    </Button>
+    <Button component="label" variant="contained" sx={{ mr: "10px" }} key={index}>
+        Envoyer mon image
+        <input
+        name={field.name}
+          type="file"
+          hidden
+          accept="image/*" // Limite les fichiers à des images
+          // onChange={(e) => handleFileUpload3(e, field.name)} // Appelle le gestionnaire avec le nom du champ
+          onChange={handleChange} // Appelle le gestionnaire avec le nom du champ
+        />
+      </Button>
+    // <ImageUploader />
   )
 )}
 </Box>
