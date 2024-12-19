@@ -72,6 +72,7 @@ const SendDataToServer = () => {
   const [productId, setProductId] = useState(null); // État local pour l'ID produit
 console.log("CHEMIN POUR IMAGE : " + JSON.stringify(previsuOwnVisu));
 console.log("CHEMIN POUR pathImageGenerate : " + JSON.stringify(pathImageGenerate));
+console.log("VERIFICATION IDPRODUIT : " + JSON.stringify(idProduit));
 
 React.useEffect(() => {
         // Accéder à la div existante

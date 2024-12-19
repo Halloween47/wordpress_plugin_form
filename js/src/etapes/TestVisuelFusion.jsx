@@ -114,6 +114,18 @@ const VisuelCard = ({ item, isSelected, onClick }) => (
 
 // const TestVisuelFusion = () => {
 const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
+
+  const [testAvecFile, setTestAvecFile] = useState();
+  
+  const [fichierPersoDetect, setFichierPersoDetect] = React.useState(false);
+  const [filePerso, setFilePerso] = React.useState(false);
+  
+  const [mediaFiles, setMediaFiles] = React.useState([]);
+  // console.log("CONTENU DE MEDIA FILE : " + JSON.stringify(mediaFiles));
+  
+  const [imageCustimzation, setImageCustimzation] = useState(null);
+  // console.log("INITIAL ImageCustom :  : " + imageCustimzation);
+
   const handleNext = () => {
     setActiveStep(prevStep => prevStep + 1); // Incrémenter l'étape
   };
@@ -121,23 +133,22 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
     window.scrollTo(0, 0);
   };
-  const { setPathImageGenerate, setImageVisuelPath, previsuOwnVisu, isGenerate, setIsGenerate, selectedSousCatId, navigationId, outputFilePathContext, setOutputFilePathContext } = useSousCat();
-  // console.log(isGenerate);
+  const { pathImageGenerate, setPathImageGenerate, setImageVisuelPath, previsuOwnVisu, isGenerate, setIsGenerate, selectedSousCatId, navigationId, outputFilePathContext, setOutputFilePathContext } = useSousCat();
+  console.log("VERIFICATION PATHIMAGE GENERATE" + JSON.stringify(pathImageGenerate));
   const [selectedVisuelId, setSelectedVisuelId] = useState(null);
   const [imagesVisuels, setImagesVisuels] = useState([]);
   const [dataVignettesClique, setDataVignettesClique] = useState([]);
   const [formData, setFormData] = useState({
     text1: '',
     text2: '',
-    image1: '',
-    image2: '',
-    // image1: null,
     // image1: '',
-    // image2: null,
+    // image2: '',
   });
   // console.log("CONTENU DE FORMADATA : " + JSON.stringify(formData));
   
   const [generatedImageUrl, setGeneratedImageUrl] = useState(null);
+  console.log("VERIFCATION DE generatedImageURL : " + JSON.stringify(generatedImageUrl));  
+  
   const [error, setError] = useState(null);
   const [isFocused, setIsFocused] = useState(false); 
 
@@ -156,9 +167,10 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
           // console.log(`Champ ${index + 1} - customizable : ${field.customizable}`);
           // console.log(`Champ test`);
       });
-  } else {
-      console.log("Aucune donnée dans textesCadres ou le format est invalide.");
-  }
+  } 
+  // else {
+  //     console.log("Aucune donnée dans textesCadres ou le format est invalide.");
+  // }
     
     const visuelsCadres = useMemo(() => {
       return dataVignettesClique.length
@@ -171,9 +183,10 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
       visuelsCadres.imageFields.forEach((field, index) => {
           // console.log(`Champ ${index + 1} - customizable IMAGEFIELDS : ${field.customizable}`);
       });
-  } else {
-      console.log("Aucune donnée dans textesCadres ou le format est invalide.");
-  }
+  } 
+  // else {
+  //     console.log("Aucune donnée dans textesCadres ou le format est invalide.");
+  // }
     
     const defaultFiles = visuelsCadres?.imageFields.map(field => field.defaultFile) || [];
     
@@ -183,14 +196,37 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
       const text1Field = textesCadres.fields.find(field => field.name === "text1");
       const text2Field = textesCadres.fields.find(field => field.name === "text2");
       // console.log("Verif text2Field : " + JSON.stringify(text2Field));
+      const image1Field = visuelsCadres.imageFields.find(field => field.name === "image1");
       const image2Field = visuelsCadres.imageFields.find(field => field.name === "image2");
       // console.log("Verif image2Field : " + JSON.stringify(image2Field));
       
       
       // Définir les constantes pour text1
       const text1_fontfamily = text1Field?.font.family || "";
-      // const image2_defaultFile = image2Field?.defaultFile || "";
-      // console.log("Verif image2_defaultFile : " + JSON.stringify(image2_defaultFile));
+      const image1_defaultFile = image1Field?.defaultFile || "";
+      const image2_defaultFile = image2Field?.defaultFile || "";
+
+      // if (fichierPersoDetect) {
+      //   const image2_defaultFile = "visuels/uploads/" + navigationId + "/" + "mediaPerso.jpg";
+      // }
+
+//       const image2_defaultFile = fichierPersoDetect 
+//       ? "https://memenza.fr/visuels/uploads/" + navigationId + "/" + "mediaPerso.jpg" 
+//       : image2Field?.defaultFile || "https://memenza.fr/" + image2_defaultFile;
+
+// const setFormData = () => {
+//   const updatedFormData = {
+//     "image2": image2_defaultFile, // Utilisation correcte
+//   };
+// };
+
+
+      // const image2_defaultFile = fichierPersoDetect 
+      // ? "https://memenza.fr/visuels/uploads/" + navigationId + "/" + "mediaPerso.jpg" 
+      // : "https://memenza.fr/" + image2_defaultFile;
+    
+      console.log("Verif image2_defaultFile : " + JSON.stringify(image2_defaultFile));
+
       const text1_size = text1Field?.font.size || 0;
       const text1_x = text1Field?.x_percent || 0;
       const text1_y = text1Field?.y_percent || 0;
@@ -206,6 +242,11 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
       const text2_colorR = text2Field?.color?.R || 0;
       const text2_colorV = text2Field?.color?.V || 0;
       const text2_colorB = text2Field?.color?.B || 0;
+
+      console.log("fichierPersoDetect : ", fichierPersoDetect);
+console.log("navigationId : ", navigationId);
+console.log("image2_defaultFile : ", image2_defaultFile);
+
   
       // Mettre à jour formData avec les nouvelles constantes
       setFormData(prevFormData => {
@@ -214,7 +255,12 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
           text1: prevFormData.text1 || text1Field?.defaultValue || "",
           text2: prevFormData.text2 || text2Field?.defaultValue || "",
           "text1-fontfamily": text1_fontfamily,
-          // "image2": image2_defaultFile,
+          "image1": "https://memenza.fr/" + image1_defaultFile,
+          "image2": "https://memenza.fr/" + image2_defaultFile,
+          // "image2": "https://memenza.fr/" + image2_defaultFile,
+          // "image2": fichierPersoDetect ? 
+          //   "https://memenza.fr/visuels/uploads/" + navigationId + "/" + "mediaPerso.jpg" :
+          //   "https://memenza.fr/" + image2_defaultFile,
           "text1-size": text1_size,
           "text1-x": text1_x,
           "text1-y": text1_y,
@@ -313,7 +359,7 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
     }
   };
   const handleChange = (e) => {
-    console.log("HANDLECHANGE contenu e : " + JSON.stringify(e.target));
+    // console.log("HANDLECHANGE contenu e : " + JSON.stringify(e.target));
     
     const { name, value, files } = e.target;
   
@@ -323,24 +369,70 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
     }));
   };
 
+  /////////////////// ENVOI DU FICHIER A PROCESS (pour generation d'image)
   const handleSubmit = async (e) => {
     e.preventDefault();
     const outputFilePath = `/home/memenzj/www/visuels/cmd/${navigationId}.png`;
+    // const outputFilePath = `/home/memenzj/www/visuels/cmd/${navigationId}.jpg`;
+    console.log("OUTPUTFILEPATH : " + JSON.stringify(outputFilePath));
     const outputFolder = `/home/memenzj/www/visuels/uploads/${navigationId}`;
-
+    console.log("outputFolder : " + JSON.stringify(outputFolder));
     setOutputFilePathContext(outputFilePath);
+
+    
+
+    const convertToBlob = async (imageFileOrURL) => {
+      if (typeof imageFileOrURL === "string") {
+        // Si c'est une URL, on la télécharge pour obtenir un Blob
+        const response = await fetch(imageFileOrURL);
+        if (!response.ok) {
+          throw new Error(`Erreur lors du téléchargement de l'image : ${imageFileOrURL}`);
+        }
+        return await response.blob();
+      } else if (imageFileOrURL instanceof File || imageFileOrURL instanceof Blob) {
+        // Si c'est un fichier ou un blob, on le retourne directement
+        return imageFileOrURL;
+      } else {
+        throw new Error("Type d'image non valide. Attendu : URL, File ou Blob.");
+      }
+    };
+    
+    console.log("ORIGINAL FORMDATA IMAGE 1 : " + JSON.stringify(formData["image1"]));
+    console.log("ORIGINAL FORMDATA IMAGE 2 " + JSON.stringify(formData["image2"]));
+    
+    let image1Blob = await convertToBlob(formData["image1"]);
+    let image2Blob = await convertToBlob(formData["image2"]);
+    
+    
+    console.log("Valeur de fichierPersoDetect :", fichierPersoDetect);
+    console.log("setTestAvecFile :", testAvecFile);
+    if(fichierPersoDetect) {
+      console.log("PERSO DETECT : " + "https://memenza.fr/visuels/uploads/" + navigationId + "/" + "mediaPerso.png");
+      const newLink = "https://memenza.fr/visuels/uploads/" + navigationId + "/" + "mediaPerso.png";
+      console.log("NEW image 2 avant blob : " + newLink);
+      try {
+        // image2Blob = await convertToBlob(newLink);
+        // image2Blob = await convertToBlob(testAvecFile);
+        image2Blob = testAvecFile;
+        console.log("IMAGE BLOB2 (mise à jour réussie) :", image2Blob);
+      } catch (error) {
+        console.error("Erreur lors de la conversion en blob pour image2 :", error);
+      }
+      
+    }
+    
+    // console.log("IMAGE BLOB1 : " + image1Blob);
+    
+
     const formPayload = new FormData();
     formPayload.append("text1", formData.text1);
     formPayload.append("text2", formData.text2);
     formPayload.append("output_file", outputFilePath);
-    // console.log("VERIF DUPLICA DOSSIER (outpufilepath) : " + JSON.stringify(outputFilePath));
     formPayload.append("dossier", outputFolder);
-    // console.log("VERIF DUPLICA DOSSIER (outputFolder) : " + JSON.stringify(outputFolder));
-    formPayload.append("image1", generatedImageUrl);
-    // console.log("VERIF DUPLICA DOSSIER (image1) : " + JSON.stringify(formData.image1));
-    formPayload.append("image2", generatedImageUrl);
-    console.log("VERIF DUPLICA DOSSIER (image2) : " + JSON.stringify(formData.image2));
-    
+    formPayload.append("image1", image1Blob, "image1.jpg"); 
+    formPayload.append("image2", image2Blob, "image2.jpg"); 
+    // formPayload.append("image2", testAvecFile, "image2.jpg"); 
+        
     // Ajouter les nouveaux champs pour text1
     formPayload.append("text1-fontfamily", formData["text1-fontfamily"]);
     formPayload.append("text1-size", formData["text1-size"]);
@@ -360,141 +452,247 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
     formPayload.append("text2-colorB", formData["text2-colorB"]);
 
     for (const [key, value] of formPayload.entries()) {
-      // console.log(" TEST VERIF PAYLOAD AVEC LISTE KEYS : " + key, value);
+      console.log(" TEST VERIF PAYLOAD AVEC LISTE KEYS : " + key, value);
     }
-    // if (formData.image1) formPayload.append("image1", formData.image1);
-    // if (formData.image2) formPayload.append("image2", formData.image2);
-    // console.log("VERIFICATION DU FORMPAYLOAD POUR ENVOI DES BONNES DATA : " + JSON.stringify(formPayload));
-    
+    formPayload.forEach((value, key) => {
+      console.log("VERIFICATION DU FORMPAYLOAD POUR ENVOI DES BONNES DATA : " + key, value);
+    });
     try {
       const response = await fetch("../../wp-content/plugins/ProductImageCustomizer/js/process-simplifie.php", {
         method: "POST",
         body: formPayload,
-        // Pour test sans envoi de data
-        // body: "",
       });
 
       if (!response.ok) {
         throw new Error("Erreur lors de la soumission du formulaire");
-      }
+      } 
+      console.log("PROCESS-SIMPLIFIE REUSSI !");
 
-
-      // const responseJson = await response.json();
+       // Si vous travaillez avec un Blob (par ex., une image générée)
       const result = await response.blob();
-      // const data = await response.json();
       const url = URL.createObjectURL(result);
-      // console.log("LIENDE responseJson : " + JSON.stringify(responseJson));
-      setGeneratedImageUrl(url);
-      setPathImageGenerate(url)
+      console.log("URL générée à partir du Blob :", url);
 
-      // console.log("LIENDE DATA !!!E : " + JSON.stringify(response));
-      // setImageVisuelPath(result.imageUrl);
-      
-      setIsGenerate(true)
-      // console.log("TEST PREVISU VOICI LE RESULT DE LA REPONSE : " + JSON.stringify(result));
-      // console.log("TEST PREVISU VOICI LERESULTAT DE LID : " + JSON.stringify(url));
-      
+      // Mettre à jour les états avec les données reçues
+      setGeneratedImageUrl(url);
+      setPathImageGenerate(url);
+      setIsGenerate(true);
+
     } catch (error) {
       setError(error.message);
     }
   };
-
-  const handleFileUpload = (event, fieldName) => {
-    const { name, value, files } = event.target;
-    if (files) {
-      console.log("Fichier sélectionné : ", files[0]);  
-      console.log("Fichier name : ", name);  
-      console.log("Fichier value : ", value);  
-    }
-    setFormData((prevData) => ({
-      ...prevData,
-      // [fieldName]: files ? files[0] : value,
-      [fieldName]: value,
-    }));
-    console.log("Fichier formadata : ", formData);  
-    // console.log("Contenu de formdata FIELDNAME :" + JSON.stringify(fieldName));
-    // const file = event.target.files[0];
-    // if (file) {
-    //   const imageUrl = URL.createObjectURL(file); // Crée une URL temporaire pour prévisualiser l'image
-    //   console.log("Lien temporaire de l'image : " + imageUrl);
-  
-    //   // Met à jour l'URL générée avec le fichier sélectionné
-    //   setGeneratedImageUrl(imageUrl);
-    //   console.log("Contenu de generatedimageurl :" + JSON.stringify(generatedImageUrl));
-      
-    //   // Si vous souhaitez ajouter le fichier au formData
-    //   setFormData((prevData) => ({
-    //     ...prevData,
-    //     [fieldName]: file, // Enregistre le fichier pour une soumission ultérieure
-    //     // [fieldName]: imageUrl, // Enregistre le fichier pour une soumission ultérieure
-    //   }));
-    //   console.log("Contenu de formdata après chargement fichier :" + JSON.stringify(formData));
-    // }
-  };
-
-  const handleFileUpload2 = (event, fieldName) => {
-    console.log("Fichier fieldname : ", fieldName);
-    const { files } = event.target;
-  
-    if (files && files[0]) {
-      const file = files[0];
-      const imageUrl = URL.createObjectURL(file); // Crée une URL temporaire pour la prévisualisation
-  
-      console.log("Fichier sélectionné : ", file);
-      console.log("Lien temporaire de l'image : ", imageUrl);
-  
-      // Met à jour le formData avec le fichier et l'URL temporaire
-      setFormData((prevData) => ({
-        ...prevData,
-        [fieldName]: file, // Stocke le fichier pour l'upload final
-        [`${fieldName}Preview`]: imageUrl, // Stocke l'URL temporaire pour la prévisualisation
-      }));
-    } else {
-      console.error("Aucun fichier sélectionné.");
-    }
-  
-    // Affiche le formData actuel dans la console
-    setTimeout(() => {
-      console.log("Contenu actuel de formData :", formData);
-    }, 0); // Utilisation d'un timeout pour s'assurer que le state est mis à jour avant l'affichage
-  };
-  const handleFileUpload3 = (event, fieldName) => {
-    const file = event.target.files[0];
-    console.log("handleFileUpload3 (file\"string\") : " + JSON.stringify(file));
-    console.log("handleFileUpload3 (file) : " + file);
-    // console.log("handleFileUpload3 (file\"parse\") : " + fileParse);
     
-    // if (file) {
-      //   setCheck(true);      
-      // }
-      setFormData((prevFiles) => [
-        ...(Array.isArray(prevFiles) ? prevFiles : []),
-        { fieldName, file },
-      ]);
-      
-      console.log("handleFileUpload3 (formadata) : " + JSON.stringify(formData));
-    // if (file) {
-    //   if (!file.type.startsWith("image/") && !file.type.startsWith("video/")) {
-    //     console.error("Seuls les fichiers d'image ou de vidéo sont autorisés.");
-    //     return;
-    //   }
-    //   const fileExtension = file.name.split('.').pop(); // Récupère la partie après le dernier "."
-    //   const validExtension = fileExtension && fileExtension.length <= 5 ? fileExtension : 'unknown';
-    //   const mediaName = `media${mediaCounter}.${validExtension}`;
-    //   console.log("Nom de fichier généré : ", mediaName);
-    //   setVariables((prevState) => ({
-    //     ...prevState, 
-    //     [fieldName]: `https://memenza.fr/visuels/uploads/${navigationId}/${mediaName}`, 
-    //   }));
-    //   setCheckedFields((prevChecked) => ({
-    //     ...prevChecked,
-    //     [fieldName]: true,
-    //   }));
-    //   setMediaCounter((prevCount) => prevCount + 1);
-    // }
+  // Fonction pour envoyer un fichier spécifique
+const handleSendMedia = async (fieldName) => {
+  const mediaData = mediaFiles.find((item) => item.fieldName === fieldName);
+
+  if (!mediaData) {
+    console.error(`Aucun fichier trouvé pour le champ : ${fieldName}`);
+    return;
+  }
+
+  const { file } = mediaData;
+
+  if (!file) {
+    console.error("Aucun fichier sélectionné.");
+    return;
+  }
+
+  // Génère un nom dynamique basé sur le compteur actuel
+  const dynamicName = `media${fileCounter}${file.name.substring(file.name.lastIndexOf("."))}`;
+  const formData = new FormData();
+  formData.append("file", file);
+
+  // Identifier le champ en cours et générer un nom dynamique
+  const fieldIndex = tabParseMediasVideo.findIndex((field) => field.name === fieldName);
+  if (fieldIndex !== -1) {
+    const dynamicName = `media${fieldIndex + 1}${file.name.substring(file.name.lastIndexOf("."))}`;
+    formData.append("destinationName", dynamicName);
+  } else {
+    console.error(`Champ non trouvé dans tabParseMediasVideo : ${fieldName}`);
+    return;
+  }
+
+  formData.append("destinationFolder", navigationId);
+
+  console.log(`Envoi du fichier pour ${fieldName} avec dynamicName: ${dynamicName}`);
+
+  // Incrémente le compteur pour le prochain fichier
+  setFileCounter((prevCounter) => prevCounter + 1);
+
+  try {
+    const response = await fetch("../../wp-content/plugins/ProductImageCustomizer/js/upload-media.php", {
+      method: "POST",
+      body: formData,
+    });
+
+    if (response.ok) {
+      console.log(`Fichier envoyé avec succès pour ${fieldName}:`, await response.json());
+    } else {
+      console.error(`Erreur lors de l'envoi pour ${fieldName}:`, response.statusText);
+    }
+  } catch (error) {
+    console.error("Erreur lors de l'envoi du fichier :", error);
+  }
+};
+
+const handleVisuelTemplatePerso = async (event) => {
+  console.log("FONCTION ACTIVE");
+  
+  const file = event.target.files[0];
+  // setTestAvecFile(file)
+  const fileBlob = new Blob([file], { type: file.type });
+  console.log("Blob généré :", fileBlob);
+  setTestAvecFile(fileBlob)
+  
+  const formDataVisuelTemplatePerso = new FormData();
+  formDataVisuelTemplatePerso.append("file", file);
+  formDataVisuelTemplatePerso.append("destinationFolder", navigationId);
+  const dynamicName = `mediaPerso${file.name.substring(file.name.lastIndexOf("."))}`;
+  formDataVisuelTemplatePerso.append("destinationName", dynamicName);
+  
+  try {
+    // Effectue l'envoi des données
+    const response = await fetch("../../wp-content/plugins/ProductImageCustomizer/js/upload-media.php", {
+      method: "POST",
+      body: formDataVisuelTemplatePerso,
+    });
+    
+    if (response.ok) {
+      // console.log("Fichier envoyé avec succès :", await response.json());
+      setFichierPersoDetect(true);
+    } else {
+      console.error("Erreur lors de l'envoi :", response.statusText);
+    }
+  } catch (error) {
+    console.error("Erreur lors de l'envoi du fichier :", error);
+    if (error.response) {
+      console.log("Réponse d'erreur:", error.response);
+      console.log("Code d'état:", error.response.status);
+      console.log("Données d'erreur:", error.response.data);
+      console.log("Message d'erreur:", error.response.statusText);
+    } else if (error.request) {
+      console.log("Erreur de requête:", error.request);
+    } else {
+      console.log("Erreur lors de la configuration de la requête:", error.message);
+    }
+  }
+  
+  const fileExtension = file.name.split('.').pop(); // Récupère la partie après le dernier "."
+  const validExtension = fileExtension && fileExtension.length <= 5 ? fileExtension : 'unknown';
+  
+  const mediaName = `mediaPerso.${validExtension}`;
+  console.log("Nom de fichier généré : ", mediaName);
+  console.log("/////////FORMDATA////////// : " + JSON.stringify(formData));
+  setFormData((prevState) => ({
+    ...prevState,       // Copie les données existantes
+    image2: `visuels/uploads/${navigationId}/${dynamicName}`,  // Met à jour uniquement "image2"
+    // image2: `/home/memenzj/www/visuels/cmd/${navigationId}.png`,  // Met à jour uniquement "image2"
+  }));
+  console.log("/////////AFTER_FORMDATA////////// : " + JSON.stringify(formData));
+  
+  
+}  
+const handleVisuelTemplatePerso2 = async (event) => {
+  console.log("FONCTION ACTIVE");
+  const file = event.target.files[0];
+  
+  const fileBlob = new Blob([file], { type: file.type });
+  console.log("Blob généré :", fileBlob);
+  
+  // Met à jour l'état pour utilisation dans handleSubmit
+  setTestAvecFile(fileBlob);
+  setFichierPersoDetect(true);
+
+};
+const handleSubmit2 = async (e) => {
+  e.preventDefault();
+
+  const outputFilePath = `/home/memenzj/www/visuels/cmd/${navigationId}.png`;
+  const outputFolder = `/home/memenzj/www/visuels/uploads/${navigationId}`;
+  setOutputFilePathContext(outputFilePath);
+
+  const convertToBlob = async (imageFileOrURL) => {
+    if (typeof imageFileOrURL === "string") {
+      const response = await fetch(imageFileOrURL);
+      if (!response.ok) {
+        throw new Error(`Erreur lors du téléchargement de l'image : ${imageFileOrURL}`);
+      }
+      return await response.blob();
+    } else if (imageFileOrURL instanceof File || imageFileOrURL instanceof Blob) {
+      return imageFileOrURL;
+    } else {
+      throw new Error("Type d'image non valide. Attendu : URL, File ou Blob.");
+    }
   };
+
+  let image1Blob = await convertToBlob(formData["image1"]);
+  let image2Blob;
+
+  // Utilisation du fichier personnalisé détecté, ou fallback vers le chemin image2 du formData
+  if (fichierPersoDetect && testAvecFile) {
+    console.log("Utilisation du fichier personnalisé détecté");
+    image2Blob = testAvecFile; // Le Blob est passé depuis handleVisuelTemplatePerso2 via setTestAvecFile
+    console.log("IMAGE2BLOB avec file direct : " + image2Blob);
+  } else {
+    console.log("Conversion normale de image2 en Blob");
+    image2Blob = await convertToBlob(formData["image2"]);
+  }
+
+  const formPayload = new FormData();
+  formPayload.append("text1", formData.text1);
+  formPayload.append("text2", formData.text2);
+  formPayload.append("output_file", outputFilePath);
+  formPayload.append("dossier", outputFolder);
+  formPayload.append("image1", image1Blob, "image1.jpg");
+  formPayload.append("image2", image2Blob, `${navigationId}.jpg`);
+
+  // Ajouter les nouveaux champs pour text1 et text2...
+  formPayload.append("text1-fontfamily", formData["text1-fontfamily"]);
+  formPayload.append("text1-size", formData["text1-size"]);
+  formPayload.append("text1-x", formData["text1-x"]);
+  formPayload.append("text1-y", formData["text1-y"]);
+  formPayload.append("text1-colorR", formData["text1-colorR"]);
+  formPayload.append("text1-colorV", formData["text1-colorV"]);
+  formPayload.append("text1-colorB", formData["text1-colorB"]);
   
-  
+   // Ajouter les nouveaux champs pour text2
+   formPayload.append("text2-fontfamily", formData["text2-fontfamily"]);
+   formPayload.append("text2-size", formData["text2-size"]);
+   formPayload.append("text2-x", formData["text2-x"]);
+   formPayload.append("text2-y", formData["text2-y"]);
+   formPayload.append("text2-colorR", formData["text2-colorR"]);
+   formPayload.append("text2-colorV", formData["text2-colorV"]);
+   formPayload.append("text2-colorB", formData["text2-colorB"]);
+
+  formPayload.forEach((value, key) => {
+    console.log("VERIFICATION DU FORMPAYLOAD POUR ENVOI DES BONNES DATA : " + key, value);
+  });
+
+  try {
+    const response = await fetch("../../wp-content/plugins/ProductImageCustomizer/js/process-simplifie.php", {
+      method: "POST",
+      body: formPayload,
+    });
+
+    if (!response.ok) {
+      throw new Error("Erreur lors de la soumission du formulaire");
+    }
+
+    const result = await response.blob();
+    const url = URL.createObjectURL(result);
+
+    setGeneratedImageUrl(url);
+    setPathImageGenerate(url);
+    setIsGenerate(true);
+
+  } catch (error) {
+    setError(error.message);
+  }
+};
+
+
 
   return (
     <Box sx={{ textAlign: "center", bgcolor: "#f5f5f5" }}>
@@ -573,54 +771,13 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
       {selectedVisuelId && (
         <Box
           component="form"
-          onSubmit={handleSubmit}
+          onSubmit={handleSubmit2}
           encType="multipart/form-data"
           sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 2, maxWidth: 400, margin: "auto", mt:"100px" }}
         >
           
           <Typography variant="h6">Générer une image</Typography>
           {error && <Typography color="error">{error}</Typography>}
-          {/* <TextField
-            label={isFocused ? "max. 15 caractères" : formData.text1}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-            name="text1"
-            // value={formData.text1}
-            onChange={handleChange}
-            inputProps={{ maxLength: 15 }}
-            required
-            sx={{ paddingTop: 1.2, marginBottom: 1.2 }}
-            InputLabelProps={{
-              sx: {
-                paddingTop: 1.2, 
-                marginBottom: 1,
-                "&.MuiInputLabel-shrink": {
-                  transform: "translate(0, -16px) scale(0.75)", 
-                },
-              },
-            }}
-            />
-          <TextField
-            label={isFocused ? "max. 17 caractères" : formData.text2}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-            name="text2"
-            // value={formData.text2}
-            // placeholder={formData.text2}
-            onChange={handleChange}
-            inputProps={{ maxLength: 17 }}
-            required
-            sx={{ paddingTop: 1.2, marginBottom: 1.2 }}
-            InputLabelProps={{
-              sx: {
-                paddingTop: 1.2, 
-                marginBottom: 1,
-                "&.MuiInputLabel-shrink": {
-                  transform: "translate(0, -16px) scale(0.75)", 
-                },
-              },
-            }}
-          /> */}
 {textesCadres.fields.map((field, index) => 
   field.customizable && (
     <TextField
@@ -655,8 +812,7 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
           type="file"
           hidden
           accept="image/*" // Limite les fichiers à des images
-          // onChange={(e) => handleFileUpload3(e, field.name)} // Appelle le gestionnaire avec le nom du champ
-          onChange={handleChange} // Appelle le gestionnaire avec le nom du champ
+          onChange={(e) => handleVisuelTemplatePerso2(e)}
         />
       </Button>
     // <ImageUploader />

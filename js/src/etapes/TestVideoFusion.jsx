@@ -146,6 +146,8 @@ const Tooltip = ({ text, children }) => {
   const [currentVideoSrc, setCurrentVideoSrc] = useState("");
   const [nomTemplate, setNomTemplate] = useState("");
   const [variables, setVariables] = useState({});  
+  console.log("VARIABLES : " + JSON.stringify(variables));
+  
   const [visuelsVideos, setVisuelsVideos] = useState([]);
   const [tabParseTextesVideo, setTabParseTextesVideo] = useState([]);
   const [tabParseMediasVideo, setTabParseMediasVideo] = useState([]);
