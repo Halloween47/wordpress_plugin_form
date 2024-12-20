@@ -10,6 +10,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import styled from 'styled-components';
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { useSousCat } from './GestionEtat.jsx';
+import { Box, CardMedia } from '@mui/material';
 
 export default function FormDialog() {
 const { navigationId } = useSousCat();
@@ -52,9 +53,9 @@ const { navigationId } = useSousCat();
   
         const fileExtension = file.name.substring(file.name.lastIndexOf("."));
         const dynamicName = navigationId + fileExtension; // Combine l'ID avec l'extension du fichier
+
         formData.append("destinationName", dynamicName);
-  
-        formData.append("destinationFolder", navigationId); 
+        formData.append("destinationFolder", navigationId);   
     
         const uploadResponse = await fetch(
           "../../wp-content/plugins/ProductImageCustomizer/js/upload-media.php",{
@@ -74,12 +75,18 @@ const { navigationId } = useSousCat();
       // }
       const fileEnvoi = `https://memenza.fr/visuels/uploads/${navigationId}/${navigationId}`+ ".mp4";
       console.log("!!!!!!!!!!!!!!!!!!!!!!" + JSON.stringify(fileEnvoi));
+      console.log("!!!!!!!!!!!!!!!!!!!!!!" + fileEnvoi);
+      setFileUrl(fileEnvoi);
+      
 
+  };
+
+  const handleSendMedia = async () => {
+    console.log("test");
 
       const formDataPourCreationVideo = {
-        // "video_path": fileUrl,
-        // "video_path": fileEnvoi,
-        "video_path": JSON.stringify(fileEnvoi),
+        "video_path": fileUrl,
+        // "video_path": JSON.stringify(fileUrl),
         "desc": "",
       };
       try {
@@ -98,8 +105,8 @@ const { navigationId } = useSousCat();
       } catch (error) {
         console.error("Erreur lors de l'envoi des données pour la création de la vidéo :", error);
       }
-
-  };
+    
+  }
 
   return (
     <React.Fragment>
@@ -136,11 +143,30 @@ const { navigationId } = useSousCat();
           </DialogContentText>
         </DialogContent>
         <DialogActions sx={{display: "flex", flexDirection: 'column'}}>
+        {fileUrl && (
+          <Box sx={{display: "flex", flexDirection: "column",alignItems: "center"}}>
+            <Box
+              component="video"
+              src={fileUrl}
+              controls
+              sx={{ width: "80%", objectFit: "contain" }}
+            />
+            <Button 
+            onClick={handleSendMedia} 
+            component="label"
+            variant="outlined" 
+             color="success"
+            sx={{ marginBottom: "10px", marginTop: "10px"}}
+            >
+              Choisir cette vidéo
+          </Button>
+          </Box>
+          )}
           <Button 
             onClick={handleClose} 
             component="label"
             variant="contained" 
-            sx={{ marginBottom: "10px"}}
+            sx={{ marginBottom: "10px", marginTop: "10px"}}
             >
               Fermer
           </Button>
