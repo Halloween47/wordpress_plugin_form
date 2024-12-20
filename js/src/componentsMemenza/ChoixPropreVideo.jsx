@@ -10,10 +10,12 @@ import DialogTitle from '@mui/material/DialogTitle';
 import styled from 'styled-components';
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { useSousCat } from './GestionEtat.jsx';
-import { Box, CardMedia } from '@mui/material';
+import { Box, CardMedia, Snackbar, Typography } from '@mui/material';
+import Alert from '@mui/material/Alert';
 
 export default function FormDialog() {
 const { navigationId } = useSousCat();
+  const [envoiReussi, setEnvoiReussi] = React.useState(null);
   const [fileUrl, setFileUrl] = React.useState(null);
   const [open, setOpen] = React.useState(false);
   const [fileForSendVideo, setFileForSendVideo] = React.useState(null);
@@ -81,32 +83,44 @@ const { navigationId } = useSousCat();
 
   };
 
-  const handleSendMedia = async () => {
+const handleSendMedia = async () => {
     console.log("test");
-
-      const formDataPourCreationVideo = {
-        "video_path": fileUrl,
-        // "video_path": JSON.stringify(fileUrl),
-        "desc": "",
-      };
-      try {
-        const response = await axios.post(API_URL_WITHOUT_TPL, formDataPourCreationVideo, {
-          headers: {
-            "WP-API-KEY": API_KEY,
-            "Content-Type": "application/json",
-          },
-        });
-    
-        if (response.status === 200 || response.status === 201) {
-          console.log("Données envoyées avec succès :", response.data);
-        } else {
-          console.error("Erreur lors de l'envoi des données :", response.statusText);
-        }
-      } catch (error) {
-        console.error("Erreur lors de l'envoi des données pour la création de la vidéo :", error);
+  
+    if (!fileUrl) {
+      console.error("fileUrl est invalide :", fileUrl);
+      return;
+    }
+  
+    const formDataPourCreationVideo = {
+      video_path: fileUrl, // Vérifiez si l'API accepte ce format
+      desc: "testdesc",
+    };
+  
+    try {
+      const response = await axios.post(API_URL_WITHOUT_TPL, formDataPourCreationVideo, {
+        headers: {
+          "WP-API-KEY": API_KEY,
+          "Content-Type": "application/json", // Changez selon ce que l'API attend
+        },
+      });
+  
+      if (response.status === 200 || response.status === 201) {
+        console.log("Données envoyées avec succès :", response.data);
+        setEnvoiReussi(true);
+      } else {
+        console.error("Erreur lors de l'envoi des données :", response.statusText);
       }
-    
-  }
+    } catch (error) {
+      if (error.response) {
+        console.error("Erreur du serveur :", error.response.data, error.response.status);
+      } else if (error.request) {
+        console.error("Aucune réponse reçue :", error.request);
+      } else {
+        console.error("Erreur lors de la configuration de la requête :", error.message);
+      }
+    }
+  };
+  
 
   return (
     <React.Fragment>
@@ -160,6 +174,15 @@ const { navigationId } = useSousCat();
             >
               Choisir cette vidéo
           </Button>
+          {envoiReussi && (
+          <Alert
+            severity="success"
+            variant="filled"
+            sx={{ width: '100%' }}
+          >
+            Envoi réussi !
+          </Alert>
+          )}
           </Box>
           )}
           <Button 
