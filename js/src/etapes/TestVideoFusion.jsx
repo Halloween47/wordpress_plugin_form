@@ -601,7 +601,7 @@ const Tooltip = ({ text, children }) => {
             lg: '1.5rem',  // grand écran
           },
         })}>
-                  Grâce aux modèles Memenza, créez une vidéo associée à votre produit (accessible via le QR Code). Vous pouvez aussi directement télécharger  une vidéo d’une minute de votre choix (créée par exemple avec Capcut). La vidéo doit-être en 16/9ème, 50Mo maximum.
+                  Grâce aux modèles Memenza, créez une vidéo associée à votre produit (accessible via le QR Code). Vous pouvez aussi directement télécharger  une vidéo d’une minute de votre choix (créée par exemple avec Capcut). La vidéo doit-être en 16/9ème format Paysage, 50Mo maximum.
                 </Typography>
               </Box>
             </Box>
@@ -686,7 +686,9 @@ const Tooltip = ({ text, children }) => {
               {/* {isClicked && tabParseTextesVideo.map((field, index) => { */}
               {tabParseTextesVideo.map((field, index) => {
                 // console.log(field);
-                const match = field.name.match(/^S(\d+)-txt$/);
+                // const match = field.name.match(/^S(\d+)-txt$/);
+                const match = field.name.match(/^S(\d+)-txt$/i);
+
                 const dynamicLabel = match ? `Texte ${match[1]}` : field.name;
                 return (
                   <Box key={index} sx={{ mt: 2 }}>
