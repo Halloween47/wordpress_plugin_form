@@ -682,9 +682,10 @@ const Tooltip = ({ text, children }) => {
           <Grid item xs={6}>
             <Box sx={{ overflowY: "auto", maxHeight: "60vh" }}>
               <Typography variant="h6">Paramétrage du Template</Typography>
+              <Typography variant="subtitle1">Une fois le modèle configuré, il est possible de modifier tous les textes et images (les photos étant au format paysage), ou bien de les laisser tels quels, selon vos envies.</Typography>
               {/* {console.log(tabParseTextesVideo)}  */}
               {/* {isClicked && tabParseTextesVideo.map((field, index) => { */}
-              {tabParseTextesVideo.map((field, index) => {
+              {/* {tabParseTextesVideo.map((field, index) => {
                 // console.log(field);
                 // const match = field.name.match(/^S(\d+)-txt$/);
                 const match = field.name.match(/^S(\d+)-txt$/i);
@@ -703,7 +704,26 @@ const Tooltip = ({ text, children }) => {
                     </Box>
                 )
                 
-              })}
+              })} */}
+              {tabParseTextesVideo.map((field, index) => {
+    // Expression régulière pour extraire uniquement le numéro
+    const match = field.name.match(/^[Ss](\d+)-/); 
+    const dynamicLabel = match ? `Texte ${match[1]}` : field.name;
+    
+    return (
+      <Box key={index} sx={{ mt: 2 }}>
+        <Typography>{dynamicLabel}</Typography>
+        <TextField
+          fullWidth
+          size="small"
+          placeholder={field.defaultText || ""}
+          value={variables[field.name] || ""}
+          onChange={(e) => handleVariableChange(field.name, e.target.value)}
+        />
+      </Box>
+    );
+})}
+
 
               <Typography variant="h6" sx={{ mt: 4 }}>
                 Paramétrage des Médias
