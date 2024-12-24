@@ -640,6 +640,7 @@ const handleSubmit2 = async (e) => {
     image2Blob = await convertToBlob(formData["image2"]);
   }
 
+  const qrCode = `"https://memenza.fr/wp-content/plugins/ProductImageCustomizer/js/qrcode.png"`;
   const formPayload = new FormData();
   formPayload.append("text1", formData.text1);
   formPayload.append("text2", formData.text2);
@@ -647,6 +648,8 @@ const handleSubmit2 = async (e) => {
   formPayload.append("dossier", outputFolder);
   formPayload.append("image1", image1Blob, "image1.jpg");
   formPayload.append("image2", image2Blob, `${navigationId}.jpg`);
+  // formPayload.append("qrcode", qrCode);
+  // formPayload.append("imagecmd", outputFilePath);
 
   // Ajouter les nouveaux champs pour text1 et text2...
   formPayload.append("text1-fontfamily", formData["text1-fontfamily"]);
@@ -729,10 +732,10 @@ const handleSubmit2 = async (e) => {
       xs: '0.875rem', // petite taille d'écran
       sm: '1rem',     // taille intermédiaire
       md: '1.125rem', // écran moyen
-      lg: '1.25rem',  // grand écran
+      lg: '1.5rem',  // grand écran
     },
   })}>
-            Vous pouvez utiliser les modèles Memenza ou directement uploader votre visuel (créé par exemple avec Canva). La taille d’image attendue est de 1086x1086px.
+            Vous pouvez utiliser les modèles Memenza ou directement télécharger votre visuel (créé par exemple avec Canva). La taille d’image attendue est de 1086x1086px.
             </Typography> 
           </Box>
       </Box>
@@ -845,7 +848,7 @@ const handleSubmit2 = async (e) => {
                     
         <Tooltip
           // title={!generatedImageUrl ? "Veuillez générer l'image d'abord" : "Veuillez générer l'image d'abord"}
-          title={!previsuOwnVisu && !generatedImageUrl ? "Veuillez uploader ou générer une image d'abord" : ""}
+          title={!previsuOwnVisu && !generatedImageUrl ? "Veuillez télécharger  ou générer une image d'abord" : ""}
           arrow
           sx={{ zIndex: "9999 !important" }} 
         >

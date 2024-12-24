@@ -127,7 +127,7 @@ const Tooltip = ({ text, children }) => {
   };
 
   const EtapeVideo = ({ activeStep, setActiveStep }) => {
-    const { setLienResultatJ2V, imageVisuelPath, selectedSousCatId, navigationId,outputFilePathContext } = useSousCat();
+    const { setLienResultatJ2V, imageVisuelPath, selectedSousCatId, navigationId, outputFilePathContext } = useSousCat();
     
     const [isSendClick, setIsSendClick] = React.useState(false);
     const [openPrevisu, setOpenPrevisu] = React.useState(true);
@@ -140,6 +140,10 @@ const Tooltip = ({ text, children }) => {
   const [check, setCheck] = useState(false);
   const handleNext = () => {
     setActiveStep(prevStep => prevStep + 1); // Incrémenter l'étape
+  };
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    window.scrollTo(0, 0);
   };
   const [isMediaSaved, setIsMediaSaved] = useState(false);
   const [openModal, setOpenModal] = useState(false);
@@ -498,31 +502,37 @@ const Tooltip = ({ text, children }) => {
 
         // Extraction du lien Movie URL
         const movieUrl = response.data.match(/Movie URL: (https:\/\/[^\s]+)/)[1];
-        // Affichage du lien dans la console
         console.log("Movie URL:", movieUrl);
         setLienResultatJ2V(movieUrl);
 
         const qrCode = JSON.parse(response.data.match(/({.*})/)[1]).data.qrcode;
         console.log("ICI LE QR CODE : "+ qrCode);
 
-        const imagePath = 'visuels/cmd/' + navigationId + '.png';
+        const outputTest = 'https://memenza.fr/visuels/cmd/' + navigationId + '.png';
+        // const imagePath = 'visuels/cmd/' + navigationId + '.png';
+        // const imagePath = 'https://memenza.fr/visuels/cmd/' + navigationId + '.png';
+        const imagePath = "visuels/cmd/" + navigationId + '.png';
         console.log("LIEN DE L IMAGE : " + JSON.stringify(imagePath));
+        console.log("LIEN OUTPUFILE : " + JSON.stringify(outputTest));
         //////////////////////
         //////////////////////
-        
-        // const imagePath = ;
         const formQR = new FormData();
         formQR.append("qrcode", qrCode);
-
+        // formQR.append("qr_code", qrCode);
         formQR.append("imagecmd", imagePath);
         // formQR.append("imagecmd", );
+        // formQR.append("output_file", outputTest);
+        console.log("Données envoyées dans formQR :", Array.from(formQR.entries()));
+
         try {
           const responseQR = await fetch("../../wp-content/plugins/ProductImageCustomizer/js/process-simplifie.php", {
             method: "POST",
             body: formQR,
-            // Pour test sans envoi de data
-            // body: "",
           });
+
+          console.log("Statut de la réponse :", responseQR.status); // Vérifiez si c'est 200
+  console.log("Réponse brute :", await responseQR.text()); // Inspectez la réponse brute
+
     
           if (!responseQR.ok) {
             throw new Error("Erreur lors de la soumission du formulaire");
@@ -532,11 +542,11 @@ const Tooltip = ({ text, children }) => {
           const url = URL.createObjectURL(result);
           setGeneratedImageUrl(url);
           setIsGenerate(true)
-          // console.log("TEST PREVISU VOICI LE RESULT DE LA REPONSE : " + JSON.stringify(result));
-          // console.log("TEST PREVISU VOICI LERESULTAT DE LID : " + JSON.stringify(url));
-          
+          console.log("TEST PREVISU VOICI LE RESULT DE LA REPONSE : " + JSON.stringify(result));
+          console.log("TEST PREVISU VOICI LERESULTAT DE LID : " + JSON.stringify(url));
         } catch (error) {
           console.log(error.message);
+          console.log("Problem catch error : ");
         }
         //////////////////////
         //////////////////////
@@ -588,10 +598,10 @@ const Tooltip = ({ text, children }) => {
             xs: '0.875rem', // petite taille d'écran
             sm: '1rem',     // taille intermédiaire
             md: '1.125rem', // écran moyen
-            lg: '1.25rem',  // grand écran
+            lg: '1.5rem',  // grand écran
           },
         })}>
-                  Grâce aux modèles Memenza, créez une vidéo associée à votre produit (accessible via le QR Code). Vous pouvez aussi directement uploader une vidéo d’une minute de votre choix (créée par exemple avec Capcut). La vidéo doit-être en 16/9ème, 50Mo maximum.
+                  Grâce aux modèles Memenza, créez une vidéo associée à votre produit (accessible via le QR Code). Vous pouvez aussi directement télécharger  une vidéo d’une minute de votre choix (créée par exemple avec Capcut). La vidéo doit-être en 16/9ème, 50Mo maximum.
                 </Typography>
               </Box>
             </Box>
@@ -831,6 +841,14 @@ const Tooltip = ({ text, children }) => {
             </span>
         </Grid>
       )}
+      <Button
+        disabled={activeStep === 0}
+        // disabled={activeStep === 0 || !isGenerate}
+        onClick={handleBack}
+        sx={{ mr: 1 }}
+      >
+        Retour
+      </Button>
       <style>{StylesTest}</style>
     </Box>
   );
