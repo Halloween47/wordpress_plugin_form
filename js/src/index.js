@@ -71,7 +71,7 @@ const App = () => {
           return <TestVideoFusion setActiveStep={setActiveStep}/>;
       case 3:
         // return <EtapeValidation />;
-        return <EtapeTim />;
+        return <EtapeTim setActiveStep={setActiveStep} />;
         // return <SendDataToServer />;
       default:
         throw new Error("Etape inconnue");

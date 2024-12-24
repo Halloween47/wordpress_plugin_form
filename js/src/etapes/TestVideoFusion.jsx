@@ -127,9 +127,9 @@ const Tooltip = ({ text, children }) => {
   };
 
   const EtapeVideo = ({ activeStep, setActiveStep }) => {
-    const { setLienResultatJ2V, imageVisuelPath, selectedSousCatId, navigationId, outputFilePathContext } = useSousCat();
+    const { modalVideoGenere, setModalVideoGenere, setLienResultatJ2V, imageVisuelPath, selectedSousCatId, navigationId, outputFilePathContext } = useSousCat();
+    // const [modalVideoGenere, setModalVideoGenere] = React.useState(false);
     
-    const [isSendClick, setIsSendClick] = React.useState(false);
     const [openPrevisu, setOpenPrevisu] = React.useState(true);
       const handleOpenPrevisu = () => setOpen(true);
       const handleClosePrevisu = () => setOpen(false);
@@ -442,7 +442,7 @@ const Tooltip = ({ text, children }) => {
   }
 
   const handleSendAllMediaAndCreateVideo = async () => {
-    setIsSendClick(true)
+    setModalVideoGenere(true)
     console.log("Démarrage de l'envoi des médias et création de la vidéo...");
   
     // Étape 1 : Envoi de tous les médias
@@ -563,7 +563,7 @@ const Tooltip = ({ text, children }) => {
   
 
   return (
-    <Box sx={{ textAlign: "center", p: 4 }}>
+    <Box sx={{ textAlign: "center", p: 4, position: "relative" }}>
       <Box className="etape-video-intro">
               <Box className="etape-video-intro-img">
                 <img
@@ -821,7 +821,7 @@ const Tooltip = ({ text, children }) => {
               >
                 Envoyer les données
               </Button>
-              {isSendClick && 
+              {modalVideoGenere && 
                (
                 <Box>
                   <CircularProgress disableShrink sx={{marginBottom: "10px"}}/>
@@ -867,7 +867,7 @@ const Tooltip = ({ text, children }) => {
         disabled={activeStep === 0}
         // disabled={activeStep === 0 || !isGenerate}
         onClick={handleBack}
-        sx={{ mr: 1 }}
+        sx={{ mr: 1, position: "absolute", bottom: 0, left: 0 }}
       >
         Retour
       </Button>

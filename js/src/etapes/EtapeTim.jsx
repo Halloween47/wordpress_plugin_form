@@ -3,7 +3,7 @@ import { useSousCat } from '../componentsMemenza/GestionEtat.jsx';
 import SendDataToServer from './SendDataToServer.jsx';
 
 // const handleCustomize = async () => {
-const handleCustomize = () => {
+const handleCustomize = ({ activeStep, setActiveStep }) => {
     const { idProduit, setIdProduit } = useSousCat();
     const [affichageProductId, setAffichageProductId] = useState("produitVideAffichage");
     React.useEffect(() => {
@@ -26,7 +26,7 @@ const handleCustomize = () => {
             {/* <h1>ID Produit : {productId}</h1> */}
             {/* <h1>ID Produit : {affichageProductId}</h1>
             <h1>ID Produit : {idProduit}</h1> */}
-            <SendDataToServer />
+            <SendDataToServer setActiveStep={setActiveStep}  activeStep={activeStep} />
             {/* <h1>ID Produit : ?</h1> */}
             {/* <h1>ID Produit : {idProduit}</h1> */}
             {/* Ajoute ici la logique pour utiliser cet ID */}

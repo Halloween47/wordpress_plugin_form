@@ -16,9 +16,13 @@ export const SousCatProvider = ({ children }) => {
   
   const [idProduit, setIdProduit] = useState(null);
   const [lienResultatJ2V, setLienResultatJ2V] = useState(null);
+  
+  const [modalVideoGenere, setModalVideoGenere] = useState(false);
 
   return (
     <SousCatContext.Provider value={{
+      modalVideoGenere, 
+      setModalVideoGenere,
       lienResultatJ2V, 
       setLienResultatJ2V,
       pathImageGenerate, 
