@@ -114,6 +114,27 @@ const VisuelCard = ({ item, isSelected, onClick }) => (
 
 // const TestVisuelFusion = () => {
 const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
+  const { 
+    visuelGeneratedImageUrl, 
+    setVisuelGeneratedImageUrl,
+    visuelChampText1,
+    setVisuelChampText1,
+    visuelDataVignetteClique,
+    setVisuelDataVignetteClique,
+    visuelTextesCadres, 
+    setVisuelTextesCadres, 
+    visuelIdVignetteSelectionner, 
+    setVisuelIdVignetteSelectionner, 
+    pathImageGenerate, 
+    setPathImageGenerate, 
+    setImageVisuelPath, 
+    previsuOwnVisu, 
+    isGenerate, 
+    setIsGenerate, 
+    selectedSousCatId, 
+    navigationId, 
+    outputFilePathContext, 
+    setOutputFilePathContext } = useSousCat();
 
   const [testAvecFile, setTestAvecFile] = useState();
   
@@ -133,7 +154,6 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
     window.scrollTo(0, 0);
   };
-  const { pathImageGenerate, setPathImageGenerate, setImageVisuelPath, previsuOwnVisu, isGenerate, setIsGenerate, selectedSousCatId, navigationId, outputFilePathContext, setOutputFilePathContext } = useSousCat();
   console.log("VERIFICATION PATHIMAGE GENERATE" + JSON.stringify(pathImageGenerate));
   const [selectedVisuelId, setSelectedVisuelId] = useState(null);
   const [imagesVisuels, setImagesVisuels] = useState([]);
@@ -157,10 +177,19 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
 
   const tableauFiltrePourVignette = imagesVisuels.filter(item => item.id_ss_cat === selectedSousCatId);
 
-  const textesCadres = dataVignettesClique.length
-    ? JSON.parse(dataVignettesClique[0].textes_cadres)
+  // const textesCadres = dataVignettesClique.length
+  //  ? JSON.parse(dataVignettesClique[0].textes_cadres)
+  // : null;
+  const textesCadres = visuelDataVignetteClique.length
+    ? JSON.parse(visuelDataVignetteClique[0].textes_cadres)
     : null;
     // console.log("VALEURS DE TEXTE_CADRES : " + JSON.stringify(textesCadres));
+  //   useEffect(() => {
+  //     setVisuelTextesCadres(textesCadres);
+  //     console.log("TEXTESCADRES DANS CONTEXTE : " + visuelTextesCadres);
+      
+  // }, [textesCadres]);
+  
     
     if (textesCadres && Array.isArray(textesCadres.fields)) {
       textesCadres.fields.forEach((field, index) => {
@@ -172,11 +201,16 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
   //     console.log("Aucune donnée dans textesCadres ou le format est invalide.");
   // }
     
+    // const visuelsCadres = useMemo(() => {
+    //   return dataVignettesClique.length
+    //     ? JSON.parse(dataVignettesClique[0].visuels_cadres)
+    //     : null;
+    // }, [dataVignettesClique]);
     const visuelsCadres = useMemo(() => {
-      return dataVignettesClique.length
-        ? JSON.parse(dataVignettesClique[0].visuels_cadres)
+      return visuelDataVignetteClique.length
+        ? JSON.parse(visuelDataVignetteClique[0].visuels_cadres)
         : null;
-    }, [dataVignettesClique]);
+    }, [visuelDataVignetteClique]);
     // console.log("ETAT DE VISUELCADRES : " + JSON.stringify(visuelsCadres));
 
     if (visuelsCadres && Array.isArray(visuelsCadres.imageFields)) {
@@ -324,6 +358,8 @@ console.log("image2_defaultFile : ", image2_defaultFile);
 
   const handleVisuelClickCustom = (id) => {
     setSelectedVisuelId(id);
+    setVisuelIdVignetteSelectionner(id);
+    
 
     setFormData((prevFormData) => ({
       ...prevFormData,
@@ -333,6 +369,7 @@ console.log("image2_defaultFile : ", image2_defaultFile);
   
     const filtreSelonVignetteSelectionne = tableauFiltrePourVignette.filter(item => item.id_modele_cadre === id);
     setDataVignettesClique(filtreSelonVignetteSelectionne);
+    setVisuelDataVignetteClique(filtreSelonVignetteSelectionne)
   
     // Récupération des valeurs par défaut pour les champs texte
     if (filtreSelonVignetteSelectionne.length) {
@@ -357,6 +394,7 @@ console.log("image2_defaultFile : ", image2_defaultFile);
         image2: null,
       });
     }
+    
   };
   const handleChange = (e) => {
     // console.log("HANDLECHANGE contenu e : " + JSON.stringify(e.target));
@@ -640,6 +678,10 @@ const handleSubmit2 = async (e) => {
     image2Blob = await convertToBlob(formData["image2"]);
   }
 
+    console.log("text1 : " + formData.text1);
+    setVisuelChampText1(formData.text1);
+  
+
   const qrCode = `"https://memenza.fr/wp-content/plugins/ProductImageCustomizer/js/qrcode.png"`;
   const formPayload = new FormData();
   formPayload.append("text1", formData.text1);
@@ -690,11 +732,16 @@ const handleSubmit2 = async (e) => {
     setPathImageGenerate(url);
     setIsGenerate(true);
 
+    setVisuelGeneratedImageUrl(url);
+
   } catch (error) {
     setError(error.message);
   }
 };
 
+
+console.log("Verification id vigentte selectionner dans le contexte : " + visuelIdVignetteSelectionner);
+console.log("CONTEXT TextField 1 : " + visuelChampText1);
 
 
   return (
@@ -766,12 +813,14 @@ const handleSubmit2 = async (e) => {
           <VisuelCard
             key={index}
             item={item}
-            isSelected={selectedVisuelId === item.id_modele_cadre}
+            // isSelected={selectedVisuelId === item.id_modele_cadre}
+            isSelected={visuelIdVignetteSelectionner === item.id_modele_cadre}
             onClick={() => handleVisuelClickCustom(item.id_modele_cadre)}
           />
         ))}
       </Grid>
-      {selectedVisuelId && (
+      {/* {selectedVisuelId && ( */}
+      {visuelIdVignetteSelectionner && (
         <Box
           component="form"
           onSubmit={handleSubmit2}
@@ -781,6 +830,7 @@ const handleSubmit2 = async (e) => {
           
           <Typography variant="h6">Générer une image</Typography>
           {error && <Typography color="error">{error}</Typography>}
+{/* {visuelTextesCadres.fields.map((field, index) =>  */}
 {textesCadres.fields.map((field, index) => 
   field.customizable && (
     <TextField
@@ -828,9 +878,11 @@ const handleSubmit2 = async (e) => {
           <Button type="success" variant="contained">
             Prévisualiser votre cadre
           </Button>
-          {generatedImageUrl && (
+          {/* {generatedImageUrl && ( */}
+          {visuelGeneratedImageUrl && (
             <Box sx={{ mt: 2 }}>
-              <CardMedia component="img" image={generatedImageUrl} alt="Image générée" />
+              {/* <CardMedia component="img" image={generatedImageUrl} alt="Image générée" /> */}
+              <CardMedia component="img" image={visuelGeneratedImageUrl} alt="Image générée" />
             </Box>
           )}
         </Box>

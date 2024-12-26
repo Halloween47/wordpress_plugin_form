@@ -18,9 +18,28 @@ export const SousCatProvider = ({ children }) => {
   const [lienResultatJ2V, setLienResultatJ2V] = useState(null);
   
   const [modalVideoGenere, setModalVideoGenere] = useState(false);
+  
+  const [visuelIdVignetteSelectionner, setVisuelIdVignetteSelectionner] = useState(null);
+  const [visuelTextesCadres, setVisuelTextesCadres] = useState(null);
+  const [visuelDataVignetteClique, setVisuelDataVignetteClique] = useState([]);
+  const [visuelChampText1, setVisuelChampText1] = useState(null);
+  const [visuelGeneratedImageUrl, setVisuelGeneratedImageUrl] = useState(null);
+  
+    
+
 
   return (
     <SousCatContext.Provider value={{
+      visuelGeneratedImageUrl, 
+      setVisuelGeneratedImageUrl,
+      visuelChampText1, 
+      setVisuelChampText1,
+      visuelDataVignetteClique, 
+      setVisuelDataVignetteClique,
+      visuelTextesCadres, 
+      setVisuelTextesCadres,
+      visuelIdVignetteSelectionner, 
+      setVisuelIdVignetteSelectionner,
       modalVideoGenere, 
       setModalVideoGenere,
       lienResultatJ2V, 
