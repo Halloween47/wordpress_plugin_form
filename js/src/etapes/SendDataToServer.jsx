@@ -233,6 +233,8 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Button, CircularProgress, Typography } from '@mui/material';
 import { useSousCat } from "../componentsMemenza/GestionEtat.jsx";
+import LinearBuffer from '../componentsMemenza/LinearBuffer.jsx';
+import { Margin } from '@mui/icons-material';
 
 const style = {
   position: 'fixed',
@@ -365,8 +367,9 @@ console.log("IDPRODUIT : " + productId);
       >
         {!lienResultatJ2V ? (
           <Box sx={{ textAlign: 'center' }}>
-            <CircularProgress disableShrink sx={{ marginBottom: "10px" }} />
+            <CircularProgress disableShrink />
             <Typography variant="h5">Envoi des données au serveur...</Typography>
+            <LinearBuffer sx={{Margin: "10px 0px"}} />
             <Typography variant="body1">
               L’opération peut prendre entre une et 3 minutes selon la taille des médias envoyés.
             </Typography>

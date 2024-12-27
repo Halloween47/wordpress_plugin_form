@@ -218,11 +218,7 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
           // console.log(`Champ ${index + 1} - customizable IMAGEFIELDS : ${field.customizable}`);
       });
   } 
-  // else {
-  //     console.log("Aucune donnée dans textesCadres ou le format est invalide.");
-  // }
     
-    const defaultFiles = visuelsCadres?.imageFields.map(field => field.defaultFile) || [];
     
   useEffect(() => {
     if (textesCadres) {
@@ -360,6 +356,8 @@ console.log("image2_defaultFile : ", image2_defaultFile);
     setSelectedVisuelId(id);
     setVisuelIdVignetteSelectionner(id);
     
+    console.log("contenu de formdata à l'instant T : " + JSON.stringify(formData));
+    
 
     setFormData((prevFormData) => ({
       ...prevFormData,
@@ -405,233 +403,11 @@ console.log("image2_defaultFile : ", image2_defaultFile);
       ...prevData,
       [name]: files ? files[0] : value === "" ? "" : value, // Si le champ est effacé, on garde une chaîne vide
     }));
+    console.log("formdata dans le handleChange : " + JSON.stringify(formData));
+    
   };
 
-  /////////////////// ENVOI DU FICHIER A PROCESS (pour generation d'image)
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const outputFilePath = `/home/memenzj/www/visuels/cmd/${navigationId}.png`;
-    // const outputFilePath = `/home/memenzj/www/visuels/cmd/${navigationId}.jpg`;
-    console.log("OUTPUTFILEPATH : " + JSON.stringify(outputFilePath));
-    const outputFolder = `/home/memenzj/www/visuels/uploads/${navigationId}`;
-    console.log("outputFolder : " + JSON.stringify(outputFolder));
-    setOutputFilePathContext(outputFilePath);
-
-    
-
-    const convertToBlob = async (imageFileOrURL) => {
-      if (typeof imageFileOrURL === "string") {
-        // Si c'est une URL, on la télécharge pour obtenir un Blob
-        const response = await fetch(imageFileOrURL);
-        if (!response.ok) {
-          throw new Error(`Erreur lors du téléchargement de l'image : ${imageFileOrURL}`);
-        }
-        return await response.blob();
-      } else if (imageFileOrURL instanceof File || imageFileOrURL instanceof Blob) {
-        // Si c'est un fichier ou un blob, on le retourne directement
-        return imageFileOrURL;
-      } else {
-        throw new Error("Type d'image non valide. Attendu : URL, File ou Blob.");
-      }
-    };
-    
-    console.log("ORIGINAL FORMDATA IMAGE 1 : " + JSON.stringify(formData["image1"]));
-    console.log("ORIGINAL FORMDATA IMAGE 2 " + JSON.stringify(formData["image2"]));
-    
-    let image1Blob = await convertToBlob(formData["image1"]);
-    let image2Blob = await convertToBlob(formData["image2"]);
-    
-    
-    console.log("Valeur de fichierPersoDetect :", fichierPersoDetect);
-    console.log("setTestAvecFile :", testAvecFile);
-    if(fichierPersoDetect) {
-      console.log("PERSO DETECT : " + "https://memenza.fr/visuels/uploads/" + navigationId + "/" + "mediaPerso.png");
-      const newLink = "https://memenza.fr/visuels/uploads/" + navigationId + "/" + "mediaPerso.png";
-      console.log("NEW image 2 avant blob : " + newLink);
-      try {
-        // image2Blob = await convertToBlob(newLink);
-        // image2Blob = await convertToBlob(testAvecFile);
-        image2Blob = testAvecFile;
-        console.log("IMAGE BLOB2 (mise à jour réussie) :", image2Blob);
-      } catch (error) {
-        console.error("Erreur lors de la conversion en blob pour image2 :", error);
-      }
-      
-    }
-    
-    // console.log("IMAGE BLOB1 : " + image1Blob);
-    
-
-    const formPayload = new FormData();
-    formPayload.append("text1", formData.text1);
-    formPayload.append("text2", formData.text2);
-    formPayload.append("output_file", outputFilePath);
-    formPayload.append("dossier", outputFolder);
-    formPayload.append("image1", image1Blob, "image1.jpg"); 
-    formPayload.append("image2", image2Blob, "image2.jpg"); 
-    // formPayload.append("image2", testAvecFile, "image2.jpg"); 
-        
-    // Ajouter les nouveaux champs pour text1
-    formPayload.append("text1-fontfamily", formData["text1-fontfamily"]);
-    formPayload.append("text1-size", formData["text1-size"]);
-    formPayload.append("text1-x", formData["text1-x"]);
-    formPayload.append("text1-y", formData["text1-y"]);
-    formPayload.append("text1-colorR", formData["text1-colorR"]);
-    formPayload.append("text1-colorV", formData["text1-colorV"]);
-    formPayload.append("text1-colorB", formData["text1-colorB"]);
-
-    // Ajouter les nouveaux champs pour text2
-    formPayload.append("text2-fontfamily", formData["text2-fontfamily"]);
-    formPayload.append("text2-size", formData["text2-size"]);
-    formPayload.append("text2-x", formData["text2-x"]);
-    formPayload.append("text2-y", formData["text2-y"]);
-    formPayload.append("text2-colorR", formData["text2-colorR"]);
-    formPayload.append("text2-colorV", formData["text2-colorV"]);
-    formPayload.append("text2-colorB", formData["text2-colorB"]);
-
-    for (const [key, value] of formPayload.entries()) {
-      console.log(" TEST VERIF PAYLOAD AVEC LISTE KEYS : " + key, value);
-    }
-    formPayload.forEach((value, key) => {
-      console.log("VERIFICATION DU FORMPAYLOAD POUR ENVOI DES BONNES DATA : " + key, value);
-    });
-    try {
-      const response = await fetch("../../wp-content/plugins/ProductImageCustomizer/js/process-simplifie.php", {
-        method: "POST",
-        body: formPayload,
-      });
-
-      if (!response.ok) {
-        throw new Error("Erreur lors de la soumission du formulaire");
-      } 
-      console.log("PROCESS-SIMPLIFIE REUSSI !");
-
-       // Si vous travaillez avec un Blob (par ex., une image générée)
-      const result = await response.blob();
-      const url = URL.createObjectURL(result);
-      console.log("URL générée à partir du Blob :", url);
-
-      // Mettre à jour les états avec les données reçues
-      setGeneratedImageUrl(url);
-      setPathImageGenerate(url);
-      setIsGenerate(true);
-
-    } catch (error) {
-      setError(error.message);
-    }
-  };
-    
-  // Fonction pour envoyer un fichier spécifique
-const handleSendMedia = async (fieldName) => {
-  const mediaData = mediaFiles.find((item) => item.fieldName === fieldName);
-
-  if (!mediaData) {
-    console.error(`Aucun fichier trouvé pour le champ : ${fieldName}`);
-    return;
-  }
-
-  const { file } = mediaData;
-
-  if (!file) {
-    console.error("Aucun fichier sélectionné.");
-    return;
-  }
-
-  // Génère un nom dynamique basé sur le compteur actuel
-  const dynamicName = `media${fileCounter}${file.name.substring(file.name.lastIndexOf("."))}`;
-  const formData = new FormData();
-  formData.append("file", file);
-
-  // Identifier le champ en cours et générer un nom dynamique
-  const fieldIndex = tabParseMediasVideo.findIndex((field) => field.name === fieldName);
-  if (fieldIndex !== -1) {
-    const dynamicName = `media${fieldIndex + 1}${file.name.substring(file.name.lastIndexOf("."))}`;
-    formData.append("destinationName", dynamicName);
-  } else {
-    console.error(`Champ non trouvé dans tabParseMediasVideo : ${fieldName}`);
-    return;
-  }
-
-  formData.append("destinationFolder", navigationId);
-
-  console.log(`Envoi du fichier pour ${fieldName} avec dynamicName: ${dynamicName}`);
-
-  // Incrémente le compteur pour le prochain fichier
-  setFileCounter((prevCounter) => prevCounter + 1);
-
-  try {
-    const response = await fetch("../../wp-content/plugins/ProductImageCustomizer/js/upload-media.php", {
-      method: "POST",
-      body: formData,
-    });
-
-    if (response.ok) {
-      console.log(`Fichier envoyé avec succès pour ${fieldName}:`, await response.json());
-    } else {
-      console.error(`Erreur lors de l'envoi pour ${fieldName}:`, response.statusText);
-    }
-  } catch (error) {
-    console.error("Erreur lors de l'envoi du fichier :", error);
-  }
-};
-
-const handleVisuelTemplatePerso = async (event) => {
-  console.log("FONCTION ACTIVE");
   
-  const file = event.target.files[0];
-  // setTestAvecFile(file)
-  const fileBlob = new Blob([file], { type: file.type });
-  console.log("Blob généré :", fileBlob);
-  setTestAvecFile(fileBlob)
-  
-  const formDataVisuelTemplatePerso = new FormData();
-  formDataVisuelTemplatePerso.append("file", file);
-  formDataVisuelTemplatePerso.append("destinationFolder", navigationId);
-  const dynamicName = `mediaPerso${file.name.substring(file.name.lastIndexOf("."))}`;
-  formDataVisuelTemplatePerso.append("destinationName", dynamicName);
-  
-  try {
-    // Effectue l'envoi des données
-    const response = await fetch("../../wp-content/plugins/ProductImageCustomizer/js/upload-media.php", {
-      method: "POST",
-      body: formDataVisuelTemplatePerso,
-    });
-    
-    if (response.ok) {
-      // console.log("Fichier envoyé avec succès :", await response.json());
-      setFichierPersoDetect(true);
-    } else {
-      console.error("Erreur lors de l'envoi :", response.statusText);
-    }
-  } catch (error) {
-    console.error("Erreur lors de l'envoi du fichier :", error);
-    if (error.response) {
-      console.log("Réponse d'erreur:", error.response);
-      console.log("Code d'état:", error.response.status);
-      console.log("Données d'erreur:", error.response.data);
-      console.log("Message d'erreur:", error.response.statusText);
-    } else if (error.request) {
-      console.log("Erreur de requête:", error.request);
-    } else {
-      console.log("Erreur lors de la configuration de la requête:", error.message);
-    }
-  }
-  
-  const fileExtension = file.name.split('.').pop(); // Récupère la partie après le dernier "."
-  const validExtension = fileExtension && fileExtension.length <= 5 ? fileExtension : 'unknown';
-  
-  const mediaName = `mediaPerso.${validExtension}`;
-  console.log("Nom de fichier généré : ", mediaName);
-  console.log("/////////FORMDATA////////// : " + JSON.stringify(formData));
-  setFormData((prevState) => ({
-    ...prevState,       // Copie les données existantes
-    image2: `visuels/uploads/${navigationId}/${dynamicName}`,  // Met à jour uniquement "image2"
-    // image2: `/home/memenzj/www/visuels/cmd/${navigationId}.png`,  // Met à jour uniquement "image2"
-  }));
-  console.log("/////////AFTER_FORMDATA////////// : " + JSON.stringify(formData));
-  
-  
-}  
 const handleVisuelTemplatePerso2 = async (event) => {
   console.log("FONCTION ACTIVE");
   const file = event.target.files[0];
@@ -646,6 +422,7 @@ const handleVisuelTemplatePerso2 = async (event) => {
 };
 const handleSubmit2 = async (e) => {
   e.preventDefault();
+  setVisuelGeneratedImageUrl(null); 
 
   const outputFilePath = `/home/memenzj/www/visuels/cmd/${navigationId}.png`;
   const outputFolder = `/home/memenzj/www/visuels/uploads/${navigationId}`;
@@ -677,10 +454,6 @@ const handleSubmit2 = async (e) => {
     console.log("Conversion normale de image2 en Blob");
     image2Blob = await convertToBlob(formData["image2"]);
   }
-
-    console.log("text1 : " + formData.text1);
-    setVisuelChampText1(formData.text1);
-  
 
   const qrCode = `"https://memenza.fr/wp-content/plugins/ProductImageCustomizer/js/qrcode.png"`;
   const formPayload = new FormData();
@@ -721,18 +494,25 @@ const handleSubmit2 = async (e) => {
       body: formPayload,
     });
 
+    console.log("Statut de la réponse :", response.status);
+  console.log("En-têtes de la réponse :", [...response.headers]);
+
     if (!response.ok) {
       throw new Error("Erreur lors de la soumission du formulaire");
     }
 
-    const result = await response.blob();
+    const result = await response.blob();    
     const url = URL.createObjectURL(result);
+
+    console.log("Blob reçu :", result);
+  console.log("URL générée :", url);
 
     setGeneratedImageUrl(url);
     setPathImageGenerate(url);
     setIsGenerate(true);
 
     setVisuelGeneratedImageUrl(url);
+
 
   } catch (error) {
     setError(error.message);
@@ -741,7 +521,7 @@ const handleSubmit2 = async (e) => {
 
 
 console.log("Verification id vigentte selectionner dans le contexte : " + visuelIdVignetteSelectionner);
-console.log("CONTEXT TextField 1 : " + visuelChampText1);
+console.log("CONTEXT visuelGeneratedImageUrl : " + visuelGeneratedImageUrl);
 
 
   return (
