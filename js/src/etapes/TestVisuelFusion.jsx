@@ -136,6 +136,7 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
     outputFilePathContext, 
     setOutputFilePathContext } = useSousCat();
 
+    const [previousBlobUrl, setPreviousBlobUrl] = useState(null);
   const [testAvecFile, setTestAvecFile] = useState();
   
   const [fichierPersoDetect, setFichierPersoDetect] = React.useState(false);
@@ -154,7 +155,7 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
     window.scrollTo(0, 0);
   };
-  console.log("VERIFICATION PATHIMAGE GENERATE" + JSON.stringify(pathImageGenerate));
+
   const [selectedVisuelId, setSelectedVisuelId] = useState(null);
   const [imagesVisuels, setImagesVisuels] = useState([]);
   const [dataVignettesClique, setDataVignettesClique] = useState([]);
@@ -164,10 +165,8 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
     // image1: '',
     // image2: '',
   });
-  // console.log("CONTENU DE FORMADATA : " + JSON.stringify(formData));
   
   const [generatedImageUrl, setGeneratedImageUrl] = useState(null);
-  console.log("VERIFCATION DE generatedImageURL : " + JSON.stringify(generatedImageUrl));  
   
   const [error, setError] = useState(null);
   const [isFocused, setIsFocused] = useState(false); 
@@ -235,28 +234,7 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
       const text1_fontfamily = text1Field?.font.family || "";
       const image1_defaultFile = image1Field?.defaultFile || "";
       const image2_defaultFile = image2Field?.defaultFile || "";
-
-      // if (fichierPersoDetect) {
-      //   const image2_defaultFile = "visuels/uploads/" + navigationId + "/" + "mediaPerso.jpg";
-      // }
-
-//       const image2_defaultFile = fichierPersoDetect 
-//       ? "https://memenza.fr/visuels/uploads/" + navigationId + "/" + "mediaPerso.jpg" 
-//       : image2Field?.defaultFile || "https://memenza.fr/" + image2_defaultFile;
-
-// const setFormData = () => {
-//   const updatedFormData = {
-//     "image2": image2_defaultFile, // Utilisation correcte
-//   };
-// };
-
-
-      // const image2_defaultFile = fichierPersoDetect 
-      // ? "https://memenza.fr/visuels/uploads/" + navigationId + "/" + "mediaPerso.jpg" 
-      // : "https://memenza.fr/" + image2_defaultFile;
     
-      console.log("Verif image2_defaultFile : " + JSON.stringify(image2_defaultFile));
-
       const text1_size = text1Field?.font.size || 0;
       const text1_x = text1Field?.x_percent || 0;
       const text1_y = text1Field?.y_percent || 0;
@@ -272,11 +250,6 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
       const text2_colorR = text2Field?.color?.R || 0;
       const text2_colorV = text2Field?.color?.V || 0;
       const text2_colorB = text2Field?.color?.B || 0;
-
-      console.log("fichierPersoDetect : ", fichierPersoDetect);
-console.log("navigationId : ", navigationId);
-console.log("image2_defaultFile : ", image2_defaultFile);
-
   
       // Mettre à jour formData avec les nouvelles constantes
       setFormData(prevFormData => {
@@ -422,7 +395,6 @@ const handleVisuelTemplatePerso2 = async (event) => {
 };
 const handleSubmit2 = async (e) => {
   e.preventDefault();
-  setVisuelGeneratedImageUrl(null); 
 
   const outputFilePath = `/home/memenzj/www/visuels/cmd/${navigationId}.png`;
   const outputFolder = `/home/memenzj/www/visuels/uploads/${navigationId}`;
@@ -451,11 +423,111 @@ const handleSubmit2 = async (e) => {
     image2Blob = testAvecFile; // Le Blob est passé depuis handleVisuelTemplatePerso2 via setTestAvecFile
     console.log("IMAGE2BLOB avec file direct : " + image2Blob);
   } else {
-    console.log("Conversion normale de image2 en Blob");
     image2Blob = await convertToBlob(formData["image2"]);
   }
 
   const qrCode = `"https://memenza.fr/wp-content/plugins/ProductImageCustomizer/js/qrcode.png"`;
+  const formPayload = new FormData();
+  formPayload.append("text1", formData.text1);
+  formPayload.append("text2", formData.text2);
+  formPayload.append("output_file", outputFilePath);
+  formPayload.append("dossier", outputFolder);
+  formPayload.append("image1", image1Blob, "image1.jpg");
+  formPayload.append("image2", image2Blob, `${navigationId}.jpg`);
+  // formPayload.append("qrcode", qrCode);
+  // formPayload.append("imagecmd", outputFilePath);
+
+  // Ajouter les nouveaux champs pour text1 et text2...
+  formPayload.append("text1-fontfamily", formData["text1-fontfamily"]);
+  formPayload.append("text1-size", formData["text1-size"]);
+  formPayload.append("text1-x", formData["text1-x"]);
+  formPayload.append("text1-y", formData["text1-y"]);
+  formPayload.append("text1-colorR", formData["text1-colorR"]);
+  formPayload.append("text1-colorV", formData["text1-colorV"]);
+  formPayload.append("text1-colorB", formData["text1-colorB"]);
+  
+   // Ajouter les nouveaux champs pour text2
+   formPayload.append("text2-fontfamily", formData["text2-fontfamily"]);
+   formPayload.append("text2-size", formData["text2-size"]);
+   formPayload.append("text2-x", formData["text2-x"]);
+   formPayload.append("text2-y", formData["text2-y"]);
+   formPayload.append("text2-colorR", formData["text2-colorR"]);
+   formPayload.append("text2-colorV", formData["text2-colorV"]);
+   formPayload.append("text2-colorB", formData["text2-colorB"]);
+
+   // A NE PAS EFFECER - Code pour verification des datas passé en payload
+  // formPayload.forEach((value, key) => {
+  //   console.log("VERIFICATION DU FORMPAYLOAD POUR ENVOI DES BONNES DATA : " + key, value);
+  // });
+
+  try {
+    const response = await fetch("../../wp-content/plugins/ProductImageCustomizer/js/process-simplifie.php", {
+      method: "POST",
+      body: formPayload,
+    });
+
+    // A NE PAS EFFECER - Code pour verification des response retour
+    // console.log("Statut de la réponse :", response.status);
+    // console.log("En-têtes de la réponse :", [...response.headers]);
+    
+    if (!response.ok) {
+      throw new Error("Erreur lors de la soumission du formulaire");
+    }
+    
+    const result = await response.blob();    
+    const url = URL.createObjectURL(result);
+    // A NE PAS EFFECER - Verification retour
+    // console.log("Blob reçu :", result);
+    // console.log("URL générée :", url);
+
+    
+
+
+    setGeneratedImageUrl(url);
+    setPathImageGenerate(url);
+    setIsGenerate(true);
+
+    setVisuelGeneratedImageUrl(url);
+
+
+  } catch (error) {
+    setError(error.message);
+  }
+};
+
+const handleSubmit3 = async (e) => {
+  e.preventDefault();
+  
+  const outputFilePath = `/home/memenzj/www/visuels/cmd/${navigationId}.png`;
+  const outputFolder = `/home/memenzj/www/visuels/uploads/${navigationId}`;
+
+  const convertToBlob = async (imageFileOrURL) => {
+    if (typeof imageFileOrURL === "string") {
+      const response = await fetch(imageFileOrURL);
+      if (!response.ok) {
+        throw new Error(`Erreur lors du téléchargement de l'image : ${imageFileOrURL}`);
+      }
+      return await response.blob();
+    } else if (imageFileOrURL instanceof File || imageFileOrURL instanceof Blob) {
+      return imageFileOrURL;
+    } else {
+      throw new Error("Type d'image non valide. Attendu : URL, File ou Blob.");
+    }
+  };
+
+  let image1Blob = await convertToBlob(formData["image1"]);
+  let image2Blob;
+
+  // Utilisation du fichier personnalisé détecté, ou fallback vers le chemin image2 du formData
+  if (fichierPersoDetect && testAvecFile) {
+    console.log("Utilisation du fichier personnalisé détecté");
+    image2Blob = testAvecFile; // Le Blob est passé depuis handleVisuelTemplatePerso2 via setTestAvecFile
+    console.log("IMAGE2BLOB avec file direct : " + image2Blob);
+  } else {
+    console.log("Conversion normale de image2 en Blob");
+    image2Blob = await convertToBlob(formData["image2"]);
+  }
+
   const formPayload = new FormData();
   formPayload.append("text1", formData.text1);
   formPayload.append("text2", formData.text2);
@@ -494,35 +566,49 @@ const handleSubmit2 = async (e) => {
       body: formPayload,
     });
 
-    console.log("Statut de la réponse :", response.status);
-  console.log("En-têtes de la réponse :", [...response.headers]);
-
+    console.log("Réponse brute du serveur :", response);
+  
     if (!response.ok) {
       throw new Error("Erreur lors de la soumission du formulaire");
     }
+  
+    // Vérification du type MIME
+    const contentType = response.headers.get("Content-Type");
+    console.log("Type de contenu de la réponse : ", contentType);
+  
+    if (!contentType || !contentType.startsWith("image")) {
+      throw new Error("Le serveur n'a pas renvoyé une image.");
+    }
+  
+    const result = await response.blob();
+  
+    // Vérifier que le Blob est valide
+    console.log("Résultat Blob reçu : ", result);
+  
+    if (previousBlobUrl) {
+      URL.revokeObjectURL(previousBlobUrl);
+    }
+  
+    // Créer une nouvelle URL pour le Blob
+    const newBlobUrl = URL.createObjectURL(result);
+    console.log("Nouvelle URL générée :", newBlobUrl);
 
-    const result = await response.blob();    
-    const url = URL.createObjectURL(result);
-
-    console.log("Blob reçu :", result);
-  console.log("URL générée :", url);
-
-    setGeneratedImageUrl(url);
-    setPathImageGenerate(url);
-    setIsGenerate(true);
-
-    setVisuelGeneratedImageUrl(url);
-
-
+    // Tester si l'URL Blob est accessible
+const img = new Image();
+img.onload = () => console.log("L'image est accessible !");
+img.onerror = () => console.error("Erreur : l'image n'est pas accessible !");
+img.src = newBlobUrl;
+  
+    // Mettre à jour l'état avec la nouvelle URL
+    setPreviousBlobUrl(newBlobUrl); // Stocker la nouvelle URL
+    setVisuelGeneratedImageUrl(newBlobUrl); // Mettre à jour l'image à afficher
+    setIsGenerate(true); // Indiquer que la génération est terminée
   } catch (error) {
+    console.error("Erreur lors de la génération de l'image :", error);
     setError(error.message);
   }
+  
 };
-
-
-console.log("Verification id vigentte selectionner dans le contexte : " + visuelIdVignetteSelectionner);
-console.log("CONTEXT visuelGeneratedImageUrl : " + visuelGeneratedImageUrl);
-
 
   return (
     <Box sx={{ textAlign: "center", bgcolor: "#f5f5f5" }}>

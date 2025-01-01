@@ -127,7 +127,7 @@ const Tooltip = ({ text, children }) => {
   };
 
   const EtapeVideo = ({ activeStep, setActiveStep }) => {
-    const { modalVideoGenere, setModalVideoGenere, setLienResultatJ2V, imageVisuelPath, selectedSousCatId, navigationId, outputFilePathContext } = useSousCat();
+    const { videoCreationFail, setVideoCreationFail,modalVideoGenere, setModalVideoGenere, setLienResultatJ2V, imageVisuelPath, selectedSousCatId, navigationId, outputFilePathContext } = useSousCat();
     // const [modalVideoGenere, setModalVideoGenere] = React.useState(false);
     
     const [openPrevisu, setOpenPrevisu] = React.useState(true);
@@ -150,8 +150,7 @@ const Tooltip = ({ text, children }) => {
   const [currentVideoSrc, setCurrentVideoSrc] = useState("");
   const [nomTemplate, setNomTemplate] = useState("");
   const [variables, setVariables] = useState({});  
-  console.log("VARIABLES : " + JSON.stringify(variables));
-  
+  console.log("DATAS prêt pour envoi : " + JSON.stringify(variables));
   const [visuelsVideos, setVisuelsVideos] = useState([]);
   const [tabParseTextesVideo, setTabParseTextesVideo] = useState([]);
   const [tabParseMediasVideo, setTabParseMediasVideo] = useState([]);
@@ -442,7 +441,8 @@ const Tooltip = ({ text, children }) => {
   }
 
   const handleSendAllMediaAndCreateVideo = async () => {
-    setModalVideoGenere(true)
+    setModalVideoGenere(true);
+    setLienResultatJ2V(null);
     console.log("Démarrage de l'envoi des médias et création de la vidéo...");
   
     // Étape 1 : Envoi de tous les médias
@@ -530,8 +530,9 @@ const Tooltip = ({ text, children }) => {
             body: formQR,
           });
 
+          // A NE PAS EFFACER - vérification de la reponse pour le QRCode (si tout ce passe bien)
           console.log("Statut de la réponse :", responseQR.status); // Vérifiez si c'est 200
-  console.log("Réponse brute :", await responseQR.text()); // Inspectez la réponse brute
+          console.log("Réponse brute :", await responseQR.text()); // Inspectez la réponse brute
 
     
           if (!responseQR.ok) {
@@ -542,11 +543,10 @@ const Tooltip = ({ text, children }) => {
           const url = URL.createObjectURL(result);
           setGeneratedImageUrl(url);
           setIsGenerate(true)
-          console.log("TEST PREVISU VOICI LE RESULT DE LA REPONSE : " + JSON.stringify(result));
-          console.log("TEST PREVISU VOICI LERESULTAT DE LID : " + JSON.stringify(url));
+          // console.log("TEST PREVISU VOICI LE RESULT DE LA REPONSE : " + JSON.stringify(result));
+          // console.log("TEST PREVISU VOICI LERESULTAT DE LID : " + JSON.stringify(url));
         } catch (error) {
           console.log(error.message);
-          console.log("Problem catch error : ");
         }
         //////////////////////
         //////////////////////
@@ -558,6 +558,7 @@ const Tooltip = ({ text, children }) => {
       }
     } catch (error) {
       console.error("Erreur lors de l'envoi des données pour la création de la vidéo :", error);
+      setVideoCreationFail("Erreur lors de la generation de la video");
     }
   };
   

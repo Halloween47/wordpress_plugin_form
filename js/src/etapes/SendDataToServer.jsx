@@ -266,9 +266,21 @@ const overlayStyle = {
 };
 
 const SendDataToServer = ({ activeStep, setActiveStep }) => {
-    const { modalVideoGenere, setModalVideoGenere, lienResultatJ2V, idProduit, setIdProduit, navigationId, previsuOwnVisu, imageVisuelPath, pathImageGenerate, outputFilePathContext } = useSousCat(); // Récupère l'ID produit via le hook personnalisé
+    const { videoCreationFail, 
+      setVideoCreationFail,
+      modalVideoGenere, 
+      setModalVideoGenere, 
+      lienResultatJ2V, 
+      idProduit, 
+      setIdProduit, 
+      navigationId, 
+      previsuOwnVisu, 
+      imageVisuelPath, 
+      pathImageGenerate, 
+      outputFilePathContext } = useSousCat(); 
 
-  console.log("RESULTAT de lienResultatJ2V coté SENDDATATOSERVEUR : " + lienResultatJ2V);
+      // NE PAS EFFACER - Vérification du résultat du lien du retour de J2V
+  // console.log("RESULTAT de lienResultatJ2V coté SENDDATATOSERVEUR : " + lienResultatJ2V);
   
   const [productId, setProductId] = useState();
   
@@ -366,15 +378,32 @@ console.log("IDPRODUIT : " + productId);
         }}
       >
         {!lienResultatJ2V ? (
+          videoCreationFail ? (
           <Box sx={{ textAlign: 'center' }}>
-            <CircularProgress disableShrink />
+            <Typography variant="h5" color="error">
+              Une erreur est survenue !
+            </Typography>
+            <Button
+              variant="contained"
+              color="primary"
+              sx={{ marginTop: '20px' }}
+              onClick={() => setModalVideoGenere(false)}
+            >
+              Réessayer
+            </Button>
+          </Box>
+          ) : (
+          <Box sx={{ textAlign: 'center' }}>
+            {/* <CircularProgress disableShrink /> */}
             <Typography variant="h5">Envoi des données au serveur...</Typography>
             <LinearBuffer sx={{Margin: "10px 0px"}} />
             <Typography variant="body1">
               L’opération peut prendre entre une et 3 minutes selon la taille des médias envoyés.
             </Typography>
           </Box>
-        ) : (
+        ) )
+
+        :  (
           <Box sx={{ display: "flex", flexDirection: 'column', gap: 4, alignItems: "center", flexGrow: 1 }}>
             <Typography variant="h5">Félicitations, voici votre vidéo générée avec Memenza!</Typography>
             <Box component="video" src={lienResultatJ2V} controls sx={{ width: "70%", objectFit: "contain", maxHeight: '90vh' }} />
@@ -395,7 +424,8 @@ console.log("IDPRODUIT : " + productId);
               </Button>
             </Box>
           </Box>
-        )}
+        )
+        }
       </Box>
     </>
   );

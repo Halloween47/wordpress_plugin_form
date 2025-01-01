@@ -25,11 +25,14 @@ export const SousCatProvider = ({ children }) => {
   const [visuelChampText1, setVisuelChampText1] = useState(null);
   const [visuelGeneratedImageUrl, setVisuelGeneratedImageUrl] = useState(null);
   
+  const [videoCreationFail, setVideoCreationFail] = useState(null);
     
 
 
   return (
     <SousCatContext.Provider value={{
+      videoCreationFail, 
+      setVideoCreationFail,
       visuelGeneratedImageUrl, 
       setVisuelGeneratedImageUrl,
       visuelChampText1, 
