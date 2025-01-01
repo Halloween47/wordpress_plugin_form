@@ -376,7 +376,7 @@ const TestVisuelFusion = ({ activeStep, setActiveStep }) => {
       ...prevData,
       [name]: files ? files[0] : value === "" ? "" : value, // Si le champ est effacé, on garde une chaîne vide
     }));
-    console.log("formdata dans le handleChange : " + JSON.stringify(formData));
+    console.log("Données envoyées à process : " + JSON.stringify(formData));
     
   };
 
@@ -386,7 +386,7 @@ const handleVisuelTemplatePerso2 = async (event) => {
   const file = event.target.files[0];
   
   const fileBlob = new Blob([file], { type: file.type });
-  console.log("Blob généré :", fileBlob);
+  // console.log("Blob généré :", fileBlob);
   
   // Met à jour l'état pour utilisation dans handleSubmit
   setTestAvecFile(fileBlob);
@@ -420,8 +420,8 @@ const handleSubmit2 = async (e) => {
   // Utilisation du fichier personnalisé détecté, ou fallback vers le chemin image2 du formData
   if (fichierPersoDetect && testAvecFile) {
     console.log("Utilisation du fichier personnalisé détecté");
-    image2Blob = testAvecFile; // Le Blob est passé depuis handleVisuelTemplatePerso2 via setTestAvecFile
-    console.log("IMAGE2BLOB avec file direct : " + image2Blob);
+    image2Blob = testAvecFile; 
+    // console.log("IMAGE2BLOB avec file direct : " + image2Blob);
   } else {
     image2Blob = await convertToBlob(formData["image2"]);
   }
