@@ -677,6 +677,21 @@
 /////////////////////////////////////////////
 /////////////////////////////////////////////
 /////////////////////////////////////////////
+/**
+ * Fichier : EtapeVisuel.jsx
+ * Description : Composant React pour la personnalisation d'images avec étapes guidées.
+ * Navigation rapide (utilisez CTRL+F + les mots-clés) :
+ * - [01] IMPORTS : "CTRL+F IMPORTS"
+ * - [02] STYLES : "CTRL+F STYLES"
+ * - [03] COMPOSANT PRINCIPAL : "CTRL+F COMPOSANT PRINCIPAL"
+ * - [04] ÉTATS (useState) : "CTRL+F ÉTATS"
+ * - [05] useEffect : "CTRL+F useEffect"
+ * - [06] FONCTIONS (Gestion des fichiers, formulaire, navigation) : "CTRL+F FONCTIONS"
+ * - [07] APPELS API (Génération preview & Soumission) : "CTRL+F APPELS API"
+ * - [08] RENDU FINAL : "CTRL+F RENDU FINAL"
+ */
+
+// [01] IMPORTS : "CTRL+F IMPORTS"
 import React, { useState, useEffect, useMemo } from "react";
 import {
   Box,
@@ -694,6 +709,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useSousCat } from "../componentsMemenza/GestionEtat.jsx";
 import ChoixPropreVisuel from "../componentsMemenza/ChoixPropreVisuel.jsx";
 
+// [02] STYLES : "CTRL+F STYLES"
 const StyleEtapeVisuel = `
 .etape-visuel-intro {
     display: flex;
@@ -782,7 +798,9 @@ const VisuelCard = ({ item, isSelected, onClick }) => (
   </Grid>
 );
 
+// [03] COMPOSANT PRINCIPAL : "CTRL+F COMPOSANT PRINCIPAL"
 const EtapeVisuel = ({ activeStep, setActiveStep }) => {
+  // [04] ÉTATS (useState) : "CTRL+F ÉTATS"
   const { 
     visuelGeneratedImageUrl, 
     setVisuelGeneratedImageUrl,
@@ -925,6 +943,7 @@ const EtapeVisuel = ({ activeStep, setActiveStep }) => {
   //   }
   // }, [visuelsCadres]);
 
+  // [05] useEffect : "CTRL+F useEffect"
   // Fusion des deux useEffect ci dessus
   useEffect(() => {
     if (textesCadres && visuelsCadres) {
@@ -1002,6 +1021,7 @@ const EtapeVisuel = ({ activeStep, setActiveStep }) => {
     fetchData();
   }, []);
 
+  // [06] FONCTIONS (Gestion des fichiers, formulaire, navigation) : "CTRL+F FONCTIONS"
 const affichageChampsParametrages = (id) => {
     setSelectedVisuelId(id);
     setVisuelIdVignetteSelectionner(id);
@@ -1057,6 +1077,8 @@ const envoiVisuelPerso = (event) => {
     setFichierPersoDetect(true);
   }
 };
+
+// [07] APPELS API (Génération preview & Soumission) : "CTRL+F APPELS API"
 const creationDuVisuelAvecTemplate = async (e) => {
   e.preventDefault();
 
@@ -1163,6 +1185,7 @@ if (!imagesVisuels.length) {
   return <Typography>Chargement des visuels...</Typography>;
 }
 
+// [08] RENDU FINAL : "CTRL+F RENDU FINAL"
 return (
   <Box sx={{ textAlign: "center", bgcolor: "#f5f5f5" }}>
     <Box className="etape-visuel-intro">
