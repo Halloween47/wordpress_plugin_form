@@ -28,7 +28,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import EtapeCategorie from "./etapes/EtapeCategorie.jsx";
 // import EtapeVisuel from "./etapes/EtapeVisuel.jsx";
-import TestVisuelFusion from "./etapes/TestVisuelFusion.jsx";
+import EtapeVisuel from "./etapes/EtapeVisuel.jsx";
 // import EtapeVideo from "./etapes/EtapeVideo.jsx";
 import TestVideoFusion from "./etapes/TestVideoFusion.jsx";
 import EtapeValidation from "./etapes/EtapeValidation.jsx";
@@ -64,8 +64,8 @@ const App = () => {
       case 0:
         return <EtapeCategorie setActiveStep={setActiveStep} />; 
       case 1:
-        // return <EtapeVisuel />;
-        return <TestVisuelFusion setActiveStep={setActiveStep}/>;
+        return <EtapeVisuel />;
+        // return <TestVisuelFusion setActiveStep={setActiveStep}/>;
         case 2:
           // return <EtapeVideo />;
           return <TestVideoFusion setActiveStep={setActiveStep}/>;
