@@ -227,6 +227,7 @@ const Tooltip = ({ text, children }) => {
       { fieldName, file }, 
     ]);
     if (file) {
+      console.log("ICI LE TYPE DE FICHIER DEMANDE : " + file.type);      
       if (!file.type.startsWith("image/") && !file.type.startsWith("video/")) {
         console.error("Seuls les fichiers d'image ou de vidéo sont autorisés.");
         return;
@@ -562,6 +563,7 @@ const Tooltip = ({ text, children }) => {
     }
   };
   
+  let nameMediaCounter = 1;
 
   return (
     <Box sx={{ textAlign: "center", p: 4, position: "relative" }}>
@@ -738,8 +740,11 @@ const Tooltip = ({ text, children }) => {
 
                 const match = field.name.match(/^s\d+-img(\d+)$/);
                 const dynamicLabel = match ? `Media ${match[1]}` : field.name;
-
-                return (
+                if (field.customizable === true) {
+                  // console.log("custom à true");                  
+                  const currentMediaIndex = nameMediaCounter++;
+                  // console.log("Élément personnalisable trouvé :", field.name);
+                  return (
                     <Box
                       key={index}
                       sx={{ 
@@ -752,9 +757,8 @@ const Tooltip = ({ text, children }) => {
                       }}
                       >
                         {/* Label dynamique pour le champ média */}
-                        {/* <Typography sx={{ mr: "30px" }}>{dynamicLabel}</Typography> */}
-                        {/* <Typography sx={{ mr: "30px" }}>{field.name}</Typography> */}
-                        <Typography sx={{ mr: "30px" }}>Media {index + 1}</Typography>
+                        {/* <Typography sx={{ mr: "30px" }}>Media {index + 1}</Typography> */}
+                        <Typography sx={{ mr: "30px" }}>Media {currentMediaIndex}</Typography>
 
                           {/* Bouton pour importer un média */}
                           <Button component="label" variant="contained" sx={{ mr: "10px" }}>
@@ -790,14 +794,80 @@ const Tooltip = ({ text, children }) => {
                           <div style={{ padding: "10px" }}>
                             {/* <Tooltip text="Ici les infos correspondant au prérequis du média attendu"> */}
                             <Tooltip text={field.comment}>
-      <InfoIcon sx={{ color: "black" }} />
+                <InfoIcon sx={{ color: "black" }} />
                             </Tooltip>
                           </div>
                         </Box>
 
 
 
-)
+                )
+                }
+////////////////////////
+//DEBUT
+// ////////////////////////
+//                 return (
+//                     <Box
+//                       key={index}
+//                       sx={{ 
+//                         mt: 2, 
+//                         display: "flex", 
+//                         justifyContent: "center", 
+//                         // justifyContent: "flex-end", 
+//                         alignItems: "center", 
+//                         width: "100%"
+//                       }}
+//                       >
+//                         {/* Label dynamique pour le champ média */}
+//                         {/* <Typography sx={{ mr: "30px" }}>{dynamicLabel}</Typography> */}
+//                         {/* <Typography sx={{ mr: "30px" }}>{field.name}</Typography> */}
+//                         <Typography sx={{ mr: "30px" }}>Media {index + 1}</Typography>
+
+//                           {/* Bouton pour importer un média */}
+//                           <Button component="label" variant="contained" sx={{ mr: "10px" }}>
+//                             Importer votre média
+//                             <input
+//                               type="file"
+//                               hidden
+//                               // accept="image/*,video/*"
+//                               accept={field.type === "image" ? "image/*" : field.type === "video" ? "video/*" : "*/*"}
+//                               onChange={(e) => handleFileUpload(e, field.name)}
+//                               // onChange={(e) => handleVariableChange(field.name, e.target.value)}
+//                             />
+//                           </Button>
+//                           {/* {check && (
+//                             <CheckCircleRoundedIcon  sx={{ color: 'green' }} />
+//                           )} */}
+//                           {checkedFields[field.name] && (
+//                             <CheckCircleRoundedIcon sx={{ color: 'green' }} />
+//                           )}
+
+//                           {/* Nouveau bouton pour envoyer le (1)média */}
+//                           {/* <Button
+//                             variant="contained"
+//                             color="primary"
+//                             sx={{ mr: "10px" }}
+//                             onClick={() => handleSendMedia(field.name)}
+//                             className="test-modificationButton"
+//                           >
+//                             Test
+//                           </Button> */}
+
+//                           {/* Tooltip avec informations supplémentaires */}
+//                           <div style={{ padding: "10px" }}>
+//                             {/* <Tooltip text="Ici les infos correspondant au prérequis du média attendu"> */}
+//                             <Tooltip text={field.comment}>
+//       <InfoIcon sx={{ color: "black" }} />
+//                             </Tooltip>
+//                           </div>
+//                         </Box>
+
+
+
+// )
+////////////////////////
+//FIN
+////////////////////////
                 
                 })}
                 {/* <Button

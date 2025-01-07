@@ -835,8 +835,11 @@ const EtapeVisuel = ({ activeStep, setActiveStep }) => {
     text1: '',
     text2: '',
     // image1: '',
+    // image1: '',
     // image2: '',
   });
+  console.log("FORMDATA : " + JSON.stringify(formData));
+  
   const tableauFiltrePourVignette = imagesVisuels.filter(item => item.id_ss_cat === selectedSousCatId);
   const textesCadres = visuelDataVignetteClique.length
     ? JSON.parse(visuelDataVignetteClique[0].textes_cadres)
@@ -943,68 +946,126 @@ const EtapeVisuel = ({ activeStep, setActiveStep }) => {
   //   }
   // }, [visuelsCadres]);
 
-  // [05] useEffect : "CTRL+F useEffect"
+  
+
+////////////////////////////
+////////////////////////////
+////////////////////////////
+// [05] useEffect : "CTRL+F useEffect"
   // Fusion des deux useEffect ci dessus
-  useEffect(() => {
-    if (textesCadres && visuelsCadres) {
-      // Extraire les champs pour text1 et text2
-      const text1Field = textesCadres.fields.find(field => field.name === "text1");
-      const text2Field = textesCadres.fields.find(field => field.name === "text2");
+  // useEffect(() => {
+  //   if (textesCadres && visuelsCadres) {
+  //     // Extraire les champs pour text1 et text2
+  //     const text1Field = textesCadres.fields.find(field => field.name === "text1");
+  //     const text2Field = textesCadres.fields.find(field => field.name === "text2");
       
-      const image1Field = visuelsCadres.imageFields.find(field => field.name === "image1");
-      const image2Field = visuelsCadres.imageFields.find(field => field.name === "image2");
+  //     const image1Field = visuelsCadres.imageFields.find(field => field.name === "image1");
+  //     // console.log("Verif de imageField 1 : " + JSON.stringify(image1Field));
       
-      // Définir les constantes pour text1
-      const text1_fontfamily = text1Field?.font.family || "";
-      const image1_defaultFile = image1Field?.defaultFile || "";
-      const image2_defaultFile = image2Field?.defaultFile || "";
-      const text1_size = text1Field?.font.size || 0;
-      const text1_x = text1Field?.x_percent || 0;
-      const text1_y = text1Field?.y_percent || 0;
-      const text1_colorR = text1Field?.color?.R || 0;      
-      const text1_colorV = text1Field?.color?.V || 0;
-      const text1_colorB = text1Field?.color?.B || 0;
+  //     const image2Field = visuelsCadres.imageFields.find(field => field.name === "image2");
+  //     // console.log("Verif de imageField 2 : " + JSON.stringify(image2Field));
+      
+  //     // Définir les constantes pour text1
+  //     const text1_fontfamily = text1Field?.font.family || "";
+  //     // const image1_defaultFile = image1Field?.defaultFile || "";
+  //     const image1_defaultFile = image1Field?.defaultFile;
+  //     const image2_defaultFile = image2Field?.defaultFile || "";
+  //     const text1_size = text1Field?.font.size || 0;
+  //     const text1_x = text1Field?.x_percent || 0;
+  //     const text1_y = text1Field?.y_percent || 0;
+  //     const text1_colorR = text1Field?.color?.R || 0;      
+  //     const text1_colorV = text1Field?.color?.V || 0;
+  //     const text1_colorB = text1Field?.color?.B || 0;
   
-      // Définir les constantes pour text2
-      const text2_fontfamily = text2Field?.font.family || "";
-      const text2_size = text2Field?.font.size || 0;
-      const text2_x = text2Field?.x_percent || 0;
-      const text2_y = text2Field?.y_percent || 0;
-      const text2_colorR = text2Field?.color?.R || 0;
-      const text2_colorV = text2Field?.color?.V || 0;
-      const text2_colorB = text2Field?.color?.B || 0;
+  //     // Définir les constantes pour text2
+  //     const text2_fontfamily = text2Field?.font.family || "";
+  //     const text2_size = text2Field?.font.size || 0;
+  //     const text2_x = text2Field?.x_percent || 0;
+  //     const text2_y = text2Field?.y_percent || 0;
+  //     const text2_colorR = text2Field?.color?.R || 0;
+  //     const text2_colorV = text2Field?.color?.V || 0;
+  //     const text2_colorB = text2Field?.color?.B || 0;
   
-      // Mettre à jour formData avec les nouvelles constantes
-      setFormData(prevFormData => {
-        const updatedFormData = {
-          ...prevFormData,
-          text1: prevFormData.text1 || text1Field?.defaultValue || "",
-          text2: prevFormData.text2 || text2Field?.defaultValue || "",
-          "text1-fontfamily": text1_fontfamily,
-          "image1": "https://memenza.fr/" + image1_defaultFile,
-          "image2": "https://memenza.fr/" + image2_defaultFile,
-          "text1-size": text1_size,
-          "text1-x": text1_x,
-          "text1-y": text1_y,
-          "text1-colorR": text1_colorR,
-          "text1-colorV": text1_colorV,
-          "text1-colorB": text1_colorB,
-          "text2-fontfamily": text2_fontfamily,
-          "text2-size": text2_size,
-          "text2-x": text2_x,
-          "text2-y": text2_y,
-          "text2-colorR": text2_colorR,
-          "text2-colorV": text2_colorV,
-          "text2-colorB": text2_colorB,
-        };
+  //     // Mettre à jour formData avec les nouvelles constantes
+  //     setFormData(prevFormData => {
+  //       const updatedFormData = {
+  //         ...prevFormData,
+  //         text1: prevFormData.text1 || text1Field?.defaultValue || "",
+  //         text2: prevFormData.text2 || text2Field?.defaultValue || "",
+  //         "text1-fontfamily": text1_fontfamily,
+  //         "image1": "https://memenza.fr/" + image1_defaultFile,
+  //         "image2": "https://memenza.fr/" + image2_defaultFile,
+  //         "text1-size": text1_size,
+  //         "text1-x": text1_x,
+  //         "text1-y": text1_y,
+  //         "text1-colorR": text1_colorR,
+  //         "text1-colorV": text1_colorV,
+  //         "text1-colorB": text1_colorB,
+  //         "text2-fontfamily": text2_fontfamily,
+  //         "text2-size": text2_size,
+  //         "text2-x": text2_x,
+  //         "text2-y": text2_y,
+  //         "text2-colorR": text2_colorR,
+  //         "text2-colorV": text2_colorV,
+  //         "text2-colorB": text2_colorB,
+  //       };
   
-        // Ne pas mettre à jour si les valeurs sont identiques
-        return JSON.stringify(prevFormData) === JSON.stringify(updatedFormData)
-          ? prevFormData
-          : updatedFormData;
-      });
-    }
-  }, [textesCadres, visuelsCadres]); 
+  //       // Ne pas mettre à jour si les valeurs sont identiques
+  //       return JSON.stringify(prevFormData) === JSON.stringify(updatedFormData)
+  //         ? prevFormData
+  //         : updatedFormData;
+  //     });
+  //   }
+  // }, [textesCadres, visuelsCadres, setFormData]); 
+
+  
+useEffect(() => {
+  if (textesCadres && visuelsCadres) {
+    // Récupérer les champs dynamiques pour text1, text2, image1 et image2
+    const text1Field = textesCadres.fields.find(field => field.name === "text1");
+    const text2Field = textesCadres.fields.find(field => field.name === "text2");
+    const image1Field = visuelsCadres.imageFields.find(field => field.name === "image1");
+    const image2Field = visuelsCadres.imageFields.find(field => field.name === "image2");
+
+    // console.log("usEffect avec les nouvelles datas !");
+    
+    // Mettre à jour le formData en fonction des nouvelles données
+    setFormData((currentFormData) => {
+      const updatedFormData = {
+        ...currentFormData, // Utiliser l'état actuel comme base
+        text1: currentFormData.text1 || text1Field?.defaultValue || "", // Prioriser la valeur actuelle
+        text2: currentFormData.text2 || text2Field?.defaultValue || "", // Prioriser la valeur actuelle
+        "text1-fontfamily": text1Field?.font.family || "",
+        "text1-size": text1Field?.font.size || 0,
+        "text1-x": text1Field?.x_percent || 0,
+        "text1-y": text1Field?.y_percent || 0,
+        "text1-colorR": text1Field?.color?.R || 0,
+        "text1-colorV": text1Field?.color?.V || 0,
+        "text1-colorB": text1Field?.color?.B || 0,
+        "text2-fontfamily": text2Field?.font.family || "",
+        "text2-size": text2Field?.font.size || 0,
+        "text2-x": text2Field?.x_percent || 0,
+        "text2-y": text2Field?.y_percent || 0,
+        "text2-colorR": text2Field?.color?.R || 0,
+        "text2-colorV": text2Field?.color?.V || 0,
+        "text2-colorB": text2Field?.color?.B || 0,
+        image1: image1Field?.defaultFile ? `https://memenza.fr/${image1Field.defaultFile}` : "",
+        image2: image2Field?.defaultFile ? `https://memenza.fr/${image2Field.defaultFile}` : "",
+      };
+
+      // Comparer les données actuelles et mises à jour pour éviter des mises à jour inutiles
+      return JSON.stringify(currentFormData) === JSON.stringify(updatedFormData)
+        ? currentFormData
+        : updatedFormData;
+    });
+    // console.log("Relance le usEffect avec les nouvelles datas !" + JSON.stringify(formData));
+  }
+}, [textesCadres, visuelsCadres, setFormData]);
+
+////////////////////////////
+////////////////////////////
+////////////////////////////
+
 // Récupération des données de images_visuel
   useEffect(() => {
     const fetchData = async () => {
@@ -1079,6 +1140,9 @@ const envoiVisuelPerso = (event) => {
 };
 
 // [07] APPELS API (Génération preview & Soumission) : "CTRL+F APPELS API"
+// let image1Blob;
+// console.log("Contenu de image1Blob : " + image1Blob);
+
 const creationDuVisuelAvecTemplate = async (e) => {
   e.preventDefault();
 
@@ -1092,8 +1156,11 @@ const creationDuVisuelAvecTemplate = async (e) => {
       if (!response.ok) {
         throw new Error(`Erreur lors du téléchargement de l'image : ${imageFileOrURL}`);
       }
+      console.log("Avant convertion, image1 est une URL");
+      
       return await response.blob();
     } else if (imageFileOrURL instanceof File || imageFileOrURL instanceof Blob) {
+      console.log("ICI Verification si image1 est un BLOB OU un fichier");
       return imageFileOrURL;
     } else {
       throw new Error("Type d'image non valide. Attendu : URL, File ou Blob.");
@@ -1101,7 +1168,14 @@ const creationDuVisuelAvecTemplate = async (e) => {
   };
 
   let image1Blob = await convertToBlob(formData["image1"]);
+  // if (!image1Blob) {
+  //   image1Blob = await convertToBlob(formData["image1"]);    
+  // }
   let image2Blob;
+
+  // console.log("FORMDATA image 1 : " + JSON.stringify(formData["image1"]));
+  // console.log("FORMDATA image 2 : " + JSON.stringify(formData["image2"]));
+  
 
   // Utilisation du fichier personnalisé détecté, ou fallback vers le chemin image2 du formData
   if (fichierPersoDetect && testAvecFile) {
@@ -1116,12 +1190,14 @@ const creationDuVisuelAvecTemplate = async (e) => {
   const formPayload = new FormData();
   formPayload.append("text1", formData.text1);
   formPayload.append("text2", formData.text2);
-  formPayload.append("output_file", outputFilePath);
-  formPayload.append("dossier", outputFolder);
-  formPayload.append("image1", image1Blob, "image1.jpg");
-  formPayload.append("image2", image2Blob, `${navigationId}.jpg`);
-  // formPayload.append("qrcode", qrCode);
-  // formPayload.append("imagecmd", outputFilePath);
+  formPayload.append("output_file", outputFilePath); // Destination de la crea cadre
+  formPayload.append("dossier", outputFolder); // Créa du dossier pour les medias video
+  
+  
+  console.log("AVANT ENVOI Blob taille de iamge1Blob : ", image1Blob.size);
+
+  formPayload.append("image1", image1Blob, formData["image1"]);
+  formPayload.append("image2", image2Blob, `${navigationId}.png`);
 
   // Ajouter les nouveaux champs pour text1 et text2...
   formPayload.append("text1-fontfamily", formData["text1-fontfamily"]);
@@ -1146,39 +1222,43 @@ const creationDuVisuelAvecTemplate = async (e) => {
   //   console.log("VERIFICATION DU FORMPAYLOAD POUR ENVOI DES BONNES DATA : " + key, value);
   // });
 
+  //////////////////////////////////////////
+  //////////////////////////////////////////
   try {
     const response = await fetch("../../wp-content/plugins/ProductImageCustomizer/js/process-simplifie.php", {
+    // const response = await fetch("../../wp-content/plugins/ProductImageCustomizer/js/process-test.php", {
       method: "POST",
       body: formPayload,
     });
 
-    // A NE PAS EFFECER - Code pour verification des response retour
-    // console.log("Statut de la réponse :", response.status);
-    // console.log("En-têtes de la réponse :", [...response.headers]);
+    // Vérification des informations de la réponse
+    console.log("Réponse Brute :", response);
+    console.log("Statut de la réponse :", response.status);
+    console.log("En-têtes de la réponse :", [...response.headers]);
     
     if (!response.ok) {
       throw new Error("Erreur lors de la soumission du formulaire");
     }
     
+    
     const result = await response.blob();    
     const url = URL.createObjectURL(result);
     // A NE PAS EFFECER - Verification retour
-    // console.log("Blob reçu :", result);
-    // console.log("URL générée :", url);
-
-    
-
-
+    console.log("APRES ENVOI Blob reçu :", result);
+    console.log("URL générée :", url);
     setGeneratedImageUrl(url);
     setPathImageGenerate(url);
     setIsGenerate(true);
-
     setVisuelGeneratedImageUrl(url);
-
 
   } catch (error) {
     setError(error.message);
   }
+  //////////////////////////////////////////
+  //////////////////////////////////////////
+
+
+
 };
 
 if (!imagesVisuels.length) {

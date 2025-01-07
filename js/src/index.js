@@ -64,7 +64,7 @@ const App = () => {
       case 0:
         return <EtapeCategorie setActiveStep={setActiveStep} />; 
       case 1:
-        return <EtapeVisuel />;
+        return <EtapeVisuel setActiveStep={setActiveStep} />;
         // return <TestVisuelFusion setActiveStep={setActiveStep}/>;
         case 2:
           // return <EtapeVideo />;
