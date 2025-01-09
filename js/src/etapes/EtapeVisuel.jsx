@@ -1153,6 +1153,37 @@ const creationDuVisuelAvecTemplate = async (e) => {
   const imagePath = "visuels/cmd/" + navigationId + '.png';
   setOutputFilePathContext(outputFilePath);
 
+
+  ///////////////////////////////
+  ///////////////////////////////
+  // Vérification de l'existence du fichier sur le serveur
+const checkFileExists = async (filePath) => {
+  try {
+    const response = await fetch(`../../wp-content/plugins/ProductImageCustomizer/js/delete-media.php?filePath=${filePath}`);
+    const data = await response.text();
+    if (data === "Coucou") {
+      console.log(data); // Affiche "Coucou" si le fichier existe
+      return true;
+    }
+    return false;
+  } catch (error) {
+    console.error("Erreur lors de la vérification du fichier :", error);
+    return false;
+  }
+};
+
+// Vérifier si le fichier existe avant de procéder
+const fileExists = await checkFileExists(outputFilePath);
+
+// Si le fichier existe, afficher "Coucou" et arrêter le processus
+if (fileExists) {
+  console.log("Le fichier existe déjà. Aucune nouvelle génération nécessaire.");
+  return;
+}
+
+  ///////////////////////////////
+  ///////////////////////////////
+
   const convertToBlob = async (imageFileOrURL) => {
     if (typeof imageFileOrURL === "string") {
       const response = await fetch(imageFileOrURL);
@@ -1281,6 +1312,222 @@ const creationDuVisuelAvecTemplate = async (e) => {
 
 };
 
+const creationDuVisuelAvecTemplate2 = async (e) => {
+  e.preventDefault();
+
+  const outputFilePath = `/home/memenzj/www/visuels/cmd/${navigationId}.png`;
+  const outputFolder = `/home/memenzj/www/visuels/uploads/${navigationId}`;
+  const imagePath = "visuels/cmd/" + navigationId + '.png';
+  setOutputFilePathContext(outputFilePath);
+
+  ///////////////////////////////
+  // Vérification et suppression du fichier existant
+  const deleteExistingFile = async (filePath) => {
+    try {
+      const response = await fetch(`../../wp-content/plugins/ProductImageCustomizer/js/delete-media.php?filePath=${filePath}`);
+      const data = await response.text();
+      console.log(data); // Log du message de retour du serveur
+      return data.includes("Fichier supprimé avec succès.");
+    } catch (error) {
+      console.error("Erreur lors de la suppression du fichier :", error);
+      return false;
+    }
+  };
+
+  const fileDeleted = await deleteExistingFile(outputFilePath);
+
+  if (fileDeleted) {
+    console.log("Fichier existant supprimé. Procédure de génération en cours.");
+  } else {
+    console.log("Aucun fichier à supprimer ou problème rencontré.");
+  }
+
+  ///////////////////////////////
+
+  const convertToBlob = async (imageFileOrURL) => {
+    if (typeof imageFileOrURL === "string") {
+      const response = await fetch(imageFileOrURL);
+      if (!response.ok) {
+        throw new Error(`Erreur lors du téléchargement de l'image : ${imageFileOrURL}`);
+      }
+      console.log("Avant conversion, image1 est une URL");
+      return await response.blob();
+    } else if (imageFileOrURL instanceof File || imageFileOrURL instanceof Blob) {
+      console.log("ICI Vérification si image1 est un BLOB ou un fichier");
+      return imageFileOrURL;
+    } else {
+      throw new Error("Type d'image non valide. Attendu : URL, File ou Blob.");
+    }
+  };
+
+  let image1Blob = await convertToBlob(formData["image1"]);
+  let image2Blob;
+
+  // Utilisation du fichier personnalisé détecté, ou fallback vers le chemin image2 du formData
+  if (fichierPersoDetect && testAvecFile) {
+    console.log("Utilisation du fichier personnalisé détecté");
+    image2Blob = testAvecFile;
+  } else {
+    image2Blob = await convertToBlob(formData["image2"]);
+  }
+
+  const formPayload = new FormData();
+  formPayload.append("text1", formData.text1);
+  formPayload.append("text2", formData.text2);
+  formPayload.append("output_file", outputFilePath); // Destination de la création du visuel
+  formPayload.append("dossier", outputFolder); // Création du dossier pour les médias
+  formPayload.append("image1", image1Blob, formData["image1"]);
+  formPayload.append("image2", image2Blob, `${navigationId}.png`);
+
+  // Ajouter les champs pour text1 et text2
+  formPayload.append("text1-fontfamily", formData["text1-fontfamily"]);
+  formPayload.append("text1-size", formData["text1-size"]);
+  formPayload.append("text1-x", formData["text1-x"]);
+  formPayload.append("text1-y", formData["text1-y"]);
+  formPayload.append("text1-colorR", formData["text1-colorR"]);
+  formPayload.append("text1-colorV", formData["text1-colorV"]);
+  formPayload.append("text1-colorB", formData["text1-colorB"]);
+  formPayload.append("text2-fontfamily", formData["text2-fontfamily"]);
+  formPayload.append("text2-size", formData["text2-size"]);
+  formPayload.append("text2-x", formData["text2-x"]);
+  formPayload.append("text2-y", formData["text2-y"]);
+  formPayload.append("text2-colorR", formData["text2-colorR"]);
+  formPayload.append("text2-colorV", formData["text2-colorV"]);
+  formPayload.append("text2-colorB", formData["text2-colorB"]);
+
+  try {
+    const response = await fetch("../../wp-content/plugins/ProductImageCustomizer/js/process-simplifie.php", {
+      method: "POST",
+      body: formPayload,
+    });
+
+    if (!response.ok) {
+      throw new Error("Erreur lors de la soumission du formulaire");
+    }
+
+    const result = await response.blob();
+    const url = URL.createObjectURL(result);
+    console.log("APRES ENVOI Blob reçu :", result);
+    console.log("URL générée :", url);
+    setGeneratedImageUrl(url);
+    setPathImageGenerate(url);
+    setIsGenerate(true);
+    setVisuelGeneratedImageUrl(url);
+  } catch (error) {
+    setError(error.message);
+  }
+};
+
+const creationDuVisuelAvecTemplate3 = async (e) => {
+  e.preventDefault();
+
+//   const uniqueId = Date.now();
+// const outputFilePath = `/home/memenzj/www/visuels/cmd/${navigationId}_${uniqueId}.png`;
+  const outputFilePath = `/home/memenzj/www/visuels/cmd/${navigationId}.png`;
+  const outputFolder = `/home/memenzj/www/visuels/uploads/${navigationId}`;
+  const imagePath = "visuels/cmd/" + navigationId + '.png';
+  setOutputFilePathContext(outputFilePath);
+
+  ///////////////////////////////
+  // Vérification et suppression complète des fichiers existants
+  // const deleteExistingFileAndTraces = async (filePath) => {
+  //   try {
+  //     const response = await fetch(`../../wp-content/plugins/ProductImageCustomizer/js/delete-media.php?filePath=${filePath}`);
+  //     const data = await response.text();
+  //     console.log("Résultat de la suppression :", data); // Log des messages du serveur
+  //     return data.includes("Fichier supprimé avec succès.");
+  //   } catch (error) {
+  //     console.error("Erreur lors de la suppression du fichier et de ses traces :", error);
+  //     return false;
+  //   }
+  // };
+
+  // const fileDeleted = await deleteExistingFileAndTraces(outputFilePath);
+
+  // if (fileDeleted) {
+  //   console.log("Fichier et ses traces supprimés. Procédure de génération en cours.");
+  // } else {
+  //   console.log("Aucun fichier à supprimer ou problème rencontré lors de la suppression.");
+  // }
+  ///////////////////////////////
+
+  const convertToBlob = async (imageFileOrURL) => {
+    if (typeof imageFileOrURL === "string") {
+      const response = await fetch(imageFileOrURL);
+      if (!response.ok) {
+        throw new Error(`Erreur lors du téléchargement de l'image : ${imageFileOrURL}`);
+      }
+      console.log("Avant conversion, image1 est une URL");
+      return await response.blob();
+    } else if (imageFileOrURL instanceof File || imageFileOrURL instanceof Blob) {
+      console.log("ICI Vérification si image1 est un BLOB ou un fichier");
+      return imageFileOrURL;
+    } else {
+      throw new Error("Type d'image non valide. Attendu : URL, File ou Blob.");
+    }
+  };
+
+  let image1Blob = await convertToBlob(formData["image1"]);
+  let image2Blob;
+
+  // Utilisation du fichier personnalisé détecté, ou fallback vers le chemin image2 du formData
+  if (fichierPersoDetect && testAvecFile) {
+    console.log("Utilisation du fichier personnalisé détecté");
+    image2Blob = testAvecFile;
+  } else {
+    image2Blob = await convertToBlob(formData["image2"]);
+  }
+
+  const formPayload = new FormData();
+  formPayload.append("text1", formData.text1);
+  formPayload.append("text2", formData.text2);
+  formPayload.append("output_file", outputFilePath); // Destination de la création du visuel
+  formPayload.append("dossier", outputFolder); // Création du dossier pour les médias
+  formPayload.append("image1", image1Blob, formData["image1"]);
+  formPayload.append("image2", image2Blob, `${navigationId}.png`);
+
+  // Ajouter les champs pour text1 et text2
+  formPayload.append("text1-fontfamily", formData["text1-fontfamily"]);
+  formPayload.append("text1-size", formData["text1-size"]);
+  formPayload.append("text1-x", formData["text1-x"]);
+  formPayload.append("text1-y", formData["text1-y"]);
+  formPayload.append("text1-colorR", formData["text1-colorR"]);
+  formPayload.append("text1-colorV", formData["text1-colorV"]);
+  formPayload.append("text1-colorB", formData["text1-colorB"]);
+  formPayload.append("text2-fontfamily", formData["text2-fontfamily"]);
+  formPayload.append("text2-size", formData["text2-size"]);
+  formPayload.append("text2-x", formData["text2-x"]);
+  formPayload.append("text2-y", formData["text2-y"]);
+  formPayload.append("text2-colorR", formData["text2-colorR"]);
+  formPayload.append("text2-colorV", formData["text2-colorV"]);
+  formPayload.append("text2-colorB", formData["text2-colorB"]);
+
+  try {
+    // const response = await fetch("../../wp-content/plugins/ProductImageCustomizer/js/process-simplifie.php", {
+    const response = await fetch("../../wp-content/plugins/ProductImageCustomizer/js/process-test.php", {
+      method: "POST",
+      body: formPayload,
+    });
+
+    if (!response.ok) {
+      throw new Error("Erreur lors de la soumission du formulaire");
+    }
+
+    const result = await response.blob();
+    const url = URL.createObjectURL(result);
+    console.log("APRES ENVOI Blob reçu :", result);
+    console.log("URL générée :", url);
+    setGeneratedImageUrl(url);
+    setPathImageGenerate(url);
+    setIsGenerate(true);
+    setVisuelGeneratedImageUrl(url);
+  } catch (error) {
+    setError(error.message);
+  }
+};
+
+
+
 if (!imagesVisuels.length) {
   return <Typography>Chargement des visuels...</Typography>;
 }
@@ -1365,7 +1612,9 @@ return (
     {visuelIdVignetteSelectionner && (
       <Box
         component="form"
-        onSubmit={creationDuVisuelAvecTemplate}
+        // onSubmit={creationDuVisuelAvecTemplate}
+        // onSubmit={creationDuVisuelAvecTemplate2}
+        onSubmit={creationDuVisuelAvecTemplate3}
         encType="multipart/form-data"
         sx={{
           display: "flex",
