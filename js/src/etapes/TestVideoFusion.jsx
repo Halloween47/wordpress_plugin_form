@@ -254,6 +254,270 @@ const Tooltip = ({ text, children }) => {
       setMediaCounter((prevCount) => prevCount + 1);
     }
   };
+
+  const handleFileUpload2 = (event, fieldName) => {
+    const file = event.target.files[0];
+  
+    if (!file) return;
+  
+    console.log(`Changement du média pour le champ : ${fieldName}`);
+    console.log(`Nom du fichier sélectionné : ${file.name}`);
+  
+    if (file) {
+      setCheck(true);
+    }
+  
+    setMediaFiles((prevFiles) => {
+      const updatedFiles = [...prevFiles];
+      const existingIndex = updatedFiles.findIndex((item) => item.fieldName === fieldName);
+  
+      if (existingIndex !== -1) {
+        // Remplacer le fichier pour le même champ (conserver le nom existant)
+        updatedFiles[existingIndex] = { fieldName, file };
+      } else {
+        // Ajouter un nouveau fichier
+        updatedFiles.push({ fieldName, file });
+      }
+  
+      return updatedFiles;
+    });
+  
+    if (file) {
+      console.log("ICI LE TYPE DE FICHIER DEMANDÉ : " + file.type);
+  
+      if (!file.type.startsWith("image/") && !file.type.startsWith("video/")) {
+        console.error("Seuls les fichiers d'image ou de vidéo sont autorisés.");
+        return;
+      }
+  
+      const fileExtension = file.name.split('.').pop(); // Récupérer l'extension
+      const validExtension = fileExtension && fileExtension.length <= 5 ? fileExtension : 'unknown';
+  
+      setVariables((prevState) => {
+        const existingValue = prevState[fieldName]; // Vérifier si `fieldName` existe déjà
+        if (existingValue) {
+          console.log(`Valeur existante trouvée pour ${fieldName} : ${existingValue}`);
+          return { ...prevState, [fieldName]: existingValue }; // Conserver l'ancienne valeur
+        }
+  
+        // Générer un nouveau nom si aucune valeur existante n'est trouvée
+        const mediaName = `media${Object.keys(prevState).length + 1}.${validExtension}`;
+        console.log("Nom de fichier généré : ", mediaName);
+  
+        return {
+          ...prevState,
+          [fieldName]: `https://memenza.fr/visuels/uploads/${navigationId}/${mediaName}`,
+        };
+      });
+  
+      setCheckedFields((prevChecked) => ({
+        ...prevChecked,
+        [fieldName]: true,
+      }));
+  
+      setMediaCounter((prevCount) => prevCount + 1);
+    }
+  };
+
+  const handleFileUpload3 = (event, fieldName) => {
+    const file = event.target.files[0];
+  
+    if (!file) return;
+  
+    console.log(`Changement du média pour le champ : ${fieldName}`);
+    console.log(`Nom du fichier sélectionné : ${file.name}`);
+  
+    if (file) {
+      setCheck(true);
+    }
+  
+    setMediaFiles((prevFiles) => {
+      const updatedFiles = [...prevFiles];
+      const existingIndex = updatedFiles.findIndex((item) => item.fieldName === fieldName);
+  
+      if (existingIndex !== -1) {
+        // Remplacer le fichier pour le même champ (conserver le nom existant)
+        updatedFiles[existingIndex] = { fieldName, file };
+      } else {
+        // Ajouter un nouveau fichier
+        updatedFiles.push({ fieldName, file });
+      }
+  
+      return updatedFiles;
+    });
+  
+    if (file) {
+      console.log("ICI LE TYPE DE FICHIER DEMANDÉ : " + file.type);
+  
+      if (!file.type.startsWith("image/") && !file.type.startsWith("video/")) {
+        console.error("Seuls les fichiers d'image ou de vidéo sont autorisés.");
+        return;
+      }
+  
+      const fileExtension = file.name.split('.').pop(); // Récupérer l'extension
+      const validExtension = fileExtension && fileExtension.length <= 5 ? fileExtension : 'unknown';
+  
+      setVariables((prevState) => {
+        const existingValue = prevState[fieldName]; // Vérifier si `fieldName` existe déjà
+        if (existingValue) {
+          console.log(`Valeur existante trouvée pour ${fieldName} : ${existingValue}`);
+          return { ...prevState, [fieldName]: existingValue }; // Conserver l'ancienne valeur
+        }
+  
+        // Si "img" est présent dans fieldName, générer un nom unique
+        let mediaName;
+        if (fieldName.includes("img")) {
+          const imgCount = Object.keys(prevState)
+            .filter((key) => key.includes("img"))
+            .length;
+          mediaName = `media${imgCount + 1}`;
+        } else {
+          mediaName = fieldName; // Pas de changement pour les autres types
+        }
+  
+        const fullMediaName = `${mediaName}.${validExtension}`;
+        console.log("Nom de fichier généré : ", fullMediaName);
+  
+        return {
+          ...prevState,
+          [fieldName]: `https://memenza.fr/visuels/uploads/${navigationId}/${fullMediaName}`,
+        };
+      });
+  
+      setCheckedFields((prevChecked) => ({
+        ...prevChecked,
+        [fieldName]: true,
+      }));
+  
+      setMediaCounter((prevCount) => prevCount + 1);
+    }
+  };
+  
+  
+
+//   const handleFileUpload2 = (event, fieldName) => {
+//     const file = event.target.files[0];
+
+//     if (!file) return;
+
+//     setCheck(true);
+
+//     // Ajouter le fichier au tableau des médias
+//     setMediaFiles((prevFiles) => [
+//         ...prevFiles,
+//         { fieldName, file },
+//     ]);
+
+//     console.log("ICI LE TYPE DE FICHIER DEMANDÉ : " + file.type);
+
+//     if (!file.type.startsWith("image/") && !file.type.startsWith("video/")) {
+//         console.error("Seuls les fichiers d'image ou de vidéo sont autorisés.");
+//         return;
+//     }
+
+//     const fileExtension = file.name.split('.').pop();
+//     const validExtension = fileExtension && fileExtension.length <= 5 ? fileExtension : 'unknown';
+
+//     // Vérifier si le champ fieldName a déjà une URL dans variables
+//     const existingMediaUrl = variables[fieldName];
+
+//     let mediaName;
+
+//     if (existingMediaUrl) {
+//         // Si une URL existe déjà, extraire le nom de fichier existant
+//         mediaName = existingMediaUrl.split('/').pop(); // Récupère le nom de fichier
+//         console.log("Nom de fichier existant conservé : ", mediaName);
+//     } else {
+//         // Sinon, générer un nouveau nom de fichier
+//         mediaName = `media${mediaCounter}.${validExtension}`;
+//         console.log("Nouveau nom de fichier généré : ", mediaName);
+
+//         // Incrémenter le compteur seulement si on génère un nouveau fichier
+//         setMediaCounter((prevCount) => prevCount + 1);
+//     }
+
+//     // Mettre à jour l'état des variables avec l'URL correcte (nouveau fichier, même nom)
+//     setVariables((prevState) => ({
+//         ...prevState,
+//         [fieldName]: `https://memenza.fr/visuels/uploads/${navigationId}/${mediaName}`,
+//     }));
+
+//     // Marquer le champ comme "traité"
+//     setCheckedFields((prevChecked) => ({
+//         ...prevChecked,
+//         [fieldName]: true,
+//     }));
+// };
+// const handleFileUpload3 = (event, fieldName) => {
+//   const file = event.target.files[0];
+
+//   if (!file) return;
+
+//   console.log(`Changement du média pour le champ : ${fieldName}`);
+//   console.log(`Nom du fichier sélectionné : ${file.name}`);
+
+//   // Vérifier si le fichier est valide (image ou vidéo uniquement)
+//   if (!file.type.startsWith("image/") && !file.type.startsWith("video/")) {
+//     console.error("Seuls les fichiers d'image ou de vidéo sont autorisés.");
+//     return;
+//   }
+
+//   let mediaName; // Le nom du média final (ex: media1)
+
+//   // Mise à jour de mediaFiles
+//   setMediaFiles((prevFiles) => {
+//     const updatedFiles = [...prevFiles];
+//     const existingIndex = updatedFiles.findIndex((item) => item.fieldName === fieldName);
+
+//     if (existingIndex !== -1) {
+//       // Si le fichier existe déjà pour ce champ, conserver le même nom et remplacer le fichier
+//       mediaName = updatedFiles[existingIndex].fieldName;
+//       console.log(`Fichier existant trouvé. Remplacement du fichier tout en conservant le nom : ${mediaName}`);
+//       updatedFiles[existingIndex] = { fieldName: mediaName, file };
+//     } else {
+//       // Sinon, calculer un nouveau nom pour un nouveau fichier
+//       const maxNumber = Math.max(
+//         ...updatedFiles.map((item) => parseInt(item.fieldName.match(/\d+/)?.[0] || 0)),
+//         0
+//       );
+//       const mediaNumber = maxNumber + 1;
+//       mediaName = `media${mediaNumber}`;
+//       console.log(`Aucun fichier existant. Nouveau fichier ajouté avec le nom : ${mediaName}`);
+//       updatedFiles.push({ fieldName: mediaName, file });
+//     }
+
+//     return updatedFiles;
+//   });
+
+//   // Mise à jour des variables (URLs)
+//   setVariables((prevState) => {
+//     const fileExtension = file.name.split(".").pop(); // Obtenir l'extension du fichier
+//     const fullMediaName = `${mediaName}.${fileExtension}`;
+//     console.log(`Nom complet du média : ${fullMediaName}`);
+
+//     return {
+//       ...prevState,
+//       [fieldName]: `https://memenza.fr/visuels/uploads/${navigationId}/${fullMediaName}`,
+//     };
+//   });
+
+//   // Marquer le champ comme traité
+//   setCheckedFields((prevChecked) => ({
+//     ...prevChecked,
+//     [fieldName]: true,
+//   }));
+// };
+
+
+
+
+
+
+
+
+
+
+
   
   const handleSendMedia = async (fieldName) => {
     // console.log("CONTENU DE MEDIA");
@@ -376,6 +640,76 @@ const Tooltip = ({ text, children }) => {
       }
     };
   })();
+  const handleSendMedia3 = (() => {
+    let mediaCounter = 0; // Le compteur persiste entre les appels.
+  
+    return async (fieldName, resetCounter = false) => {
+      // Réinitialise le compteur si nécessaire
+      if (resetCounter) {
+        mediaCounter = 0;
+      }
+  
+      // Trouve les données média correspondant au champ
+      console.log("Contenu de mediaFiles :", JSON.stringify(mediaFiles, null, 2));     
+      const mediaData = mediaFiles.find((item) => item.fieldName === fieldName);
+      // console.log("Contenu de mediaData : " + mediaData);      
+      if (!mediaData) {
+        console.error("Aucun fichier trouvé pour ce champ :", fieldName);
+        return;
+      }
+  
+      const { file } = mediaData;
+      if (!file) {
+        console.error("Aucun fichier sélectionné.");
+        return;
+      }
+  
+      // Génère un nom dynamique basé sur le compteur
+      const dynamicName = `media${mediaCounter + 1}${file.name.substring(file.name.lastIndexOf("."))}`;
+      console.log("Nom dynamique généré :", dynamicName);
+  
+      // Prépare les données pour l'envoi
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("destinationName", dynamicName);
+      formData.append("destinationFolder", navigationId);
+  
+      try {
+        // Vérifier si un fichier du même nom existe déjà
+        const checkResponse = await fetch(`../../wp-content/plugins/ProductImageCustomizer/js/check-file-exists.php?fileName=${dynamicName}&folder=${navigationId}`, {
+          method: "GET",
+        });
+  
+        if (!checkResponse.ok) {
+          throw new Error("Erreur lors de la vérification de l'existence du fichier.");
+        }
+  
+        const fileExists = await checkResponse.json();
+  
+        if (fileExists.exists) {
+          console.log(`Un fichier nommé ${dynamicName} existe déjà. Il sera remplacé.`);
+        }
+  
+        // Effectue l'envoi des données
+        const response = await fetch("../../wp-content/plugins/ProductImageCustomizer/js/upload-media.php", {
+          method: "POST",
+          body: formData,
+        });
+  
+        if (response.ok) {
+          console.log("Fichier envoyé avec succès :", dynamicName);
+          // Incrémente le compteur uniquement après un envoi réussi
+          mediaCounter += 1;
+        } else {
+          console.error("Erreur lors de l'envoi :", response.statusText);
+        }
+      } catch (error) {
+        console.error("Erreur lors de l'envoi du fichier :", error);
+      }
+    };
+  })();
+  
+  
   
   
 
@@ -540,7 +874,8 @@ const Tooltip = ({ text, children }) => {
   
         try {
           // Utilisation de handleSendMedia pour chaque fichier
-          await handleSendMedia2(fieldName);
+          // await handleSendMedia2(fieldName);
+          await handleSendMedia3(fieldName);
           console.log(`Fichier associé au champ ${fieldName} envoyé avec succès.`);
         } catch (error) {
           console.error(`Erreur lors de l'envoi du fichier pour le champ ${fieldName} :`, error);
@@ -646,6 +981,8 @@ const Tooltip = ({ text, children }) => {
   };
   
   let nameMediaCounter = 1;
+  const sceneKeys = [...new Set([...tabParseMediasVideo, ...tabParseTextesVideo]
+    .map(field => field.name.match(/^s(\d+)/)?.[1]))]; // Extraire les numéros de scène uniques
 
   return (
     <Box sx={{ textAlign: "center", p: 4, position: "relative" }}>
@@ -706,13 +1043,13 @@ const Tooltip = ({ text, children }) => {
       <Grid container spacing={4} justifyContent="center">
         {imagesVideosFiltered.map((src, index) => (
           <Grid
-            item
-            key={index}
-            xs={12}
-            sm={6}
-            md={4}
-            onClick={() => handleChoixModele2(src.chemin_video_ex, src.nom_modele_video)}
-            sx={{ textAlign: "center", cursor: "pointer" }}
+          item
+          key={index}
+          xs={12}
+          sm={6}
+          md={4}
+          onClick={() => handleChoixModele2(src.chemin_video_ex, src.nom_modele_video)}
+          sx={{ textAlign: "center", cursor: "pointer" }}
           >
             <Typography sx={{ mb: 1 }}>{src.nom_modele_video || "Modèle inconnu"}</Typography>
             <Box
@@ -756,271 +1093,110 @@ const Tooltip = ({ text, children }) => {
 
       {openModal && (
         <Grid container spacing={2} sx={{ mt: 4 }}>
-          <Grid item xs={6}>
-            <Box
-              component="video"
-              src={currentVideoSrc}
-              controls
-              sx={{ width: "100%", height: "100%", objectFit: "contain" }}
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <Box sx={{ overflowY: "auto", maxHeight: "60vh" }}>
-              <Typography variant="h6">Paramétrage du Template</Typography>
-              <Typography variant="subtitle1">Une fois le modèle configuré, il est possible de modifier tous les textes et images (les photos étant au format paysage), ou bien de les laisser tels quels, selon vos envies.</Typography>
-              {/* {console.log(tabParseTextesVideo)}  */}
-              {/* {isClicked && tabParseTextesVideo.map((field, index) => { */}
-              {/* {tabParseTextesVideo.map((field, index) => {
-                // console.log(field);
-                // const match = field.name.match(/^S(\d+)-txt$/);
-                const match = field.name.match(/^S(\d+)-txt$/i);
+          <Grid container spacing={2} sx={{ mt: 4 }}>
+            <Grid item xs={6}>
+              <Box
+                component="video"
+                src={currentVideoSrc}
+                controls
+                sx={{ width: "100%", height: "100%", objectFit: "contain" }}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <Box sx={{ overflowY: "auto", maxHeight: "60vh" }}>
+                <Typography variant="h6">Paramétrage du Template</Typography>
+                <Typography variant="subtitle1">Une fois le modèle configuré, il est possible de modifier tous les textes et images (les photos étant au format paysage), ou bien de les laisser tels quels, selon vos envies.</Typography>
 
-                const dynamicLabel = match ? `Texte ${match[1]}` : field.name;
-                return (
-                  <Box key={index} sx={{ mt: 2 }}>
-                        <Typography>{dynamicLabel}</Typography>
-                        <TextField
-                            fullWidth
-                            size="small"
-                            placeholder={field.defaultText || ""}
-                            value={variables[field.name] || ""}
-                            onChange={(e) => handleVariableChange(field.name, e.target.value)}
-                            />
-                    </Box>
-                )
-                
-              })} */}
-              {tabParseTextesVideo.map((field, index) => {
-    // Expression régulière pour extraire uniquement le numéro
-    const match = field.name.match(/^[Ss](\d+)-/); 
-    const dynamicLabel = match ? `Texte ${match[1]}` : field.name;
-    
-    return (
-      <Box key={index} sx={{ mt: 2 }}>
-        <Typography>{dynamicLabel}</Typography>
-        <TextField
-          fullWidth
-          size="small"
-          placeholder={field.defaultText || ""}
-          value={variables[field.name] || ""}
-          onChange={(e) => handleVariableChange(field.name, e.target.value)}
-        />
-      </Box>
-    );
-})}
+                {tabParseTextesVideo.map((field, index) => {
+      // Expression régulière pour extraire uniquement le numéro
+      const match = field.name.match(/^[Ss](\d+)-/); 
+      const dynamicLabel = match ? `Texte ${match[1]}` : field.name;
+      
+      return (
+        <Box key={index} sx={{ mt: 2 }}>
+          <Typography>{dynamicLabel}</Typography>
+          <TextField
+            fullWidth
+            size="small"
+            placeholder={field.defaultText || ""}
+            value={variables[field.name] || ""}
+            onChange={(e) => handleVariableChange(field.name, e.target.value)}
+          />
+        </Box>
+      );
+  })}
 
+                <Typography variant="h6" sx={{ mt: 4 }}>
+                  Paramétrage des Médias
+                </Typography>
+                {tabParseMediasVideo.map((field, index) => {
+                  const match = field.name.match(/^s\d+-img(\d+)$/);
+                  const dynamicLabel = match ? `Media ${match[1]}` : field.name;
+                  if (field.customizable === true) {                 
+                    const currentMediaIndex = nameMediaCounter++;
+                    return (
+                      <Box
+                        key={index}
+                        sx={{ 
+                          mt: 2, 
+                          display: "flex", 
+                          justifyContent: "center", 
+                          alignItems: "center", 
+                          width: "100%"
+                        }}
+                        >
+                          {/* Label dynamique pour le champ média */}
+                          <Typography sx={{ mr: "30px" }}>Media {currentMediaIndex}</Typography>
 
-              <Typography variant="h6" sx={{ mt: 4 }}>
-                Paramétrage des Médias
-              </Typography>
-              {/* {console.log(tabParseMediasVideo)}  */}
-              {tabParseMediasVideo.map((field, index) => {
-                
-                // field.name = `Media ${index + 1}`;
-                // console.log(field.name);
-                
+                            {/* Bouton pour importer un média */}
+                            <Button component="label" variant="contained" sx={{ mr: "10px" }}>
+                              Importer votre média
+                              <input
+                                type="file"
+                                hidden
+                                accept={field.type === "image" ? "image/*" : field.type === "video" ? "video/*" : "*/*"}
+                                // onChange={(e) => handleFileUpload(e, field.name)}
+                                // onChange={(e) => handleFileUpload2(e, field.name)}
+                                onChange={(e) => handleFileUpload3(e, field.name)}
+                              />
+                            </Button>
+                            {checkedFields[field.name] && (
+                              <CheckCircleRoundedIcon sx={{ color: 'green' }} />
+                            )}
 
-                const match = field.name.match(/^s\d+-img(\d+)$/);
-                const dynamicLabel = match ? `Media ${match[1]}` : field.name;
-                // if (field.customizable === false) {
-                //   console.log(field.name); 
-                //   setVariables((prevState) => ({
-                //     ...prevState,
-                //     [field.name]: `https://memenza.fr/visuels/uploads/${navigationId}/${field.name}.mp4`, 
-                //   }));
-                // }
-                if (field.customizable === true) {
-                  // console.log("custom à true");                  
-                  const currentMediaIndex = nameMediaCounter++;
-                  // console.log("Élément personnalisable trouvé :", field.name);
-                  return (
-                    <Box
-                      key={index}
-                      sx={{ 
-                        mt: 2, 
-                        display: "flex", 
-                        justifyContent: "center", 
-                        // justifyContent: "flex-end", 
-                        alignItems: "center", 
-                        width: "100%"
-                      }}
-                      >
-                        {/* Label dynamique pour le champ média */}
-                        {/* <Typography sx={{ mr: "30px" }}>Media {index + 1}</Typography> */}
-                        <Typography sx={{ mr: "30px" }}>Media {currentMediaIndex}</Typography>
-
-                          {/* Bouton pour importer un média */}
-                          <Button component="label" variant="contained" sx={{ mr: "10px" }}>
-                            Importer votre média
-                            <input
-                              type="file"
-                              hidden
-                              // accept="image/*,video/*"
-                              accept={field.type === "image" ? "image/*" : field.type === "video" ? "video/*" : "*/*"}
-                              onChange={(e) => handleFileUpload(e, field.name)}
-                              // onChange={(e) => handleVariableChange(field.name, e.target.value)}
-                            />
-                          </Button>
-                          {/* {check && (
-                            <CheckCircleRoundedIcon  sx={{ color: 'green' }} />
-                          )} */}
-                          {checkedFields[field.name] && (
-                            <CheckCircleRoundedIcon sx={{ color: 'green' }} />
-                          )}
-
-                          {/* Nouveau bouton pour envoyer le (1)média */}
-                          {/* <Button
-                            variant="contained"
-                            color="primary"
-                            sx={{ mr: "10px" }}
-                            onClick={() => handleSendMedia(field.name)}
-                            className="test-modificationButton"
-                          >
-                            Test
-                          </Button> */}
-
-                          {/* Tooltip avec informations supplémentaires */}
-                          <div style={{ padding: "10px" }}>
-                            {/* <Tooltip text="Ici les infos correspondant au prérequis du média attendu"> */}
-                            <Tooltip text={field.comment}>
-                <InfoIcon sx={{ color: "black" }} />
-                            </Tooltip>
-                          </div>
-                        </Box>
-
-
-
+                            {/* Tooltip avec informations supplémentaires */}
+                            <div style={{ padding: "10px" }}>
+                              <Tooltip text={field.comment}>
+                  <InfoIcon sx={{ color: "black" }} />
+                              </Tooltip>
+                            </div>
+                          </Box>
+                    )}
+                  })}
+                <Box sx={{display: "flex", flexDirection: "column", gap: 3, alignItems: "center"}}>
+                <Button
+                  variant="contained"
+                  // disabled={!isMediaSaved}
+                  sx={{ 
+                    mt: 3,
+                    padding: 0, 
+                  }}
+                  onClick={handleSendAllMediaAndCreateVideo}
+                >
+                  Envoyer les données
+                </Button>
+                {modalVideoGenere && 
+                (
+                  <Box>
+                    <CircularProgress disableShrink sx={{marginBottom: "10px"}}/>
+                    <SendDataToServer />
+                  </Box>
                 )
                 }
-////////////////////////
-//DEBUT
-// ////////////////////////
-//                 return (
-//                     <Box
-//                       key={index}
-//                       sx={{ 
-//                         mt: 2, 
-//                         display: "flex", 
-//                         justifyContent: "center", 
-//                         // justifyContent: "flex-end", 
-//                         alignItems: "center", 
-//                         width: "100%"
-//                       }}
-//                       >
-//                         {/* Label dynamique pour le champ média */}
-//                         {/* <Typography sx={{ mr: "30px" }}>{dynamicLabel}</Typography> */}
-//                         {/* <Typography sx={{ mr: "30px" }}>{field.name}</Typography> */}
-//                         <Typography sx={{ mr: "30px" }}>Media {index + 1}</Typography>
-
-//                           {/* Bouton pour importer un média */}
-//                           <Button component="label" variant="contained" sx={{ mr: "10px" }}>
-//                             Importer votre média
-//                             <input
-//                               type="file"
-//                               hidden
-//                               // accept="image/*,video/*"
-//                               accept={field.type === "image" ? "image/*" : field.type === "video" ? "video/*" : "*/*"}
-//                               onChange={(e) => handleFileUpload(e, field.name)}
-//                               // onChange={(e) => handleVariableChange(field.name, e.target.value)}
-//                             />
-//                           </Button>
-//                           {/* {check && (
-//                             <CheckCircleRoundedIcon  sx={{ color: 'green' }} />
-//                           )} */}
-//                           {checkedFields[field.name] && (
-//                             <CheckCircleRoundedIcon sx={{ color: 'green' }} />
-//                           )}
-
-//                           {/* Nouveau bouton pour envoyer le (1)média */}
-//                           {/* <Button
-//                             variant="contained"
-//                             color="primary"
-//                             sx={{ mr: "10px" }}
-//                             onClick={() => handleSendMedia(field.name)}
-//                             className="test-modificationButton"
-//                           >
-//                             Test
-//                           </Button> */}
-
-//                           {/* Tooltip avec informations supplémentaires */}
-//                           <div style={{ padding: "10px" }}>
-//                             {/* <Tooltip text="Ici les infos correspondant au prérequis du média attendu"> */}
-//                             <Tooltip text={field.comment}>
-//       <InfoIcon sx={{ color: "black" }} />
-//                             </Tooltip>
-//                           </div>
-//                         </Box>
-
-
-
-// )
-////////////////////////
-//FIN
-////////////////////////
-                
-                })}
-                {/* <Button
-                  variant="contained"
-                  color="primary"
-                  sx={{ mr: "10px" }}
-                  onClick={handleSendAllMedia}
-                  className="test-modificationButton"
-                >
-                  Enregistrement des medias
-              </Button> */}
-              <Box sx={{display: "flex", flexDirection: "column", gap: 3, alignItems: "center"}}>
-              <Button
-                variant="contained"
-                // disabled={!isMediaSaved}
-                sx={{ 
-                  mt: 3,
-                  padding: 0, 
-                }}
-                // onClick={handleVideoSendWithTemplate}
-                onClick={handleSendAllMediaAndCreateVideo}
-              >
-                Envoyer les données
-              </Button>
-              {modalVideoGenere && 
-               (
-                <Box>
-                  <CircularProgress disableShrink sx={{marginBottom: "10px"}}/>
-                  <SendDataToServer />
                 </Box>
-               )
-              }
-              {/* {reponseJ2VOK && (
-                <Button onClick={handleOpenPrevisu}>Prévisualisation</Button>
-              )} */}
-              {/* <Modal
-                open={openPrevisu}
-                onClose={handleClosePrevisu}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-                sx={{position: "relative", zIndex: 10000, width: "100%", height: "100%"}}
-              >
-                <Box sx={stylePrevisu}>
-                  <Typography id="modal-modal-title" variant="h5" component="h2">
-                            Envoi des données au serveur...
-                  </Typography>
-                </Box>
-              </Modal> */}
               </Box>
-            </Box>
+            </Grid>
           </Grid>
-          <span>
-            {/* {reponseJ2VOK && (
-              <SendDataToServer />
-            )} */}
-                    {/* <Button
-                      type="button"
-                      variant="contained"
-                      onClick={handleNext}
-                      sx={{ mt: 4, mr: "1rem" }}
-                    >
-                      Vers le panier
-                    </Button> */}
-            </span>
         </Grid>
       )}
       <Button

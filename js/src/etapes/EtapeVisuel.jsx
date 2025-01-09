@@ -1452,7 +1452,7 @@ return (
           <Button
             type="button"
             variant="contained"
-            disabled={!previsuOwnVisu && !generatedImageUrl}
+            // disabled={!previsuOwnVisu && !generatedImageUrl}
             onClick={handleNext}
             sx={{ mt: 4, mr: "1rem" }}
           >
