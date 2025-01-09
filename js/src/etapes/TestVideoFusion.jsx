@@ -269,9 +269,6 @@ const Tooltip = ({ text, children }) => {
       console.error("Aucun fichier sélectionné.");
       return;
     }
-    // Génère un nom dynamique basé sur le compteur actuel
-    const dynamicName = `media${fileCounter}${file.name.substring(file.name.lastIndexOf("."))}`;
-    // console.log("Nom dynamique généré :", dynamicName);
     // Prépare les données pour l'envoi
     const formData = new FormData();
     formData.append("file", file);
@@ -322,9 +319,67 @@ const Tooltip = ({ text, children }) => {
       }
     }
   };
+  const handleSendMedia2 = (() => {
+    // Initialise un compteur local pour les médias
+    let mediaCounter = 0;
+  
+    return async (fieldName) => {
+      // Trouve les données média correspondant au champ
+      const mediaData = mediaFiles.find((item) => item.fieldName === fieldName);
+      if (!mediaData) {
+        console.error("Aucun fichier trouvé pour ce champ :", fieldName);
+        return;
+      }
+  
+      const { file } = mediaData;
+      if (!file) {
+        console.error("Aucun fichier sélectionné.");
+        return;
+      }
+  
+      // Génère un nom dynamique basé sur le compteur local
+      const dynamicName = `media${mediaCounter + 1}${file.name.substring(file.name.lastIndexOf("."))}`;
+      console.log("Nom dynamique généré :", dynamicName);
+  
+      // Prépare les données pour l'envoi
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("destinationName", dynamicName);
+      formData.append("destinationFolder", navigationId);
+  
+      try {
+        // Effectue l'envoi des données
+        const response = await fetch("../../wp-content/plugins/ProductImageCustomizer/js/upload-media.php", {
+          method: "POST",
+          body: formData,
+        });
+  
+        if (response.ok) {
+          console.log("Fichier envoyé avec succès");
+          // Incrémente le compteur local après un envoi réussi
+          mediaCounter += 1;
+        } else {
+          console.error("Erreur lors de l'envoi :", response.statusText);
+        }
+      } catch (error) {
+        console.error("Erreur lors de l'envoi du fichier :", error);
+        if (error.response) {
+          console.log("Réponse d'erreur:", error.response);
+          console.log("Code d'état:", error.response.status);
+          console.log("Données d'erreur:", error.response.data);
+          console.log("Message d'erreur:", error.response.statusText);
+        } else if (error.request) {
+          console.log("Erreur de requête:", error.request);
+        } else {
+          console.log("Erreur lors de la configuration de la requête:", error.message);
+        }
+      }
+    };
+  })();
+  
   
 
-  const handleTest = (srcVid, nomVid) => {
+  const handleChoixModele = (srcVid, nomVid) => {
     // setIsClicked(true);
     setOpenModal(true);
     setCurrentVideoSrc(srcVid);
@@ -352,6 +407,7 @@ const Tooltip = ({ text, children }) => {
     const parsedTemplateMediasVideo = JSON.parse(selectedTemplate.medias_video);
     setTabParseMediasVideo(parsedTemplateMediasVideo.mediaFields || []);
 
+
     // try {
     //   const parsedTemplateTextesVideo = JSON.parse(selectedTemplate.textes_video);
     //   const parsedTemplateMediasVideo = JSON.parse(selectedTemplate.medias_video);
@@ -363,6 +419,54 @@ const Tooltip = ({ text, children }) => {
     // }
 
   };
+
+  const handleChoixModele2 = (srcVid, nomVid) => {
+    // Ouvrir la modale et mettre à jour les informations du modèle
+    setOpenModal(true);
+    setCurrentVideoSrc(srcVid);
+    setNomTemplate(nomVid);
+  
+    // Filtrer les visuels par le nom du modèle sélectionné
+    const imagesVideosFilteredParNomTemplate = visuelsVideos.filter(
+      (item) => item.nom_modele_video === nomVid
+    );
+  
+    // Trouver le template correspondant qui contient les textes et médias
+    const selectedTemplate = imagesVideosFilteredParNomTemplate.find(
+      (item) => item.textes_video && item.medias_video
+    );
+  
+    if (!selectedTemplate) {
+      console.error("Aucun template sélectionné");
+      return;
+    }
+  
+    // Parser les textes et médias JSON du template sélectionné
+    const parsedTemplateTextesVideo = JSON.parse(selectedTemplate.textes_video);
+    setTabParseTextesVideo(parsedTemplateTextesVideo.videoTextFields);
+  
+    const parsedTemplateMediasVideo = JSON.parse(selectedTemplate.medias_video);
+    
+    const mediaFields = parsedTemplateMediasVideo.mediaFields || [];
+    setTabParseMediasVideo(mediaFields);
+  
+    // Gestion des champs où customizable === false
+    const newVariables = {};
+    mediaFields.forEach((field) => {
+      if (field.customizable === false) {
+        console.log(field.name);
+        // newVariables[field.name] = `https://memenza.fr/visuels/modeles/${nomVid}/${field.name}.mp4`;
+        newVariables[field.name] = `https://memenza.fr/${field.defaultFile}`;
+      }
+    });
+  
+    // Mettre à jour les variables une seule fois avec les nouveaux champs non personnalisables
+    setVariables((prevState) => ({
+      ...prevState,
+      ...newVariables,
+    }));
+  };
+  
   
   const handleVideoSendWithTemplate = async () => {
     const pourIdTemplateDynamique = imagesVideosFilteredParNomTemplate.find(
@@ -394,29 +498,7 @@ const Tooltip = ({ text, children }) => {
     }
   };
 
-  const handleSendAllMedia = async () => {
-    setIsMediaSaved(true);
-    if (mediaFiles.length === 0) {
-      console.error("Aucun média enregistré à envoyer.");
-      return;
-    }
   
-    // console.log("Démarrage de l'envoi des fichiers individuellement...");
-    
-    for (const mediaData of mediaFiles) {
-      const { fieldName } = mediaData;
-  
-      try {
-        // Utilisation de handleSendMedia pour chaque fichier
-        await handleSendMedia(fieldName);
-        console.log(`Fichier associé au champ ${fieldName} envoyé avec succès.`);
-      } catch (error) {
-        console.error(`Erreur lors de l'envoi du fichier pour le champ ${fieldName} :`, error);
-      }
-    }
-  
-    console.log("Envoi de tous les fichiers terminé.");
-  };
 
   const handleVideoSendWithoutTemplate = async () => {
     const formData = {
@@ -458,7 +540,7 @@ const Tooltip = ({ text, children }) => {
   
         try {
           // Utilisation de handleSendMedia pour chaque fichier
-          await handleSendMedia(fieldName);
+          await handleSendMedia2(fieldName);
           console.log(`Fichier associé au champ ${fieldName} envoyé avec succès.`);
         } catch (error) {
           console.error(`Erreur lors de l'envoi du fichier pour le champ ${fieldName} :`, error);
@@ -629,7 +711,7 @@ const Tooltip = ({ text, children }) => {
             xs={12}
             sm={6}
             md={4}
-            onClick={() => handleTest(src.chemin_video_ex, src.nom_modele_video)}
+            onClick={() => handleChoixModele2(src.chemin_video_ex, src.nom_modele_video)}
             sx={{ textAlign: "center", cursor: "pointer" }}
           >
             <Typography sx={{ mb: 1 }}>{src.nom_modele_video || "Modèle inconnu"}</Typography>
@@ -740,6 +822,13 @@ const Tooltip = ({ text, children }) => {
 
                 const match = field.name.match(/^s\d+-img(\d+)$/);
                 const dynamicLabel = match ? `Media ${match[1]}` : field.name;
+                // if (field.customizable === false) {
+                //   console.log(field.name); 
+                //   setVariables((prevState) => ({
+                //     ...prevState,
+                //     [field.name]: `https://memenza.fr/visuels/uploads/${navigationId}/${field.name}.mp4`, 
+                //   }));
+                // }
                 if (field.customizable === true) {
                   // console.log("custom à true");                  
                   const currentMediaIndex = nameMediaCounter++;

@@ -838,7 +838,7 @@ const EtapeVisuel = ({ activeStep, setActiveStep }) => {
     // image1: '',
     // image2: '',
   });
-  console.log("FORMDATA : " + JSON.stringify(formData));
+  // console.log("FORMDATA : " + JSON.stringify(formData));
   
   const tableauFiltrePourVignette = imagesVisuels.filter(item => item.id_ss_cat === selectedSousCatId);
   const textesCadres = visuelDataVignetteClique.length
@@ -1018,7 +1018,6 @@ const EtapeVisuel = ({ activeStep, setActiveStep }) => {
   //   }
   // }, [textesCadres, visuelsCadres, setFormData]); 
 
-  
 useEffect(() => {
   if (textesCadres && visuelsCadres) {
     // Récupérer les champs dynamiques pour text1, text2, image1 et image2
@@ -1146,8 +1145,12 @@ const envoiVisuelPerso = (event) => {
 const creationDuVisuelAvecTemplate = async (e) => {
   e.preventDefault();
 
+  // const uniqueId = Date.now();
+  // const outputFilePath = `/home/memenzj/www/visuels/cmd/${navigationId}_${uniqueId}.png`;
+
   const outputFilePath = `/home/memenzj/www/visuels/cmd/${navigationId}.png`;
   const outputFolder = `/home/memenzj/www/visuels/uploads/${navigationId}`;
+  const imagePath = "visuels/cmd/" + navigationId + '.png';
   setOutputFilePathContext(outputFilePath);
 
   const convertToBlob = async (imageFileOrURL) => {
@@ -1192,6 +1195,7 @@ const creationDuVisuelAvecTemplate = async (e) => {
   formPayload.append("text2", formData.text2);
   formPayload.append("output_file", outputFilePath); // Destination de la crea cadre
   formPayload.append("dossier", outputFolder); // Créa du dossier pour les medias video
+  // formPayload.append("imagecmd", imagePath);
   
   
   console.log("AVANT ENVOI Blob taille de iamge1Blob : ", image1Blob.size);
@@ -1235,11 +1239,27 @@ const creationDuVisuelAvecTemplate = async (e) => {
     console.log("Réponse Brute :", response);
     console.log("Statut de la réponse :", response.status);
     console.log("En-têtes de la réponse :", [...response.headers]);
-    
+   
     if (!response.ok) {
       throw new Error("Erreur lors de la soumission du formulaire");
     }
     
+//     if (response.headers.get("content-type") === "image/png") {
+//       console.log("la reponse est bien de type image/png !");
+//       const result = await response.blob();    
+//       const url = URL.createObjectURL(result);
+//       // A NE PAS EFFECER - Verification retour
+//       console.log("APRES ENVOI Blob reçu :", result);
+//       console.log("URL générée :", url);
+//       setGeneratedImageUrl(url);
+//       setPathImageGenerate(url);
+//       setIsGenerate(true);
+//       setVisuelGeneratedImageUrl(url);
+//   } else {
+//     // Gérer une réponse inattendue
+//     console.error("Réponse inattendue :", await response.text());
+//     // throw new Error(`Réponse inattendue : ${response.status}`);
+// }
     
     const result = await response.blob();    
     const url = URL.createObjectURL(result);
