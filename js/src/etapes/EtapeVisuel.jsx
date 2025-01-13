@@ -1260,8 +1260,9 @@ if (fileExists) {
   //////////////////////////////////////////
   //////////////////////////////////////////
   try {
-    const response = await fetch("../../wp-content/plugins/ProductImageCustomizer/js/process-simplifie.php", {
-    // const response = await fetch("../../wp-content/plugins/ProductImageCustomizer/js/process-test.php", {
+    // const response = await fetch("../../wp-content/plugins/ProductImageCustomizer/js/process-simplifie.php", {
+    // const response = await fetch("../../wp-content/plugins/ProductImageCustomizer/js/process-gencadre.php", {
+    const response = await fetch("../../wp-content/plugins/ProductImageCustomizer/js/process-test.php", {
       method: "POST",
       body: formPayload,
     });
@@ -1633,7 +1634,8 @@ return (
           field.customizable ? (
             <TextField
               key={field.name}
-              label={isFocused ? "max. 17 caractères" : formData[`text${index + 1}`]}
+              // label={isFocused ? "max. 17 caractères" : formData[`text${index + 1}`]}
+              label={isFocused ? "max."+`${field.length}` + " caractères" : formData[`text${index + 1}`]}
               onFocus={handleFocus}
               onBlur={handleBlur}
               name={`text${index + 1}`}

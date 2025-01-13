@@ -366,9 +366,10 @@ const Tooltip = ({ text, children }) => {
   
         // Si "img" est présent dans fieldName, générer un nom unique
         let mediaName;
-        if (fieldName.includes("img")) {
+        // if (fieldName.includes("img"))  {
+        if (fieldName.includes("img") || fieldName.includes("-i") )  {
           const imgCount = Object.keys(prevState)
-            .filter((key) => key.includes("img"))
+            .filter((key) => key.includes("img") || key.includes("-i"))
             .length;
           mediaName = `media${imgCount + 1}`;
         } else {
@@ -756,6 +757,7 @@ const Tooltip = ({ text, children }) => {
 
   const handleChoixModele2 = (srcVid, nomVid) => {
     // Ouvrir la modale et mettre à jour les informations du modèle
+    // setVariables({});
     setOpenModal(true);
     setCurrentVideoSrc(srcVid);
     setNomTemplate(nomVid);

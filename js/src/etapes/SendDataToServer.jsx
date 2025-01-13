@@ -387,7 +387,11 @@ console.log("IDPRODUIT : " + productId);
               variant="contained"
               color="primary"
               sx={{ marginTop: '20px' }}
-              onClick={() => setModalVideoGenere(false)}
+              // onClick={() => setModalVideoGenere(false)}
+              onClick={() => {
+                setModalVideoGenere(false); // Ferme la modale
+                setVideoCreationFail(false); // Réinitialise l'état d'échec
+              }}
             >
               Réessayer
             </Button>
