@@ -710,6 +710,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useSousCat } from "../componentsMemenza/GestionEtat.jsx";
 import ChoixPropreVisuel from "../componentsMemenza/ChoixPropreVisuel.jsx";
 import LoadingUpload from "../componentsMemenza/LoadingUpload.jsx";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 // [02] STYLES : "CTRL+F STYLES"
 const StyleEtapeVisuel = `
@@ -799,6 +800,15 @@ const VisuelCard = ({ item, isSelected, onClick }) => (
     </Card>
   </Grid>
 );
+
+const buttonStyles = {
+  width: '300px', // Largeur fixe
+  height: '50px', // Hauteur fixe
+  fontSize: '16px', // Taille du texte uniforme
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+};
 
 // [03] COMPOSANT PRINCIPAL : "CTRL+F COMPOSANT PRINCIPAL"
 const EtapeVisuel = ({ activeStep, setActiveStep }) => {
@@ -1140,6 +1150,7 @@ const envoiVisuelPerso = (event) => {
     setFichierPersoDetect(true);
   }
   setLoadingImage(true);
+  creationDuVisuelAvecTemplate3();
 };
 
 // [07] APPELS API (Génération preview & Soumission) : "CTRL+F APPELS API"
@@ -1424,7 +1435,10 @@ const creationDuVisuelAvecTemplate2 = async (e) => {
 };
 
 const creationDuVisuelAvecTemplate3 = async (e) => {
-  e.preventDefault();
+  // e.preventDefault();
+  if (e?.preventDefault) {
+    e.preventDefault();
+  }
 
 //   const uniqueId = Date.now();
 // const outputFilePath = `/home/memenzj/www/visuels/cmd/${navigationId}_${uniqueId}.png`;
@@ -1665,7 +1679,7 @@ return (
           {visuelsCadres.imageFields.map((field, index) =>
             field.customizable ? (
               <Box>
-                <Button component="label" variant="contained" sx={{ mr: "10px" }} key={field.name} onClick={() => setLoadingImage(false)}>
+                <Button startIcon={<CloudUploadIcon />} component="label" variant="contained" sx={buttonStyles} key={field.name} onClick={() => setLoadingImage(false)}>
                   Envoyer mon image
                   <input
                     name={field.name}
@@ -1677,7 +1691,7 @@ return (
                 </Button>
                 {loadingImage && (
                   <Box>
-                    <LoadingUpload /> 
+                    <LoadingUpload onSuccess={creationDuVisuelAvecTemplate3} /> 
                   </Box>
                 )}
               </Box>
@@ -1685,7 +1699,7 @@ return (
           )}
         </Box>
 
-        <Button type="success" variant="contained">
+        <Button type="success" variant="contained" sx={buttonStyles}>
           Prévisualiser votre cadre
         </Button>
 

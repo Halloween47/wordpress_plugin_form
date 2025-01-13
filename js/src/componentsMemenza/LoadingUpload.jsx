@@ -27,7 +27,7 @@ const styles = {
   },
 };
 
-export default function LoadingUpload() {
+export default function LoadingUpload({ onSuccess }) {
   const [loadingImage, setLoadingImage] = React.useState(true);
   const [success, setSuccess] = React.useState(false);
 
@@ -39,6 +39,7 @@ export default function LoadingUpload() {
       timer = setTimeout(() => {
         setLoadingImage(false); // Fin du chargement
         setSuccess(true); // Définir l'état success
+        if (onSuccess) onSuccess();
       }, 2000); // Temps d'attente en ms
     }
 
