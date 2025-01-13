@@ -704,10 +704,12 @@ import {
   Button,
   TextField,
   Tooltip,
+  CircularProgress,
 } from "@mui/material";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useSousCat } from "../componentsMemenza/GestionEtat.jsx";
 import ChoixPropreVisuel from "../componentsMemenza/ChoixPropreVisuel.jsx";
+import LoadingUpload from "../componentsMemenza/LoadingUpload.jsx";
 
 // [02] STYLES : "CTRL+F STYLES"
 const StyleEtapeVisuel = `
@@ -831,6 +833,7 @@ const EtapeVisuel = ({ activeStep, setActiveStep }) => {
   const [generatedImageUrl, setGeneratedImageUrl] = useState(null);
   const [error, setError] = useState(null);
   const [isFocused, setIsFocused] = useState(false); 
+  const [loadingImage, setLoadingImage] = useState(false); 
   const [formData, setFormData] = useState({
     text1: '',
     text2: '',
@@ -1136,6 +1139,7 @@ const envoiVisuelPerso = (event) => {
     setTestAvecFile(file);
     setFichierPersoDetect(true);
   }
+  setLoadingImage(true);
 };
 
 // [07] APPELS API (Génération preview & Soumission) : "CTRL+F APPELS API"
@@ -1633,7 +1637,7 @@ return (
         {textesCadres.fields.map((field, index) =>
           field.customizable ? (
             <TextField
-              key={field.name}
+            key={field.name}
               // label={isFocused ? "max. 17 caractères" : formData[`text${index + 1}`]}
               label={isFocused ? "max."+`${field.length}` + " caractères" : formData[`text${index + 1}`]}
               onFocus={handleFocus}
@@ -1657,18 +1661,26 @@ return (
         )}
 
         <Box>
-          {visuelsCadres.imageFields.map((field) =>
+          {/* {visuelsCadres.imageFields.map((field, key) => */}
+          {visuelsCadres.imageFields.map((field, index) =>
             field.customizable ? (
-              <Button component="label" variant="contained" sx={{ mr: "10px" }} key={field.name}>
-                Envoyer mon image
-                <input
-                  name={field.name}
-                  type="file"
-                  hidden
-                  accept="image/*"
-                  onChange={(e) => envoiVisuelPerso(e)}
-                />
-              </Button>
+              <Box>
+                <Button component="label" variant="contained" sx={{ mr: "10px" }} key={field.name} onClick={() => setLoadingImage(false)}>
+                  Envoyer mon image
+                  <input
+                    name={field.name}
+                    type="file"
+                    hidden
+                    accept="image/*"
+                    onChange={(e) => envoiVisuelPerso(e)}
+                    />
+                </Button>
+                {loadingImage && (
+                  <Box>
+                    <LoadingUpload /> 
+                  </Box>
+                )}
+              </Box>
             ) : null
           )}
         </Box>
