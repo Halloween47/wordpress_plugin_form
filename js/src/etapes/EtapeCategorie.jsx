@@ -88,7 +88,7 @@ function EtapeCategorie({ activeStep, setActiveStep }) {
 
   return (
     <Box className="memenza-categories">
-      <Typography
+      {/* <Typography
         variant="h4"
         sx={{
           fontSize: "2.5rem",
@@ -100,7 +100,26 @@ function EtapeCategorie({ activeStep, setActiveStep }) {
         }}
       >
         Choisissez votre catégorie
+      </Typography> */}
+      <Typography
+        variant="h4"
+        sx={{
+          fontSize: {
+            // xs: "1.8rem", // Taille sur mobile
+            xs: "1.2rem", // Taille sur mobile
+            sm: "1.8rem", // Taille sur tablettes
+            md: "2.5rem", // Taille par défaut sur les écrans plus grands
+          },
+          color: "#000",
+          margin: "1.5rem 0",
+          textAlign: "center",
+          fontWeight: 600,
+          lineHeight: 1.2,
+        }}
+      >
+        Choisissez votre catégorie
       </Typography>
+
 
       {/* Composant Carousel */}
       <CarouselCategories

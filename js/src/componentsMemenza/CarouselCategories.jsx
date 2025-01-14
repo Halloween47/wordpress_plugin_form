@@ -363,6 +363,29 @@ const styles = `
   font-size: 1.2rem;
   color: white;
 }
+
+  /* Styles spécifiques aux mobiles */
+  @media (max-width: 768px) {
+    .carousel .item-container, .carousel-ss .item-container-ss {
+      height: auto; /* Retirer la hauteur */
+      flex-direction: column;
+    }
+
+    .carousel .overlay, .carousel-ss .overlay {
+      position: static; /* Retirer l'overlay */
+      background: none;
+      opacity: 1;
+      justify-content: flex-start;
+    }
+
+    .overlay h3 {
+      position: relative;
+      font-size: 1rem;
+      margin-top: 10px; /* Ajouter un espace au-dessus du titre */
+      color: black; /* Optionnel, changer la couleur pour mobile */
+      text-align: center;
+    }
+  }
 `;
 
 export default function CarouselCategories({ onImageClick, onSousCatClick }) {
