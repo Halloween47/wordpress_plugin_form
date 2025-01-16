@@ -706,6 +706,7 @@ import {
   Tooltip,
   CircularProgress,
 } from "@mui/material";
+import InfoIcon from "@mui/icons-material/Info";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useSousCat } from "../componentsMemenza/GestionEtat.jsx";
 import ChoixPropreVisuel from "../componentsMemenza/ChoixPropreVisuel.jsx";
@@ -734,6 +735,7 @@ const StyleEtapeVisuel = `
      justify-content: center;
      align-items: flex-start;
      text-align: left;
+     padding : 0px !important;
    }
 
   .selected-card {
@@ -772,14 +774,15 @@ const StyleEtapeVisuel = `
 
 // Composant VisuelCard
 const VisuelCard = ({ item, isSelected, onClick }) => (
-  <Grid item xs={12} sm={6} md={4} lg={3}>
+  // <Grid item xs={12} sm={6} md={4} lg={3}>
+  <Grid item xs={10} sm={6} md={4} lg={3} sx={{mt:2, pt: 5, gap: '20px'}}>
     <Card
       className={`selected-card ${isSelected ? "selected" : ""}`}
       onClick={onClick}
       sx={{
         transform: 'scale(1.1)',
         transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-        padding: '20px',
+        padding: '50px !important',
         '&:hover': {
           transform: 'scale(1.15)',
           boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)',
@@ -1560,30 +1563,85 @@ return (
           src="https://memenza.fr/visuels/personnaliser.png"
           alt="Visuel personnalisé"
           style={{
-            width: "100px",
-            height: "100px",
+            // width: "100px",
+            // height: "100px",
+            width: "200px",
+            height: "200px",
             borderRadius: "8px",
             objectFit: "cover",
           }}
         />
       </Box>
-      <Box className="etape-visuel-intro-txt" sx={{ p: 4 }}>
-        <Typography
-          variant="h4"
-          color="textPrimary"
+      <Box className="etape-visuel-intro-txt" sx={{ p: 3 }}>
+        <Box sx={{display: "flex"}}>
+          <Typography
+            variant="h4"
+            color="textPrimary"
+            sx={{
+              mb: 1,
+              fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem', lg: '3rem' },
+            }}
+          >
+            Personnaliser le visuel
+          </Typography>
+        </Box>
+        {/* Tooltip pour mobile */}
+        <Box
           sx={{
-            mb: 1,
-            fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem', lg: '3rem' },
+            display: { xs: "block", sm: "none" },
+            position: "relative",
+            cursor: "pointer",
+          }}
+          onMouseEnter={(e) => {
+            const tooltip = e.currentTarget.querySelector(".tooltip");
+            if (tooltip) tooltip.style.opacity = "1";
+          }}
+          onMouseLeave={(e) => {
+            const tooltip = e.currentTarget.querySelector(".tooltip");
+            if (tooltip) tooltip.style.opacity = "0";
           }}
         >
-          Personnaliser le visuel
-        </Typography>
+          <Box
+            sx={{
+              // bgcolor: "text.disabled",
+              // color: "background.paper",
+              // bgcolor: "text.disabled",
+              color: "black",
+              // p: 2,
+              borderRadius: "8px",
+            }}
+          >
+            ?
+          </Box>
+          <Box
+            className="tooltip"
+            sx={{
+              position: "absolute",
+              bottom: "110%",
+              left: "50%",
+              transform: "translateX(-50%)",
+              bgcolor: "black",
+              color: "white",
+              p: 1,
+              borderRadius: "4px",
+              whiteSpace: "nowrap",
+              opacity: "0",
+              transition: "opacity 0.3s ease",
+              pointerEvents: "none",
+              zIndex: 10,
+            }}
+          >
+            Vous pouvez utiliser les modèles Memenza <br/>ou directement télécharger votre visuel <br/>(créé par exemple avec Canva). <br/>La taille d’image attendue est de 1086x1086px.
+
+          </Box>
+        </Box>
         <Typography
           variant="body1"
           color="textPrimary"
           sx={{
             pr: 3,
             fontSize: { xs: '0.875rem', sm: '1rem', md: '1.125rem', lg: '1.5rem' },
+            display: { xs: "none", sm: "block" },
           }}
         >
           Vous pouvez utiliser les modèles Memenza ou directement télécharger votre visuel (créé par exemple avec Canva). La taille d’image attendue est de 1086x1086px.

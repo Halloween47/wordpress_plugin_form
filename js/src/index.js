@@ -120,7 +120,8 @@ const App = () => {
     <SousCatProvider>
       <div className="memenzaFormulaire">
         <Box sx={{ width: "100%", height: "auto" }}>
-          <Stepper activeStep={activeStep} sx={{ m: "4em" }}>
+          {/* <Stepper activeStep={activeStep} sx={{ m: "1rem" }}> */}
+          <Stepper activeStep={activeStep} sx={{ mt: "60px" }}>
             {steps.map((label, index) => {
               const stepProps = {};
               const labelProps = {};
