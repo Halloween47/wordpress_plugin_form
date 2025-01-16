@@ -160,6 +160,12 @@ const Tooltip = ({ text, children }) => {
   const [fileCounter, setFileCounter] = React.useState(1);
   const [idJ2V, setIdJ2V] = React.useState(1);
   const videoRefs = useRef([]);
+  //////////////////////
+  //////////////////////
+  const [uploadedImages, setUploadedImages] = useState({});
+  //////////////////////
+  //////////////////////
+
   
   const API_KEY = process.env.REACT_APP_MEMENZA_API_KEY || "simulation lecture clé API";
   const API_URL_WITH_TPL = "https://core-api.memenza.fr/api/wp-media/create-with-tpl";
@@ -357,6 +363,21 @@ const Tooltip = ({ text, children }) => {
       const fileExtension = file.name.split('.').pop(); // Récupérer l'extension
       const validExtension = fileExtension && fileExtension.length <= 5 ? fileExtension : 'unknown';
   
+      ///////////////////////////
+      ///////////////////////////
+      // Gérer l'affichage immédiat
+      const fileURL = URL.createObjectURL(file); // Générer un lien temporaire
+
+      // Mettre à jour l'état des images téléversées
+      setUploadedImages((prevImages) => ({
+        ...prevImages,
+        [fieldName]: fileURL, // Met à jour l'URL du fichier pour le champ concerné
+      }));
+
+      console.log("Image téléversée : ", fileURL);
+      ///////////////////////////
+      ///////////////////////////
+
       setVariables((prevState) => {
         const existingValue = prevState[fieldName]; // Vérifier si `fieldName` existe déjà
         if (existingValue) {
@@ -1146,74 +1167,186 @@ const Tooltip = ({ text, children }) => {
       </Grid>
 
       {openModal && (
-        <Grid container spacing={2} sx={{ mt: 4 }}>
-          <Grid container spacing={2} sx={{ mt: 4 }}>
-            <Grid item xs={6}>
-              <Box
-                component="video"
-                src={currentVideoSrc}
-                controls
-                sx={{ width: "100%", height: "100%", objectFit: "contain" }}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <Box sx={{ overflowY: "auto", maxHeight: "60vh" }}>
-                <Typography variant="h6">Paramétrage du Template</Typography>
-                <Typography variant="subtitle1">Une fois le modèle configuré, il est possible de modifier tous les textes et images (les photos étant au format paysage), ou bien de les laisser tels quels, selon vos envies.</Typography>
+        //////////////////
+        //////////////////
+        //////////////////
+        // <Grid container spacing={2} sx={{ mt: 4 }}>
+        //   <Grid container spacing={2} sx={{ mt: 4 }}>
+        //     <Grid item xs={6}>
+        //       <Box
+        //         component="video"
+        //         src={currentVideoSrc}
+        //         controls
+        //         sx={{ width: "100%", height: "100%", objectFit: "contain" }}
+        //       />
+        //     </Grid>
+        //     <Grid item xs={6}>
+        //       <Box sx={{ overflowY: "auto", maxHeight: "60vh" }}>
+        //         <Typography variant="h6">Paramétrage du Template</Typography>
+        //         <Typography variant="subtitle1">Une fois le modèle configuré, il est possible de modifier tous les textes et images (les photos étant au format paysage), ou bien de les laisser tels quels, selon vos envies.</Typography>
 
-                {tabParseTextesVideo.map((field, index) => {
-      // Expression régulière pour extraire uniquement le numéro
-      const match = field.name.match(/^[Ss](\d+)-/); 
-      const dynamicLabel = match ? `Texte ${match[1]}` : field.name;
-      
-      return (
-        <Box key={index} sx={{ mt: 2 }}>
-          <Typography>{dynamicLabel}</Typography>
-          <TextField
-            fullWidth
-            size="small"
-            placeholder={field.defaultText || ""}
-            value={variables[field.name] || ""}
-            onChange={(e) => handleVariableChange(field.name, e.target.value)}
-          />
-        </Box>
-      );
-  })}
+        //         {tabParseTextesVideo.map((field, index) => {
+        //           // Expression régulière pour extraire uniquement le numéro
+        //           const match = field.name.match(/^[Ss](\d+)-/); 
+        //           const dynamicLabel = match ? `Texte ${match[1]}` : field.name;
+                  
+        //           return (
+        //             <Box key={index} sx={{ mt: 2 }}>
+        //               <Typography>{dynamicLabel}</Typography>
+        //               <TextField
+        //                 fullWidth
+        //                 size="small"
+        //                 placeholder={field.defaultText || ""}
+        //                 value={variables[field.name] || ""}
+        //                 onChange={(e) => handleVariableChange(field.name, e.target.value)}
+        //               />
+        //             </Box>
+        //           );
+        //         })}
 
-                <Typography variant="h6" sx={{ mt: 4 }}>
-                  Paramétrage des Médias
-                </Typography>
-                {tabParseMediasVideo.map((field, index) => {
-                  const match = field.name.match(/^s\d+-img(\d+)$/);
-                  const dynamicLabel = match ? `Media ${match[1]}` : field.name;
-                  if (field.customizable === true) {                 
-                    const currentMediaIndex = nameMediaCounter++;
-                    return (
-                      <Box
-                        key={index}
-                        sx={{ 
-                          mt: 2, 
-                          display: "flex", 
-                          justifyContent: "center", 
-                          alignItems: "center", 
-                          width: "100%"
-                        }}
-                        >
-                          {/* Label dynamique pour le champ média */}
-                          <Typography sx={{ mr: "30px" }}>Media {currentMediaIndex}</Typography>
+        //         <Typography variant="h6" sx={{ mt: 4 }}>
+        //           Paramétrage des Médias
+        //         </Typography>
+        //         {tabParseMediasVideo.map((field, index) => {
+        //           const match = field.name.match(/^s\d+-img(\d+)$/);
+        //           const dynamicLabel = match ? `Media ${match[1]}` : field.name;
+        //           if (field.customizable === true) {                 
+        //             const currentMediaIndex = nameMediaCounter++;
+        //             return (
+        //               <Box
+        //                 key={index}
+        //                 sx={{ 
+        //                   mt: 2, 
+        //                   display: "flex", 
+        //                   justifyContent: "center", 
+        //                   alignItems: "center", 
+        //                   width: "100%"
+        //                 }}
+        //                 >
+        //                   {/* Label dynamique pour le champ média */}
+        //                   <Typography sx={{ mr: "30px" }}>Media {currentMediaIndex}</Typography>
 
-                            {/* Bouton pour importer un média */}
-                            <Button component="label" variant="contained" sx={{ mr: "10px" }}>
-                              Importer votre média
-                              <input
-                                type="file"
-                                hidden
-                                accept={field.type === "image" ? "image/*" : field.type === "video" ? "video/*" : "*/*"}
-                                // onChange={(e) => handleFileUpload(e, field.name)}
-                                // onChange={(e) => handleFileUpload2(e, field.name)}
-                                onChange={(e) => handleFileUpload3(e, field.name)}
-                              />
-                            </Button>
+        //                     {/* Bouton pour importer un média */}
+        //                     <Button component="label" variant="contained" sx={{ mr: "10px" }}>
+        //                       Importer votre média
+        //                       <input
+        //                         type="file"
+        //                         hidden
+        //                         accept={field.type === "image" ? "image/*" : field.type === "video" ? "video/*" : "*/*"}
+        //                         // onChange={(e) => handleFileUpload(e, field.name)}
+        //                         // onChange={(e) => handleFileUpload2(e, field.name)}
+        //                         onChange={(e) => handleFileUpload3(e, field.name)}
+        //                       />
+        //                     </Button>
+        //                     {checkedFields[field.name] && (
+        //                       <CheckCircleRoundedIcon sx={{ color: 'green' }} />
+        //                     )}
+
+        //                     {/* Tooltip avec informations supplémentaires */}
+        //                     <div style={{ padding: "10px" }}>
+        //                       <Tooltip text={field.comment}>
+        //           <InfoIcon sx={{ color: "black" }} />
+        //                       </Tooltip>
+        //                     </div>
+        //                   </Box>
+        //             )}
+        //           })}
+        //         <Box sx={{display: "flex", flexDirection: "column", gap: 3, alignItems: "center"}}>
+        //         <Button
+        //           variant="contained"
+        //           // disabled={!isMediaSaved}
+        //           sx={{ 
+        //             mt: 3,
+        //             padding: 0, 
+        //           }}
+        //           onClick={handleSendAllMediaAndCreateVideo}
+        //         >
+        //           Envoyer les données
+        //         </Button>
+        //         {modalVideoGenere && 
+        //         (
+        //           <Box>
+        //             <CircularProgress disableShrink sx={{marginBottom: "10px"}}/>
+        //             <SendDataToServer />
+        //           </Box>
+        //         )
+        //         }
+        //         </Box>
+        //       </Box>
+        //     </Grid>
+        //   </Grid>
+        // </Grid>
+        <Grid container spacing={2} sx={{ mt: 8, pb: 5 }} direction="column">
+          <Typography variant="h6">Paramétrage du Template</Typography>
+            <Typography variant="subtitle1">Une fois le modèle configuré, il est possible de modifier tous les textes et images (les photos étant au format paysage), ou bien de les laisser tels quels, selon vos envies.</Typography>          
+            {sceneKeys.map((sceneKey) => (
+              <React.Fragment key={sceneKey}>
+                {/* Section pour chaque scène */}
+                <Typography variant="h4">SCENE {sceneKey}</Typography>
+                
+                {/* Medias pour la scène */}
+                <Grid container spacing={2} sx={{ mt: 4, flexWrap: 'nowrap' }}>
+                  {tabParseMediasVideo
+                    .filter(field => new RegExp(`^s${sceneKey}`, "i").test(field.name)) // Filtrer par scène dynamique
+                    .map((field, index) => {
+                      const match = field.name.match(/^s\d+-img(\d+)$/);
+                      const dynamicLabel = match ? `Media ${match[1]}` : field.name;
+
+                      if (field.customizable === true) {
+                        return (
+                          <Box
+                            key={index}
+                            sx={{ 
+                              mt: 2, 
+                              display: "flex", 
+                              justifyContent: "center", 
+                              alignItems: "center", 
+                              width: "100%"
+                            }}
+                          >
+                            {/* Label dynamique pour le champ média */}
+                            <Typography sx={{ mr: "30px" }}>{dynamicLabel}</Typography>
+
+                            {/* Image cliquable pour importer un média */}
+<Box
+  component="label"
+  sx={{
+    display: "inline-block",
+    cursor: "pointer",
+    position: "relative",
+    width: "150px", // Largeur de l'image
+    height: "150px", // Hauteur de l'image
+    border: "2px dashed #ccc", // Bordure optionnelle pour le style
+    borderRadius: "8px",
+    overflow: "hidden",
+    "&:hover": {
+      borderColor: "primary.main", // Changer la couleur au survol
+    },
+  }}
+>
+  {/* Image affichée */}
+  <img
+    // src= "https://i0.wp.com/memenza.fr/wp-content/uploads/2024/12/cadre20.png?fit=500%2C500&ssl=1"
+    // src= {`https://memenza.fr/${field.defaultFile}`}
+    src={uploadedImages[field.name] || `https://memenza.fr/${field.defaultFile}`}
+    alt="Importer un média"
+    // alt={`Image pour ${field.name}`}
+    style={{
+      width: "100%",
+      height: "100%",
+      objectFit: "cover",
+    }}
+  />
+  {/* Input file caché */}
+  <input
+    type="file"
+    hidden
+    accept={field.type === "image" ? "image/*" : field.type === "video" ? "video/*" : "*/*"}
+    onChange={(e) => handleFileUpload3(e, field.name)}
+  />
+</Box>
+
+
                             {checkedFields[field.name] && (
                               <CheckCircleRoundedIcon sx={{ color: 'green' }} />
                             )}
@@ -1221,37 +1354,61 @@ const Tooltip = ({ text, children }) => {
                             {/* Tooltip avec informations supplémentaires */}
                             <div style={{ padding: "10px" }}>
                               <Tooltip text={field.comment}>
-                  <InfoIcon sx={{ color: "black" }} />
+                                <InfoIcon sx={{ color: "black" }} />
                               </Tooltip>
                             </div>
                           </Box>
-                    )}
+                        );
+                      }
+                      return null;
                   })}
-                <Box sx={{display: "flex", flexDirection: "column", gap: 3, alignItems: "center"}}>
-                <Button
-                  variant="contained"
-                  // disabled={!isMediaSaved}
-                  sx={{ 
-                    mt: 3,
-                    padding: 0, 
-                  }}
-                  onClick={handleSendAllMediaAndCreateVideo}
-                >
-                  Envoyer les données
-                </Button>
-                {modalVideoGenere && 
+                </Grid>
+
+                {/* Textes pour la scène */}
+                {tabParseTextesVideo
+                  .filter(field => new RegExp(`^s${sceneKey}`, "i").test(field.name)) // Filtrer par scène dynamique
+                  .map((field, index) => {
+                    const match = field.name.match(/^[Ss](\d+)-/); 
+                    const dynamicLabel = match ? `Texte ${match[1]}` : field.name;
+
+                    return (
+                      <Box key={index} sx={{ mt: 2 }}>
+                        <Typography>{dynamicLabel}</Typography>
+                        <TextField
+                          fullWidth
+                          size="small"
+                          placeholder={field.defaultText || ""}
+                          value={variables[field.name] || ""}
+                          onChange={(e) => handleVariableChange(field.name, e.target.value)}
+                        />
+                      </Box>
+                    );
+                })}
+              </React.Fragment>
+            ))}
+            <Box sx={{display: "flex", flexDirection: "column", gap: 3, alignItems: "center"}}>
+              <Button
+                variant="contained"
+                // disabled={!isMediaSaved}
+                sx={{ mt: 3, padding: 0,}}
+                // onClick={handleVideoSendWithTemplate}
+                onClick={handleSendAllMediaAndCreateVideo}
+              >
+                Envoyer les données
+              </Button>
+              {modalVideoGenere && 
                 (
                   <Box>
                     <CircularProgress disableShrink sx={{marginBottom: "10px"}}/>
                     <SendDataToServer />
                   </Box>
                 )
-                }
-                </Box>
-              </Box>
-            </Grid>
+              }                
+            </Box>
           </Grid>
-        </Grid>
+        ////////////////
+        ////////////////
+        ////////////////
       )}
       <Button
         disabled={activeStep === 0}
