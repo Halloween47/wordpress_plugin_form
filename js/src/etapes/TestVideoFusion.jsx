@@ -1276,136 +1276,212 @@ const Tooltip = ({ text, children }) => {
         //     </Grid>
         //   </Grid>
         // </Grid>
-        <Grid container spacing={2} sx={{ mt: 8, pb: 5 }} direction="column">
+        <Grid container spacing={2} sx={{ m: 2, p: 5, bgcolor: '#e8dee8', width: "100%", display: 'flex', flexDirection: 'column', }}>
           <Typography variant="h6">Paramétrage du Template</Typography>
-            <Typography variant="subtitle1">Une fois le modèle configuré, il est possible de modifier tous les textes et images (les photos étant au format paysage), ou bien de les laisser tels quels, selon vos envies.</Typography>          
-            {sceneKeys.map((sceneKey) => (
+          <Typography variant="subtitle1">Une fois le modèle configuré, il est possible de modifier tous les textes et images (les photos étant au format paysage), ou bien de les laisser tels quels, selon vos envies.</Typography>          
+          {sceneKeys.map((sceneKey) => (
+            <Box sx={{width: '100%', display: 'flex', justifyContent: 'center', mt: 2,}}>
               <React.Fragment key={sceneKey}>
-                {/* Section pour chaque scène */}
-                <Typography variant="h4">SCENE {sceneKey}</Typography>
-                
-                {/* Medias pour la scène */}
-                <Grid container spacing={2} sx={{ mt: 4, flexWrap: 'nowrap' }}>
-                  {tabParseMediasVideo
-                    .filter(field => new RegExp(`^s${sceneKey}`, "i").test(field.name)) // Filtrer par scène dynamique
-                    .map((field, index) => {
-                      const match = field.name.match(/^s\d+-img(\d+)$/);
-                      const dynamicLabel = match ? `Media ${match[1]}` : field.name;
-
-                      if (field.customizable === true) {
-                        return (
-                          <Box
-                            key={index}
-                            sx={{ 
-                              mt: 2, 
-                              display: "flex", 
-                              justifyContent: "center", 
-                              alignItems: "center", 
-                              width: "100%"
-                            }}
-                          >
-                            {/* Label dynamique pour le champ média */}
-                            <Typography sx={{ mr: "30px" }}>{dynamicLabel}</Typography>
-
-                            {/* Image cliquable pour importer un média */}
-<Box
-  component="label"
+              <Box
   sx={{
-    display: "inline-block",
-    cursor: "pointer",
-    position: "relative",
-    width: "150px", // Largeur de l'image
-    height: "150px", // Hauteur de l'image
-    border: "2px dashed #ccc", // Bordure optionnelle pour le style
-    borderRadius: "8px",
-    overflow: "hidden",
-    "&:hover": {
-      borderColor: "primary.main", // Changer la couleur au survol
-    },
+    width: '55%', // Adapte à la largeur totale sur mobile
+    display: 'flex',
+    flexDirection: 'column',
+    px: 2, // Ajoute un padding horizontal
   }}
 >
-  {/* Image affichée */}
-  <img
-    // src= "https://i0.wp.com/memenza.fr/wp-content/uploads/2024/12/cadre20.png?fit=500%2C500&ssl=1"
-    // src= {`https://memenza.fr/${field.defaultFile}`}
-    src={uploadedImages[field.name] || `https://memenza.fr/${field.defaultFile}`}
-    alt="Importer un média"
-    // alt={`Image pour ${field.name}`}
-    style={{
-      width: "100%",
-      height: "100%",
-      objectFit: "cover",
+  <Box
+    sx={{
+      width: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
     }}
-  />
-  {/* Input file caché */}
-  <input
-    type="file"
-    hidden
-    accept={field.type === "image" ? "image/*" : field.type === "video" ? "video/*" : "*/*"}
-    onChange={(e) => handleFileUpload3(e, field.name)}
-  />
+  >
+    {/* Section pour chaque scène */}
+    <Box
+      sx={{
+        width: '100%',
+        display: 'flex',
+        flexDirection: { xs: 'column', sm: 'row' }, // Colonne sur mobile, ligne sur écrans plus grands
+        justifyContent: 'space-between',
+        alignItems: 'flex-start',
+      }}
+    >
+      <Typography variant="h6" sx={{ mt: 1 }}>SCENE {sceneKey}</Typography>
+      <Typography
+        variant="body2"
+        sx={{ mt: 1, textAlign: { xs: 'left', sm: 'right' } }} // Ajuste l'alignement sur mobile
+      >
+        Cliquez sur l'image pour la modifier ...
+      </Typography>
+    </Box>
+
+    {/* Medias pour la scène */}
+    <Grid
+      container
+      spacing={2}
+      sx={{
+        mt: 1,
+        flexWrap: 'wrap', // Permet de gérer plusieurs lignes sur mobile
+      }}
+    >
+      {tabParseMediasVideo
+        .filter((field) =>
+          new RegExp(`^s${sceneKey}`, 'i').test(field.name)
+        )
+        .map((field, index) => {
+          const match = field.name.match(/^s\d+-img(\d+)$/);
+          const dynamicLabel = match ? `Media ${match[1]}` : field.name;
+
+          if (field.customizable === true) {
+            return (
+              <Box
+                key={index}
+                sx={{
+                  m: 1,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: '100%', // Prend toute la largeur sur mobile
+                  maxWidth: '150px', // Taille maximale pour l'image
+                }}
+              >
+                {/* Label dynamique pour le champ média */}
+                <Typography sx={{ fontSize: '0.9rem' }}>{dynamicLabel}</Typography>
+
+                {/* Image cliquable pour importer un média */}
+                <Box
+                  component="label"
+                  sx={{
+                    display: 'inline-block',
+                    cursor: 'pointer',
+                    position: 'relative',
+                    width: '100%',
+                    height: '0',
+                    paddingBottom: '100%', // Assure un ratio 1:1
+                    border: '2px dashed #ccc',
+                    borderRadius: '8px',
+                    overflow: 'hidden',
+                    '&:hover': {
+                      borderColor: 'primary.main',
+                    },
+                  }}
+                >
+                  {/* Image affichée */}
+                  <img
+                    src={
+                      uploadedImages[field.name] ||
+                      `https://memenza.fr/${field.defaultFile}`
+                    }
+                    alt="Importer un média"
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                    }}
+                  />
+                  {/* Input file caché */}
+                  <input
+                    type="file"
+                    hidden
+                    accept={
+                      field.type === 'image'
+                        ? 'image/*'
+                        : field.type === 'video'
+                        ? 'video/*'
+                        : '*/*'
+                    }
+                    onChange={(e) => handleFileUpload3(e, field.name)}
+                  />
+                </Box>
+
+                {checkedFields[field.name] && (
+                  <CheckCircleRoundedIcon sx={{ color: 'green', mt: 1 }} />
+                )}
+
+                {/* Tooltip avec informations supplémentaires */}
+                <div style={{ padding: '5px' }}>
+                  <Tooltip text={field.comment}>
+                    <InfoIcon sx={{ color: 'black', fontSize: '1rem' }} />
+                  </Tooltip>
+                </div>
+              </Box>
+            );
+          }
+          return null;
+        })}
+    </Grid>
+  </Box>
+
+  {/* Textes pour la scène */}
+  {tabParseTextesVideo
+    .filter((field) =>
+      new RegExp(`^s${sceneKey}`, 'i').test(field.name)
+    )
+    .map((field, index) => {
+      const match = field.name.match(/^[Ss](\d+)-/);
+      const dynamicLabel = match ? `Texte ${match[1]}` : field.name;
+
+      return (
+        <Box
+          key={index}
+          sx={{
+            mt: 1,
+            display: 'flex',
+            flexDirection: 'column', // Colonne pour une meilleure lisibilité sur mobile
+            alignItems: 'flex-start',
+            width: '100%',
+          }}
+        >
+          <Typography
+            sx={{
+              mb: 1,
+              fontSize: '0.9rem', // Réduit la taille du texte sur mobile
+            }}
+            variant="h6"
+          >
+            {dynamicLabel}
+          </Typography>
+          <TextField
+            fullWidth // Utilise toute la largeur sur mobile
+            size="small"
+            placeholder={field.defaultText || ''}
+            value={variables[field.name] || ''}
+            onChange={(e) => handleVariableChange(field.name, e.target.value)}
+          />
+        </Box>
+      );
+    })}
 </Box>
 
-
-                            {checkedFields[field.name] && (
-                              <CheckCircleRoundedIcon sx={{ color: 'green' }} />
-                            )}
-
-                            {/* Tooltip avec informations supplémentaires */}
-                            <div style={{ padding: "10px" }}>
-                              <Tooltip text={field.comment}>
-                                <InfoIcon sx={{ color: "black" }} />
-                              </Tooltip>
-                            </div>
-                          </Box>
-                        );
-                      }
-                      return null;
-                  })}
-                </Grid>
-
-                {/* Textes pour la scène */}
-                {tabParseTextesVideo
-                  .filter(field => new RegExp(`^s${sceneKey}`, "i").test(field.name)) // Filtrer par scène dynamique
-                  .map((field, index) => {
-                    const match = field.name.match(/^[Ss](\d+)-/); 
-                    const dynamicLabel = match ? `Texte ${match[1]}` : field.name;
-
-                    return (
-                      <Box key={index} sx={{ mt: 2 }}>
-                        <Typography>{dynamicLabel}</Typography>
-                        <TextField
-                          fullWidth
-                          size="small"
-                          placeholder={field.defaultText || ""}
-                          value={variables[field.name] || ""}
-                          onChange={(e) => handleVariableChange(field.name, e.target.value)}
-                        />
-                      </Box>
-                    );
-                })}
               </React.Fragment>
-            ))}
-            <Box sx={{display: "flex", flexDirection: "column", gap: 3, alignItems: "center"}}>
-              <Button
-                variant="contained"
-                // disabled={!isMediaSaved}
-                sx={{ mt: 3, padding: 0,}}
-                // onClick={handleVideoSendWithTemplate}
-                onClick={handleSendAllMediaAndCreateVideo}
-              >
-                Envoyer les données
-              </Button>
-              {modalVideoGenere && 
-                (
-                  <Box>
-                    <CircularProgress disableShrink sx={{marginBottom: "10px"}}/>
-                    <SendDataToServer />
-                  </Box>
-                )
-              }                
             </Box>
-          </Grid>
+          ))}
+          <Box sx={{display: "flex", flexDirection: "column", gap: 3, alignItems: "center"}}>
+            <Button
+              variant="contained"
+              // disabled={!isMediaSaved}
+              sx={{ mt: 3, padding: 0,}}
+              // onClick={handleVideoSendWithTemplate}
+              onClick={handleSendAllMediaAndCreateVideo}
+            >
+              Envoyer les données
+            </Button>
+            {modalVideoGenere && 
+              (
+                <Box>
+                  <CircularProgress disableShrink sx={{marginBottom: "10px"}}/>
+                  <SendDataToServer />
+                </Box>
+              )
+            }                
+          </Box>
+        </Grid>
         ////////////////
         ////////////////
         ////////////////
