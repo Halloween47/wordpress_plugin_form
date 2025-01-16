@@ -1016,16 +1016,68 @@ const Tooltip = ({ text, children }) => {
         })}>
                   Créer votre vidéo
                 </Typography>
+                {/* Tooltip pour mobile */}
+                <Box
+                  sx={{
+                    display: { xs: "block", sm: "none" },
+                    position: "relative",
+                    cursor: "pointer",
+                  }}
+                  onMouseEnter={(e) => {
+                    const tooltip = e.currentTarget.querySelector(".tooltip");
+                    if (tooltip) tooltip.style.opacity = "1";
+                  }}
+                  onMouseLeave={(e) => {
+                    const tooltip = e.currentTarget.querySelector(".tooltip");
+                    if (tooltip) tooltip.style.opacity = "0";
+                  }}
+                >
+                  <Box
+                    sx={{
+                      // bgcolor: "text.disabled",
+                      // color: "background.paper",
+                      // bgcolor: "text.disabled",
+                      color: "black",
+                      // p: 2,
+                      borderRadius: "8px",
+                    }}
+                  >
+                    ?
+                  </Box>
+                  <Box
+                    className="tooltip"
+                    sx={{
+                      position: "absolute",
+                      bottom: "110%",
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                      bgcolor: "black",
+                      color: "white",
+                      p: 1,
+                      borderRadius: "4px",
+                      // whiteSpace: "nowrap",
+                      opacity: "0",
+                      transition: "opacity 0.3s ease",
+                      pointerEvents: "none",
+                      zIndex: 10,
+                      // width: '500px',
+                      width: '20rem',
+                    }}
+                  >
+                    Grâce aux modèles Memenza, <br/>créez une vidéo associée à votre produit <br/>(accessible via le QR Code). <br/>Vous pouvez aussi directement télécharger une vidéo d’une minute de votre choix <br/>(créée par exemple avec Capcut). <br/>La vidéo doit-être en 16/9ème format Paysage, 50Mo maximum.
+                  </Box>
+                </Box>
                 <Typography variant="body1" color="textPrimary"  sx={(theme) => ({
-          pr: 3,
-          fontSize: {
-            xs: '0.875rem', // petite taille d'écran
-            sm: '1rem',     // taille intermédiaire
-            md: '1.125rem', // écran moyen
-            lg: '1.5rem',  // grand écran
-          },
-        })}>
-                  Grâce aux modèles Memenza, créez une vidéo associée à votre produit (accessible via le QR Code). Vous pouvez aussi directement télécharger  une vidéo d’une minute de votre choix (créée par exemple avec Capcut). La vidéo doit-être en 16/9ème format Paysage, 50Mo maximum.
+                  pr: 3,
+                  fontSize: {
+                    xs: '0.875rem', // petite taille d'écran
+                    sm: '1rem',     // taille intermédiaire
+                    md: '1.125rem', // écran moyen
+                    lg: '1.5rem',  // grand écran
+                  },
+                  display: { xs: "none", sm: "block" },
+                })}>
+                  Grâce aux modèles Memenza, créez une vidéo associée à votre produit (accessible via le QR Code). Vous pouvez aussi directement télécharger une vidéo d’une minute de votre choix (créée par exemple avec Capcut). La vidéo doit-être en 16/9ème format Paysage, 50Mo maximum.
                 </Typography>
               </Box>
             </Box>
