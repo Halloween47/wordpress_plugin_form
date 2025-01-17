@@ -692,7 +692,7 @@
  */
 
 // [01] IMPORTS : "CTRL+F IMPORTS"
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import {
   Box,
   Grid,
@@ -847,6 +847,7 @@ const EtapeVisuel = ({ activeStep, setActiveStep }) => {
   const [error, setError] = useState(null);
   const [isFocused, setIsFocused] = useState(false); 
   const [loadingImage, setLoadingImage] = useState(false); 
+  const parametresContainerRef = useRef(null);
   const [formData, setFormData] = useState({
     text1: '',
     text2: '',
@@ -1558,6 +1559,26 @@ if (!imagesVisuels.length) {
   )
 }
 
+// Fonction pour scroller vers les parametres
+// const scrollToPrametres = () => {
+//   if (parametresContainerRef.current) {
+//     parametresContainerRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+//   }
+// };
+const scrollToPrametres = () => { 
+  if (parametresContainerRef.current) {
+    // Scroller jusqu'au conteneur après un court délai
+    setTimeout(() => {
+      parametresContainerRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 300); // Délai de 300 ms (ajustez selon vos besoins)
+  }
+
+  // Scroller tout en haut de la page après un délai supplémentaire
+  setTimeout(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, 600); // Délai total avant de scroller en haut (ajustez selon vos besoins)
+};
+
 // [08] RENDU FINAL : "CTRL+F RENDU FINAL"
 return (
   <Box sx={{ textAlign: "center", bgcolor: "#f5f5f5" }}>
@@ -1685,94 +1706,98 @@ return (
           key={item.id_modele_cadre}
           item={item}
           isSelected={visuelIdVignetteSelectionner === item.id_modele_cadre}
-          onClick={() => affichageChampsParametrages(item.id_modele_cadre)}
+          onClick={() => {
+            affichageChampsParametrages(item.id_modele_cadre);
+            scrollToPrametres();
+          } 
+        }
         />
       ))}
     </Grid>
+    <Box  ref={parametresContainerRef}>
+      {visuelIdVignetteSelectionner && (
+        <Box
+          component="form"
+          // onSubmit={creationDuVisuelAvecTemplate}
+          // onSubmit={creationDuVisuelAvecTemplate2}
+          onSubmit={creationDuVisuelAvecTemplate3}
+          encType="multipart/form-data"
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: 2,
+            maxWidth: 400,
+            margin: "auto",
+            mt: "100px",
+          }}
+        >
+          <Typography variant="h6">Générer une image</Typography>
+          {error && <Typography color="error">{error}</Typography>}
 
-    {visuelIdVignetteSelectionner && (
-      <Box
-        component="form"
-        // onSubmit={creationDuVisuelAvecTemplate}
-        // onSubmit={creationDuVisuelAvecTemplate2}
-        onSubmit={creationDuVisuelAvecTemplate3}
-        encType="multipart/form-data"
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: 2,
-          maxWidth: 400,
-          margin: "auto",
-          mt: "100px",
-        }}
-      >
-        <Typography variant="h6">Générer une image</Typography>
-        {error && <Typography color="error">{error}</Typography>}
-
-        {textesCadres.fields.map((field, index) =>
-          field.customizable ? (
-            <TextField
-            key={field.name}
-              // label={isFocused ? "max. 17 caractères" : formData[`text${index + 1}`]}
-              label={isFocused ? "max."+`${field.length}` + " caractères" : formData[`text${index + 1}`]}
-              onFocus={handleFocus}
-              onBlur={handleBlur}
-              name={`text${index + 1}`}
-              onChange={alimenterLeTabDataAvecLeContenuDesChamps}
-              inputProps={{ maxLength: field.length || 17 }}
-              required
-              sx={{ paddingTop: 1.2, marginBottom: 1.2 }}
-              InputLabelProps={{
-                sx: {
-                  paddingTop: 1.2,
-                  marginBottom: 1,
-                  "&.MuiInputLabel-shrink": {
-                    transform: "translate(0, -16px) scale(0.75)",
-                  },
-                },
-              }}
-            />
-          ) : null
-        )}
-
-        <Box>
-          {/* {visuelsCadres.imageFields.map((field, key) => */}
-          {visuelsCadres.imageFields.map((field, index) =>
+          {textesCadres.fields.map((field, index) =>
             field.customizable ? (
-              <Box>
-                <Button startIcon={<CloudUploadIcon />} component="label" variant="contained" sx={buttonStyles} key={field.name} onClick={() => setLoadingImage(false)}>
-                  Envoyer mon image
-                  <input
-                    name={field.name}
-                    type="file"
-                    hidden
-                    accept="image/*"
-                    onChange={(e) => envoiVisuelPerso(e)}
-                    />
-                </Button>
-                {loadingImage && (
-                  <Box>
-                    <LoadingUpload onSuccess={creationDuVisuelAvecTemplate3} /> 
-                  </Box>
-                )}
-              </Box>
+              <TextField
+              key={field.name}
+                // label={isFocused ? "max. 17 caractères" : formData[`text${index + 1}`]}
+                label={isFocused ? "max."+`${field.length}` + " caractères" : formData[`text${index + 1}`]}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
+                name={`text${index + 1}`}
+                onChange={alimenterLeTabDataAvecLeContenuDesChamps}
+                inputProps={{ maxLength: field.length || 17 }}
+                required
+                sx={{ paddingTop: 1.2, marginBottom: 1.2 }}
+                InputLabelProps={{
+                  sx: {
+                    paddingTop: 1.2,
+                    marginBottom: 1,
+                    "&.MuiInputLabel-shrink": {
+                      transform: "translate(0, -16px) scale(0.75)",
+                    },
+                  },
+                }}
+              />
             ) : null
           )}
-        </Box>
 
-        <Button type="success" variant="contained" sx={buttonStyles}>
-          Prévisualiser votre cadre
-        </Button>
-
-        {visuelGeneratedImageUrl && (
-          <Box sx={{ mt: 2 }}>
-            <CardMedia component="img" image={visuelGeneratedImageUrl} alt="Image générée" />
+          <Box>
+            {/* {visuelsCadres.imageFields.map((field, key) => */}
+            {visuelsCadres.imageFields.map((field, index) =>
+              field.customizable ? (
+                <Box>
+                  <Button startIcon={<CloudUploadIcon />} component="label" variant="contained" sx={buttonStyles} key={field.name} onClick={() => setLoadingImage(false)}>
+                    Envoyer mon image
+                    <input
+                      name={field.name}
+                      type="file"
+                      hidden
+                      accept="image/*"
+                      onChange={(e) => envoiVisuelPerso(e)}
+                      />
+                  </Button>
+                  {loadingImage && (
+                    <Box>
+                      <LoadingUpload onSuccess={creationDuVisuelAvecTemplate3} /> 
+                    </Box>
+                  )}
+                </Box>
+              ) : null
+            )}
           </Box>
-        )}
-      </Box>
-    )}
 
+          <Button type="success" variant="contained" sx={buttonStyles}>
+            Prévisualiser votre cadre
+          </Button>
+
+          {visuelGeneratedImageUrl && (
+            <Box sx={{ mt: 2 }}>
+              <CardMedia component="img" image={visuelGeneratedImageUrl} alt="Image générée" />
+            </Box>
+          )}
+        </Box>
+      )}
+    </Box>
     <Box sx={{ display: "flex", justifyContent: "space-between", mt: 2 }}>
       <Button
         disabled={activeStep === 0}
