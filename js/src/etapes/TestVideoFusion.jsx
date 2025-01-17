@@ -1317,6 +1317,14 @@ const scrollToPrametres = () => {
           //   </Grid>
           // </Grid>
           <Grid container spacing={2} sx={{ mt: 2, p: 5, bgcolor: '#e8dee8', width: "100%",height: 'auto', display: 'flex', flexDirection: 'column', }}>
+            <Box item xs={6} sx={{display: 'flex', justifyContent: 'center', width: '100%', }}>
+              <Box
+                component="video"
+                src={currentVideoSrc}
+                controls
+                sx={{ width: "50%", height: "100%", objectFit: "contain" }}
+              />
+            </Box>
             <Typography variant="h6">Paramétrage du Template</Typography>
             <Typography variant="subtitle1">Une fois le modèle configuré, il est possible de modifier tous les textes et images (les photos étant au format paysage), ou bien de les laisser tels quels, selon vos envies.</Typography>          
             {sceneKeys.map((sceneKey) => (
