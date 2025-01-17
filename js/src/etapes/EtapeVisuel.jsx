@@ -1725,7 +1725,7 @@ return (
       </Typography>
     </Box>
 
-    <Grid container spacing={3} justifyContent="center">
+    <Grid container spacing={3} justifyContent="center" sx={{mb: 4}}>
       {tableauFiltrePourVignette.map((item, index) => (
         <VisuelCard
           key={item.id_modele_cadre}
@@ -1755,6 +1755,7 @@ return (
             maxWidth: 400,
             margin: "auto",
             mt: "100px",
+            mb: "100px",
           }}
         >
           <Typography variant="h6">Générer une image</Typography>
@@ -1823,11 +1824,11 @@ return (
         </Box>
       )}
     </Box>
-    <Box sx={{ display: "flex", justifyContent: "space-between", mt: 2 }}>
+    <Box sx={{width:{xs:"100%"}, display: "flex", justifyContent: "space-between",alignItems: "center", backgroundColor:{ xs: "grey", sm:"transparent" }, zIndex: {xs: 2}, position: {xs: "fixed", sm: "relative"},left:{xs: 0}, bottom: {xs: 0}, p: {xs: 0},m:{xs:"0 !important", sm: "1 !important" },}}>
       <Button
         disabled={activeStep === 0}
         onClick={handleBack}
-        sx={{ mr: 1 }}
+        sx={{ margin:{xs:"0 !important", sm: "0 !important"}, px: {xs: "35px !important", sm: "35px !important"}, }}
       >
         Retour
       </Button>
@@ -1843,7 +1844,7 @@ return (
             variant="contained"
             // disabled={!previsuOwnVisu && !generatedImageUrl}
             onClick={handleNext}
-            sx={{ mt: 4, mr: "1rem" }}
+            sx={{  m: "0 !important" }}
           >
             Suivant
           </Button>

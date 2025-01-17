@@ -140,9 +140,9 @@ const App = () => {
           {getStepContent(activeStep)}
 
           <React.Fragment>
-            <Typography sx={{ mt: 2, mb: 1 }}>
+            {/* <Typography sx={{ mt: 2, mb: 1 }}>
               Etape {activeStep + 1}
-            </Typography>
+            </Typography> */}
             <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
               {/* {activeStep > 0 && (
                 <Button
