@@ -718,25 +718,24 @@ const StyleEtapeVisuel = `
 .etape-visuel-intro {
     display: flex;
     align-items: center;
-    gap: 20px;
+    // gap: 20px;
     margin-bottom: 50px;
     background-color: #fff;
-    padding: 20px;
+    // padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }  
-     .etape-visuel-intro-txt {
-//     // background-color: green;
-     width: 100%;
-     color: #333;
-     font-size: 16px;
-     display: flex;
-     flex-direction: column;
-     justify-content: center;
-     align-items: flex-start;
-     text-align: left;
-     padding : 0px !important;
-   }
+  //    .etape-visuel-intro-txt {
+  //    width: 100%;
+  //    color: #333;
+  //    font-size: 16px;
+  //    display: flex;
+  //    flex-direction: column;
+  //    justify-content: center;
+  //    align-items: flex-start;
+  //    text-align: left;
+  //    padding : 0px !important;
+  //  }
 
   .selected-card {
     position: relative;
@@ -769,6 +768,16 @@ const StyleEtapeVisuel = `
       font-size: 2rem;
       z-index: 3;
     }
+
+    @media (max-width: 600px) {
+      .etape-visuel-intro-txt {
+        background-color: orange;
+        display: flex;
+        flex-direction: column !important;
+        align-items: center !important;
+      }
+    }
+
   }
 `;
 
@@ -1582,22 +1591,37 @@ const scrollToPrametres = () => {
 // [08] RENDU FINAL : "CTRL+F RENDU FINAL"
 return (
   <Box sx={{ textAlign: "center", bgcolor: "#f5f5f5" }}>
-    <Box className="etape-visuel-intro">
-      <Box className="etape-visuel-intro-img">
+    <Box className="etape-visuel-intro" sx={{width: {xs: "100%"}, height:{xs: "30vh", sm: "50%",}, flexDirection: { xs: "column", sm: "row" }, mt:{xs: "50px"}, p: {xs: "0px"}}}>
+      <Box className="etape-visuel-intro-img" sx={{height: {xs: "70%"}, position: {xs: "relative"},}}>
         <img
           src="https://memenza.fr/visuels/personnaliser.png"
           alt="Visuel personnalisé"
           style={{
             // width: "100px",
             // height: "100px",
-            width: "200px",
-            height: "200px",
+            // width: "200px",
+            width: {xs: "100%", sm: "200px"},
+            // height: "200px",
+            height: {xs: "100%", sm: "200px"},
             borderRadius: "8px",
             objectFit: "cover",
           }}
         />
       </Box>
-      <Box className="etape-visuel-intro-txt" sx={{ p: 3 }}>
+      {/* <Box className="etape-visuel-intro-txt" sx={{ p: 3, display: "flex", flexDirection: {xs : "column", sm: "column",}, alignItems: {xs: "center",sm: "center", } }}> */}
+      <Box className="etape-visuel-intro-txt" 
+        sx={{ 
+          pt: 3, 
+          p: {sm: 3},
+          backgroundColor: {xs: "white", sm: "transparent"}, 
+          width: {xs: "100%"},
+          height: {xs: "30%"},
+          display: "flex", 
+          flexDirection: {xs: "column", sm: "column"}, 
+          alignItems:{xs: "center", sm: "flex-start", }, 
+          zIndex: {xs: 2},
+        }}
+      >
         <Box sx={{display: "flex"}}>
           <Typography
             variant="h4"
@@ -1664,9 +1688,10 @@ return (
           variant="body1"
           color="textPrimary"
           sx={{
-            pr: 3,
             fontSize: { xs: '0.875rem', sm: '1rem', md: '1.125rem', lg: '1.5rem' },
-            display: { xs: "none", sm: "block" },
+            display: { xs: "none", sm: "flex" },
+            justifyContent: {sm: "flex-start"},
+            textAlign: "left"
           }}
         >
           Vous pouvez utiliser les modèles Memenza ou directement télécharger votre visuel (créé par exemple avec Canva). La taille d’image attendue est de 1086x1086px.
