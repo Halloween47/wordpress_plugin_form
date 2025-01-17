@@ -160,6 +160,7 @@ const Tooltip = ({ text, children }) => {
   const [fileCounter, setFileCounter] = React.useState(1);
   const [idJ2V, setIdJ2V] = React.useState(1);
   const videoRefs = useRef([]);
+  const parametresContainerRef = useRef(null);
   //////////////////////
   //////////////////////
   const [uploadedImages, setUploadedImages] = useState({});
@@ -210,7 +211,11 @@ const Tooltip = ({ text, children }) => {
     fetchData();
   }, []);
   if (!imagesVideosFiltered.length) {
-      return <Typography>Chargement des templates...</Typography>;
+      return (
+        <Box sx={{width: '100%', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', mt: 5}}>
+          <Typography variant="h6">Chargement des templates..</Typography>
+        </Box>
+      )
     }
 
   const handleVariableChange = (key, value) => {
@@ -782,6 +787,14 @@ const Tooltip = ({ text, children }) => {
     setOpenModal(true);
     setCurrentVideoSrc(srcVid);
     setNomTemplate(nomVid);
+
+  //   // Ajouter un délai avant d'exécuter les actions principales
+  //   setTimeout(() => {
+  //     // Ouvrir la modale et mettre à jour les informations du modèle
+  //     setOpenModal(true);
+  //     setCurrentVideoSrc(srcVid);
+  //     setNomTemplate(nomVid);
+  // }, 300); // Délai de 300 ms (ajustez selon vos besoins)
   
     // Filtrer les visuels par le nom du modèle sélectionné
     const imagesVideosFilteredParNomTemplate = visuelsVideos.filter(
@@ -1007,8 +1020,30 @@ const Tooltip = ({ text, children }) => {
   const sceneKeys = [...new Set([...tabParseMediasVideo, ...tabParseTextesVideo]
     .map(field => field.name.match(/^s(\d+)/)?.[1]))]; // Extraire les numéros de scène uniques
 
+// Fonction pour scroller vers les parametres
+// const scrollToPrametres = () => {
+//   if (parametresContainerRef.current) {
+//     parametresContainerRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+//   }
+// };
+
+const scrollToPrametres = () => { 
+  if (parametresContainerRef.current) {
+    // Scroller jusqu'au conteneur après un court délai
+    setTimeout(() => {
+      parametresContainerRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 300); // Délai de 300 ms (ajustez selon vos besoins)
+  }
+
+  // Scroller tout en haut de la page après un délai supplémentaire
+  setTimeout(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, 600); // Délai total avant de scroller en haut (ajustez selon vos besoins)
+};
+
+
   return (
-    <Box sx={{ textAlign: "center", p: 4, position: "relative" }}>
+    <Box sx={{ textAlign: "center", p: 4, position: "relative", height: 'auto' }}>
       <Box className="etape-video-intro">
               <Box className="etape-video-intro-img">
                 <img
@@ -1123,7 +1158,11 @@ const Tooltip = ({ text, children }) => {
           xs={12}
           sm={6}
           md={4}
-          onClick={() => handleChoixModele2(src.chemin_video_ex, src.nom_modele_video)}
+          onClick={() => {
+            scrollToPrametres();
+            handleChoixModele2(src.chemin_video_ex, src.nom_modele_video);
+          }
+          }
           sx={{ textAlign: "center", cursor: "pointer" }}
           >
             <Typography sx={{ mb: 1 }}>{src.nom_modele_video || "Modèle inconnu"}</Typography>
@@ -1166,326 +1205,332 @@ const Tooltip = ({ text, children }) => {
         ))}
       </Grid>
 
-      {openModal && (
-        //////////////////
-        //////////////////
-        //////////////////
-        // <Grid container spacing={2} sx={{ mt: 4 }}>
-        //   <Grid container spacing={2} sx={{ mt: 4 }}>
-        //     <Grid item xs={6}>
-        //       <Box
-        //         component="video"
-        //         src={currentVideoSrc}
-        //         controls
-        //         sx={{ width: "100%", height: "100%", objectFit: "contain" }}
-        //       />
-        //     </Grid>
-        //     <Grid item xs={6}>
-        //       <Box sx={{ overflowY: "auto", maxHeight: "60vh" }}>
-        //         <Typography variant="h6">Paramétrage du Template</Typography>
-        //         <Typography variant="subtitle1">Une fois le modèle configuré, il est possible de modifier tous les textes et images (les photos étant au format paysage), ou bien de les laisser tels quels, selon vos envies.</Typography>
+      <Box ref={parametresContainerRef} >
+        {openModal && (
+          //////////////////
+          //////////////////
+          //////////////////
+          // <Grid container spacing={2} sx={{ mt: 4 }}>
+          //   <Grid container spacing={2} sx={{ mt: 4 }}>
+          //     <Grid item xs={6}>
+          //       <Box
+          //         component="video"
+          //         src={currentVideoSrc}
+          //         controls
+          //         sx={{ width: "100%", height: "100%", objectFit: "contain" }}
+          //       />
+          //     </Grid>
+          //     <Grid item xs={6}>
+          //       <Box sx={{ overflowY: "auto", maxHeight: "60vh" }}>
+          //         <Typography variant="h6">Paramétrage du Template</Typography>
+          //         <Typography variant="subtitle1">Une fois le modèle configuré, il est possible de modifier tous les textes et images (les photos étant au format paysage), ou bien de les laisser tels quels, selon vos envies.</Typography>
 
-        //         {tabParseTextesVideo.map((field, index) => {
-        //           // Expression régulière pour extraire uniquement le numéro
-        //           const match = field.name.match(/^[Ss](\d+)-/); 
-        //           const dynamicLabel = match ? `Texte ${match[1]}` : field.name;
-                  
-        //           return (
-        //             <Box key={index} sx={{ mt: 2 }}>
-        //               <Typography>{dynamicLabel}</Typography>
-        //               <TextField
-        //                 fullWidth
-        //                 size="small"
-        //                 placeholder={field.defaultText || ""}
-        //                 value={variables[field.name] || ""}
-        //                 onChange={(e) => handleVariableChange(field.name, e.target.value)}
-        //               />
-        //             </Box>
-        //           );
-        //         })}
+          //         {tabParseTextesVideo.map((field, index) => {
+          //           // Expression régulière pour extraire uniquement le numéro
+          //           const match = field.name.match(/^[Ss](\d+)-/); 
+          //           const dynamicLabel = match ? `Texte ${match[1]}` : field.name;
+                    
+          //           return (
+          //             <Box key={index} sx={{ mt: 2 }}>
+          //               <Typography>{dynamicLabel}</Typography>
+          //               <TextField
+          //                 fullWidth
+          //                 size="small"
+          //                 placeholder={field.defaultText || ""}
+          //                 value={variables[field.name] || ""}
+          //                 onChange={(e) => handleVariableChange(field.name, e.target.value)}
+          //               />
+          //             </Box>
+          //           );
+          //         })}
 
-        //         <Typography variant="h6" sx={{ mt: 4 }}>
-        //           Paramétrage des Médias
-        //         </Typography>
-        //         {tabParseMediasVideo.map((field, index) => {
-        //           const match = field.name.match(/^s\d+-img(\d+)$/);
-        //           const dynamicLabel = match ? `Media ${match[1]}` : field.name;
-        //           if (field.customizable === true) {                 
-        //             const currentMediaIndex = nameMediaCounter++;
-        //             return (
-        //               <Box
-        //                 key={index}
-        //                 sx={{ 
-        //                   mt: 2, 
-        //                   display: "flex", 
-        //                   justifyContent: "center", 
-        //                   alignItems: "center", 
-        //                   width: "100%"
-        //                 }}
-        //                 >
-        //                   {/* Label dynamique pour le champ média */}
-        //                   <Typography sx={{ mr: "30px" }}>Media {currentMediaIndex}</Typography>
+          //         <Typography variant="h6" sx={{ mt: 4 }}>
+          //           Paramétrage des Médias
+          //         </Typography>
+          //         {tabParseMediasVideo.map((field, index) => {
+          //           const match = field.name.match(/^s\d+-img(\d+)$/);
+          //           const dynamicLabel = match ? `Media ${match[1]}` : field.name;
+          //           if (field.customizable === true) {                 
+          //             const currentMediaIndex = nameMediaCounter++;
+          //             return (
+          //               <Box
+          //                 key={index}
+          //                 sx={{ 
+          //                   mt: 2, 
+          //                   display: "flex", 
+          //                   justifyContent: "center", 
+          //                   alignItems: "center", 
+          //                   width: "100%"
+          //                 }}
+          //                 >
+          //                   {/* Label dynamique pour le champ média */}
+          //                   <Typography sx={{ mr: "30px" }}>Media {currentMediaIndex}</Typography>
 
-        //                     {/* Bouton pour importer un média */}
-        //                     <Button component="label" variant="contained" sx={{ mr: "10px" }}>
-        //                       Importer votre média
-        //                       <input
-        //                         type="file"
-        //                         hidden
-        //                         accept={field.type === "image" ? "image/*" : field.type === "video" ? "video/*" : "*/*"}
-        //                         // onChange={(e) => handleFileUpload(e, field.name)}
-        //                         // onChange={(e) => handleFileUpload2(e, field.name)}
-        //                         onChange={(e) => handleFileUpload3(e, field.name)}
-        //                       />
-        //                     </Button>
-        //                     {checkedFields[field.name] && (
-        //                       <CheckCircleRoundedIcon sx={{ color: 'green' }} />
-        //                     )}
+          //                     {/* Bouton pour importer un média */}
+          //                     <Button component="label" variant="contained" sx={{ mr: "10px" }}>
+          //                       Importer votre média
+          //                       <input
+          //                         type="file"
+          //                         hidden
+          //                         accept={field.type === "image" ? "image/*" : field.type === "video" ? "video/*" : "*/*"}
+          //                         // onChange={(e) => handleFileUpload(e, field.name)}
+          //                         // onChange={(e) => handleFileUpload2(e, field.name)}
+          //                         onChange={(e) => handleFileUpload3(e, field.name)}
+          //                       />
+          //                     </Button>
+          //                     {checkedFields[field.name] && (
+          //                       <CheckCircleRoundedIcon sx={{ color: 'green' }} />
+          //                     )}
 
-        //                     {/* Tooltip avec informations supplémentaires */}
-        //                     <div style={{ padding: "10px" }}>
-        //                       <Tooltip text={field.comment}>
-        //           <InfoIcon sx={{ color: "black" }} />
-        //                       </Tooltip>
-        //                     </div>
-        //                   </Box>
-        //             )}
-        //           })}
-        //         <Box sx={{display: "flex", flexDirection: "column", gap: 3, alignItems: "center"}}>
-        //         <Button
-        //           variant="contained"
-        //           // disabled={!isMediaSaved}
-        //           sx={{ 
-        //             mt: 3,
-        //             padding: 0, 
-        //           }}
-        //           onClick={handleSendAllMediaAndCreateVideo}
-        //         >
-        //           Envoyer les données
-        //         </Button>
-        //         {modalVideoGenere && 
-        //         (
-        //           <Box>
-        //             <CircularProgress disableShrink sx={{marginBottom: "10px"}}/>
-        //             <SendDataToServer />
-        //           </Box>
-        //         )
-        //         }
-        //         </Box>
-        //       </Box>
-        //     </Grid>
-        //   </Grid>
-        // </Grid>
-        <Grid container spacing={2} sx={{ m: 2, p: 5, bgcolor: '#e8dee8', width: "100%", display: 'flex', flexDirection: 'column', }}>
-          <Typography variant="h6">Paramétrage du Template</Typography>
-          <Typography variant="subtitle1">Une fois le modèle configuré, il est possible de modifier tous les textes et images (les photos étant au format paysage), ou bien de les laisser tels quels, selon vos envies.</Typography>          
-          {sceneKeys.map((sceneKey) => (
-            <Box sx={{width: '100%', display: 'flex', justifyContent: 'center', mt: 2,}}>
-              <React.Fragment key={sceneKey}>
-              <Box
-  sx={{
-    width: '55%', // Adapte à la largeur totale sur mobile
-    display: 'flex',
-    flexDirection: 'column',
-    px: 2, // Ajoute un padding horizontal
-  }}
->
-  <Box
+          //                     {/* Tooltip avec informations supplémentaires */}
+          //                     <div style={{ padding: "10px" }}>
+          //                       <Tooltip text={field.comment}>
+          //           <InfoIcon sx={{ color: "black" }} />
+          //                       </Tooltip>
+          //                     </div>
+          //                   </Box>
+          //             )}
+          //           })}
+          //         <Box sx={{display: "flex", flexDirection: "column", gap: 3, alignItems: "center"}}>
+          //         <Button
+          //           variant="contained"
+          //           // disabled={!isMediaSaved}
+          //           sx={{ 
+          //             mt: 3,
+          //             padding: 0, 
+          //           }}
+          //           onClick={handleSendAllMediaAndCreateVideo}
+          //         >
+          //           Envoyer les données
+          //         </Button>
+          //         {modalVideoGenere && 
+          //         (
+          //           <Box>
+          //             <CircularProgress disableShrink sx={{marginBottom: "10px"}}/>
+          //             <SendDataToServer />
+          //           </Box>
+          //         )
+          //         }
+          //         </Box>
+          //       </Box>
+          //     </Grid>
+          //   </Grid>
+          // </Grid>
+          <Grid container spacing={2} sx={{ mt: 2, p: 5, bgcolor: '#e8dee8', width: "100%",height: 'auto', display: 'flex', flexDirection: 'column', }}>
+            <Typography variant="h6">Paramétrage du Template</Typography>
+            <Typography variant="subtitle1">Une fois le modèle configuré, il est possible de modifier tous les textes et images (les photos étant au format paysage), ou bien de les laisser tels quels, selon vos envies.</Typography>          
+            {sceneKeys.map((sceneKey) => (
+              <Box sx={{width: '100%', display: 'flex', justifyContent: 'center', mt: 2,}}>
+                <React.Fragment key={sceneKey}>
+                <Box
     sx={{
-      width: '100%',
+      width: '55%', // Adapte à la largeur totale sur mobile
+      width: {xs: '100%', sm: '100%'}, // Adapte à la largeur totale sur mobile
       display: 'flex',
       flexDirection: 'column',
-      alignItems: 'center',
+      px: 2, // Ajoute un padding horizontal
     }}
   >
-    {/* Section pour chaque scène */}
     <Box
       sx={{
         width: '100%',
         display: 'flex',
-        flexDirection: { xs: 'column', sm: 'row' }, // Colonne sur mobile, ligne sur écrans plus grands
-        justifyContent: 'space-between',
-        alignItems: 'flex-start',
+        flexDirection: 'column',
+        // alignItems: 'center',
       }}
     >
-      <Typography variant="h6" sx={{ mt: 1 }}>SCENE {sceneKey}</Typography>
-      <Typography
-        variant="body2"
-        sx={{ mt: 1, textAlign: { xs: 'left', sm: 'right' } }} // Ajuste l'alignement sur mobile
+      {/* Section pour chaque scène */}
+      <Box
+        sx={{
+          // width: '100%',
+          width: {xs: '100%', sm: '100%'},
+          display: 'flex',
+          flexDirection: { xs: 'column', sm: 'row' }, // Colonne sur mobile, ligne sur écrans plus grands
+          justifyContent: 'space-between',
+          alignItems: 'flex-start',
+        }}
       >
-        Cliquez sur l'image pour la modifier ...
-      </Typography>
-    </Box>
+        <Typography variant="h6" sx={{ mt: 1 }}>SCENE {sceneKey}</Typography>
+        <Typography
+          variant="body2"
+          sx={{ mt: 1, textAlign: { xs: 'left', sm: 'right' } }} // Ajuste l'alignement sur mobile
+        >
+          Cliquez sur l'image pour la modifier ...
+        </Typography>
+      </Box>
 
-    {/* Medias pour la scène */}
-    <Grid
-      container
-      spacing={2}
-      sx={{
-        mt: 1,
-        flexWrap: 'wrap', // Permet de gérer plusieurs lignes sur mobile
-      }}
-    >
-      {tabParseMediasVideo
-        .filter((field) =>
-          new RegExp(`^s${sceneKey}`, 'i').test(field.name)
-        )
-        .map((field, index) => {
-          const match = field.name.match(/^s\d+-img(\d+)$/);
-          const dynamicLabel = match ? `Media ${match[1]}` : field.name;
+      {/* Medias pour la scène */}
+      <Grid
+        container
+        spacing={2}
+        sx={{
+          mt: 1,
+          flexWrap: 'wrap', // Permet de gérer plusieurs lignes sur mobile
+          display: 'flex',
+          justifyContent: 'center',
+        }}
+      >
+        {tabParseMediasVideo
+          .filter((field) =>
+            new RegExp(`^s${sceneKey}`, 'i').test(field.name)
+          )
+          .map((field, index) => {
+            const match = field.name.match(/^s\d+-img(\d+)$/);
+            const dynamicLabel = match ? `Media ${match[1]}` : field.name;
 
-          if (field.customizable === true) {
-            return (
-              <Box
-                key={index}
-                sx={{
-                  m: 1,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  width: '100%', // Prend toute la largeur sur mobile
-                  maxWidth: '150px', // Taille maximale pour l'image
-                }}
-              >
-                {/* Label dynamique pour le champ média */}
-                <Typography sx={{ fontSize: '0.9rem' }}>{dynamicLabel}</Typography>
-
-                {/* Image cliquable pour importer un média */}
+            if (field.customizable === true) {
+              return (
                 <Box
-                  component="label"
+                  key={index}
                   sx={{
-                    display: 'inline-block',
-                    cursor: 'pointer',
-                    position: 'relative',
-                    width: '100%',
-                    height: '0',
-                    paddingBottom: '100%', // Assure un ratio 1:1
-                    border: '2px dashed #ccc',
-                    borderRadius: '8px',
-                    overflow: 'hidden',
-                    '&:hover': {
-                      borderColor: 'primary.main',
-                    },
+                    m: 1,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    width: '100%', // Prend toute la largeur sur mobile
+                    maxWidth: '150px', // Taille maximale pour l'image
                   }}
                 >
-                  {/* Image affichée */}
-                  <img
-                    src={
-                      uploadedImages[field.name] ||
-                      `https://memenza.fr/${field.defaultFile}`
-                    }
-                    alt="Importer un média"
-                    style={{
+                  {/* Label dynamique pour le champ média */}
+                  <Typography sx={{ fontSize: '0.9rem' }}>{dynamicLabel}</Typography>
+
+                  {/* Image cliquable pour importer un média */}
+                  <Box
+                    component="label"
+                    sx={{
+                      display: 'inline-block',
+                      cursor: 'pointer',
+                      position: 'relative',
                       width: '100%',
-                      height: '100%',
-                      objectFit: 'cover',
-                      position: 'absolute',
-                      top: 0,
-                      left: 0,
+                      height: '0',
+                      paddingBottom: '100%', // Assure un ratio 1:1
+                      border: '2px dashed #ccc',
+                      borderRadius: '8px',
+                      overflow: 'hidden',
+                      '&:hover': {
+                        borderColor: 'primary.main',
+                      },
                     }}
-                  />
-                  {/* Input file caché */}
-                  <input
-                    type="file"
-                    hidden
-                    accept={
-                      field.type === 'image'
-                        ? 'image/*'
-                        : field.type === 'video'
-                        ? 'video/*'
-                        : '*/*'
-                    }
-                    onChange={(e) => handleFileUpload3(e, field.name)}
-                  />
+                  >
+                    {/* Image affichée */}
+                    <img
+                      src={
+                        uploadedImages[field.name] ||
+                        `https://memenza.fr/${field.defaultFile}`
+                      }
+                      alt="Importer un média"
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                      }}
+                    />
+                    {/* Input file caché */}
+                    <input
+                      type="file"
+                      hidden
+                      accept={
+                        field.type === 'image'
+                          ? 'image/*'
+                          : field.type === 'video'
+                          ? 'video/*'
+                          : '*/*'
+                      }
+                      onChange={(e) => handleFileUpload3(e, field.name)}
+                    />
+                  </Box>
+
+                  {checkedFields[field.name] && (
+                    <CheckCircleRoundedIcon sx={{ color: 'green', mt: 1 }} />
+                  )}
+
+                  {/* Tooltip avec informations supplémentaires */}
+                  <div style={{ padding: '5px' }}>
+                    <Tooltip text={field.comment}>
+                      <InfoIcon sx={{ color: 'black', fontSize: '1rem' }} />
+                    </Tooltip>
+                  </div>
                 </Box>
+              );
+            }
+            return null;
+          })}
+      </Grid>
+    </Box>
 
-                {checkedFields[field.name] && (
-                  <CheckCircleRoundedIcon sx={{ color: 'green', mt: 1 }} />
-                )}
+    {/* Textes pour la scène */}
+    {tabParseTextesVideo
+      .filter((field) =>
+        new RegExp(`^s${sceneKey}`, 'i').test(field.name)
+      )
+      .map((field, index) => {
+        const match = field.name.match(/^[Ss](\d+)-/);
+        const dynamicLabel = match ? `Texte ${match[1]}` : field.name;
 
-                {/* Tooltip avec informations supplémentaires */}
-                <div style={{ padding: '5px' }}>
-                  <Tooltip text={field.comment}>
-                    <InfoIcon sx={{ color: 'black', fontSize: '1rem' }} />
-                  </Tooltip>
-                </div>
-              </Box>
-            );
-          }
-          return null;
-        })}
-    </Grid>
+        return (
+          <Box
+            key={index}
+            sx={{
+              mt: 1,
+              display: 'flex',
+              flexDirection: 'column', // Colonne pour une meilleure lisibilité sur mobile
+              alignItems: 'flex-start',
+              width: '100%',
+            }}
+          >
+            <Typography
+              sx={{
+                mb: 1,
+                fontSize: '0.9rem', // Réduit la taille du texte sur mobile
+              }}
+              variant="h6"
+            >
+              {dynamicLabel}
+            </Typography>
+            <TextField
+              fullWidth // Utilise toute la largeur sur mobile
+              size="small"
+              placeholder={field.defaultText || ''}
+              value={variables[field.name] || ''}
+              onChange={(e) => handleVariableChange(field.name, e.target.value)}
+            />
+          </Box>
+        );
+      })}
   </Box>
 
-  {/* Textes pour la scène */}
-  {tabParseTextesVideo
-    .filter((field) =>
-      new RegExp(`^s${sceneKey}`, 'i').test(field.name)
-    )
-    .map((field, index) => {
-      const match = field.name.match(/^[Ss](\d+)-/);
-      const dynamicLabel = match ? `Texte ${match[1]}` : field.name;
-
-      return (
-        <Box
-          key={index}
-          sx={{
-            mt: 1,
-            display: 'flex',
-            flexDirection: 'column', // Colonne pour une meilleure lisibilité sur mobile
-            alignItems: 'flex-start',
-            width: '100%',
-          }}
-        >
-          <Typography
-            sx={{
-              mb: 1,
-              fontSize: '0.9rem', // Réduit la taille du texte sur mobile
-            }}
-            variant="h6"
-          >
-            {dynamicLabel}
-          </Typography>
-          <TextField
-            fullWidth // Utilise toute la largeur sur mobile
-            size="small"
-            placeholder={field.defaultText || ''}
-            value={variables[field.name] || ''}
-            onChange={(e) => handleVariableChange(field.name, e.target.value)}
-          />
-        </Box>
-      );
-    })}
-</Box>
-
-              </React.Fragment>
+                </React.Fragment>
+              </Box>
+            ))}
+            <Box sx={{display: "flex", flexDirection: "column", gap: 3, alignItems: "center"}}>
+              <Button
+                variant="contained"
+                // disabled={!isMediaSaved}
+                sx={{ mt: 3, padding: 0,}}
+                // onClick={handleVideoSendWithTemplate}
+                onClick={handleSendAllMediaAndCreateVideo}
+              >
+                Envoyer les données
+              </Button>
+              {modalVideoGenere && 
+                (
+                  <Box>
+                    <CircularProgress disableShrink sx={{marginBottom: "10px"}}/>
+                    <SendDataToServer />
+                  </Box>
+                )
+              }                
             </Box>
-          ))}
-          <Box sx={{display: "flex", flexDirection: "column", gap: 3, alignItems: "center"}}>
-            <Button
-              variant="contained"
-              // disabled={!isMediaSaved}
-              sx={{ mt: 3, padding: 0,}}
-              // onClick={handleVideoSendWithTemplate}
-              onClick={handleSendAllMediaAndCreateVideo}
-            >
-              Envoyer les données
-            </Button>
-            {modalVideoGenere && 
-              (
-                <Box>
-                  <CircularProgress disableShrink sx={{marginBottom: "10px"}}/>
-                  <SendDataToServer />
-                </Box>
-              )
-            }                
-          </Box>
-        </Grid>
-        ////////////////
-        ////////////////
-        ////////////////
-      )}
+          </Grid>
+          ////////////////
+          ////////////////
+          ////////////////
+        )}
+      </Box>
       <Button
         disabled={activeStep === 0}
         // disabled={activeStep === 0 || !isGenerate}

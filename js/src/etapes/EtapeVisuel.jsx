@@ -1551,7 +1551,11 @@ const creationDuVisuelAvecTemplate3 = async (e) => {
 
 
 if (!imagesVisuels.length) {
-  return <Typography>Chargement des visuels...</Typography>;
+  return (
+    <Box sx={{width: '100%', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', mt: 5}}>
+      <Typography variant="h6">Chargement des visuels...</Typography>
+    </Box>
+  )
 }
 
 // [08] RENDU FINAL : "CTRL+F RENDU FINAL"
