@@ -791,7 +791,8 @@ const VisuelCard = ({ item, isSelected, onClick }) => (
       sx={{
         transform: 'scale(1.1)',
         transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-        padding: '50px !important',
+        padding: '15px !important',
+        margin: '30px !important',
         '&:hover': {
           transform: 'scale(1.15)',
           boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)',
@@ -1591,7 +1592,7 @@ const scrollToPrametres = () => {
 // [08] RENDU FINAL : "CTRL+F RENDU FINAL"
 return (
   <Box sx={{ textAlign: "center", bgcolor: "#f5f5f5" }}>
-    <Box className="etape-visuel-intro" sx={{width: {xs: "100%"}, height:{xs: "30vh", sm: "50%",}, flexDirection: { xs: "column", sm: "row" }, mt:{xs: "50px"}, p: {xs: "0px"}}}>
+    <Box className="etape-visuel-intro" sx={{width: {xs: "100%"}, height:{xs: "auto", sm: "50%",}, flexDirection: { xs: "column", sm: "row" }, mt:{xs: "50px"}, p: {xs: "0px"}}}>
       <Box className="etape-visuel-intro-img" sx={{height: {xs: "70%"}, position: {xs: "relative"},}}>
         <img
           src="https://memenza.fr/visuels/personnaliser.png"

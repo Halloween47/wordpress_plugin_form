@@ -1150,7 +1150,7 @@ const scrollToPrametres = () => {
       <Divider sx={{ color: "black", opacity: 0.6, margin: "10px" }}>OU</Divider>
 
       <Typography variant="h5">Choisissez votre modèle</Typography>
-      <Grid container spacing={4} justifyContent="center">
+      <Grid container spacing={4} justifyContent="center" sx={{mb: 5}}>
         {imagesVideosFiltered.map((src, index) => (
           <Grid
           item
@@ -1316,17 +1316,23 @@ const scrollToPrametres = () => {
           //     </Grid>
           //   </Grid>
           // </Grid>
-          <Grid container spacing={2} sx={{ mt: 2, p: 5, bgcolor: '#e8dee8', width: "100%",height: 'auto', display: 'flex', flexDirection: 'column', }}>
+          <Grid container sx={{ mt: 2,mb:5, p: { xs:1, sm: 5}, bgcolor: '#e8dee8', width: "100%",height: 'auto', display: 'flex', flexDirection: 'column', }}>
             <Box item xs={6} sx={{display: 'flex', justifyContent: 'center', width: '100%', }}>
               <Box
                 component="video"
                 src={currentVideoSrc}
                 controls
-                sx={{ width: "50%", height: "100%", objectFit: "contain" }}
+                sx={{ width: {xs: "100%", sm: "60%"}, height: "100%", objectFit: "contain", mb: 2 }}
               />
             </Box>
-            <Typography variant="h6">Paramétrage du Template</Typography>
+            <Typography variant="h5">Paramétrage du Template</Typography>
             <Typography variant="subtitle1">Une fois le modèle configuré, il est possible de modifier tous les textes et images (les photos étant au format paysage), ou bien de les laisser tels quels, selon vos envies.</Typography>          
+            <Typography
+              variant="body2"
+              sx={{ mt: 1, textAlign: { xs: 'left', sm: 'center' } }} // Ajuste l'alignement sur mobile
+            >
+              Cliquez sur les images pour les modifier ...
+            </Typography>
             {sceneKeys.map((sceneKey) => (
               <Box sx={{width: '100%', display: 'flex', justifyContent: 'center', mt: 2,}}>
                 <React.Fragment key={sceneKey}>
@@ -1359,12 +1365,12 @@ const scrollToPrametres = () => {
         }}
       >
         <Typography variant="h6" sx={{ mt: 1 }}>SCENE {sceneKey}</Typography>
-        <Typography
+        {/* <Typography
           variant="body2"
           sx={{ mt: 1, textAlign: { xs: 'left', sm: 'right' } }} // Ajuste l'alignement sur mobile
         >
           Cliquez sur l'image pour la modifier ...
-        </Typography>
+        </Typography> */}
       </Box>
 
       {/* Medias pour la scène */}
