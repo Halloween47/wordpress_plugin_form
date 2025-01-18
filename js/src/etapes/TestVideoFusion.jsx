@@ -161,6 +161,7 @@ const Tooltip = ({ text, children }) => {
   const [idJ2V, setIdJ2V] = React.useState(1);
   const videoRefs = useRef([]);
   const parametresContainerRef = useRef(null);
+  const [apparitionScene, setApparitionScene] = useState();
   //////////////////////
   //////////////////////
   const [uploadedImages, setUploadedImages] = useState({});
@@ -1042,6 +1043,7 @@ const scrollToPrametres = () => {
 };
 
 
+
   return (
     <Box sx={{ textAlign: "center", p: 4, position: "relative", height: 'auto' }}>
       <Box className="etape-video-intro">
@@ -1325,201 +1327,194 @@ const scrollToPrametres = () => {
                 sx={{ width: {xs: "100%", sm: "60%"}, height: "100%", objectFit: "contain", mb: 2 }}
               />
             </Box>
-            <Typography variant="h5">Paramétrage du Template</Typography>
+            <Typography variant="h5">Paramétrage de votre vidéo</Typography>
             <Typography variant="subtitle1">Une fois le modèle configuré, il est possible de modifier tous les textes et images (les photos étant au format paysage), ou bien de les laisser tels quels, selon vos envies.</Typography>          
             <Typography
-              variant="body2"
-              sx={{ mt: 1, textAlign: { xs: 'left', sm: 'center' } }} // Ajuste l'alignement sur mobile
+              variant="h6"
+              sx={{ mt: 1, textAlign: { xs: 'left', sm: 'center' }, fontWeight: 'bold' }} // Ajuste l'alignement sur mobile
             >
-              Cliquez sur les images pour les modifier ...
+              Cliquez sur les images pour les modifier
             </Typography>
-            {sceneKeys.map((sceneKey) => (
-              <Box sx={{width: '100%', display: 'flex', justifyContent: 'center', mt: 2,}}>
-                <React.Fragment key={sceneKey}>
-                <Box
-    sx={{
-      width: '55%', // Adapte à la largeur totale sur mobile
-      width: {xs: '100%', sm: '100%'}, // Adapte à la largeur totale sur mobile
-      display: 'flex',
-      flexDirection: 'column',
-      px: 2, // Ajoute un padding horizontal
-    }}
-  >
-    <Box
-      sx={{
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        // alignItems: 'center',
-      }}
-    >
-      {/* Section pour chaque scène */}
-      <Box
-        sx={{
-          // width: '100%',
-          width: {xs: '100%', sm: '100%'},
-          display: 'flex',
-          flexDirection: { xs: 'column', sm: 'row' }, // Colonne sur mobile, ligne sur écrans plus grands
-          justifyContent: 'space-between',
-          alignItems: 'flex-start',
-        }}
-      >
-        <Typography variant="h6" sx={{ mt: 1 }}>SCENE {sceneKey}</Typography>
-        {/* <Typography
-          variant="body2"
-          sx={{ mt: 1, textAlign: { xs: 'left', sm: 'right' } }} // Ajuste l'alignement sur mobile
+            
+            {sceneKeys.map((sceneKey) => {
+  // Filtrer les champs média et texte pour la scène actuelle
+  const mediaFields = tabParseMediasVideo.filter((field) =>
+    new RegExp(`^s${sceneKey}`, 'i').test(field.name)
+  );
+
+  const textFields = tabParseTextesVideo.filter((field) =>
+    new RegExp(`^s${sceneKey}`, 'i').test(field.name)
+  );
+
+  // Vérifier si une image ou un champ texte est présent
+  const hasImage = mediaFields.some((field) => field.customizable && (uploadedImages[field.name] || field.defaultFile));
+  const hasTextField = textFields.length > 0;
+
+  // Ne pas afficher si aucune image et aucun champ texte n'est présent
+  if (!hasImage && !hasTextField) {
+    return null; // Ne pas rendre le contenu
+  }
+
+  return (
+    <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', mt: 2 }}>
+      <React.Fragment key={sceneKey}>
+        <Box
+          sx={{
+            width: '55%',
+            width: { xs: '100%', sm: '100%' },
+            display: 'flex',
+            flexDirection: 'column',
+            px: 2,
+          }}
         >
-          Cliquez sur l'image pour la modifier ...
-        </Typography> */}
-      </Box>
+          {/* Contenu de la scène */}
+          <Box
+            sx={{
+              width: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+            }}
+          >
+            <Box
+              sx={{
+                width: { xs: '100%', sm: '100%' },
+                display: 'flex',
+                flexDirection: { xs: 'column', sm: 'row' },
+                justifyContent: 'space-between',
+                alignItems: 'flex-start',
+              }}
+            >
+              <Typography variant="h6" sx={{ mt: 1 }}>SCENE {sceneKey}</Typography>
+            </Box>
+            <Grid
+              container
+              spacing={2}
+              sx={{
+                mt: 1,
+                flexWrap: 'wrap',
+                display: 'flex',
+                justifyContent: 'center',
+              }}
+            >
+              {mediaFields.map((field, index) => {
+                const match = field.name.match(/^s\d+-img(\d+)$/);
+                const dynamicLabel = match ? `Media ${match[1]}` : field.name;
 
-      {/* Medias pour la scène */}
-      <Grid
-        container
-        spacing={2}
-        sx={{
-          mt: 1,
-          flexWrap: 'wrap', // Permet de gérer plusieurs lignes sur mobile
-          display: 'flex',
-          justifyContent: 'center',
-        }}
-      >
-        {tabParseMediasVideo
-          .filter((field) =>
-            new RegExp(`^s${sceneKey}`, 'i').test(field.name)
-          )
-          .map((field, index) => {
-            const match = field.name.match(/^s\d+-img(\d+)$/);
-            const dynamicLabel = match ? `Media ${match[1]}` : field.name;
+                if (field.customizable === true) {
+                  return (
+                    <Box
+                      key={index}
+                      sx={{
+                        m: 1,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        width: '100%',
+                        maxWidth: '150px',
+                      }}
+                    >
+                      <Typography sx={{ fontSize: '0.9rem' }}>{dynamicLabel}</Typography>
+                      <Box
+                        component="label"
+                        sx={{
+                          display: 'inline-block',
+                          cursor: 'pointer',
+                          position: 'relative',
+                          width: '100%',
+                          height: '0',
+                          paddingBottom: '100%',
+                          border: '2px dashed #ccc',
+                          borderRadius: '8px',
+                          overflow: 'hidden',
+                          '&:hover': {
+                            borderColor: 'primary.main',
+                          },
+                        }}
+                      >
+                        <img
+                          src={
+                            uploadedImages[field.name] || `https://memenza.fr/${field.defaultFile}`
+                          }
+                          alt="Importer un média"
+                          style={{
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover',
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                          }}
+                        />
+                        <input
+                          type="file"
+                          hidden
+                          accept={
+                            field.type === 'image'
+                              ? 'image/*'
+                              : field.type === 'video'
+                              ? 'video/*'
+                              : '*/*'
+                          }
+                          onChange={(e) => handleFileUpload3(e, field.name)}
+                        />
+                      </Box>
+                      {checkedFields[field.name] && (
+                        <CheckCircleRoundedIcon sx={{ color: 'green', mt: 1 }} />
+                      )}
+                      <div style={{ padding: '5px' }}>
+                        <Tooltip text={field.comment}>
+                          <InfoIcon sx={{ color: 'black', fontSize: '1rem' }} />
+                        </Tooltip>
+                      </div>
+                    </Box>
+                  );
+                }
+                return null;
+              })}
+            </Grid>
+            {textFields.map((field, index) => {
+              const match = field.name.match(/^[Ss](\d+)-/);
+              const dynamicLabel = match ? `Texte ${match[1]}` : field.name;
 
-            if (field.customizable === true) {
               return (
                 <Box
                   key={index}
                   sx={{
-                    m: 1,
+                    mt: 1,
                     display: 'flex',
                     flexDirection: 'column',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    width: '100%', // Prend toute la largeur sur mobile
-                    maxWidth: '150px', // Taille maximale pour l'image
+                    alignItems: 'flex-start',
+                    width: '100%',
                   }}
                 >
-                  {/* Label dynamique pour le champ média */}
-                  <Typography sx={{ fontSize: '0.9rem' }}>{dynamicLabel}</Typography>
-
-                  {/* Image cliquable pour importer un média */}
-                  <Box
-                    component="label"
+                  <Typography
                     sx={{
-                      display: 'inline-block',
-                      cursor: 'pointer',
-                      position: 'relative',
-                      width: '100%',
-                      height: '0',
-                      paddingBottom: '100%', // Assure un ratio 1:1
-                      border: '2px dashed #ccc',
-                      borderRadius: '8px',
-                      overflow: 'hidden',
-                      '&:hover': {
-                        borderColor: 'primary.main',
-                      },
+                      mb: 1,
+                      fontSize: '0.9rem',
                     }}
+                    variant="h6"
                   >
-                    {/* Image affichée */}
-                    <img
-                      src={
-                        uploadedImages[field.name] ||
-                        `https://memenza.fr/${field.defaultFile}`
-                      }
-                      alt="Importer un média"
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
-                        position: 'absolute',
-                        top: 0,
-                        left: 0,
-                      }}
-                    />
-                    {/* Input file caché */}
-                    <input
-                      type="file"
-                      hidden
-                      accept={
-                        field.type === 'image'
-                          ? 'image/*'
-                          : field.type === 'video'
-                          ? 'video/*'
-                          : '*/*'
-                      }
-                      onChange={(e) => handleFileUpload3(e, field.name)}
-                    />
-                  </Box>
-
-                  {checkedFields[field.name] && (
-                    <CheckCircleRoundedIcon sx={{ color: 'green', mt: 1 }} />
-                  )}
-
-                  {/* Tooltip avec informations supplémentaires */}
-                  <div style={{ padding: '5px' }}>
-                    <Tooltip text={field.comment}>
-                      <InfoIcon sx={{ color: 'black', fontSize: '1rem' }} />
-                    </Tooltip>
-                  </div>
+                    {dynamicLabel}
+                  </Typography>
+                  <TextField
+                    fullWidth
+                    size="small"
+                    placeholder={field.defaultText || ''}
+                    value={variables[field.name] || ''}
+                    onChange={(e) => handleVariableChange(field.name, e.target.value)}
+                  />
                 </Box>
               );
-            }
-            return null;
-          })}
-      </Grid>
-    </Box>
-
-    {/* Textes pour la scène */}
-    {tabParseTextesVideo
-      .filter((field) =>
-        new RegExp(`^s${sceneKey}`, 'i').test(field.name)
-      )
-      .map((field, index) => {
-        const match = field.name.match(/^[Ss](\d+)-/);
-        const dynamicLabel = match ? `Texte ${match[1]}` : field.name;
-
-        return (
-          <Box
-            key={index}
-            sx={{
-              mt: 1,
-              display: 'flex',
-              flexDirection: 'column', // Colonne pour une meilleure lisibilité sur mobile
-              alignItems: 'flex-start',
-              width: '100%',
-            }}
-          >
-            <Typography
-              sx={{
-                mb: 1,
-                fontSize: '0.9rem', // Réduit la taille du texte sur mobile
-              }}
-              variant="h6"
-            >
-              {dynamicLabel}
-            </Typography>
-            <TextField
-              fullWidth // Utilise toute la largeur sur mobile
-              size="small"
-              placeholder={field.defaultText || ''}
-              value={variables[field.name] || ''}
-              onChange={(e) => handleVariableChange(field.name, e.target.value)}
-            />
+            })}
           </Box>
-        );
-      })}
-  </Box>
+        </Box>
+      </React.Fragment>
+    </Box>
+  );
+})}
 
-                </React.Fragment>
-              </Box>
-            ))}
+
             <Box sx={{display: "flex", flexDirection: "column", gap: 3, alignItems: "center"}}>
               <Button
                 variant="contained"
