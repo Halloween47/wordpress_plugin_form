@@ -383,6 +383,9 @@ console.log("IDPRODUIT : " + productId);
             <Typography variant="h5" color="error">
               Une erreur est survenue !
             </Typography>
+            <Typography variant="h6" color="error">
+              Merci de vérifier que vos medias soit bien en format paysag et que le media ne soit pas une vidéo.
+            </Typography>
             <Button
               variant="contained"
               color="primary"

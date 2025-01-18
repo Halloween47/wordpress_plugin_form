@@ -341,6 +341,7 @@ const Tooltip = ({ text, children }) => {
   
     if (file) {
       setCheck(true);
+      setIsMediaSaved(true)
     }
   
     setMediaFiles((prevFiles) => {
@@ -1518,7 +1519,7 @@ const scrollToPrametres = () => {
             <Box sx={{display: "flex", flexDirection: "column", gap: 3, alignItems: "center"}}>
               <Button
                 variant="contained"
-                // disabled={!isMediaSaved}
+                disabled={!isMediaSaved}
                 sx={{ mt: 3, padding: 0,}}
                 // onClick={handleVideoSendWithTemplate}
                 onClick={handleSendAllMediaAndCreateVideo}
