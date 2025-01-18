@@ -410,19 +410,19 @@ console.log("IDPRODUIT : " + productId);
         :  (
           <Box sx={{ display: "flex", flexDirection: 'column', gap: 4, alignItems: "center", flexGrow: 1 }}>
             <Typography variant="h5">Félicitations, voici votre vidéo générée avec Memenza!</Typography>
-            <Box component="video" src={lienResultatJ2V} controls sx={{ width: "70%", objectFit: "contain", maxHeight: '90vh' }} />
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%', mt: 4 }}>
+            <Box component="video" src={lienResultatJ2V} controls sx={{ width: {xs: "100%", sm: "70%"}, objectFit: "contain", maxHeight: '90vh' }} />
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%', mt: 2 }}>
               <Button
                 disabled={activeStep === 0}
                 onClick={handleBack}
-                sx={{ mr: 1 }}
+                sx={{ mr: 1, p: {xs: "5px 10px !important", sm: "16px 35px !important"}, fontSize: {xs: "0.7rem !important", sm: "19px !important"}}}
               >
                 Retour
               </Button>
               <Button
                 variant="contained"
                 onClick={handleNextPanierEtEnregistrement}
-                sx={{ ml: 1 }}
+                sx={{ ml: 1, p: {xs: "5px 10px !important", sm: "16px 35px !important"}, fontSize: {xs: "0.7rem !important", sm: "19px !important"}}}
               >
                 Vers le panier
               </Button>
