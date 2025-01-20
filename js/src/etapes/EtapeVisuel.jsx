@@ -776,6 +776,10 @@ const StyleEtapeVisuel = `
         flex-direction: column !important;
         align-items: center !important;
       }
+      .visuel-intro-img {
+        height: 100% !important;
+width: 60px !important;
+        }
     }
 
   }
@@ -1592,22 +1596,18 @@ const scrollToPrametres = () => {
 // [08] RENDU FINAL : "CTRL+F RENDU FINAL"
 return (
   <Box sx={{ textAlign: "center", bgcolor: "#f5f5f5" }}>
-    <Box className="etape-visuel-intro" sx={{width: {xs: "100%"}, height:{xs: "auto", sm: "50%",}, flexDirection: { xs: "column", sm: "row" }, mt:{xs: "50px"}, p: {xs: "0px"}}}>
-      <Box className="etape-visuel-intro-img" sx={{height: {xs: "70%"}, position: {xs: "relative"},}}>
-        <img
-          src="https://memenza.fr/visuels/personnaliser.png"
-          alt="Visuel personnalisé"
-          style={{
-            // width: "100px",
-            // height: "100px",
-            // width: "200px",
-            width: {xs: "100%", sm: "200px"},
-            // height: "200px",
-            height: {xs: "100%", sm: "200px"},
-            borderRadius: "8px",
-            objectFit: "cover",
-          }}
-        />
+    <Box className="etape-visuel-intro" sx={{width: {xs: "100%"}, height:{xs: "25vh", sm: "50%",}, flexDirection: { xs: "column", sm: "row" }, mt:{xs: "50px"}, mb:{xs: "50px"}, p: {xs: "0px"}}}>
+      <Box className="etape-visuel-intro-img" sx={{width: {xs: "100%"}, height: {xs: "60% !important"}, position: {xs: "relative"},}}>
+        <CardMedia
+        component="img"
+        image="https://memenza.fr/visuels/personnaliser.png"
+        alt="Visuel personnalisé"
+        sx={{
+          width: {xs: "100%", sm: "200px"},
+          height: {xs: "100% !important", sm: "200px !important"},
+          objectFit: "cover !important",
+        }}
+      />
       </Box>
       {/* <Box className="etape-visuel-intro-txt" sx={{ p: 3, display: "flex", flexDirection: {xs : "column", sm: "column",}, alignItems: {xs: "center",sm: "center", } }}> */}
       <Box className="etape-visuel-intro-txt" 
@@ -1616,9 +1616,10 @@ return (
           p: {sm: 3},
           backgroundColor: {xs: "white", sm: "transparent"}, 
           width: {xs: "100%"},
-          height: {xs: "30%"},
+          height: {xs: "50%"},
           display: "flex", 
           flexDirection: {xs: "column", sm: "column"}, 
+          justifyContent: {xs: "center"},
           alignItems:{xs: "center", sm: "flex-start", }, 
           zIndex: {xs: 2},
         }}
@@ -1632,7 +1633,7 @@ return (
               fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem', lg: '3rem' },
             }}
           >
-            Personnaliser le visuel
+            Personnaliser le cadre
           </Typography>
         </Box>
         {/* Tooltip pour mobile */}
