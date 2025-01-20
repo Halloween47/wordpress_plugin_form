@@ -10,6 +10,7 @@ import {
   IconButton,
   Modal,
   CircularProgress,
+  CardMedia,
 } from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import InfoIcon from "@mui/icons-material/Info";
@@ -69,7 +70,7 @@ const StylesTest = `
     gap: 20px;
     margin-bottom: 50px;
     background-color: #fff;
-    padding: 20px;
+    // padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
@@ -1047,9 +1048,11 @@ const scrollToPrametres = () => {
 
   return (
     <Box sx={{ textAlign: "center", p: 4, position: "relative", height: 'auto' }}>
-      <Box className="etape-video-intro">
-              <Box className="etape-video-intro-img">
-                <img
+      {/* <Box className="etape-video-intro"> */}
+    <Box className="etape-video-intro" sx={{width: {xs: "100%"}, height:{xs: "25vh", sm: "50%",}, flexDirection: { xs: "column", sm: "row" }, mt:{xs: "50px"}, mb:{xs: "50px"}, p: {xs: "0px"}}}>
+              {/* <Box className="etape-video-intro-img"> */}
+      <Box className="etape-video-intro-img" sx={{width: {xs: "100%"}, height: {xs: "60% !important"}, position: {xs: "relative"},}}>
+                {/* <img
                   // src={imgIntroVideo}
                   src="https://memenza.fr/visuels/personnaliservideo.png"
                   alt="Wedding"
@@ -1061,18 +1064,42 @@ const scrollToPrametres = () => {
                     height: "100px",
                     borderRadius: "8px",
                     objectFit: "cover", }}
+                /> */}
+                <CardMedia
+                  component="img"
+                  image="https://memenza.fr/visuels/personnaliservideo.png"
+                  alt="Intro video personnalisé"
+                  sx={{
+                    width: {xs: "100%", sm: "200px"},
+                    height: {xs: "100% !important", sm: "200px !important"},
+                    objectFit: "cover !important",
+                  }}
                 />
               </Box>
-              <Box className="etape-video-intro-txt">
-                <Typography variant="h4" color="textPrimary" sx={(theme) => ({
-          mb: 1,
-          fontSize: {
-            xs: '1.5rem',  // petite taille d'écran
-            sm: '2rem',    // taille intermédiaire
-            md: '2.5rem',  // écran moyen
-            lg: '3rem',    // grand écran
-          },
-        })}>
+              <Box className="etape-video-intro-txt"
+              sx={{  
+                p: {sm: 3},
+                backgroundColor: {xs: "white", sm: "transparent"}, 
+                width: {xs: "100%"},
+                height: {xs: "50%"},
+                display: "flex", 
+                flexDirection: {xs: "column", sm: "column"}, 
+                justifyContent: {xs: "center"},
+                alignItems:{xs: "center !important", sm: "flex-start", }, 
+                zIndex: {xs: 2},
+              }}
+              >
+                <Typography variant="h4" color="textPrimary" 
+                  sx={(theme) => ({
+                    mb: {xs: 0, sm: 1},
+                    fontSize: {
+                      xs: '1.5rem',  // petite taille d'écran
+                      sm: '2rem',    // taille intermédiaire
+                      md: '2.5rem',  // écran moyen
+                      lg: '3rem',    // grand écran
+                    },
+                  })}
+                >
                   Créer votre vidéo
                 </Typography>
                 {/* Tooltip pour mobile */}

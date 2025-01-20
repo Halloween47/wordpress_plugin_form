@@ -1595,7 +1595,7 @@ const scrollToPrametres = () => {
 
 // [08] RENDU FINAL : "CTRL+F RENDU FINAL"
 return (
-  <Box sx={{ textAlign: "center", bgcolor: "#f5f5f5" }}>
+  <Box sx={{ textAlign: "center",  }}>
     <Box className="etape-visuel-intro" sx={{width: {xs: "100%"}, height:{xs: "25vh", sm: "50%",}, flexDirection: { xs: "column", sm: "row" }, mt:{xs: "50px"}, mb:{xs: "50px"}, p: {xs: "0px"}}}>
       <Box className="etape-visuel-intro-img" sx={{width: {xs: "100%"}, height: {xs: "60% !important"}, position: {xs: "relative"},}}>
         <CardMedia
