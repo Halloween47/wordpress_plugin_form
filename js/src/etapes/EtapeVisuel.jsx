@@ -1596,8 +1596,8 @@ const scrollToPrametres = () => {
 // [08] RENDU FINAL : "CTRL+F RENDU FINAL"
 return (
   <Box sx={{ textAlign: "center",  }}>
-    <Box className="etape-visuel-intro" sx={{width: {xs: "100%"}, height:{xs: "25vh", sm: "50%",}, flexDirection: { xs: "column", sm: "row" }, mt:{xs: "50px"}, mb:{xs: "50px"}, p: {xs: "0px"}}}>
-      <Box className="etape-visuel-intro-img" sx={{width: {xs: "100%"}, height: {xs: "60% !important"}, position: {xs: "relative"},}}>
+    <Box className="etape-visuel-intro" sx={{width: {xs: "100%"}, height:{xs: "25vh", sm: "50%",}, flexDirection: { xs: "column", sm: "row" },justifyContent: {sm: "center"}, mt:{xs: "50px"}, mb:{xs: "50px"}, p: {xs: "0px", sm: "20px"}}}>
+      <Box className="etape-visuel-intro-img" sx={{width: {xs: "100%", sm: "20%"}, height: {xs: "60% !important"}, position: {xs: "relative"}, display: {sm: "flex"}, justifyContent: {sm: "center"},}}>
         <CardMedia
         component="img"
         image="https://memenza.fr/visuels/personnaliser.png"
@@ -1615,7 +1615,7 @@ return (
           pt: 3, 
           p: {sm: 3},
           backgroundColor: {xs: "white", sm: "transparent"}, 
-          width: {xs: "100%"},
+          width: {xs: "100%",sm :"60% !important"},
           height: {xs: "50%"},
           display: "flex", 
           flexDirection: {xs: "column", sm: "column"}, 
@@ -1844,7 +1844,7 @@ return (
           <Button
             type="button"
             variant="contained"
-            // disabled={!previsuOwnVisu && !generatedImageUrl}
+            disabled={!previsuOwnVisu && !generatedImageUrl}
             onClick={handleNext}
             sx={{  m: "0 !important" }}
           >

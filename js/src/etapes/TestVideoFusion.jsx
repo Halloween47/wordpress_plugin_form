@@ -74,11 +74,6 @@ const StylesTest = `
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
-  .etape-video-intro-img {
-    background-color: #e0e0e0;
-    // width: 40%;
-    border-radius: 8px;
-  }
   .etape-video-intro-txt {
     width: 100%;
     color: #333;
@@ -1051,7 +1046,15 @@ const scrollToPrametres = () => {
       {/* <Box className="etape-video-intro"> */}
     <Box className="etape-video-intro" sx={{width: {xs: "100%"}, height:{xs: "25vh", sm: "50%",}, flexDirection: { xs: "column", sm: "row" }, mt:{xs: "50px"}, mb:{xs: "50px"}, p: {xs: "0px"}}}>
               {/* <Box className="etape-video-intro-img"> */}
-      <Box className="etape-video-intro-img" sx={{width: {xs: "100%"}, height: {xs: "60% !important"}, position: {xs: "relative"},}}>
+      <Box className="etape-video-intro-img" 
+        sx={{
+          width: {xs: "100%", sm: "20%"}, 
+          height: {xs: "60% !important"}, 
+          position: {xs: "relative"},
+          display:{sm: "flex"},
+          justifyContent: {sm: "center"}
+        }}
+      >
                 {/* <img
                   // src={imgIntroVideo}
                   src="https://memenza.fr/visuels/personnaliservideo.png"
@@ -1075,7 +1078,7 @@ const scrollToPrametres = () => {
                     objectFit: "cover !important",
                   }}
                 />
-              </Box>
+      </Box>
               <Box className="etape-video-intro-txt"
               sx={{  
                 p: {sm: 3},
@@ -1085,7 +1088,7 @@ const scrollToPrametres = () => {
                 display: "flex", 
                 flexDirection: {xs: "column", sm: "column"}, 
                 justifyContent: {xs: "center"},
-                alignItems:{xs: "center !important", sm: "flex-start", }, 
+                alignItems:{xs: "center !important", sm: "flex-start !important", }, 
                 zIndex: {xs: 2},
               }}
               >
@@ -1098,6 +1101,7 @@ const scrollToPrametres = () => {
                       md: '2.5rem',  // écran moyen
                       lg: '3rem',    // grand écran
                     },
+                    textAlign: { sm: "left !important"}
                   })}
                 >
                   Créer votre vidéo
