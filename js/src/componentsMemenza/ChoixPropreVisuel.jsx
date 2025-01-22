@@ -297,7 +297,7 @@ function ChoixPropreVisuel() {
     if (file) {
       const generatedUrl = URL.createObjectURL(file);
       setFileUrl(generatedUrl);
-      setPrevisuOwnVisu(generatedUrl);
+      // setPrevisuOwnVisu(generatedUrl);
     }
   };
 
@@ -329,12 +329,56 @@ function ChoixPropreVisuel() {
       if (uploadResponse.ok) {
         setSnackbarOpen(true);
         setIsSaved(true);
+        creationDuVisuelSansTemplate();
+
+        // Ajouter un délai avant la fermeture de la fenêtre
+        setTimeout(() => {
+          setOpen(false);
+          setPrevisuOwnVisu(true)
+        }, 2000); 
+        
+
       } else {
         console.error("Erreur lors de l'envoi :", uploadResponse.status);
       }
     } catch (error) {
       console.error("Erreur lors de l'envoi du fichier :", error);
     }
+
+  };
+
+  const creationDuVisuelSansTemplate = async (e) => {
+    console.log("test fonction de création sans template");
+
+    const outputFilePath = `/home/memenzj/www/visuels/cmd/${navigationId}.png`;
+    const outputFolder = `/home/memenzj/www/visuels/uploads/${navigationId}`;
+  
+    let image2Blob = fileForSend;
+
+    const formPayload = new FormData();
+    formPayload.append("text1", '');
+    formPayload.append("text2", '');
+    formPayload.append("image1", fileForSend, `${navigationId}.png`);
+    formPayload.append("image2", fileForSend, `${navigationId}.png`);
+    formPayload.append("output_file", outputFilePath); // Destination de la crea cadre
+    formPayload.append("dossier", outputFolder); // Créa du dossier pour les medias video
+    
+
+    // Appel à process de creation
+    try {
+      const response = await fetch("../../wp-content/plugins/ProductImageCustomizer/js/process-test.php", {
+        method: "POST",
+        body: formPayload,
+      });
+  
+      if (!response.ok) {
+        throw new Error("Erreur lors de la soumission du formulaire");
+      }
+
+    } catch (error) {
+      setError(error.message);
+    }
+    
   };
 
   return (
@@ -428,7 +472,7 @@ function ChoixPropreVisuel() {
             )}
             {snackbarOpen && (
               <Alert severity="success" sx={{ mt: 2 }}>
-                Image téléchargée avec succès ! Vous pouvez maintenant quitter la fenêtre.
+                Image téléchargée avec succès ! Patientez un instant...
               </Alert>
             )}
           </Box>

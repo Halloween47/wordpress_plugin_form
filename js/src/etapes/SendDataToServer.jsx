@@ -301,26 +301,10 @@ const SendDataToServer = ({ activeStep, setActiveStep }) => {
   }, []); // Effet exécuté une seule fois, après le premier rendu
   
 
-    const handleNextPanierEtEnregistrement = () => {
+  const handleNextPanierEtEnregistrement = () => {
 
-    // Récuperation de l'ID Produit
-//     const modal = document.getElementById('customization-modal');
-//     if (modal) {
-//       const id = modal.getAttribute('data-product-id'); // Récupère l'attribut personnalisé
-//       console.log('ID Produit récupéré depuis le modal :', id);
-//       setProductId(id); // Met à jour l'état avec l'ID produit
-//     } else {
-//       console.error("L'élément #customization-modal est introuvable !");
-//     }
-console.log("IDPRODUIT : " + productId);
+    console.log('RESULTAT DU productId :', productId);
 
-    // if (!idProduit) {
-    //   console.error('ID Produit manquant dans le contexte !');
-    //   return;
-    // }
-
-    console.log('!!!!!!!!!! ICI LE RESULTAT DU productId :', productId);
-    
     const fetchData = async () => {
       try {
         const response = await fetch(MyPluginAjax.ajax_url, {
@@ -341,7 +325,6 @@ console.log("IDPRODUIT : " + productId);
 
         const result = await response.json();
         console.log('Résultat de la requête AJAX :', result);
-        // const customText = `<p>ID cadre : ${navigationId}</p><p><img src="${pathImageGenerate}" alt="Image" /></p>`;
         if (result) {
           window.location.href = '/panier/';
         }
