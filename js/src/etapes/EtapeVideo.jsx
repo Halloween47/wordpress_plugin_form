@@ -1380,10 +1380,16 @@ const scrollToPrametres = () => {
 
   // Vérifier si une image ou un champ texte est présent
   const hasImage = mediaFields.some((field) => field.customizable && (uploadedImages[field.name] || field.defaultFile));
+
+  // Vérification pour les champs textFields avec "customizable"
+const hasCustomizableTextField = textFields.some(
+  (field) => field.customizable
+);
+
   const hasTextField = textFields.length > 0;
 
   // Ne pas afficher si aucune image et aucun champ texte n'est présent
-  if (!hasImage && !hasTextField) {
+  if (!hasImage && !hasTextField || !hasCustomizableTextField && !hasImage) {
     return null; // Ne pas rendre le contenu
   }
 
@@ -1509,35 +1515,38 @@ const scrollToPrametres = () => {
               const match = field.name.match(/^[Ss](\d+)-/);
               const dynamicLabel = match ? `Texte ${match[1]}` : field.name;
 
-              return (
-                <Box
-                  key={index}
-                  sx={{
-                    mt: 1,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'flex-start',
-                    width: '100%',
-                  }}
-                >
-                  <Typography
+              if (field.customizable === true) {
+                return (
+                  <Box
+                    key={index}
                     sx={{
-                      mb: 1,
-                      fontSize: '0.9rem',
+                      mt: 1,
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'flex-start',
+                      width: '100%',
                     }}
-                    variant="h6"
                   >
-                    {dynamicLabel}
-                  </Typography>
-                  <TextField
-                    fullWidth
-                    size="small"
-                    placeholder={field.defaultText || ''}
-                    value={variables[field.name] || ''}
-                    onChange={(e) => handleVariableChange(field.name, e.target.value)}
-                  />
-                </Box>
-              );
+                    <Typography
+                      sx={{
+                        mb: 1,
+                        fontSize: '0.9rem',
+                      }}
+                      variant="h6"
+                    >
+                      {dynamicLabel}
+                    </Typography>
+                    <TextField
+                      fullWidth
+                      size="small"
+                      placeholder={field.defaultText || ''}
+                      value={variables[field.name] || ''}
+                      onChange={(e) => handleVariableChange(field.name, e.target.value)}
+                    />
+                  </Box>
+                );
+            }
+
             })}
           </Box>
         </Box>

@@ -29,8 +29,8 @@ import Button from "@mui/material/Button";
 import EtapeCategorie from "./etapes/EtapeCategorie.jsx";
 // import EtapeVisuel from "./etapes/EtapeVisuel.jsx";
 import EtapeVisuel from "./etapes/EtapeVisuel.jsx";
-// import EtapeVideo from "./etapes/EtapeVideo.jsx";
-import TestVideoFusion from "./etapes/TestVideoFusion.jsx";
+import EtapeVideo from "./etapes/EtapeVideo.jsx";
+// import TestVideoFusion from "./etapes/TestVideoFusion.jsx";
 import EtapeValidation from "./etapes/EtapeValidation.jsx";
 import EtapeTim from "./etapes/EtapeTim.jsx";
 import { SousCatProvider, useSousCat } from "./componentsMemenza/GestionEtat.jsx";
@@ -67,8 +67,8 @@ const App = () => {
         return <EtapeVisuel setActiveStep={setActiveStep} />;
         // return <TestVisuelFusion setActiveStep={setActiveStep}/>;
         case 2:
-          // return <EtapeVideo />;
-          return <TestVideoFusion setActiveStep={setActiveStep}/>;
+          return <EtapeVideo setActiveStep={setActiveStep} />;
+          // return <TestVideoFusion setActiveStep={setActiveStep}/>;
       case 3:
         // return <EtapeValidation />;
         return <EtapeTim setActiveStep={setActiveStep} />;
