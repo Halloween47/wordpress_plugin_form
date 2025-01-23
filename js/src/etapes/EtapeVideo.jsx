@@ -193,7 +193,9 @@ const Tooltip = ({ text, children }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("/wp-json/plugin_memenza/v1/videos_visuel");
+        // const response = await fetch("/wp-json/plugin_memenza/v1/videos_visuel");
+        // POUR SIMULATION
+        const response = await fetch("https://memenza.fr/wp-json/plugin_memenza/v1/videos_visuel");
         if (!response.ok) {
           throw new Error("Erreur lors de la récupération des données");
         }
@@ -701,7 +703,9 @@ const Tooltip = ({ text, children }) => {
   
       try {
         // Vérifier si un fichier du même nom existe déjà
-        const checkResponse = await fetch(`../../wp-content/plugins/ProductImageCustomizer/js/check-file-exists.php?fileName=${dynamicName}&folder=${navigationId}`, {
+        // const checkResponse = await fetch(`../../wp-content/plugins/ProductImageCustomizer/js/check-file-exists.php?fileName=${dynamicName}&folder=${navigationId}`, {
+        // POUR SIMULATION
+        const checkResponse = await fetch(`https://memenza.fr/wp-content/plugins/ProductImageCustomizer/js/check-file-exists.php?fileName=${dynamicName}&folder=${navigationId}`, {
           method: "GET",
         });
   
@@ -716,7 +720,9 @@ const Tooltip = ({ text, children }) => {
         }
   
         // Effectue l'envoi des données
-        const response = await fetch("../../wp-content/plugins/ProductImageCustomizer/js/upload-media.php", {
+        // const response = await fetch("../../wp-content/plugins/ProductImageCustomizer/js/upload-media.php", {
+        // POUR SIMULATION
+        const response = await fetch("https://memenza.fr//wp-content/plugins/ProductImageCustomizer/js/upload-media.php", {
           method: "POST",
           body: formData,
         });
@@ -1212,7 +1218,9 @@ const scrollToPrametres = () => {
             >
               <Box
                 component="video"
-                src={src.chemin_video_ex}
+                // src={src.chemin_video_ex}
+                // POUR SIMULATION
+                src={"https://memenza.fr/" + src.chemin_video_ex}
                 ref={(el) => (videoRefs.current[index] = el)}
                 sx={{ width: "100%", height: "100%", objectFit: "cover" }}
               />
@@ -1241,120 +1249,13 @@ const scrollToPrametres = () => {
 
       <Box ref={parametresContainerRef} >
         {openModal && (
-          //////////////////
-          //////////////////
-          //////////////////
-          // <Grid container spacing={2} sx={{ mt: 4 }}>
-          //   <Grid container spacing={2} sx={{ mt: 4 }}>
-          //     <Grid item xs={6}>
-          //       <Box
-          //         component="video"
-          //         src={currentVideoSrc}
-          //         controls
-          //         sx={{ width: "100%", height: "100%", objectFit: "contain" }}
-          //       />
-          //     </Grid>
-          //     <Grid item xs={6}>
-          //       <Box sx={{ overflowY: "auto", maxHeight: "60vh" }}>
-          //         <Typography variant="h6">Paramétrage du Template</Typography>
-          //         <Typography variant="subtitle1">Une fois le modèle configuré, il est possible de modifier tous les textes et images (les photos étant au format paysage), ou bien de les laisser tels quels, selon vos envies.</Typography>
-
-          //         {tabParseTextesVideo.map((field, index) => {
-          //           // Expression régulière pour extraire uniquement le numéro
-          //           const match = field.name.match(/^[Ss](\d+)-/); 
-          //           const dynamicLabel = match ? `Texte ${match[1]}` : field.name;
-                    
-          //           return (
-          //             <Box key={index} sx={{ mt: 2 }}>
-          //               <Typography>{dynamicLabel}</Typography>
-          //               <TextField
-          //                 fullWidth
-          //                 size="small"
-          //                 placeholder={field.defaultText || ""}
-          //                 value={variables[field.name] || ""}
-          //                 onChange={(e) => handleVariableChange(field.name, e.target.value)}
-          //               />
-          //             </Box>
-          //           );
-          //         })}
-
-          //         <Typography variant="h6" sx={{ mt: 4 }}>
-          //           Paramétrage des Médias
-          //         </Typography>
-          //         {tabParseMediasVideo.map((field, index) => {
-          //           const match = field.name.match(/^s\d+-img(\d+)$/);
-          //           const dynamicLabel = match ? `Media ${match[1]}` : field.name;
-          //           if (field.customizable === true) {                 
-          //             const currentMediaIndex = nameMediaCounter++;
-          //             return (
-          //               <Box
-          //                 key={index}
-          //                 sx={{ 
-          //                   mt: 2, 
-          //                   display: "flex", 
-          //                   justifyContent: "center", 
-          //                   alignItems: "center", 
-          //                   width: "100%"
-          //                 }}
-          //                 >
-          //                   {/* Label dynamique pour le champ média */}
-          //                   <Typography sx={{ mr: "30px" }}>Media {currentMediaIndex}</Typography>
-
-          //                     {/* Bouton pour importer un média */}
-          //                     <Button component="label" variant="contained" sx={{ mr: "10px" }}>
-          //                       Importer votre média
-          //                       <input
-          //                         type="file"
-          //                         hidden
-          //                         accept={field.type === "image" ? "image/*" : field.type === "video" ? "video/*" : "*/*"}
-          //                         // onChange={(e) => handleFileUpload(e, field.name)}
-          //                         // onChange={(e) => handleFileUpload2(e, field.name)}
-          //                         onChange={(e) => handleFileUpload3(e, field.name)}
-          //                       />
-          //                     </Button>
-          //                     {checkedFields[field.name] && (
-          //                       <CheckCircleRoundedIcon sx={{ color: 'green' }} />
-          //                     )}
-
-          //                     {/* Tooltip avec informations supplémentaires */}
-          //                     <div style={{ padding: "10px" }}>
-          //                       <Tooltip text={field.comment}>
-          //           <InfoIcon sx={{ color: "black" }} />
-          //                       </Tooltip>
-          //                     </div>
-          //                   </Box>
-          //             )}
-          //           })}
-          //         <Box sx={{display: "flex", flexDirection: "column", gap: 3, alignItems: "center"}}>
-          //         <Button
-          //           variant="contained"
-          //           // disabled={!isMediaSaved}
-          //           sx={{ 
-          //             mt: 3,
-          //             padding: 0, 
-          //           }}
-          //           onClick={handleSendAllMediaAndCreateVideo}
-          //         >
-          //           Envoyer les données
-          //         </Button>
-          //         {modalVideoGenere && 
-          //         (
-          //           <Box>
-          //             <CircularProgress disableShrink sx={{marginBottom: "10px"}}/>
-          //             <SendDataToServer />
-          //           </Box>
-          //         )
-          //         }
-          //         </Box>
-          //       </Box>
-          //     </Grid>
-          //   </Grid>
-          // </Grid>
           <Grid container sx={{ mt: 2,mb:5, p: { xs:1, sm: 5}, bgcolor: '#e8dee8', width: "100%",height: 'auto', display: 'flex', flexDirection: 'column', }}>
             <Box item xs={6} sx={{display: 'flex', justifyContent: 'center', width: '100%', }}>
               <Box
                 component="video"
-                src={currentVideoSrc}
+                // src={currentVideoSrc}
+                // POUR SIMULATION
+                src={"https://memenza.fr/"+ currentVideoSrc}
                 controls
                 sx={{ width: {xs: "100%", sm: "60%"}, height: "100%", objectFit: "contain", mb: 2 }}
               />

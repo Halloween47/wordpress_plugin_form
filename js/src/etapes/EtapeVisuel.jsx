@@ -425,7 +425,7 @@ useEffect(() => {
       try {
         // const response = await fetch("/wp-json/plugin_memenza/v1/images_visuel");
         // POUR SIMULATION
-        const response = await fetch("https://memenza.fr//wp-json/plugin_memenza/v1/images_visuel");
+        const response = await fetch("https://memenza.fr/wp-json/plugin_memenza/v1/images_visuel");
         if (!response.ok) throw new Error("Erreur lors de la récupération des données");
         const result = await response.json();
         setImagesVisuels(result);
@@ -842,7 +842,9 @@ const creationDuVisuelAvecTemplate3 = async (e) => {
 
   try {
     // const response = await fetch("../../wp-content/plugins/ProductImageCustomizer/js/process-simplifie.php", {
-    const response = await fetch("../../wp-content/plugins/ProductImageCustomizer/js/process-test.php", {
+    // const response = await fetch("../../wp-content/plugins/ProductImageCustomizer/js/process-test.php", {
+    // POUR SIMULATION
+    const response = await fetch("https://memenza.fr/wp-content/plugins/ProductImageCustomizer/js/process-test.php", {
       method: "POST",
       body: formPayload,
     });
