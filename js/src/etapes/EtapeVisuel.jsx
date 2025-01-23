@@ -126,7 +126,9 @@ const VisuelCard = ({ item, isSelected, onClick }) => (
     >
       <CardMedia
         component="img"
-        image={item.img_modele}
+        // image={item.img_modele}
+        // POUR SIMULATION
+        image={"https://memenza.fr" + item.img_modele}
         alt={item.nom_modele}
       />
       <CardContent>
@@ -421,7 +423,9 @@ useEffect(() => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("/wp-json/plugin_memenza/v1/images_visuel");
+        // const response = await fetch("/wp-json/plugin_memenza/v1/images_visuel");
+        // POUR SIMULATION
+        const response = await fetch("https://memenza.fr//wp-json/plugin_memenza/v1/images_visuel");
         if (!response.ok) throw new Error("Erreur lors de la récupération des données");
         const result = await response.json();
         setImagesVisuels(result);
@@ -1143,7 +1147,8 @@ return (
           <Button
             type="button"
             variant="contained"
-            disabled={!previsuOwnVisu && !generatedImageUrl}
+            // POUR SIMULATION
+            // disabled={!previsuOwnVisu && !generatedImageUrl}
             onClick={handleNext}
             sx={{  m: "0 !important" }}
           >
