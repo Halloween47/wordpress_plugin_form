@@ -392,14 +392,15 @@ const Tooltip = ({ text, children }) => {
   
         // Si "img" est présent dans fieldName, générer un nom unique
         let mediaName;
-        // if (fieldName.includes("img"))  {
-        if (fieldName.includes("img") || fieldName.includes("-i") )  {
+        if (fieldName.includes("imgi"))  {
+        // if (fieldName.includes("img") || fieldName.includes("-i") || fieldName.includes("image") )  {
           const imgCount = Object.keys(prevState)
             .filter((key) => key.includes("img") || key.includes("-i"))
             .length;
           mediaName = `media${imgCount + 1}`;
         } else {
           mediaName = fieldName; // Pas de changement pour les autres types
+          mediaName = "fieldName"; // Pas de changement pour les autres types
         }
   
         const fullMediaName = `${mediaName}.${validExtension}`;
@@ -1336,8 +1337,16 @@ const hasCustomizableTextField = textFields.some(
               }}
             >
               {mediaFields.map((field, index) => {
-                const match = field.name.match(/^s\d+-img(\d+)$/);
-                const dynamicLabel = match ? `Media ${match[1]}` : field.name;
+                // const match = field.name.match(/^s\d+-img(\d+)$/);
+                // const dynamicLabel = match ? `Media ${match[1]}` : field.name;
+
+                // const match = field.name.match(/\d+/); // Recherche le premier nombre dans le nom
+                // const dynamicLabel = `Media ${match ? match[0] : "1"}`; // Utilise le nombre trouvé ou "1" par défaut
+
+                const match = field.name.match(/\d+/g); // Recherche tous les nombres dans la chaîne
+                const lastNumber = match ? match[match.length - 1] : "1"; // Récupère le dernier nombre ou "1" par défaut
+                const dynamicLabel = `Media ${lastNumber}`;
+
 
                 if (field.customizable === true) {
                   return (
@@ -1443,6 +1452,9 @@ const hasCustomizableTextField = textFields.some(
                       placeholder={field.defaultText || ''}
                       value={variables[field.name] || ''}
                       onChange={(e) => handleVariableChange(field.name, e.target.value)}
+                      inputProps={{
+                        maxLength: field.maxCharacters, 
+                      }}
                     />
                   </Box>
                 );
