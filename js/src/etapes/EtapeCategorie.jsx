@@ -128,13 +128,13 @@ function EtapeCategorie({ activeStep, setActiveStep }) {
       />
 
       {/* Modal */}
-      <Modal open={open} onClose={handleClose} aria-labelledby="modal-title">
+      {/* <Modal open={open} onClose={handleClose} aria-labelledby="modal-title">
         <Box sx={modalStyle}>
           <Typography id="modal-title" variant="h6">
             Contenu de la modal
           </Typography>
         </Box>
-      </Modal>
+      </Modal> */}
 
       {/* Bouton Suivant */}
       <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}>

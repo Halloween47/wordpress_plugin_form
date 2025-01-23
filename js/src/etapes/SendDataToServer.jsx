@@ -367,7 +367,7 @@ const SendDataToServer = ({ activeStep, setActiveStep }) => {
               Une erreur est survenue !
             </Typography>
             <Typography variant="h6" color="error">
-              Merci de vérifier que vos medias soit bien en format paysag et que le media ne soit pas une vidéo.
+              Merci de vérifier que vos medias soit bien en format paysage et que le media ne soit pas une vidéo.
             </Typography>
             <Button
               variant="contained"

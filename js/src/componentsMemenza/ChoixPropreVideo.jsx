@@ -204,7 +204,23 @@ export default function FormDialog() {
                 controls
                 sx={{ width: "80%", objectFit: "contain" }}
               />
-              <Button
+              <Box>
+                  <Alert
+                    severity="success"
+                    variant="filled"
+                    sx={{ width: '100%', marginTop: "10px !important", marginBottom: "10px !important", }}
+                    >
+                    Envoi réussi !
+                  </Alert>
+                  <Button
+                  variant="contained"
+                  onClick={handleNextPanierEtEnregistrement}
+                  sx={{ ml: 1, marginBottom: "10px !important", p: {xs: "5px 10px !important", sm: "16px 35px !important"}, fontSize: {xs: "0.7rem !important", sm: "19px !important"}}}
+                  >
+                  Continuer vers le panier
+                  </Button>
+              </Box>
+              {/* <Button
                 onClick={handleSendMedia}
                 component="label"
                 variant="outlined"
@@ -212,8 +228,8 @@ export default function FormDialog() {
                 sx={{ marginBottom: "10px", marginTop: "10px" }}
               >
                 Choisir cette vidéo
-              </Button>
-              {envoiReussi && (
+              </Button> */}
+              {/* {envoiReussi && (
                 <Box>
                   <Alert
                     severity="success"
@@ -230,17 +246,9 @@ export default function FormDialog() {
                   Continuer vers le panier
                   </Button>
                 </Box>
-              )}
+              )} */}
             </Box>
           )}
-          <Button
-            onClick={handleClose}
-            component="label"
-            variant="contained"
-            sx={{ marginBottom: "10px", marginTop: "10px" }}
-          >
-            Fermer
-          </Button>
           <Button
             component="label"
             variant="contained"
@@ -249,6 +257,14 @@ export default function FormDialog() {
           >
             Uploader sa propre Vidéo
             <VisuallyHiddenInputPropreVisuel type="file" accept="video/*" onChange={EnregistrementPropreVideo} />
+          </Button>
+          <Button
+            onClick={handleClose}
+            component="label"
+            variant="contained"
+            sx={{ marginBottom: "10px", marginTop: "10px" }}
+          >
+            Fermer
           </Button>
         </DialogActions>
       </Dialog>

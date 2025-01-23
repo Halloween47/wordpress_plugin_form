@@ -413,7 +413,8 @@ export default function CarouselCategories({ onImageClick, onSousCatClick }) {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch("/wp-json/plugin_memenza/v1/images-categories");
+        // const response = await fetch("/wp-json/plugin_memenza/v1/images-categories");
+        const response = await fetch("https://memenza.fr/wp-json/plugin_memenza/v1/images-categories");
         if (!response.ok) throw new Error("Erreur lors de la récupération des catégories.");
         const result = await response.json();
         setData(result);
@@ -437,7 +438,8 @@ export default function CarouselCategories({ onImageClick, onSousCatClick }) {
   useEffect(() => {
     const fetchSousCategories = async () => {
       try {
-        const response = await fetch("/wp-json/plugin_memenza/v1/images_sous-categories");
+        // const response = await fetch("/wp-json/plugin_memenza/v1/images_sous-categories");
+        const response = await fetch("https://memenza.fr/wp-json/plugin_memenza/v1/images_sous-categories");
         if (!response.ok) throw new Error("Erreur lors de la récupération des sous-catégories.");
         const result = await response.json();
         setDataSousCat(result);
