@@ -1051,15 +1051,23 @@ const scrollToPrametres = () => {
   return (
     <Box sx={{ textAlign: "center", p: 4, position: "relative", height: 'auto' }}>
       {/* <Box className="etape-video-intro"> */}
-    <Box className="etape-video-intro" sx={{width: {xs: "100%"}, height:{xs: "25vh", sm: "50%",}, flexDirection: { xs: "column", sm: "row" }, mt:{xs: "50px"}, mb:{xs: "50px"}, p: {xs: "0px"}}}>
+    <Box className="etape-video-intro" 
+    sx={{
+      width: {xs: "100%"}, 
+      height:{xs: "25vh", sm: "50%",}, 
+      flexDirection: { xs: "column", sm: "row" },
+      mt:{xs: "50px"}, 
+      mb:{xs: "50px"}, 
+      p: {xs: "0px", sm: "20px"}
+      }}>
               {/* <Box className="etape-video-intro-img"> */}
       <Box className="etape-video-intro-img" 
         sx={{
-          width: {xs: "100%", sm: "20%"}, 
+          width: {xs: "100%", sm: "10%"}, 
           height: {xs: "60% !important"}, 
-          position: {xs: "relative"},
-          display:{sm: "flex"},
-          justifyContent: {sm: "center"}
+          position: {xs: "relative"}, 
+          display: {sm: "flex"}, 
+          justifyContent: {sm: "center"},
         }}
       >
                 {/* <img
@@ -1080,103 +1088,96 @@ const scrollToPrametres = () => {
                   image="https://memenza.fr/visuels/personnaliservideo.png"
                   alt="Intro video personnalisé"
                   sx={{
-                    width: {xs: "100%", sm: "200px"},
-                    height: {xs: "100% !important", sm: "200px !important"},
+                    width: {xs: "100%", sm: "100px"},
+                    height: {xs: "100% !important", sm: "100px !important"},
                     objectFit: "cover !important",
                   }}
                 />
       </Box>
-              <Box className="etape-video-intro-txt"
-              sx={{  
-                p: {sm: 3},
-                backgroundColor: {xs: "white", sm: "transparent"}, 
-                width: {xs: "100%"},
-                height: {xs: "50%"},
-                display: "flex", 
-                flexDirection: {xs: "column", sm: "column"}, 
-                justifyContent: {xs: "center"},
-                alignItems:{xs: "center !important", sm: "flex-start !important", }, 
-                zIndex: {xs: 2},
-              }}
-              >
-                <Typography variant="h4" color="textPrimary" 
-                  sx={(theme) => ({
-                    mb: {xs: 0, sm: 1},
-                    fontSize: {
-                      xs: '1.5rem',  // petite taille d'écran
-                      sm: '2rem',    // taille intermédiaire
-                      md: '2.5rem',  // écran moyen
-                      lg: '3rem',    // grand écran
-                    },
-                    textAlign: { sm: "left !important"}
-                  })}
-                >
-                  Créer votre vidéo
-                </Typography>
-                {/* Tooltip pour mobile */}
-                <Box
-                  sx={{
-                    display: { xs: "block", sm: "none" },
-                    position: "relative",
-                    cursor: "pointer",
-                  }}
-                  onMouseEnter={(e) => {
-                    const tooltip = e.currentTarget.querySelector(".tooltip");
-                    if (tooltip) tooltip.style.opacity = "1";
-                  }}
-                  onMouseLeave={(e) => {
-                    const tooltip = e.currentTarget.querySelector(".tooltip");
-                    if (tooltip) tooltip.style.opacity = "0";
-                  }}
-                >
-                  <Box
-                    sx={{
-                      // bgcolor: "text.disabled",
-                      // color: "background.paper",
-                      // bgcolor: "text.disabled",
-                      color: "black",
-                      // p: 2,
-                      borderRadius: "8px",
-                    }}
-                  >
-                    ?
-                  </Box>
-                  <Box
-                    className="tooltip"
-                    sx={{
-                      position: "absolute",
-                      bottom: "110%",
-                      left: "50%",
-                      transform: "translateX(-50%)",
-                      bgcolor: "black",
-                      color: "white",
-                      p: 1,
-                      borderRadius: "4px",
-                      // whiteSpace: "nowrap",
-                      opacity: "0",
-                      transition: "opacity 0.3s ease",
-                      pointerEvents: "none",
-                      zIndex: 10,
-                      // width: '500px',
-                      width: '20rem',
-                    }}
-                  >
-                    Grâce aux modèles Memenza, <br/>créez une vidéo associée à votre produit <br/>(accessible via le QR Code). <br/>Vous pouvez aussi directement télécharger une vidéo d’une minute de votre choix <br/>(créée par exemple avec Capcut). <br/>La vidéo doit-être en 16/9ème format Paysage, 50Mo maximum.
-                  </Box>
-                </Box>
-                <Typography variant="body1" color="textPrimary"  sx={(theme) => ({
-                  pr: 3,
-                  fontSize: {
-                    xs: '0.875rem', // petite taille d'écran
-                    sm: '1rem',     // taille intermédiaire
-                    md: '1.125rem', // écran moyen
-                    lg: '1.5rem',  // grand écran
-                  },
-                  display: { xs: "none", sm: "block" },
-                })}>
-                  Grâce aux modèles Memenza, créez une vidéo associée à votre produit (accessible via le QR Code). Vous pouvez aussi directement télécharger une vidéo d’une minute de votre choix (créée par exemple avec Capcut). La vidéo doit-être en 16/9ème format Paysage, 50Mo maximum.
-                </Typography>
-              </Box>
+      <Box className="etape-video-intro-txt"
+      sx={{  
+        pt: 3, 
+        p: {sm: 3},
+        backgroundColor: {xs: "white", sm: "transparent"}, 
+        width: {xs: "100%",sm :"60% !important"},
+        height: {xs: "50%"},
+        display: "flex", 
+        flexDirection: {xs: "column", sm: "column"}, 
+        justifyContent: {xs: "center"},
+        alignItems:{xs: "center", sm: "flex-start", }, 
+        zIndex: {xs: 2},
+      }}
+      >
+        <Typography variant="h5" color="textPrimary" 
+          sx={{
+            mb: 1,
+            fontWeight: "bold"
+          }}
+        >
+          Créer votre vidéo
+        </Typography>
+        {/* Tooltip pour mobile */}
+        <Box
+          sx={{
+            display: { xs: "block", sm: "none" },
+            position: "relative",
+            cursor: "pointer",
+          }}
+          onMouseEnter={(e) => {
+            const tooltip = e.currentTarget.querySelector(".tooltip");
+            if (tooltip) tooltip.style.opacity = "1";
+          }}
+          onMouseLeave={(e) => {
+            const tooltip = e.currentTarget.querySelector(".tooltip");
+            if (tooltip) tooltip.style.opacity = "0";
+          }}
+        >
+          <Box
+            sx={{
+              // bgcolor: "text.disabled",
+              // color: "background.paper",
+              // bgcolor: "text.disabled",
+              color: "black",
+              // p: 2,
+              borderRadius: "8px",
+            }}
+          >
+            ?
+          </Box>
+          <Box
+            className="tooltip"
+            sx={{
+              position: "absolute",
+              bottom: "110%",
+              left: "50%",
+              transform: "translateX(-50%)",
+              bgcolor: "black",
+              color: "white",
+              p: 1,
+              borderRadius: "4px",
+              // whiteSpace: "nowrap",
+              opacity: "0",
+              transition: "opacity 0.3s ease",
+              pointerEvents: "none",
+              zIndex: 10,
+              // width: '500px',
+              width: '20rem',
+            }}
+          >
+            Grâce aux modèles Memenza, <br/>créez une vidéo associée à votre produit <br/>(accessible via le QR Code). <br/>Vous pouvez aussi directement télécharger une vidéo d’une minute de votre choix <br/>(créée par exemple avec Capcut). <br/>La vidéo doit-être en 16/9ème format Paysage, 50Mo maximum.
+          </Box>
+        </Box>
+        <Typography variant="body1" color="textPrimary"  
+        sx={{
+          fontSize: { xs: '0.875rem', sm: '1.25rem', md: '1.25rem', lg: '1.25rem' },
+          display: { xs: "none", sm: "flex" },
+          justifyContent: {sm: "flex-start"},
+          textAlign: "left"
+        }}
+        >
+          Grâce aux modèles Memenza, créez une vidéo associée à votre produit (accessible via le QR Code). Vous pouvez aussi directement télécharger une vidéo d’une minute de votre choix (créée par exemple avec Capcut). La vidéo doit-être en 16/9ème format Paysage, 50Mo maximum.
+        </Typography>
+      </Box>
             </Box>
       {/* <Button
         component="label"

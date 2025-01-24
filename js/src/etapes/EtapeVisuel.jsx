@@ -899,15 +899,31 @@ const scrollToPrametres = () => {
 // [08] RENDU FINAL : "CTRL+F RENDU FINAL"
 return (
   <Box sx={{ textAlign: "center",  }}>
-    <Box className="etape-visuel-intro" sx={{width: {xs: "100%"}, height:{xs: "25vh", sm: "50%",}, flexDirection: { xs: "column", sm: "row" },justifyContent: {sm: "center"}, mt:{xs: "50px"}, mb:{xs: "50px"}, p: {xs: "0px", sm: "20px"}}}>
-      <Box className="etape-visuel-intro-img" sx={{width: {xs: "100%", sm: "20%"}, height: {xs: "60% !important"}, position: {xs: "relative"}, display: {sm: "flex"}, justifyContent: {sm: "center"},}}>
+    <Box className="etape-visuel-intro" 
+    sx={{
+      width: {xs: "100%"}, 
+      height:{xs: "25vh", sm: "50%",}, 
+      flexDirection: { xs: "column", sm: "row" },
+      mt:{xs: "50px"}, 
+      mb:{xs: "50px"}, 
+      p: {xs: "0px", sm: "20px"}
+      }}>
+      <Box className="etape-visuel-intro-img" 
+        sx={{
+          width: {xs: "100%", sm: "10%"}, 
+          height: {xs: "60% !important"}, 
+          position: {xs: "relative"}, 
+          display: {sm: "flex"}, 
+          justifyContent: {sm: "center"},
+          }}
+      >
         <CardMedia
         component="img"
         image="https://memenza.fr/visuels/personnaliser.png"
         alt="Visuel personnalisé"
         sx={{
-          width: {xs: "100%", sm: "200px"},
-          height: {xs: "100% !important", sm: "200px !important"},
+          width: {xs: "100%", sm: "100px"},
+          height: {xs: "100% !important", sm: "100px !important"},
           objectFit: "cover !important",
         }}
       />
@@ -929,11 +945,11 @@ return (
       >
         <Box sx={{display: "flex"}}>
           <Typography
-            variant="h4"
+            variant="h5"
             color="textPrimary"
             sx={{
               mb: 1,
-              fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem', lg: '3rem' },
+              fontWeight: "bold"
             }}
           >
             Personnaliser le cadre
@@ -993,7 +1009,7 @@ return (
           variant="body1"
           color="textPrimary"
           sx={{
-            fontSize: { xs: '0.875rem', sm: '1rem', md: '1.125rem', lg: '1.5rem' },
+            fontSize: { xs: '0.875rem', sm: '1.25rem', md: '1.25rem', lg: '1.25rem' },
             display: { xs: "none", sm: "flex" },
             justifyContent: {sm: "flex-start"},
             textAlign: "left"
