@@ -223,111 +223,6 @@ const Tooltip = ({ text, children }) => {
       [key]: value,
     }));
   };
-  const handleFileUpload = (event, fieldName) => {
-    const file = event.target.files[0];
-    ////////////////////
-    ////////////////////
-    if (file) {
-      setCheck(true);      
-    }
-    ////////////////////
-    ////////////////////
-    setMediaFiles((prevFiles) => [
-      ...prevFiles,
-      { fieldName, file }, 
-    ]);
-    if (file) {
-      console.log("ICI LE TYPE DE FICHIER DEMANDE : " + file.type);      
-      if (!file.type.startsWith("image/") && !file.type.startsWith("video/")) {
-        console.error("Seuls les fichiers d'image ou de vidéo sont autorisés.");
-        return;
-      }
-      
-      const fileExtension = file.name.split('.').pop(); // Récupère la partie après le dernier "."
-      const validExtension = fileExtension && fileExtension.length <= 5 ? fileExtension : 'unknown';
-
-      const mediaName = `media${mediaCounter}.${validExtension}`;
-      console.log("Nom de fichier généré : ", mediaName);
-
-      // setMediaName(mediaName);
-      setVariables((prevState) => ({
-        ...prevState,
-        // [fieldName]: 'https://memenza.fr/visuels/uploads/' + navigationId + "/" + file.name, 
-        [fieldName]: `https://memenza.fr/visuels/uploads/${navigationId}/${mediaName}`, 
-      }));
-      // console.log("Fichier sélectionné :", file.name);
-      setCheckedFields((prevChecked) => ({
-        ...prevChecked,
-        [fieldName]: true,
-      }));
-
-      setMediaCounter((prevCount) => prevCount + 1);
-    }
-  };
-
-  const handleFileUpload2 = (event, fieldName) => {
-    const file = event.target.files[0];
-  
-    if (!file) return;
-  
-    console.log(`Changement du média pour le champ : ${fieldName}`);
-    console.log(`Nom du fichier sélectionné : ${file.name}`);
-  
-    if (file) {
-      setCheck(true);
-    }
-  
-    setMediaFiles((prevFiles) => {
-      const updatedFiles = [...prevFiles];
-      const existingIndex = updatedFiles.findIndex((item) => item.fieldName === fieldName);
-  
-      if (existingIndex !== -1) {
-        // Remplacer le fichier pour le même champ (conserver le nom existant)
-        updatedFiles[existingIndex] = { fieldName, file };
-      } else {
-        // Ajouter un nouveau fichier
-        updatedFiles.push({ fieldName, file });
-      }
-  
-      return updatedFiles;
-    });
-  
-    if (file) {
-      console.log("ICI LE TYPE DE FICHIER DEMANDÉ : " + file.type);
-  
-      if (!file.type.startsWith("image/") && !file.type.startsWith("video/")) {
-        console.error("Seuls les fichiers d'image ou de vidéo sont autorisés.");
-        return;
-      }
-  
-      const fileExtension = file.name.split('.').pop(); // Récupérer l'extension
-      const validExtension = fileExtension && fileExtension.length <= 5 ? fileExtension : 'unknown';
-  
-      setVariables((prevState) => {
-        const existingValue = prevState[fieldName]; // Vérifier si `fieldName` existe déjà
-        if (existingValue) {
-          console.log(`Valeur existante trouvée pour ${fieldName} : ${existingValue}`);
-          return { ...prevState, [fieldName]: existingValue }; // Conserver l'ancienne valeur
-        }
-  
-        // Générer un nouveau nom si aucune valeur existante n'est trouvée
-        const mediaName = `media${Object.keys(prevState).length + 1}.${validExtension}`;
-        console.log("Nom de fichier généré : ", mediaName);
-  
-        return {
-          ...prevState,
-          [fieldName]: `https://memenza.fr/visuels/uploads/${navigationId}/${mediaName}`,
-        };
-      });
-  
-      setCheckedFields((prevChecked) => ({
-        ...prevChecked,
-        [fieldName]: true,
-      }));
-  
-      setMediaCounter((prevCount) => prevCount + 1);
-    }
-  };
 
   const handleFileUpload3 = (event, fieldName) => {
     const file = event.target.files[0];
@@ -368,8 +263,6 @@ const Tooltip = ({ text, children }) => {
       const fileExtension = file.name.split('.').pop(); // Récupérer l'extension
       const validExtension = fileExtension && fileExtension.length <= 5 ? fileExtension : 'unknown';
   
-      ///////////////////////////
-      ///////////////////////////
       // Gérer l'affichage immédiat
       const fileURL = URL.createObjectURL(file); // Générer un lien temporaire
 
@@ -380,19 +273,33 @@ const Tooltip = ({ text, children }) => {
       }));
 
       console.log("Image téléversée : ", fileURL);
-      ///////////////////////////
-      ///////////////////////////
 
       setVariables((prevState) => {
         const existingValue = prevState[fieldName]; // Vérifier si `fieldName` existe déjà
+        // if (existingValue) {
+        //   console.log(`Valeur existante trouvée pour ${fieldName} : ${existingValue}`);
+        //   return { ...prevState, [fieldName]: existingValue }; // Conserver l'ancienne valeur
+        // }
+
         if (existingValue) {
-          console.log(`Valeur existante trouvée pour ${fieldName} : ${existingValue}`);
-          return { ...prevState, [fieldName]: existingValue }; // Conserver l'ancienne valeur
+          // Extraire la base de l'URL (sans l'extension)
+          const baseURL = existingValue.replace(/\.\w+$/, '');
+        
+          // Obtenir la nouvelle extension dynamiquement depuis un fichier téléchargé
+          const uploadedFileName = file.name; // Nom du fichier téléchargé
+          const newExtension = uploadedFileName.split('.').pop(); // Extraire l'extension après le dernier point
+        
+          // Construire l'URL mise à jour
+          const updatedValue = `${baseURL}.${newExtension}`;
+        
+          console.log(`Valeur mise à jour pour ${fieldName} : ${updatedValue}`);
+          return { ...prevState, [fieldName]: updatedValue }; // Mettre à jour avec la nouvelle extension
         }
+        
   
         // Si "img" est présent dans fieldName, générer un nom unique
         let mediaName;
-        if (fieldName.includes("imgi"))  {
+        if (fieldName.includes("s"))  {
         // if (fieldName.includes("img") || fieldName.includes("-i") || fieldName.includes("image") )  {
           const imgCount = Object.keys(prevState)
             .filter((key) => key.includes("img") || key.includes("-i"))
@@ -400,7 +307,7 @@ const Tooltip = ({ text, children }) => {
           mediaName = `media${imgCount + 1}`;
         } else {
           mediaName = fieldName; // Pas de changement pour les autres types
-          mediaName = "fieldName"; // Pas de changement pour les autres types
+          // mediaName = "fieldName"; // Pas de changement pour les autres types
         }
   
         const fullMediaName = `${mediaName}.${validExtension}`;
@@ -420,132 +327,6 @@ const Tooltip = ({ text, children }) => {
       setMediaCounter((prevCount) => prevCount + 1);
     }
   };
-  
-  
-
-//   const handleFileUpload2 = (event, fieldName) => {
-//     const file = event.target.files[0];
-
-//     if (!file) return;
-
-//     setCheck(true);
-
-//     // Ajouter le fichier au tableau des médias
-//     setMediaFiles((prevFiles) => [
-//         ...prevFiles,
-//         { fieldName, file },
-//     ]);
-
-//     console.log("ICI LE TYPE DE FICHIER DEMANDÉ : " + file.type);
-
-//     if (!file.type.startsWith("image/") && !file.type.startsWith("video/")) {
-//         console.error("Seuls les fichiers d'image ou de vidéo sont autorisés.");
-//         return;
-//     }
-
-//     const fileExtension = file.name.split('.').pop();
-//     const validExtension = fileExtension && fileExtension.length <= 5 ? fileExtension : 'unknown';
-
-//     // Vérifier si le champ fieldName a déjà une URL dans variables
-//     const existingMediaUrl = variables[fieldName];
-
-//     let mediaName;
-
-//     if (existingMediaUrl) {
-//         // Si une URL existe déjà, extraire le nom de fichier existant
-//         mediaName = existingMediaUrl.split('/').pop(); // Récupère le nom de fichier
-//         console.log("Nom de fichier existant conservé : ", mediaName);
-//     } else {
-//         // Sinon, générer un nouveau nom de fichier
-//         mediaName = `media${mediaCounter}.${validExtension}`;
-//         console.log("Nouveau nom de fichier généré : ", mediaName);
-
-//         // Incrémenter le compteur seulement si on génère un nouveau fichier
-//         setMediaCounter((prevCount) => prevCount + 1);
-//     }
-
-//     // Mettre à jour l'état des variables avec l'URL correcte (nouveau fichier, même nom)
-//     setVariables((prevState) => ({
-//         ...prevState,
-//         [fieldName]: `https://memenza.fr/visuels/uploads/${navigationId}/${mediaName}`,
-//     }));
-
-//     // Marquer le champ comme "traité"
-//     setCheckedFields((prevChecked) => ({
-//         ...prevChecked,
-//         [fieldName]: true,
-//     }));
-// };
-// const handleFileUpload3 = (event, fieldName) => {
-//   const file = event.target.files[0];
-
-//   if (!file) return;
-
-//   console.log(`Changement du média pour le champ : ${fieldName}`);
-//   console.log(`Nom du fichier sélectionné : ${file.name}`);
-
-//   // Vérifier si le fichier est valide (image ou vidéo uniquement)
-//   if (!file.type.startsWith("image/") && !file.type.startsWith("video/")) {
-//     console.error("Seuls les fichiers d'image ou de vidéo sont autorisés.");
-//     return;
-//   }
-
-//   let mediaName; // Le nom du média final (ex: media1)
-
-//   // Mise à jour de mediaFiles
-//   setMediaFiles((prevFiles) => {
-//     const updatedFiles = [...prevFiles];
-//     const existingIndex = updatedFiles.findIndex((item) => item.fieldName === fieldName);
-
-//     if (existingIndex !== -1) {
-//       // Si le fichier existe déjà pour ce champ, conserver le même nom et remplacer le fichier
-//       mediaName = updatedFiles[existingIndex].fieldName;
-//       console.log(`Fichier existant trouvé. Remplacement du fichier tout en conservant le nom : ${mediaName}`);
-//       updatedFiles[existingIndex] = { fieldName: mediaName, file };
-//     } else {
-//       // Sinon, calculer un nouveau nom pour un nouveau fichier
-//       const maxNumber = Math.max(
-//         ...updatedFiles.map((item) => parseInt(item.fieldName.match(/\d+/)?.[0] || 0)),
-//         0
-//       );
-//       const mediaNumber = maxNumber + 1;
-//       mediaName = `media${mediaNumber}`;
-//       console.log(`Aucun fichier existant. Nouveau fichier ajouté avec le nom : ${mediaName}`);
-//       updatedFiles.push({ fieldName: mediaName, file });
-//     }
-
-//     return updatedFiles;
-//   });
-
-//   // Mise à jour des variables (URLs)
-//   setVariables((prevState) => {
-//     const fileExtension = file.name.split(".").pop(); // Obtenir l'extension du fichier
-//     const fullMediaName = `${mediaName}.${fileExtension}`;
-//     console.log(`Nom complet du média : ${fullMediaName}`);
-
-//     return {
-//       ...prevState,
-//       [fieldName]: `https://memenza.fr/visuels/uploads/${navigationId}/${fullMediaName}`,
-//     };
-//   });
-
-//   // Marquer le champ comme traité
-//   setCheckedFields((prevChecked) => ({
-//     ...prevChecked,
-//     [fieldName]: true,
-//   }));
-// };
-
-
-
-
-
-
-
-
-
-
-
   
   const handleSendMedia = async (fieldName) => {
     // console.log("CONTENU DE MEDIA");
@@ -1490,9 +1271,6 @@ const hasCustomizableTextField = textFields.some(
               }                
             </Box>
           </Grid>
-          ////////////////
-          ////////////////
-          ////////////////
         )}
       </Box>
       <Box 
@@ -1502,7 +1280,7 @@ const hasCustomizableTextField = textFields.some(
               justifyContent: "space-between",
               alignItems: "center", 
               backgroundColor:{ xs: "white", sm:"transparent" }, 
-              boxShadow: "0px -2px 8px grey",
+              boxShadow: {xs: "0px -2px 8px grey", sm: "none"},
               zIndex: {xs: 2}, 
               position: {xs: "fixed", sm: "relative"},
               left:{xs: 0}, 

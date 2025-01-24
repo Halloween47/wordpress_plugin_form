@@ -1154,7 +1154,7 @@ return (
         justifyContent: "space-between",
         alignItems: "center", 
         backgroundColor:{ xs: "white", sm:"transparent" }, 
-        boxShadow: "0px -2px 8px grey",
+        boxShadow: {xs: "0px -2px 8px grey", sm: "none"},
         zIndex: {xs: 2}, 
         position: {xs: "fixed", sm: "relative"},
         left:{xs: 0}, 
