@@ -1167,6 +1167,7 @@ return (
             variant="contained"
             // POUR SIMULATION
             // disabled={!previsuOwnVisu && !generatedImageUrl}
+            disabled={!visuelGeneratedImageUrl}
             onClick={handleNext}
             sx={{  m: "0 !important" }}
           >
