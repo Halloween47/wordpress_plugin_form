@@ -22,6 +22,7 @@ import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 import ChoixPropreVideo from "../componentsMemenza/ChoixPropreVideo.jsx";
 import SendDataToServer from "./SendDataToServer.jsx";
 import zIndex from "@mui/material/styles/zIndex.js";
+import ResultatJ2V from "../componentsMemenza/ResultatJ2V.jsx";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -123,7 +124,17 @@ const Tooltip = ({ text, children }) => {
   };
 
   const EtapeVideo = ({ activeStep, setActiveStep }) => {
-    const { videoCreationFail, setVideoCreationFail,modalVideoGenere, setModalVideoGenere, setLienResultatJ2V, imageVisuelPath, selectedSousCatId, navigationId, outputFilePathContext } = useSousCat();
+    const { 
+      videoCreationFail, 
+      setVideoCreationFail,
+      modalVideoGenere, 
+      setModalVideoGenere, 
+      lienResultatJ2V,
+      setLienResultatJ2V, 
+      imageVisuelPath, 
+      selectedSousCatId, 
+      navigationId, 
+      outputFilePathContext } = useSousCat();
     // const [modalVideoGenere, setModalVideoGenere] = React.useState(false);
     
     const [openPrevisu, setOpenPrevisu] = React.useState(true);
@@ -1268,7 +1279,10 @@ const hasCustomizableTextField = textFields.some(
                     <SendDataToServer />
                   </Box>
                 )
-              }                
+              }  
+              {lienResultatJ2V && (
+                <ResultatJ2V />              
+              )}
             </Box>
           </Grid>
         )}
