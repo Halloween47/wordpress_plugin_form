@@ -1147,11 +1147,29 @@ return (
         </Box>
       )}
     </Box>
-    <Box sx={{width:{xs:"100%"}, display: "flex", justifyContent: "space-between",alignItems: "center", backgroundColor:{ xs: "grey", sm:"transparent" }, zIndex: {xs: 2}, position: {xs: "fixed", sm: "relative"},left:{xs: 0}, bottom: {xs: 0}, p: {xs: 0},m:{xs:"0 !important", sm: "1 !important" },}}>
+    <Box 
+      sx={{
+        width:{xs:"100%"}, 
+        display: "flex", 
+        justifyContent: "space-between",
+        alignItems: "center", 
+        backgroundColor:{ xs: "white", sm:"transparent" }, 
+        boxShadow: "0px -2px 8px grey",
+        zIndex: {xs: 2}, 
+        position: {xs: "fixed", sm: "relative"},
+        left:{xs: 0}, 
+        bottom: {xs: 0}, 
+        p: {xs: "10px 0 !important"},
+        m:{xs:"0 !important", sm: "1 !important" },
+      }}
+    >
       <Button
         disabled={activeStep === 0}
         onClick={handleBack}
-        sx={{ margin:{xs:"0 !important", sm: "0 !important"}, px: {xs: "35px !important", sm: "35px !important"}, }}
+        sx={{ 
+          margin:{xs:"0 !important", sm: "0 !important"}, 
+          px: {xs: "35px !important", sm: "35px !important"}, 
+        }}
       >
         Retour
       </Button>
@@ -1161,19 +1179,17 @@ return (
         arrow
         sx={{ zIndex: "9999 !important" }}
       >
-        <span>
           <Button
             type="button"
             variant="contained"
             // POUR SIMULATION
             // disabled={!previsuOwnVisu && !generatedImageUrl}
-            disabled={!visuelGeneratedImageUrl}
+            // disabled={!visuelGeneratedImageUrl}
             onClick={handleNext}
-            sx={{  m: "0 !important" }}
+            sx={{  m: "0 10px !important" }}
           >
             Suivant
           </Button>
-        </span>
       </Tooltip>
     </Box>
 

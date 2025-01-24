@@ -1495,14 +1495,35 @@ const hasCustomizableTextField = textFields.some(
           ////////////////
         )}
       </Box>
-      <Button
-        disabled={activeStep === 0}
-        // disabled={activeStep === 0 || !isGenerate}
-        onClick={handleBack}
-        sx={{ mr: 1, position: "absolute", bottom: 0, left: 0 }}
-      >
-        Retour
-      </Button>
+      <Box 
+            sx={{
+              width:{xs:"100%"}, 
+              display: "flex", 
+              justifyContent: "space-between",
+              alignItems: "center", 
+              backgroundColor:{ xs: "white", sm:"transparent" }, 
+              boxShadow: "0px -2px 8px grey",
+              zIndex: {xs: 2}, 
+              position: {xs: "fixed", sm: "relative"},
+              left:{xs: 0}, 
+              bottom: {xs: 0}, 
+              p: {xs: "10px 0 !important"},
+              m:{xs:"0 !important", sm: "1 !important" },
+            }}
+          >
+        <Button
+          disabled={activeStep === 0}
+          // disabled={activeStep === 0 || !isGenerate}
+          onClick={handleBack}
+          // sx={{ mr: 1, position: "absolute", bottom: 0, left: 0 }}
+          sx={{ 
+            margin:{xs:"0 !important", sm: "0 !important"}, 
+            px: {xs: "35px !important", sm: "35px !important"}, 
+          }}
+        >
+          Retour
+        </Button>
+      </Box>
       <style>{StylesTest}</style>
     </Box>
   );
