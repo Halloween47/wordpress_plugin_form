@@ -26,11 +26,14 @@ export const SousCatProvider = ({ children }) => {
   const [visuelGeneratedImageUrl, setVisuelGeneratedImageUrl] = useState(null);
   
   const [videoCreationFail, setVideoCreationFail] = useState(null);
-    
+  
+  const [ownVideoUrl, setOwnVideoUrl] = useState(null);
 
 
   return (
     <SousCatContext.Provider value={{
+      ownVideoUrl, 
+      setOwnVideoUrl,
       videoCreationFail, 
       setVideoCreationFail,
       visuelGeneratedImageUrl, 
